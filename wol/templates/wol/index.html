@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wake on LAN</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma-prefers-dark.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="px-6">
+    <section class="section">
+        <div class="container">
+            <div class="columns is-vcentered">
+                <div class="column is-one-third">
+                    <h1 class="title">
+                        Wake on LAN
+                    </h1>
+                    <p class="subtitle">
+                        Wake your devices with a simple click!
+                    </p>
+                </div>
+                <div class="column is-one-third">
+                    <a class="button is-link is-light" href="/admin">
+                        <span>Admin</span>
+                        <span class="icon is-small">
+                            <i class="fas fa-user-cog"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="columns is-fullhd is-multiline">
+        {% for dev in devices %}
+        <div class="column is-half-fullhd is-half-widescreen is-full-desktop is-full-tablet is-full-mobile">
+            <div class="box mb-3" id="{{ dev.id }}-container">
+                <div class="columns is-centered">
+                    <div class="column">
+                        <div class="container">
+                            <h1 class="title">
+                                {{ dev.name }}
+                            </h1>
+                            <p><strong>ip</strong>: {{ dev.ip }}</p>
+                            <p><strong>mac</strong>: {{ dev.mac }}</p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="container">
+                            <h1 class="title">
+                                Status
+                            </h1>
+                            <p id="{{ dev.id }}-status">
+                                <span class="dot-grey"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="container">
+                            <h1 class="title">
+                                Actions
+                            </h1>
+                            <div class="field is-grouped">
+                                <p class="control">
+                                    <form id="{{ dev.id }}" method="post" class="wake-form">
+                                        {% csrf_token %}
+                                        <button class="button is-success is-outlined" id="{{ dev.id }}-btn-wake" name="wake"
+                                            aria-label="wake" disabled>
+                                            <span>Wake</span>
+                                            <span class="icon is-small">
+                                                <i class="fas fa-play"></i>
+                                            </span>
+                                        </button>
+                                    </form>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+<footer>
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</footer>
+
+</html>
