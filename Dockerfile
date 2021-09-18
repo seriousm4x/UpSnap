@@ -19,7 +19,6 @@ FROM base
 COPY --from=builder /install /usr/local
 COPY app /app
 WORKDIR /app
-COPY run.sh .
 RUN apk add --no-cache postgresql-dev iputils
 RUN addgroup -S user && adduser -S user -G user –no-create-home
 RUN chmod -R 755 /app && chown -R user:user /app
