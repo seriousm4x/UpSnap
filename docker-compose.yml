@@ -1,18 +1,34 @@
 version: "3"
 services:
-  wol:
-    container_name: django-wol
+  wol_django:
+    container_name: wol_django
     build: .
-    env_file:
-      - .env
-    command:
-      - /bin/sh
-      - -c
-      - |
-        python manage.py makemigrations
-        python manage.py migrate
-        python manage.py collectstatic --noinput
-        python -u manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('$DJANGO_SUPERUSER_USER', password='$DJANGO_SUPERUSER_PASSWORD') if not User.objects.filter(username='$DJANGO_SUPERUSER_USER').exists() else print('Django user exists')"
-        python manage.py runserver 0.0.0.0:8000
-    network_mode: host
+    ports:
+      - 8000:8000
+    depends_on:
+      - wol_redis
+      - wol_postgres
     restart: always
+    environment:
+      - DJANGO_SUPERUSER_USER=admin
+      - DJANGO_SUPERUSER_PASSWORD=admin
+      - DJANGO_SECRET_KEY=secret
+      - DJANGO_DEBUG=False
+      - DJANGO_LANGUAGE_CODE=de
+      - DJANGO_TIME_ZONE=Europe/Berlin
+  wol_redis:
+    container_name: wol_redis
+    image: redis:latest
+    restart: always
+  wol_postgres:
+    container_name: wol_postgres
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - "POSTGRES_USER=wol"
+      - "POSTGRES_PASSWORD=wol"
+      - "POSTGRES_DB=wol"
+    volumes:
+      - wol_db:/var/lib/postgresql/data
+volumes:
+  wol_db:

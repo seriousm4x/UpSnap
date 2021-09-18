@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wol',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'django_wol.urls'
@@ -70,15 +72,33 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'django_wol.wsgi.application'
+ASGI_APPLICATION = 'django_wol.asgi.application'
+CELERY_BROKER_URL = "redis://wol_redis:6379"
 
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.getenv("POSTGRES_DB", "wol"),
+        "USER": os.getenv("POSTGRES_USER", "wol"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "wol"),
+        "HOST": "wol_postgres",
+        "PORT": 5432,
+        "OPTIONS": {"connect_timeout": 5},
+    }
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+CHANNEL_LAYERS  = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("wol_redis", 6379)]
+        }
     }
 }
 
@@ -119,5 +139,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

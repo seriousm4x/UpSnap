@@ -1,2 +1,9 @@
 django
 wakeonlan
+channels
+channels-redis
+celery[redis]
+psycopg2-binary
+whitenoise
+gunicorn
+uvicorn[standard]

@@ -6,10 +6,9 @@ from platform import system
 import wakeonlan
 from django.core.serializers import serialize
 from django.http import JsonResponse
-from django.shortcuts import (HttpResponse, HttpResponseRedirect,
-                              get_object_or_404, render)
+from django.shortcuts import HttpResponse, get_object_or_404, render
 
-from .forms import AddDeviceForm, DeleteDeviceForm, WakeDeviceForm
+from .forms import WakeDeviceForm
 from .models import Device
 
 
@@ -34,30 +33,9 @@ def devices(request):
         return JsonResponse(data)
 
 
-def status(request, dev_id):
-    dev = get_object_or_404(Device, id=dev_id)
-    
-    data = {
-        "status": 200
-    }
-
-    if system() == "Windows":
-        cmd = ["ping", "-n", "1", "-w", "1", dev.ip]
-    else:
-        cmd = ["ping", "-c", "1", "-W", "1", dev.ip]
-    
-    try:
-        subprocess.check_output(cmd)
-        data["up"] = True
-        return JsonResponse(data)
-    except subprocess.CalledProcessError:
-        data["up"] = False
-        return JsonResponse(data)
-
-
 def wake(request, dev_id):
     dev = get_object_or_404(Device, id=dev_id)
-    subnet = ipaddress.ip_network(f"{dev.ip}/{dev.netmask}", strict=False).network_address
+    subnet = ipaddress.ip_network(f"{dev.ip}/{dev.netmask}", strict=False).broadcast_address
     if request.method == "POST":
         form = WakeDeviceForm(request.POST, instance=dev)
         if form.is_valid():
