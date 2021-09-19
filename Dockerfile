@@ -4,8 +4,9 @@ FROM base as builder
 
 ENV PYTHONUNBUFFERED 1
 
-RUN apk update && apk add --no-cache --virtual .build-deps libc-dev make gcc musl-dev python3-dev libffi-dev openssl-dev cargo postgresql-dev && \
-     mkdir /install
+RUN sed -i 's/dl-cdn.alpinelinux.org/dl-5.alpinelinux.org/g' /etc/apk/repositories && \
+    apk update && apk add --no-cache --virtual .build-deps libc-dev make gcc musl-dev python3-dev libffi-dev openssl-dev cargo postgresql-dev && \
+    mkdir /install
 WORKDIR /install
 COPY requirements.txt .
 RUN python -m pip install --prefix=/install --no-cache-dir --upgrade pip && \
