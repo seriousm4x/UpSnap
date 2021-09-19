@@ -18,7 +18,7 @@ services:
       - DJANGO_TIME_ZONE=Europe/Berlin
   wol_redis:
     container_name: wol_redis
-    image: redis:latest
+    image: redis:6
     restart: always
   wol_postgres:
     container_name: wol_postgres
