@@ -2,7 +2,7 @@ version: "3"
 services:
   wol_django:
     container_name: wol_django
-    build: .
+    image: seriousm4x/django-wol:latest
     ports:
       - 8000:8000
     depends_on:
