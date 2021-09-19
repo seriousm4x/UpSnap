@@ -22,17 +22,6 @@ def index(request):
     return render(request, "wol/index.html", context)
 
 
-def devices(request):
-    if request.method == "GET":
-        devices = Device.objects.all()
-        devices_serialized = json.loads(serialize("json", devices))
-        data = {
-            "status": 200,
-            "devices": devices_serialized
-        }
-        return JsonResponse(data)
-
-
 def wake(request, dev_id):
     dev = get_object_or_404(Device, id=dev_id)
     subnet = ipaddress.ip_network(f"{dev.ip}/{dev.netmask}", strict=False).broadcast_address
