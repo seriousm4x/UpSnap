@@ -1,5 +1,7 @@
 # Django Wake on LAN
 
+A simple wake on lan app written with Django, Django-Channels (websockets), Celery and Redis.
+
 | Dark                 | Light                 |
 | -------------------- | --------------------- |
 | ![](assets/dark.jpg) | ![](assets/light.jpg) |
