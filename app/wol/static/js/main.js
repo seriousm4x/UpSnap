@@ -5,36 +5,24 @@ $('.wake-form').submit(function (e) {
     document.getElementById(this.id + "-btn-wake").classList.add("is-loading");
 });
 
-// get available devices
-async function getDevices() {
-    let response = await fetch("/devices/");
-    let data = await response.json()
-    if (data.status == 200) {
-        return data.devices
+var socket = new WebSocket("ws://" + location.host + "/wol/");
+socket.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+    console.log(data);
+
+    if (data.status !== 200) {
+        console.log("message status not 200");
+        return;
     }
-}
 
-// ping devices and set status in web interface
-async function ping(device) {
-    let response = await fetch("/status/" + device.pk);
-    let data = await response.json()
-    if (data.status == 200 && data.up == true) {
-        document.getElementById(device.pk + "-status").innerHTML = "<span class=\"dot-green\"></span>";
-        document.getElementById(device.pk + "-btn-wake").classList.remove("is-loading");
-        document.getElementById(device.pk + "-btn-wake").disabled = true;
-    } else {
-        document.getElementById(device.pk + "-status").innerHTML = "<span class=\"dot-red\"></span>";
-        document.getElementById(device.pk + "-btn-wake").disabled = false;
-    }
+    data.devices.forEach(function(device, index) {
+        if (device.up == true) {
+            document.getElementById(device.id + "-status").innerHTML = "<span class=\"dot-green\"></span>";
+            document.getElementById(device.id + "-btn-wake").classList.remove("is-loading");
+            document.getElementById(device.id + "-btn-wake").disabled = true;
+        } else {
+            document.getElementById(device.id + "-status").innerHTML = "<span class=\"dot-red\"></span>";
+            document.getElementById(device.id + "-btn-wake").disabled = false;
+        }
+    })
 }
-
-async function main() {
-    var allDevices = await getDevices();
-    allDevices.forEach(device => {
-        setInterval(() => {
-            ping(device)
-        }, 3000)
-    });
-}
-
-main()
