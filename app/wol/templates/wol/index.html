@@ -27,7 +27,7 @@
                     </p>
                 </div>
                 <div class="column is-one-third">
-                    <a class="button is-link is-light" href="/admin">
+                    <a class="button is-light" href="/admin">
                         <span>Admin</span>
                         <span class="icon is-small">
                             <i class="fas fa-user-cog"></i>
@@ -39,8 +39,8 @@
     </section>
     <div class="columns is-fullhd is-multiline">
         {% for dev in devices %}
-        <div class="column is-half-fullhd is-half-widescreen is-full-desktop is-full-tablet is-full-mobile">
-            <div class="box mb-3" id="{{ dev.id }}-container">
+        <div class="column is-half-fullhd is-full-widescreen is-full-desktop is-full-tablet is-full-mobile">
+            <div class="box mb-3 box-waiting" id="{{ dev.id }}-container">
                 <div class="columns is-centered">
                     <div class="column">
                         <div class="container">
@@ -49,6 +49,7 @@
                             </h1>
                             <p><strong>ip</strong>: {{ dev.ip }}</p>
                             <p><strong>mac</strong>: {{ dev.mac }}</p>
+                            <p><strong>netmask</strong>: {{ dev.netmask }}</p>
                         </div>
                     </div>
                     <div class="column">
@@ -57,8 +58,22 @@
                                 Status
                             </h1>
                             <p id="{{ dev.id }}-status">
-                                <span class="dot"></span>
+                                <span id="{{ dev.id }}-dot" class="dot dot-waiting"></span>
                             </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="container">
+                            <h1 class="title">
+                                Ports
+                            </h1>
+                            <div id="{{ dev.id }}-ports">
+                                <ul>
+                                    <li><span>&#8986;</span> VNC (5900)</li>
+                                    <li><span>&#8986;</span> RDP (3389)</li>
+                                    <li><span>&#8986;</span> SSH (22)</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="column">

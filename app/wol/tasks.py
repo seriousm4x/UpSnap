@@ -1,4 +1,5 @@
 import json
+import socket
 import subprocess
 import threading
 
@@ -11,27 +12,43 @@ from .models import Device
 channel_layer = get_channel_layer()
 
 
-def ping_device(dev):
-    try:
-        subprocess.check_output(["ping", "-c", "1", "-W", "1", dev.ip])
+class WolDevice:
+    def ping_device(self, ip):
+        try:
+            subprocess.check_output(["ping", "-c", "1", "-W", "1", ip])
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
+    def check_port(self, ip, port):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        if sock.connect_ex((ip, port)) == 0:
+            return True
+        return False
+
+    def start(self, dev):
         data = {
             "id": dev.id,
             "name": dev.name,
             "ip": dev.ip,
             "mac": dev.mac,
-            "up": True
-        }
-    except subprocess.CalledProcessError:
-        data = {
-            "id": dev.id,
-            "name": dev.name,
-            "ip": dev.ip,
-            "mac": dev.mac,
-            "up": False
+            "up": False,
+            "vnc": False,
+            "rdp": False,
+            "ssh": False
         }
 
-    async_to_sync(channel_layer.group_send)(
-        "status", {"type": "send_status", "status": json.dumps(data)})
+        if self.ping_device(dev.ip):
+            data["up"] = True
+        if self.check_port(dev.ip, 5900):
+            data["vnc"] = True
+        if self.check_port(dev.ip, 3389):
+            data["rdp"] = True
+        if self.check_port(dev.ip, 22):
+            data["ssh"] = True
+
+        async_to_sync(channel_layer.group_send)(
+            "status", {"type": "send_status", "status": json.dumps(data)})
 
 
 @shared_task
@@ -39,5 +56,6 @@ def status():
     devices = Device.objects.all()
 
     for dev in devices:
-        t = threading.Thread(target=ping_device, args=(dev,))
+        d = WolDevice()
+        t = threading.Thread(target=d.start, args=(dev,))
         t.start()

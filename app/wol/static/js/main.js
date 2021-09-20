@@ -8,23 +8,65 @@ $('.wake-form').submit(function (e) {
 var socket = new WebSocket("ws://" + location.host + "/wol/");
 socket.onmessage = function(event) {
     var device = JSON.parse(event.data);
+    console.log(device);
 
-    var statusDot = document.getElementById(device.id + "-status").children[0];
+    // get elements
+    var deviceBox = document.getElementById(device.id + "-container");
+    var statusDot = document.getElementById(device.id + "-dot");
+    var statusPorts = document.getElementById(device.id + "-ports");
 
     // clear current animation
     statusDot.style.animation = "none"; 
     statusDot.offsetWidth;
 
+    const openPorts = []
+
     if (device.up == true) {
-        statusDot.classList.remove("dot-red");
-        statusDot.classList.add("dot-green");
+        // set dot
+        statusDot.classList.remove("dot-waiting");
+        statusDot.classList.remove("dot-down");
+        statusDot.classList.add("dot-up");
         statusDot.style.animation = "green-pulse 1s normal";
+        // set box border left
+        deviceBox.classList.remove("box-waiting");
+        deviceBox.classList.remove("box-down");
+        deviceBox.classList.add("box-up");
+        // set ports
+        if (device.vnc) {
+            openPorts.push("<li><span>&#9989;</span> <strong>VNC (5900)</strong></li>");
+        } else {
+            openPorts.push("<li><span>&#10060;</span> VNC (5900)</li>");
+        }
+        if (device.rdp) {
+            openPorts.push("<li><span>&#9989;</span> <strong>RDP (3389)</strong></li>");
+        } else {
+            openPorts.push("<li><span>&#10060;</span> RDP (3389)</li>");
+        }
+        if (device.ssh) {
+            openPorts.push("<li><span>&#9989;</span> <strong>SSH (22)</strong></li>");
+        } else {
+            openPorts.push("<li><span>&#10060;</span> SSH (22)</li>");
+        }
+        statusPorts.innerHTML = '<ul>' + openPorts.join('') + '</ul>';
+        // set wake btn
         document.getElementById(device.id + "-btn-wake").classList.remove("is-loading");
         document.getElementById(device.id + "-btn-wake").disabled = true;
     } else {
-        statusDot.classList.remove("dot-green");
-        statusDot.classList.add("dot-red");
+        // set dot
+        statusDot.classList.remove("dot-waiting");
+        statusDot.classList.remove("dot-up");
+        statusDot.classList.add("dot-down");
         statusDot.style.animation = "red-pulse 1s normal";
+        // set box border left
+        deviceBox.classList.remove("box-waiting");
+        deviceBox.classList.remove("box-up");
+        deviceBox.classList.add("box-down");
+        // set ports
+        openPorts.push("<li><span>&#10060;</span> VNC (5900)</li>");
+        openPorts.push("<li><span>&#10060;</span> RDP (3389)</li>");
+        openPorts.push("<li><span>&#10060;</span> SSH (22)</li>");
+        statusPorts.innerHTML = '<ul>' + openPorts.join('') + '</ul>';
+        // set wake btn
         document.getElementById(device.id + "-btn-wake").disabled = false;
     }
 }
