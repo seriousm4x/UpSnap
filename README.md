@@ -10,7 +10,7 @@ A simple wake on lan app written with Django, Django-Channels (websockets), Cele
 
 You can use the example [docker-compose.yml](docker-compose.yml) file and just run `docker-compose up -d`.
 
-# Available Env Vars
+## Available Env Vars
 
 | env var | type | info |
 |---------|------|------|
@@ -22,10 +22,10 @@ You can use the example [docker-compose.yml](docker-compose.yml) file and just r
 | DJANGO_TIME_ZONE | Str | YEP CLOCK |
 | DJANGO_PORT | Int | Web port |
 
-# Manage devices
+## Manage devices
 
 Click on the `Admin` button and login with your django backend user (see [#available-env-vars](#available-env-vars)). Once logged in you can manage your devices there.
 
-# Other infos
+## Other infos
 
 * The django container needs to run in host network mode to send the wakeonlan command on your local network. Therefore all other containers also need to run in host network mode. I don't like it but there is no way around.
