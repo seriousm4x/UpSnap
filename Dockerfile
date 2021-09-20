@@ -18,7 +18,8 @@ FROM base
 COPY --from=builder /install /usr/local
 COPY app /app
 WORKDIR /app
-RUN apt-get -y install iputils-ping && \
+RUN apt-get update && \
+    apt-get -y install iputils-ping && \
     rm -rf /var/lib/apt/lists/* && \
     groupadd user && useradd -M user -g user && \
     chmod -R 755 /app && chown -R user:user /app
