@@ -7,22 +7,24 @@ $('.wake-form').submit(function (e) {
 
 var socket = new WebSocket("ws://" + location.host + "/wol/");
 socket.onmessage = function(event) {
-    var data = JSON.parse(event.data);
-    console.log(data);
+    var device = JSON.parse(event.data);
 
-    if (data.status !== 200) {
-        console.log("message status not 200");
-        return;
+    var statusDot = document.getElementById(device.id + "-status").children[0];
+
+    // clear current animation
+    statusDot.style.animation = "none"; 
+    statusDot.offsetWidth;
+
+    if (device.up == true) {
+        statusDot.classList.remove("dot-red");
+        statusDot.classList.add("dot-green");
+        statusDot.style.animation = "green-pulse 1s normal";
+        document.getElementById(device.id + "-btn-wake").classList.remove("is-loading");
+        document.getElementById(device.id + "-btn-wake").disabled = true;
+    } else {
+        statusDot.classList.remove("dot-green");
+        statusDot.classList.add("dot-red");
+        statusDot.style.animation = "red-pulse 1s normal";
+        document.getElementById(device.id + "-btn-wake").disabled = false;
     }
-
-    data.devices.forEach(function(device, index) {
-        if (device.up == true) {
-            document.getElementById(device.id + "-status").innerHTML = "<span class=\"dot-green\"></span>";
-            document.getElementById(device.id + "-btn-wake").classList.remove("is-loading");
-            document.getElementById(device.id + "-btn-wake").disabled = true;
-        } else {
-            document.getElementById(device.id + "-status").innerHTML = "<span class=\"dot-red\"></span>";
-            document.getElementById(device.id + "-btn-wake").disabled = false;
-        }
-    })
 }
