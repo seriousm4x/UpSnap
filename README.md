@@ -15,7 +15,6 @@ You can use the example [docker-compose.yml](docker-compose.yml) file and just r
 | env var | type | info |
 |-|-|-|
 | DJANGO_SUPERUSER_USER | Str | Django username for /admin backend |
-| DJANGO_SUPERUSER_USER | Str | Django username for /admin backend |
 | DJANGO_SUPERUSER_PASSWORD | Str | Django password for /admin backend |
 | DJANGO_SECRET_KEY | Str | Django secrect key. You can create your own by running `docker exec wol_django bash -c "python manage.py shell -c 'from django.core.management import utils; print(utils.get_random_secret_key())'"` |
 | DJANGO_DEBUG | Bool | Sets django to run in debug mode |
