@@ -12,33 +12,16 @@ You can use the example [docker-compose.yml](docker-compose.yml) file and just r
 
 # Available Env Vars
 
-### DJANGO_SUPERUSER_USER (String)
-
-Django username for /admin backend
-
-### DJANGO_SUPERUSER_PASSWORD (String)
-
-Django password for /admin backend
-
-### DJANGO_SECRET_KEY (String)
-
-Django secrect key. You can create your own by running `docker exec wol_django bash -c "python manage.py shell -c 'from django.core.management import utils; print(utils.get_random_secret_key())'"`
-
-### DJANGO_DEBUG (Bool)
-
-Sets django to run in debug mode.
-
-### DJANGO_LANGUAGE_CODE (String)
-
-Language code in RFC 3066 (e.g. "en-us" or "de)
-
-### DJANGO_TIME_ZONE (String)
-
-YEP CLOCK
-
-### DJANGO_PORT (Int)
-
-Web port
+| env var | type | info |
+|-|-|-|
+| DJANGO_SUPERUSER_USER | Str | Django username for /admin backend |
+| DJANGO_SUPERUSER_USER | Str | Django username for /admin backend |
+| DJANGO_SUPERUSER_PASSWORD | Str | Django password for /admin backend |
+| DJANGO_SECRET_KEY | Str | Django secrect key. You can create your own by running `docker exec wol_django bash -c "python manage.py shell -c 'from django.core.management import utils; print(utils.get_random_secret_key())'"` |
+| DJANGO_DEBUG | Bool | Sets django to run in debug mode |
+| DJANGO_LANGUAGE_CODE | Str | Language code in RFC 3066 (e.g. "en-us" or "de) |
+| DJANGO_TIME_ZONE | Str | YEP CLOCK |
+| DJANGO_PORT | Int | Web port |
 
 # Manage devices
 
