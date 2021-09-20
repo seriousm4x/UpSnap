@@ -10,6 +10,6 @@ class WSConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_discard("status", self.channel_name)
 
     async def send_status(self, event):
-        text_message = event["text"]
+        text_message = event["status"]
 
         await self.send(text_message)
