@@ -6,18 +6,44 @@ A simple wake on lan app written with Django, Django-Channels (websockets), Cele
 | -------------------- | --------------------- |
 | ![](assets/dark.jpg) | ![](assets/light.jpg) |
 
-## Installation
+## Run your own instance
 
-1. Clone this repo
+You can use the example [docker-compose.yml](docker-compose.yml) file and just run `docker-compose up -d`.
 
-`git clone https://github.com/seriousm4x/django-wake-on-lan.git`
+# Available Env Vars
 
-2. Adjust environment vars in `docker-compose.yml`
+### DJANGO_SUPERUSER_USER (String)
 
-3. Run the container
+Django username for /admin backend
 
-`docker-compose up -d`
+### DJANGO_SUPERUSER_PASSWORD (String)
 
-## Manage devices
+Django password for /admin backend
 
-Click on the `Admin` button and login with your credentials from step 2. Once logged in you can manage your devices there.
+### DJANGO_SECRET_KEY (String)
+
+Django secrect key. You can create your own by running `docker exec wol_django bash -c "python manage.py shell -c 'from django.core.management import utils; print(utils.get_random_secret_key())'"`
+
+### DJANGO_DEBUG (Bool)
+
+Sets django to run in debug mode.
+
+### DJANGO_LANGUAGE_CODE (String)
+
+Language code in RFC 3066 (e.g. "en-us" or "de)
+
+### DJANGO_TIME_ZONE (String)
+
+YEP CLOCK
+
+### DJANGO_PORT (Int)
+
+Web port
+
+# Manage devices
+
+Click on the `Admin` button and login with your django backend user (see [#available-env-vars](#available-env-vars)). Once logged in you can manage your devices there.
+
+# Other infos
+
+* The django container needs to run in host network mode to send the wakeonlan command on your local network. Therefore all other containers also need to run in host network mode. I don't like it but there is no way around.

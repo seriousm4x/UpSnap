@@ -11,4 +11,4 @@ fi
 
 celery -A django_wol worker &
 celery -A django_wol beat &
-gunicorn --bind 0.0.0.0:8000 --workers 4 django_wol.asgi:application -k uvicorn.workers.UvicornWorker
+gunicorn --bind 0.0.0.0:"$DJANGO_PORT" --workers 4 django_wol.asgi:application -k uvicorn.workers.UvicornWorker
