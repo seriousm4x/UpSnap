@@ -73,7 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_wol.wsgi.application'
 ASGI_APPLICATION = 'django_wol.asgi.application'
-CELERY_BROKER_URL = "redis://wol_redis:6379"
+CELERY_BROKER_URL = "redis://localhost:6379"
 
 
 # Database
@@ -85,7 +85,7 @@ DATABASES = {
         "NAME": os.getenv("POSTGRES_DB", "wol"),
         "USER": os.getenv("POSTGRES_USER", "wol"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD", "wol"),
-        "HOST": "wol_postgres",
+        "HOST": "localhost",
         "PORT": 5432,
         "OPTIONS": {"connect_timeout": 5},
     }
@@ -97,7 +97,7 @@ CHANNEL_LAYERS  = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("wol_redis", 6379)]
+            "hosts": [("localhost", 6379)]
         }
     }
 }

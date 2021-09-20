@@ -3,8 +3,7 @@ services:
   wol_django:
     container_name: wol_django
     image: seriousm4x/django-wol:latest
-    ports:
-      - 8000:8000
+    network_mode: host
     depends_on:
       - wol_redis
       - wol_postgres
@@ -16,14 +15,17 @@ services:
       - DJANGO_DEBUG=False
       - DJANGO_LANGUAGE_CODE=de
       - DJANGO_TIME_ZONE=Europe/Berlin
+      - DJANGO_PORT=8000
   wol_redis:
     container_name: wol_redis
     image: redis:6
+    network_mode: host
     restart: always
   wol_postgres:
     container_name: wol_postgres
     image: postgres:13-alpine
     restart: always
+    network_mode: host
     environment:
       - "POSTGRES_USER=wol"
       - "POSTGRES_PASSWORD=wol"
