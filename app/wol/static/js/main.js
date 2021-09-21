@@ -39,19 +39,19 @@ socket.onmessage = function(event) {
         deviceBox.classList.add("box-up");
         // set ports
         if (device.vnc) {
-            openPorts.push("<li><span>&#9989;</span> <strong>VNC (5900)</strong></li>");
+            openPorts.push("<li><i class='fas fa-check fa-fw'></i> <strong>VNC (5900)</strong></li>");
         } else {
-            openPorts.push("<li><span>&#10060;</span> VNC (5900)</li>");
+            openPorts.push("<li><i class='fas fa-times fa-fw'></i> VNC (5900)</li>");
         }
         if (device.rdp) {
-            openPorts.push("<li><span>&#9989;</span> <strong>RDP (3389)</strong></li>");
+            openPorts.push("<li><i class='fas fa-check fa-fw'></i> <strong>RDP (3389)</strong></li>");
         } else {
-            openPorts.push("<li><span>&#10060;</span> RDP (3389)</li>");
+            openPorts.push("<li><i class='fas fa-times fa-fw'></i> RDP (3389)</li>");
         }
         if (device.ssh) {
-            openPorts.push("<li><span>&#9989;</span> <strong>SSH (22)</strong></li>");
+            openPorts.push("<li><i class='fas fa-check fa-fw'></i> <strong>SSH (22)</strong></li>");
         } else {
-            openPorts.push("<li><span>&#10060;</span> SSH (22)</li>");
+            openPorts.push("<li><i class='fas fa-times fa-fw'></i> SSH (22)</li>");
         }
         statusPorts.innerHTML = '<ul>' + openPorts.join('') + '</ul>';
         // set wake btn
@@ -68,9 +68,9 @@ socket.onmessage = function(event) {
         deviceBox.classList.remove("box-up");
         deviceBox.classList.add("box-down");
         // set ports
-        openPorts.push("<li><span>&#10060;</span> VNC (5900)</li>");
-        openPorts.push("<li><span>&#10060;</span> RDP (3389)</li>");
-        openPorts.push("<li><span>&#10060;</span> SSH (22)</li>");
+        openPorts.push("<li><i class='fas fa-times fa-fw'></i> VNC (5900)</li>");
+        openPorts.push("<li><i class='fas fa-times fa-fw'></i> RDP (3389)</li>");
+        openPorts.push("<li><i class='fas fa-times fa-fw'></i> SSH (22)</li>");
         statusPorts.innerHTML = '<ul>' + openPorts.join('') + '</ul>';
         // set wake btn
         document.getElementById(device.id + "-btn-wake").disabled = false;

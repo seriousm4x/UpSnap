@@ -23,23 +23,28 @@
     border-left: 5px solid var(--down-red);
 }
 
-.dot {
-    height: 30px;
-    width: 30px;
+.fas.fa-check {
+    color: var(--up-green);
+}
+
+.fas.fa-times {
+    color: var(--down-red);
+}
+
+.fas.fa-circle {
     border-radius: 50%;
-    display: inline-block;
 }
 
 .dot-waiting {
-    background-color: var(--waiting-gray);
+    color: var(--waiting-gray);
 }
 
 .dot-up {
-    background-color: var(--up-green);
+    color: var(--up-green);
 }
 
 .dot-down {
-    background-color: var(--down-red);
+    color: var(--down-red);
 }
 
 .button.is-static {
