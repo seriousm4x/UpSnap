@@ -52,4 +52,4 @@ class WSConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_visitors(self):
-        return str(Websocket.objects.first().visitors)
+        return Websocket.objects.first().visitors

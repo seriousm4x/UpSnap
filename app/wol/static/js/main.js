@@ -11,7 +11,12 @@ socket.onmessage = function(event) {
     console.log(message);
 
     if ("visitors" in message) {
-        document.getElementById("visitors").innerHTML = message.visitors + ' Visitors';
+        if (message.visitors == 1) {
+            var visitor_spelling = ' Visitor';
+        } else {
+            var visitor_spelling = ' Visitors';
+        }
+        document.getElementById("visitors").innerHTML = message.visitors + visitor_spelling;
         return;
     }
 
