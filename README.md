@@ -4,7 +4,7 @@ A simple wake on lan app written with Django, Django-Channels (websockets), Cele
 
 | Dark                 | Light                 |
 | -------------------- | --------------------- |
-| ![https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/dark.png](assets/dark.png) | ![https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/light.png](assets/light.png) |
+| ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/light.png) |
 
 ## Run your own instance
 
