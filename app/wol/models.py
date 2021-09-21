@@ -7,3 +7,6 @@ class Device(models.Model):
     ip = models.GenericIPAddressField()
     mac = models.CharField(max_length=17)
     netmask = models.CharField(max_length=15, default="255.255.255.0", blank=False, null=False)
+
+class Websocket(models.Model):
+    visitors = models.PositiveSmallIntegerField(blank=False, null=False, default=0)

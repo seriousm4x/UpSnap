@@ -42,6 +42,12 @@
     background-color: var(--down-red);
 }
 
+.button.is-static {
+    background-color: #dbdbdb;
+    border-color: transparent;
+    color: #363636;
+}
+
 @media (prefers-color-scheme: dark) {
     .box {
         background-color: var(--box-bg);

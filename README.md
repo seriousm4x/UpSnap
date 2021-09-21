@@ -4,7 +4,7 @@ A simple wake on lan app written with Django, Django-Channels (websockets), Cele
 
 | Dark                 | Light                 |
 | -------------------- | --------------------- |
-| ![](assets/dark.jpg) | ![](assets/light.jpg) |
+| ![](assets/dark.png) | ![](assets/light.png) |
 
 ## Run your own instance
 

@@ -27,12 +27,24 @@
                     </p>
                 </div>
                 <div class="column is-one-third">
-                    <a class="button is-light" href="/admin">
-                        <span>Admin</span>
-                        <span class="icon is-small">
-                            <i class="fas fa-user-cog"></i>
-                        </span>
-                    </a>
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button is-light" href="/admin">
+                                <span>Admin</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-user-cog"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="control">
+                            <div class="button is-static is-light">
+                                <span id="visitors">{{ visitors }} Visitors</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-users"></i>
+                                </span>
+                            </div>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,22 +1,19 @@
 import ipaddress
-import json
-import subprocess
-from platform import system
 
 import wakeonlan
-from django.core.serializers import serialize
-from django.http import JsonResponse
 from django.shortcuts import HttpResponse, get_object_or_404, render
 
 from .forms import WakeDeviceForm
-from .models import Device
+from .models import Device, Websocket
 
 
 def index(request):
     devices = Device.objects.all().order_by("name")
+    visitors = Websocket.objects.first().visitors
 
     context = {
-        "devices": devices
+        "devices": devices,
+        "visitors": visitors
     }
 
     return render(request, "wol/index.html", context)

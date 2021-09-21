@@ -7,7 +7,7 @@ from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
 
-from .models import Device
+from .models import Device, Websocket
 
 channel_layer = get_channel_layer()
 
@@ -29,31 +29,36 @@ class WolDevice:
 
     def start(self, dev):
         data = {
-            "id": dev.id,
-            "name": dev.name,
-            "ip": dev.ip,
-            "mac": dev.mac,
-            "up": False,
-            "vnc": False,
-            "rdp": False,
-            "ssh": False
+            "device": {
+                "id": dev.id,
+                "name": dev.name,
+                "ip": dev.ip,
+                "mac": dev.mac,
+                "up": False,
+                "vnc": False,
+                "rdp": False,
+                "ssh": False
+            }
         }
 
         if self.ping_device(dev.ip):
-            data["up"] = True
-        if self.check_port(dev.ip, 5900):
-            data["vnc"] = True
-        if self.check_port(dev.ip, 3389):
-            data["rdp"] = True
-        if self.check_port(dev.ip, 22):
-            data["ssh"] = True
+            data["device"]["up"] = True
+            if self.check_port(dev.ip, 5900):
+                data["device"]["vnc"] = True
+            if self.check_port(dev.ip, 3389):
+                data["device"]["rdp"] = True
+            if self.check_port(dev.ip, 22):
+                data["device"]["ssh"] = True
 
         async_to_sync(channel_layer.group_send)(
-            "status", {"type": "send_status", "status": json.dumps(data)})
+            "wol", {"type": "send_status", "status": json.dumps(data)})
 
 
 @shared_task
 def status():
+    if Websocket.objects.first().visitors == 0:
+        return
+
     devices = Device.objects.all()
 
     for dev in devices:

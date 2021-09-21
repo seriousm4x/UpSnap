@@ -7,10 +7,16 @@ $('.wake-form').submit(function (e) {
 
 var socket = new WebSocket("ws://" + location.host + "/wol/");
 socket.onmessage = function(event) {
-    var device = JSON.parse(event.data);
-    console.log(device);
+    var message = JSON.parse(event.data);
+    console.log(message);
+
+    if ("visitors" in message) {
+        document.getElementById("visitors").innerHTML = message.visitors + ' Visitors';
+        return;
+    }
 
     // get elements
+    var device = message.device
     var deviceBox = document.getElementById(device.id + "-container");
     var statusDot = document.getElementById(device.id + "-dot");
     var statusPorts = document.getElementById(device.id + "-ports");
