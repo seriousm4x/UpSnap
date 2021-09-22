@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/bulma-prefers-dark.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma-notifications.css' %}">
 </head>
 
 <body class="px-6">
@@ -95,16 +96,13 @@
                             </h1>
                             <div class="field is-grouped">
                                 <p class="control">
-                                    <form id="{{ dev.id }}" method="post" class="wake-form">
-                                        {% csrf_token %}
-                                        <button class="button is-success" id="{{ dev.id }}-btn-wake" name="wake"
-                                            aria-label="wake" disabled>
-                                            <span>Wake</span>
-                                            <span class="icon is-small">
-                                                <i class="fas fa-play"></i>
-                                            </span>
-                                        </button>
-                                    </form>
+                                    <button class="button is-success" id="{{ dev.id }}-btn-wake" name="wake"
+                                        aria-label="wake" disabled>
+                                        <span>Wake</span>
+                                        <span class="icon is-small">
+                                            <i class="fas fa-play"></i>
+                                        </span>
+                                    </button>
                                 </p>
                             </div>
                         </div>

@@ -1,0 +1,15 @@
+.note{
+    visibility: hidden;
+    opacity:0;
+    transition: opacity 0.2s, top 0.2s, visibility 0.2s;
+    transition-timing-function: ease-in;
+}
+
+.note-visible{
+    opacity: 1;
+    visibility: visible;
+}
+
+.note-title{
+    font-weight: bold;
+}

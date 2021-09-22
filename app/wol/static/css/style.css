@@ -48,41 +48,58 @@
 }
 
 .button.is-static {
-    background-color: #dbdbdb;
     border-color: transparent;
-    color: #363636;
+}
+
+.notification {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    width: 20%;
+    min-width: 300px;
+    max-width: 700px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
 
 @media (prefers-color-scheme: dark) {
     .box {
         background-color: var(--box-bg);
+    }
+
+    .button.is-static {
+        background-color: #dbdbdb;
+        color: #363636;
     }    
+
+    .notification {
+        box-shadow: 0 0 10px 0 rgba(200, 200, 200, 0.7);
+    }
 }
 
 @keyframes green-pulse {
-	0% {
+    0% {
         box-shadow: 0 0 0 0 rgba(35, 209, 96, 0.6);
-	}
+    }
 
-	70% {
+    70% {
         box-shadow: 0 0 0 20px rgba(35, 209, 96, 0);
-	}
+    }
 
-	100% {
+    100% {
         box-shadow: 0 0 0 0 rgba(35, 209, 96, 0);
-	}
+    }
 }
 
 @keyframes red-pulse {
-	0% {
+    0% {
         box-shadow: 0 0 0 0 rgba(255, 56, 96, 0.6);
-	}
+    }
 
-	70% {
+    70% {
         box-shadow: 0 0 0 20px rgba(255, 56, 96, 0);
-	}
+    }
 
-	100% {
+    100% {
         box-shadow: 0 0 0 0 rgba(255, 56, 96, 0);
-	}
+    }
 }
