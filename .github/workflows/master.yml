@@ -17,7 +17,7 @@ jobs:
         run: |
           DOCKER_IMAGE=${{ secrets.DOCKER_HUB_USERNAME }}/django-wol
           VERSION=${GITHUB_REF#refs/tags/}
-          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:latest"
+          TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${VERSION:0:2},${DOCKER_IMAGE}:latest"
           echo ::set-output name=tags::${TAGS}
 
       - name: Cache Docker layers
