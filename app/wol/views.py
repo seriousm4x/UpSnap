@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Device, Websocket
+from wol.models import Device, Websocket
 
 
 def index(request):

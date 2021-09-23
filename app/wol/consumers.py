@@ -1,12 +1,13 @@
-import ipaddress
 import json
-
-import wakeonlan
+from datetime import datetime, tzinfo
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.core import serializers
+from django.utils.dateparse import parse_datetime
+from django.utils.timezone import make_aware
 
-from .models import Device, Websocket
+from wol.models import Device, Websocket
+from wol.wake import wake
 
 
 class WSConsumer(AsyncWebsocketConsumer):
@@ -36,20 +37,56 @@ class WSConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data=None, bytes_data=None):
-        dev = await self.get_json_from_device_id(text_data)
+        received = json.loads(text_data)
 
-        subnet = ipaddress.ip_network(
-            f"{dev['fields']['ip']}/{dev['fields']['netmask']}", strict=False).broadcast_address
-        wakeonlan.send_magic_packet(dev['fields']["mac"], ip_address=str(subnet))
+        if received["message"] == "wake":
+            dev = await self.get_json_from_device_id(received["id"])
+            wake(dev["fields"]["mac"], dev["fields"]
+                 ["ip"], dev["fields"]["netmask"])
 
-        await self.channel_layer.group_send(
-            "wol", {
-                "type": "send_group",
-                "message": {
-                    "wake": dev
+            await self.channel_layer.group_send(
+                "wol", {
+                    "type": "send_group",
+                    "message": {
+                        "wake": {
+                            "id": dev["pk"],
+                            "name": dev["fields"]["name"]
+                        }
+                    }
                 }
-            }
-        )
+            )
+        elif received["message"] == "add_schedule":
+            if not received["datetime"]:
+                return
+            d = make_aware(parse_datetime(received["datetime"]))
+            print(d.isoformat())
+            await self.add_schedule(received["id"], d)
+            await self.channel_layer.group_send(
+                "wol", {
+                    "type": "send_group",
+                    "message": {
+                        "add_schedule": {
+                            "id": received["id"],
+                            "name": received["name"],
+                            "datetime": str(d.isoformat())
+                        }
+                    }
+                }
+            )
+        elif received["message"] == "delete_schedule":
+            await self.delete_schedule(received["id"])
+            await self.channel_layer.group_send(
+                "wol", {
+                    "type": "send_group",
+                    "message": {
+                        "delete_schedule": {
+                            "id": received["id"],
+                            "name": received["name"]
+                        }
+                    }
+                }
+            )
+
 
     async def send_status(self, event):
         await self.send(event["status"])
@@ -77,3 +114,15 @@ class WSConsumer(AsyncWebsocketConsumer):
     def get_json_from_device_id(self, id):
         dev = Device.objects.filter(id=id)
         return serializers.serialize("python", dev)[0]
+
+    @database_sync_to_async
+    def add_schedule(self, id, datetime):
+        dev = Device.objects.filter(id=id).get()
+        dev.scheduled_wake = datetime
+        dev.save()
+
+    @database_sync_to_async
+    def delete_schedule(self, id):
+        dev = Device.objects.filter(id=id).get()
+        dev.scheduled_wake = None
+        dev.save()

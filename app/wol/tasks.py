@@ -6,8 +6,11 @@ import threading
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
+from django.core import serializers
+from django.utils import timezone
 
-from .models import Device, Websocket
+from wol.models import Device, Websocket
+from wol.wake import wake
 
 channel_layer = get_channel_layer()
 
@@ -65,3 +68,28 @@ def status():
         d = WolDevice()
         t = threading.Thread(target=d.start, args=(dev,))
         t.start()
+
+
+@shared_task
+def scheduled_wakes():
+    if Websocket.objects.first().visitors == 0:
+        return
+
+    devices = Device.objects.all()
+
+    for dev in devices:
+        if dev.scheduled_wake and dev.scheduled_wake <= timezone.now():
+            wake(dev.mac, dev.ip, dev.netmask)
+            dev.scheduled_wake = None
+            dev.save()
+            async_to_sync(channel_layer.group_send)(
+                "wol", {
+                    "type": "send_group",
+                    "message": {
+                        "wake_schedule": {
+                            "id": dev.id,
+                            "name": dev.name
+                        }
+                    }
+                }
+            )

@@ -11,6 +11,10 @@ app.conf.beat_schedule = {
     "ping_devices_5s": {
         "task": "wol.tasks.status",
         "schedule": 5
+    },
+    "scheduled_wakes_1s": {
+        "task": "wol.tasks.scheduled_wakes",
+        "schedule": 1
     }
 }
 

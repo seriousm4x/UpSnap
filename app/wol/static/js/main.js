@@ -88,6 +88,25 @@ class BulmaNotification {
 let notif;
 window.onload = () => {
     notif = new BulmaNotification();
+    var now = new Date();
+    var utcString = now.toISOString().substring(0, 19);
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var day = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    var localDatetime = year + "-" +
+        (month < 10 ? "0" + month.toString() : month) + "-" +
+        (day < 10 ? "0" + day.toString() : day) + "T" +
+        (hour < 10 ? "0" + hour.toString() : hour) + ":" +
+        (minute < 10 ? "0" + minute.toString() : minute) +
+        utcString.substring(16, 19);
+    var datetimeFields = document.querySelectorAll('[id*=-input]');
+    for (let index = 0; index < datetimeFields.length; index++) {
+        const element = datetimeFields[index];
+        element.value = localDatetime;
+    }
 };
 
 //
@@ -100,7 +119,8 @@ function setDeviceUp(device) {
     var statusDot = document.getElementById(device.id + "-dot");
     var statusPorts = document.getElementById(device.id + "-ports");
     var wakeButton = document.getElementById(device.id + "-btn-wake");
-    
+    var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");
+
     // check if device was down before
     if (statusDot.classList.contains("dot-down")) {
         notif.show("Device now up!", device.name + " is now up.", "is-success", 5000);
@@ -141,6 +161,8 @@ function setDeviceUp(device) {
     // set wake btn
     wakeButton.classList.remove("is-loading");
     wakeButton.disabled = true;
+    // set schedule button
+    scheduleModalButton.disabled = false;
 }
 
 function setDeviceDown(device) {
@@ -149,12 +171,13 @@ function setDeviceDown(device) {
     var statusDot = document.getElementById(device.id + "-dot");
     var statusPorts = document.getElementById(device.id + "-ports");
     var wakeButton = document.getElementById(device.id + "-btn-wake");
+    var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");
 
     // check if device was up before
     if (statusDot.classList.contains("dot-up")) {
         notif.show("Device now down!", device.name + " is now down.", "is-danger", 5000);
     }
-    
+
     // clear current animation
     statusDot.style.animation = "none";
     statusDot.offsetWidth;
@@ -177,13 +200,36 @@ function setDeviceDown(device) {
     statusPorts.innerHTML = '<ul>' + openPorts.join('') + '</ul>';
     // set wake btn
     wakeButton.disabled = false;
-    wakeButton.addEventListener("click", function() {
-        setDeviceWake(device.id);
-    });
+    // set schedule button
+    scheduleModalButton.disabled = false;
 }
 
-function setDeviceWake(id) {
-    socket.send(id);
+function wakeDevice(id) {
+    socket.send(JSON.stringify({
+        "message": "wake",
+        "id": id
+    }));
+}
+
+function addSchedule(id, name, datetime) {
+    if (!(datetime)) {
+        return;
+    }
+    console.log(datetime);
+    socket.send(JSON.stringify({
+        "message": "add_schedule",
+        "id": id,
+        "name": name,
+        "datetime": datetime
+    }));
+}
+
+function deleteSchedule(id, name) {
+    socket.send(JSON.stringify({
+        "message": "delete_schedule",
+        "id": id,
+        "name": name
+    }));
 }
 
 //
@@ -195,22 +241,6 @@ socket.onmessage = function (event) {
     var message = JSON.parse(event.data);
     console.log(message);
 
-    // set visitors element
-    if ("visitors" in message) {
-        if (message.visitors == 1) {
-            document.getElementById("visitors").innerHTML = message.visitors + ' visitor';
-        } else {
-            document.getElementById("visitors").innerHTML = message.visitors + ' visitors';
-            notif.show("Visitors updated", "There are currently " + message.visitors + " visitors", "is-info", 50000);
-        }
-    }
-
-    // set wake button
-    if ("wake" in message) {
-        document.getElementById(message.wake.pk + "-btn-wake").classList.add("is-loading");
-        notif.show("Wake started", message.wake.fields.name + " has been started.", "is-info", 5000);
-    }
-
     // set devices up or down
     if ("device" in message) {
         if (message.device.up == true) {
@@ -218,6 +248,41 @@ socket.onmessage = function (event) {
         } else {
             setDeviceDown(message.device);
         }
+    }
+
+    // set visitors element
+    if ("visitors" in message) {
+        if (message.visitors == 1) {
+            document.getElementById("visitors").innerHTML = message.visitors + ' visitor';
+        } else {
+            document.getElementById("visitors").innerHTML = message.visitors + ' visitors';
+            notif.show("Visitors updated", "There are currently " + message.visitors + " visitors", "is-info", 5000);
+        }
+    }
+
+    // set wake by client
+    if ("wake" in message) {
+        document.getElementById(message.wake.id + "-btn-wake").classList.add("is-loading");
+        notif.show("Wake started", message.wake.name + " has been started.", "is-info", 5000);
+    }
+
+    // set wake by schedule
+    if ("wake_schedule" in message) {
+        document.getElementById(message.wake_schedule.id + "-btn-wake").classList.add("is-loading");
+        document.getElementById(message.wake_schedule.id + "-schedule-notice").innerHTML = "";
+        notif.show("Scheduled wake started", message.wake_schedule.name + " has been started.", "is-info", 5000);
+    }
+
+    // add schedule
+    if ("add_schedule" in message) {
+        document.getElementById(message.add_schedule.id + "-schedule-notice").innerHTML = `<p>Scheduled wake set:<br>${message.add_schedule.datetime}</p>`;
+        notif.show("Schedule added", "A wake up event has been scheduled for " + message.add_schedule.name, "is-info", 5000);
+    }
+
+    // delete schedule
+    if ("delete_schedule" in message) {
+        document.getElementById(message.delete_schedule.id + "-schedule-notice").innerHTML = "";
+        notif.show("Schedule deleted", "A wake up event has been deleted for " + message.delete_schedule.name, "is-info", 5000);
     }
 }
 socket.onclose = function (event) {
