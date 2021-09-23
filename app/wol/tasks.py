@@ -15,14 +15,14 @@ channel_layer = get_channel_layer()
 class WolDevice:
     def ping_device(self, ip):
         try:
-            subprocess.check_output(["ping", "-c", "1", "-W", "1", ip])
+            subprocess.check_output(["ping", "-c", "1", "-W", "0.5", ip])
             return True
         except subprocess.CalledProcessError:
             return False
 
     def check_port(self, ip, port):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(1)
+        sock.settimeout(0.5)
         if sock.connect_ex((ip, port)) == 0:
             return True
         return False

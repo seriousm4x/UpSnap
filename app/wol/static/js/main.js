@@ -202,20 +202,20 @@ socket.onmessage = function (event) {
             document.getElementById("visitors").innerHTML = message.visitors + ' visitors';
             notif.show("Visitors updated", "There are currently " + message.visitors + " visitors", "is-info is-light", 5000);
         }
-        return;
     }
 
     // set wake button
     if ("wake" in message) {
         document.getElementById(message.wake.pk + "-btn-wake").classList.add("is-loading");
         notif.show("Wake started", message.wake.fields.name + " has been started.", "is-info is-light", 5000);
-        return;
     }
 
     // set devices up or down
-    if (message.device.up == true) {
-        setDeviceUp(message.device);
-    } else {
-        setDeviceDown(message.device);
+    if ("device" in message) {
+        if (message.device.up == true) {
+            setDeviceUp(message.device);
+        } else {
+            setDeviceDown(message.device);
+        }
     }
 }
