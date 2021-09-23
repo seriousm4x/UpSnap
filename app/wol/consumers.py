@@ -11,6 +11,8 @@ from .models import Device, Websocket
 
 class WSConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        await self.channel_layer.group_add("wol", self.channel_name)
+        await self.accept()
         await self.add_visitor()
         await self.channel_layer.group_send(
             "wol", {
@@ -20,8 +22,6 @@ class WSConsumer(AsyncWebsocketConsumer):
                 }
             }
         )
-        await self.channel_layer.group_add("wol", self.channel_name)
-        await self.accept()
 
     async def disconnect(self, code):
         await self.channel_layer.group_discard("wol", self.channel_name)
