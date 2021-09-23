@@ -42,6 +42,7 @@ class BulmaNotification {
     // Make the notification visible on the screen
     show(title, message, context, duration) {
         clearTimeout(this.hideTimeout);
+        this.containerNode.className = "notification note";
         this.containerNode.classList.add("note-visible");
 
         // Setting a title to the notification
@@ -218,4 +219,7 @@ socket.onmessage = function (event) {
             setDeviceDown(message.device);
         }
     }
+}
+socket.onclose = function (event) {
+    notif.show("Connection closed", "Websocket connection has closed", "is-danger is-light", 5000);
 }
