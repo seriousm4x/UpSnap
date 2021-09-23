@@ -103,7 +103,7 @@ function setDeviceUp(device) {
     
     // check if device was down before
     if (statusDot.classList.contains("dot-down")) {
-        notif.show("Device now up!", device.name + " is now up.", "is-success is-light", 5000);
+        notif.show("Device now up!", device.name + " is now up.", "is-success", 5000);
     }
 
     // clear current animation
@@ -152,7 +152,7 @@ function setDeviceDown(device) {
 
     // check if device was up before
     if (statusDot.classList.contains("dot-up")) {
-        notif.show("Device now down!", device.name + " is now down.", "is-error is-light", 5000);
+        notif.show("Device now down!", device.name + " is now down.", "is-danger", 5000);
     }
     
     // clear current animation
@@ -201,14 +201,14 @@ socket.onmessage = function (event) {
             document.getElementById("visitors").innerHTML = message.visitors + ' visitor';
         } else {
             document.getElementById("visitors").innerHTML = message.visitors + ' visitors';
-            notif.show("Visitors updated", "There are currently " + message.visitors + " visitors", "is-info is-light", 5000);
+            notif.show("Visitors updated", "There are currently " + message.visitors + " visitors", "is-info", 50000);
         }
     }
 
     // set wake button
     if ("wake" in message) {
         document.getElementById(message.wake.pk + "-btn-wake").classList.add("is-loading");
-        notif.show("Wake started", message.wake.fields.name + " has been started.", "is-info is-light", 5000);
+        notif.show("Wake started", message.wake.fields.name + " has been started.", "is-info", 5000);
     }
 
     // set devices up or down
@@ -221,5 +221,5 @@ socket.onmessage = function (event) {
     }
 }
 socket.onclose = function (event) {
-    notif.show("Connection closed", "Websocket connection has closed", "is-danger is-light", 5000);
+    notif.show("Connection closed", "Websocket connection has closed", "is-danger", 5000);
 }

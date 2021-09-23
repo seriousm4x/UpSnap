@@ -70,10 +70,6 @@
         background-color: #dbdbdb;
         color: #363636;
     }    
-
-    .notification {
-        box-shadow: 0 0 10px 0 rgba(200, 200, 200, 0.7);
-    }
 }
 
 @keyframes green-pulse {
