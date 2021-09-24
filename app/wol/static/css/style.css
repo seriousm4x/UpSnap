@@ -62,8 +62,13 @@
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
 
-.modal-card, .modal-content {
+.modal-card,
+.modal-content {
     margin: 0 auto;
+}
+
+.modal-card-title {
+    flex-shrink: unset;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -78,6 +83,10 @@
 
     .modal-card-body {
         background-color: black;
+    }
+
+    .modal-background {
+        background-color: rgba(0, 0, 0, 0.86);
     }
 }
 
