@@ -13,3 +13,11 @@ def index(request):
     }
 
     return render(request, "wol/index.html", context)
+
+def settings(request):
+    
+    context = {
+        "test": "ja lol ey"
+    }
+
+    return render(request, "wol/settings.html", context)

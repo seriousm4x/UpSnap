@@ -1,0 +1,130 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wake on LAN</title>
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma-prefers-dark.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma-notifications.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slider.css' %}">
+</head>
+
+<body class="px-4">
+    <section class="section">
+        <div class="container">
+            <div class="columns is-vcentered">
+                <div class="column is-one-third">
+                    <h1 class="title">
+                        Wake on LAN
+                    </h1>
+                    <p class="subtitle">
+                        Settings
+                    </p>
+                </div>
+                <div class="column is-one-third">
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <a class="button is-light" href="/">
+                                <span>Devices</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-desktop"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="control">
+                            <a class="button is-light" href="/admin">
+                                <span>Admin</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-user-cog"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="control">
+                            <a class="button is-static is-light">
+                                <span id="visitors">{{ visitors }} visitors</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-users"></i>
+                                </span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="box">
+            <section class="section settings">
+                <h2 class="is-size-3 mb-4">General</h2>
+                <div class="columns">
+                    <div class="column is-one-fifth">
+                        <label for="ping-interval">Ping interval:</label>
+                    </div>
+                    <div class="column">
+                        <input id="ping-interval" class="input is-inline is-primary w-25" type="text" placeholder="5">
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-one-fifth">
+                        <span class="mr-2">Enable notifications:</span>
+                    </div>
+                    <div class="column">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-one-fifth">
+                        <span class="mr-2">Debug mode:</span>
+                    </div>
+                    <div class="column">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="box">
+            <section class="section settings">
+                <h2 class="is-size-3 mb-4">Database</h2>
+                <div class="columns">
+                    <div class="column is-one-fifth">
+                        <label for="ping-interval">Ping interval:</label>
+                    </div>
+                    <div class="column">
+                        <input id="ping-interval" class="input is-inline is-primary w-25" type="text" placeholder="5">
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-one-fifth">
+                        <span class="mr-2">Enable notifications:</span>
+                    </div>
+                    <div class="column">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+
+<footer>
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
+</footer>
+
+</html>

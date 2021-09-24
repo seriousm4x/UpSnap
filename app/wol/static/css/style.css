@@ -71,6 +71,10 @@
     flex-shrink: unset;
 }
 
+.section.settings {
+    padding: 0;
+}
+
 @media (prefers-color-scheme: dark) {
     .box {
         background-color: var(--box-bg);
