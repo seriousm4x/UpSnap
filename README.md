@@ -6,6 +6,17 @@ A simple wake on lan app written with Django, Django-Channels (websockets), Cele
 | -------------------- | --------------------- |
 | ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/light.png) |
 
+## Features
+
+* Simple dashboard for waking up devices on local network
+* Visual indicators for device up/down and open ports. Pulse effect to visualize incoming websocket messages.
+* Schedule wake events
+* Notifications on status changes
+* Visitor counter
+* Dark/light mode via preferes-color-scheme
+* Multithread support for pings
+* [Docker images](https://hub.docker.com/r/seriousm4x/django-wol) for amd64, arm64, arm/v7
+
 ## Run your own instance
 
 You can use the example [docker-compose.yml](docker-compose.yml) file and just run `docker-compose up -d`.
@@ -21,6 +32,9 @@ You can use the example [docker-compose.yml](docker-compose.yml) file and just r
 | DJANGO_LANGUAGE_CODE | Str | Language code in RFC 3066 (e.g. "en-us" or "de) |
 | DJANGO_TIME_ZONE | Str | YEP CLOCK |
 | DJANGO_PORT | Int | Web port |
+| POSTGRES_USER | Str | Database user |
+| POSTGRES_PASSWORD | Str | Database password |
+| POSTGRES_DB | Str | Database name |
 
 ## Manage devices
 
