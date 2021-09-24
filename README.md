@@ -12,7 +12,7 @@ A simple wake on lan app written with Django, Django-Channels (websockets), Cele
 * Visual indicators for device up/down and open ports. Pulse effect to visualize incoming websocket messages.
 * Schedule wake events
 * Notifications on status changes
-* Visitor counter
+* Restful pings. Devices only get pinged when there are 1 or more visitors
 * Dark/light mode via preferes-color-scheme
 * Multithread support for pings
 * [Docker images](https://hub.docker.com/r/seriousm4x/django-wol) for amd64, arm64, arm/v7
