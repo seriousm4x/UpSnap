@@ -21,6 +21,7 @@ A simple wake on lan app written with Django, Django-Channels (websockets), Cele
 * Restful pings. Devices only get pinged when there are 1 or more visitors
 * Dark/light mode via preferes-color-scheme
 * Multithread support for pings
+* Settings page with system infos
 * [Docker images](https://hub.docker.com/r/seriousm4x/django-wol) for amd64, arm64, arm/v7
 
 ## Run your own instance
