@@ -2,8 +2,7 @@ version: "3"
 services:
   wol_django:
     container_name: wol_django
-    #image: seriousm4x/django-wol:latest
-    build: .
+    image: seriousm4x/django-wol:latest
     network_mode: host
     depends_on:
       - wol_redis
