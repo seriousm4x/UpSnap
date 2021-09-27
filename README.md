@@ -49,7 +49,7 @@ You can use the example [docker-compose.yml](docker-compose.yml) file and just r
 
 ## Manage devices
 
-Click on the `Admin` button and login with your django backend user (see [#available-env-vars](#available-env-vars)). Once logged in you can manage your devices there.
+Adding devices is (for now) only possible via the [/admin](/admin) backend. A frontend solution will be implemented in the future.
 
 ## Other infos
 
