@@ -49,7 +49,7 @@ You can use the example [docker-compose.yml](docker-compose.yml) file and just r
 
 ## Manage devices
 
-Adding devices is (for now) only possible via the [/admin](/admin) backend. A frontend solution will be implemented in the future.
+Adding devices is (for now) only possible via the /admin backend. A frontend solution will be implemented in the future.
 
 ## Other infos
 
