@@ -16,115 +16,203 @@
     <link rel="stylesheet" href="{% static 'css/slider.css' %}">
 </head>
 
-<body class="px-4">
-    <section class="section">
-        <div class="container">
-            <div class="columns is-vcentered">
-                <div class="column is-one-third">
-                    <h1 class="title">
-                        Wake on LAN
-                    </h1>
-                    <p class="subtitle">
-                        Settings
-                    </p>
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img class="ml-2" src="{% static 'img/favicon.png' %}" width="28" height="28">
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                    Devices
+                </a>
+                <a class="navbar-item" href="/settings/">
+                    Settings
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="section">
+            <h1 class="title is-size-2">
+                Settings
+            </h1>
+            <p class="subtitle">
+                Wake on LAN
+            </p>
+        </section>
+        <section class="section pt-4 pb-3">
+            <article class="message is-info">
+                <div class="message-header">
+                    <p>Adding devices</p>
                 </div>
-                <div class="column is-one-third">
-                    <div class="field is-grouped">
-                        <p class="control">
-                            <a class="button is-light" href="/">
-                                <span>Devices</span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-desktop"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                            <a class="button is-light" href="/admin">
-                                <span>Admin</span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-user-cog"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                            <a class="button is-static is-light">
-                                <span id="visitors">{{ visitors }} visitors</span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-users"></i>
-                                </span>
-                            </a>
-                        </p>
+                <div class="message-body">
+                    Adding devices is (for now) only possible via the <a href="/admin">/admin</a> backend. A frontend solution will be implemented in the future.
+                </div>
+            </article>
+        </section>
+        <section class="section py-3">
+            <form action="/save_settings/" method="post">
+                {% csrf_token %}
+                <div class="box">
+                    <h2 class="title is-size-3 mb-4">General</h2>
+                    <div class="columns is-mobile">
+                        <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                            <span class="mr-2"><strong>Notifications:</strong></span>
+                        </div>
+                        <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                            <div class="control">
+                                <label class="radio">
+                                    <input id="noti-on" type="radio" name="notifications" value="on" {% if settings.enable_notifications %}checked{% endif %}>
+                                    Enabled
+                                </label>
+                                <label class="radio">
+                                    <input id="noti-off" type="radio" name="notifications" value="off" {% if not settings.enable_notifications %}checked{% endif %}>
+                                    Disabled
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns is-mobile">
+                        <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                            <span class="mr-2"><strong>Console logging:</strong></span>
+                        </div>
+                        <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                            <div class="control">
+                                <label class="radio">
+                                    <input id="console-on" type="radio" name="console" value="on" {% if settings.enable_console_logging %}checked{% endif %}>
+                                    Enabled
+                                </label>
+                                <label class="radio">
+                                    <input id="console-off" type="radio" name="console" value="off" {% if not settings.enable_console_logging %}checked{% endif %}>
+                                    Disabled
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns is-mobile">
+                        <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                            <span class="mr-2"><strong>Sort devices by:</strong></span>
+                        </div>
+                        <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                            <div class="control">
+                                <label class="radio">
+                                    <input id="sort-name" type="radio" name="sort" value="name" {% if settings.sort_by == "name" %}checked{% endif %}>
+                                    Name
+                                </label>
+                                <label class="radio">
+                                    <input id="sort-ip" type="radio" name="sort" value="ip" {% if settings.sort_by == "ip" %}checked{% endif %}>
+                                    IP
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="button is-primary" type="submit" value="Submit">Save</button>
+                </div>
+            </form>
+        </section>
+        <section class="section py-3">
+            <div class="box">
+                <h2 class="title is-size-3 mb-4">App info</h2>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>App version:</strong></span>
+                    </div>
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ app_version }}</p>
+                    </div>
+                </div>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>Ping interval:</strong></span>
+                    </div>
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ ping_interval }} seconds</p>
+                    </div>
+                </div>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>Devices in database:</strong></span>
+                    </div>
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ devices_count }}</p>
+                    </div>
+                </div>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>Current visitors:</strong></span>
+                    </div>
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ visitors }}</p>
+                    </div>
+                </div>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>Debug mode:</strong></span>
+                    </div>
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ debug }}</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <div class="container">
-        <div class="box">
-            <section class="section settings">
-                <h2 class="is-size-3 mb-4">General</h2>
-                <div class="columns">
-                    <div class="column is-one-fifth">
-                        <label for="ping-interval">Ping interval:</label>
+        </section>
+        <section class="section py-3">
+            <div class="box">
+                <h2 class="title is-size-3 mb-4">System info</h2>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>System:</strong></span>
                     </div>
-                    <div class="column">
-                        <input id="ping-interval" class="input is-inline is-primary w-25" type="text" placeholder="5">
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ platform.system }}</p>
                     </div>
                 </div>
-                <div class="columns">
-                    <div class="column is-one-fifth">
-                        <span class="mr-2">Enable notifications:</span>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>Node:</strong></span>
                     </div>
-                    <div class="column">
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ platform.node }}</p>
                     </div>
                 </div>
-                <div class="columns">
-                    <div class="column is-one-fifth">
-                        <span class="mr-2">Debug mode:</span>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>Release:</strong></span>
                     </div>
-                    <div class="column">
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ platform.release }}</p>
                     </div>
                 </div>
-            </section>
-        </div>
-        <div class="box">
-            <section class="section settings">
-                <h2 class="is-size-3 mb-4">Database</h2>
-                <div class="columns">
-                    <div class="column is-one-fifth">
-                        <label for="ping-interval">Ping interval:</label>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>Version:</strong></span>
                     </div>
-                    <div class="column">
-                        <input id="ping-interval" class="input is-inline is-primary w-25" type="text" placeholder="5">
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ platform.version }}</p>
                     </div>
                 </div>
-                <div class="columns">
-                    <div class="column is-one-fifth">
-                        <span class="mr-2">Enable notifications:</span>
+                <div class="columns is-mobile">
+                    <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                        <span class="mr-2"><strong>Machine:</strong></span>
                     </div>
-                    <div class="column">
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
+                    <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen">
+                        <p>{{ platform.machine }}</p>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
 </body>
 
 <footer>
-    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
-    <script src="{% static 'js/modal.js' %}"></script>
+    <script src="{% static 'js/bulma.js' %}"></script>
 </footer>
 
 </html>

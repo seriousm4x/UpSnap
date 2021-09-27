@@ -12,7 +12,11 @@ fi
 # set visitors to 0
     python -u manage.py shell -c "from wol.models import Websocket; [i.delete() for i in Websocket.objects.all()]; Websocket.objects.create(visitors=0)"
 
+# set notifications
+if [ -n "$ENABLE_NOTIFICATIONS" ]; then
+    python -u manage.py shell -c "from wol.models import Settings; Settings.objects.update_or_create(id=1, defaults={'enable_notifications': '$ENABLE_NOTIFICATIONS'})"
+fi
+
 celery -A django_wol worker &
 celery -A django_wol beat &
 gunicorn --bind 0.0.0.0:"$DJANGO_PORT" --workers 4 django_wol.asgi:application -k uvicorn.workers.UvicornWorker
-

@@ -2,7 +2,8 @@ version: "3"
 services:
   wol_django:
     container_name: wol_django
-    image: seriousm4x/django-wol:latest
+    #image: seriousm4x/django-wol:latest
+    build: .
     network_mode: host
     depends_on:
       - wol_redis
@@ -16,6 +17,8 @@ services:
       - DJANGO_LANGUAGE_CODE=de
       - DJANGO_TIME_ZONE=Europe/Berlin
       - DJANGO_PORT=8000
+      - PING_INTERVAL=5
+      - ENABLE_NOTIFICATIONS=True
   wol_redis:
     container_name: wol_redis
     image: redis:6

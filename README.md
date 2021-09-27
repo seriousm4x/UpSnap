@@ -1,6 +1,12 @@
 # Django Wake on LAN
 
+<div align="center" width="100%">
+    <img src="app/wol/static/img/favicon.png" width="128" />
+</div>
+
 A simple wake on lan app written with Django, Django-Channels (websockets), Celery and Redis.
+
+<a target="_blank" href="https://github.com/seriousm4x/django-wake-on-lan"><img src="https://img.shields.io/github/stars/seriousm4x/django-wake-on-lan" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/django-wol"><img src="https://img.shields.io/docker/pulls/seriousm4x/django-wol" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/django-wol"><img src="https://img.shields.io/docker/v/seriousm4x/django-wol/latest?label=docker%20image%20ver." /></a> <a target="_blank" href="https://github.com/seriousm4x/django-wake-on-lan"><img src="https://img.shields.io/github/last-commit/seriousm4x/django-wake-on-lan" /></a>
 
 | Dark                 | Light                 |
 | -------------------- | --------------------- |
@@ -35,6 +41,9 @@ You can use the example [docker-compose.yml](docker-compose.yml) file and just r
 | POSTGRES_USER | Str | Database user |
 | POSTGRES_PASSWORD | Str | Database password |
 | POSTGRES_DB | Str | Database name |
+| PING_INTERVAL | Int | Time between pings |
+| ENABLE_NOTIFICATIONS | Bool | Show notifications in the bottom right corner |
+
 
 ## Manage devices
 

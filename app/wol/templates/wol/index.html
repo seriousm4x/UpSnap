@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Wake on LAN</title>
+    <title>wake on lan</title>
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
     <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bulma-prefers-dark.min.css' %}">
@@ -15,150 +15,159 @@
     <link rel="stylesheet" href="{% static 'css/bulma-notifications.css' %}">
 </head>
 
-<body class="px-4">
-    <section class="section">
-        <div class="container">
-            <div class="columns is-vcentered">
-                <div class="column is-one-third">
-                    <h1 class="title">
-                        Wake on LAN
-                    </h1>
-                    <p class="subtitle">
-                        Wake your devices with a simple click!
-                    </p>
-                </div>
-                <div class="column is-one-third">
-                    <div class="field is-grouped">
-                        <p class="control">
-                            <a class="button is-light" href="/settings">
-                                <span>Settings</span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-cogs"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                            <a class="button is-light" href="/admin">
-                                <span>Admin</span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-user-cog"></i>
-                                </span>
-                            </a>
-                        </p>
-                        <p class="control">
-                            <a class="button is-static is-light">
-                                <span id="visitors">{{ visitors }} visitors</span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-users"></i>
-                                </span>
-                            </a>
-                        </p>
-                    </div>
-                </div>
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img class="ml-2" src="{% static 'img/favicon.png' %}" width="28" height="28">
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                    Devices
+                </a>
+                <a class="navbar-item" href="/settings/">
+                    Settings
+                </a>
             </div>
         </div>
-    </section>
-    <div class="columns is-fullhd is-multiline">
-        {% for dev in devices %}
-        <div class="column is-half-fullhd is-full-widescreen is-full-desktop is-full-tablet is-full-mobile">
-            <div class="box mb-3 box-waiting" id="{{ dev.id }}-container">
-                <div class="columns is-centered">
-                    <div class="column">
-                        <div class="container">
-                            <h1 class="title">
-                                {{ dev.name }}
-                            </h1>
-                            <p><strong>ip</strong>: {{ dev.ip }}</p>
-                            <p><strong>mac</strong>: {{ dev.mac }}</p>
-                            <p><strong>netmask</strong>: {{ dev.netmask }}</p>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="container">
-                            <h1 class="title">
-                                Status
-                            </h1>
-                            <p id="{{ dev.id }}-status">
-                                <i id="{{ dev.id }}-dot" class="fas fa-circle fa-2x dot-waiting"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="container">
-                            <h1 class="title">
-                                Ports
-                            </h1>
-                            <div id="{{ dev.id }}-ports">
-                                <ul>
-                                    <li><i class="fas fa-circle fa-fw dot-waiting"></i> VNC (5900)</li>
-                                    <li><i class="fas fa-circle fa-fw dot-waiting"></i> RDP (3389)</li>
-                                    <li><i class="fas fa-circle fa-fw dot-waiting"></i> SSH (22)</li>
-                                </ul>
+    </nav>
+    <div class="container">
+        <section class="section">
+            <h1 class="title is-size-2">
+                Devices <span id="visitors" class="tag is-primary is-light">{{ visitors }} visitors</span>
+            </h1>
+            <p class="subtitle">
+                Wake on LAN
+            </p>
+        </section>
+    </div>
+    <div class="p-4">
+        <div class="columns is-fullhd is-multiline">
+            {% for dev in devices %}
+            <div class="column is-half-fullhd is-full-widescreen is-full-desktop is-full-tablet is-full-mobile">
+                <div class="box mb-3 box-waiting" id="{{ dev.id }}-container">
+                    <div class="columns is-centered">
+                        <div class="column">
+                            <div class="container">
+                                <h1 class="title">
+                                    {{ dev.name }}
+                                </h1>
+                                <p><strong>ip</strong>: {{ dev.ip }}</p>
+                                <p><strong>mac</strong>: {{ dev.mac }}</p>
+                                <p><strong>netmask</strong>: {{ dev.netmask }}</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="column">
-                        <div class="container">
-                            <h1 class="title">
-                                Actions
-                            </h1>
-                            <div class="buttons">
-                                <button class="button is-success" id="{{ dev.id }}-btn-wake" name="wake"
-                                    aria-label="wake" onclick="wakeDevice({{ dev.id }})" disabled>
-                                    <span>Wake</span>
-                                    <span class="icon is-small">
-                                        <i class="fas fa-play"></i>
-                                    </span>
-                                </button>
-                                <button id="{{ dev.id }}-btn-schedule" class="button is-light modal-button" data-target="{{ dev.id }}-modal" aria-haspopup="true" disabled>
-                                    <span class="icon">
-                                        <i class="fas fa-clock"></i>
-                                    </span>
-                                </button>
-                            </div>
-                            <div id="{{ dev.id }}-schedule-notice">
-                                {% if dev.scheduled_wake %}
-                                <p>
-                                    Scheduled wake set:<br>{{ dev.scheduled_wake|date:"c" }}
+                        <div class="column">
+                            <div class="container">
+                                <h1 class="title">
+                                    Status
+                                </h1>
+                                <p id="{{ dev.id }}-status">
+                                    <i id="{{ dev.id }}-dot" class="fas fa-circle fa-2x dot-waiting"></i>
                                 </p>
-                                {% endif %}
                             </div>
-                            <p></p>
+                        </div>
+                        <div class="column">
+                            <div class="container">
+                                <h1 class="title">
+                                    Ports
+                                </h1>
+                                <div id="{{ dev.id }}-ports">
+                                    <ul>
+                                        <li><i class="fas fa-circle fa-fw dot-waiting"></i> VNC (5900)</li>
+                                        <li><i class="fas fa-circle fa-fw dot-waiting"></i> RDP (3389)</li>
+                                        <li><i class="fas fa-circle fa-fw dot-waiting"></i> SSH (22)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="container">
+                                <h1 class="title">
+                                    Actions
+                                </h1>
+                                <div class="buttons">
+                                    <button class="button is-success" id="{{ dev.id }}-btn-wake" name="wake"
+                                        aria-label="wake" onclick="wakeDevice({{ dev.id }})" disabled>
+                                        <span>Wake</span>
+                                        <span class="icon is-small">
+                                            <i class="fas fa-play"></i>
+                                        </span>
+                                    </button>
+                                    <button id="{{ dev.id }}-btn-schedule" class="button is-light modal-button" data-target="{{ dev.id }}-modal" aria-haspopup="true" disabled>
+                                        <span class="icon">
+                                            <i class="fas fa-clock"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div id="{{ dev.id }}-schedule-notice">
+                                    {% if dev.scheduled_wake %}
+                                    <p>
+                                        Scheduled wake:<br>{{ dev.scheduled_wake|date:"c" }}
+                                    </p>
+                                    {% endif %}
+                                </div>
+                                <p></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="{{ dev.id }}-modal" class="modal">
-            <div class="modal-background"></div>
-            <div class="modal-content">
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Schedule wake up for {{ dev.name }}</p>
-                        <button class="delete" aria-label="close"></button>
-                    </header>
-                    <section class="modal-card-body">
-                        <label for="{{ dev.id }}-input">Choose date and time:</label>
-                        <input type="datetime-local" id="{{ dev.id }}-input" class="input">
-                    </section>
-                    <footer class="modal-card-foot">
-                        <button class="button is-success" id="{{ dev.id }}-btn-schedule-save"
-                        onclick="addSchedule({{ dev.id }}, '{{ dev.name }}', document.getElementById('{{ dev.id }}-input').value)">Save changes</button>
-                        <button class="button is-light-dark">Cancel</button>
-                        <button class="button is-danger is-pulled-right" onclick="deleteSchedule({{ dev.id }}, '{{ dev.name }}')">Delete</button>
-                    </footer>
+            <div id="{{ dev.id }}-modal" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Schedule wake up for {{ dev.name }}</p>
+                            <button class="delete" aria-label="close"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            <label for="{{ dev.id }}-input">Choose date and time:</label>
+                            <input type="datetime-local" id="{{ dev.id }}-input" class="input">
+                        </section>
+                        <footer class="modal-card-foot">
+                            <button class="button is-success" id="{{ dev.id }}-btn-schedule-save"
+                            onclick="addSchedule({{ dev.id }}, '{{ dev.name }}', document.getElementById('{{ dev.id }}-input').value)">Save changes</button>
+                            <button class="button is-light-dark">Cancel</button>
+                            <button class="button is-danger is-pulled-right" onclick="deleteSchedule({{ dev.id }}, '{{ dev.name }}')">Delete</button>
+                        </footer>
+                    </div>
                 </div>
+                <button class="modal-close is-large" aria-label="close"></button>
             </div>
-            <button class="modal-close is-large" aria-label="close"></button>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </body>
 
 <footer>
-    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    {% if settings.enable_notifications %}
+    <script>
+        const enableNotifications = true
+    </script>
+    {% else %}
+    <script>
+        const enableNotifications = false
+    </script>
+    {% endif %}
+    {% if settings.enable_console_logging %}
+    <script>
+        const enableConsoleLogging = true
+    </script>
+    {% else %}
+    <script>
+        const enableConsoleLogging = false
+    </script>
+    {% endif %}
+    <script src="{% static 'js/bulma.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/modal.js' %}"></script>
 </footer>
 
 </html>

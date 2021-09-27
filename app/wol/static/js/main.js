@@ -122,7 +122,7 @@ function setDeviceUp(device) {
     var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");
 
     // check if device was down before
-    if (statusDot.classList.contains("dot-down")) {
+    if (statusDot.classList.contains("dot-down") && enableNotifications) {
         notif.show("Device now up!", device.name + " is now up.", "is-success", 5000);
     }
 
@@ -174,7 +174,7 @@ function setDeviceDown(device) {
     var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");
 
     // check if device was up before
-    if (statusDot.classList.contains("dot-up")) {
+    if (statusDot.classList.contains("dot-up") && enableNotifications ) {
         notif.show("Device now down!", device.name + " is now down.", "is-danger", 5000);
     }
 
@@ -215,7 +215,6 @@ function addSchedule(id, name, datetime) {
     if (!(datetime)) {
         return;
     }
-    console.log(datetime);
     socket.send(JSON.stringify({
         "message": "add_schedule",
         "id": id,
@@ -239,7 +238,9 @@ function deleteSchedule(id, name) {
 var socket = new WebSocket("ws://" + location.host + "/wol/");
 socket.onmessage = function (event) {
     var message = JSON.parse(event.data);
-    console.log(message);
+    if (enableConsoleLogging) {
+        console.log(message);
+    }
 
     // set devices up or down
     if ("device" in message) {
@@ -256,35 +257,47 @@ socket.onmessage = function (event) {
             document.getElementById("visitors").innerHTML = message.visitors + ' visitor';
         } else {
             document.getElementById("visitors").innerHTML = message.visitors + ' visitors';
-            notif.show("Visitors updated", "There are currently " + message.visitors + " visitors", "is-info", 5000);
+            if (enableNotifications) {
+                notif.show("Visitors updated", "There are currently " + message.visitors + " visitors", "is-info", 5000);
+            }
         }
     }
 
     // set wake by client
     if ("wake" in message) {
         document.getElementById(message.wake.id + "-btn-wake").classList.add("is-loading");
-        notif.show("Wake started", message.wake.name + " has been started.", "is-info", 5000);
+        if (enableNotifications) {
+            notif.show("Wake started", message.wake.name + " has been started.", "is-info", 5000);
+        }
     }
 
     // set wake by schedule
     if ("wake_schedule" in message) {
         document.getElementById(message.wake_schedule.id + "-btn-wake").classList.add("is-loading");
         document.getElementById(message.wake_schedule.id + "-schedule-notice").innerHTML = "";
-        notif.show("Scheduled wake started", message.wake_schedule.name + " has been started.", "is-info", 5000);
+        if (enableNotifications) {
+            notif.show("Scheduled wake started", message.wake_schedule.name + " has been started.", "is-info", 5000);
+        }
     }
 
     // add schedule
     if ("add_schedule" in message) {
         document.getElementById(message.add_schedule.id + "-schedule-notice").innerHTML = `<p>Scheduled wake set:<br>${message.add_schedule.datetime}</p>`;
-        notif.show("Schedule added", "A wake up event has been scheduled for " + message.add_schedule.name, "is-info", 5000);
+        if (enableNotifications) {
+            notif.show("Schedule added", "A wake up event has been scheduled for " + message.add_schedule.name, "is-info", 5000);
+        }
     }
 
     // delete schedule
     if ("delete_schedule" in message) {
         document.getElementById(message.delete_schedule.id + "-schedule-notice").innerHTML = "";
-        notif.show("Schedule deleted", "A wake up event has been deleted for " + message.delete_schedule.name, "is-info", 5000);
+        if (enableNotifications) {
+            notif.show("Schedule deleted", "A wake up event has been deleted for " + message.delete_schedule.name, "is-info", 5000);
+        }
     }
 }
 socket.onclose = function (event) {
-    notif.show("Connection closed", "Websocket connection has closed", "is-danger", 5000);
+    if (enableNotifications) {
+        notif.show("Connection closed", "Websocket connection has closed", "is-danger", 5000);
+    }
 }

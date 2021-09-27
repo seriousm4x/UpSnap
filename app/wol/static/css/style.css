@@ -71,13 +71,14 @@
     flex-shrink: unset;
 }
 
-.section.settings {
-    padding: 0;
+.checkbox, .radio {
+    display: table-header-group;
 }
 
 @media (prefers-color-scheme: dark) {
     .box {
         background-color: var(--box-bg);
+        box-shadow: none;
     }
 
     .button.is-static {
@@ -91,6 +92,10 @@
 
     .modal-background {
         background-color: rgba(0, 0, 0, 0.86);
+    }
+
+    .navbar-menu.is-active {
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2)
     }
 }
 
