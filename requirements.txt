@@ -7,3 +7,5 @@ psycopg2-binary
 whitenoise
 gunicorn
 uvicorn[standard]
+python-nmap
+arpreq

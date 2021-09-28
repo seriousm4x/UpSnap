@@ -75,6 +75,11 @@
     display: table-header-group;
 }
 
+.no-flex {
+    display: inherit;
+    flex-direction: unset;
+}
+
 @media (prefers-color-scheme: dark) {
     .box {
         background-color: var(--box-bg);
@@ -100,6 +105,18 @@
     
     input[type="datetime-local"]::-webkit-calendar-picker-indicator {
         filter: invert(1);
+    }
+
+    .table {
+        background-color: var(--box-bg);
+    }
+
+    .table td, .table th {
+        border-width: 0 0 1px;
+    }
+
+    .input::placeholder, .textarea::placeholder {
+        color: rgba(219,219,219,.6);
     }
 }
 

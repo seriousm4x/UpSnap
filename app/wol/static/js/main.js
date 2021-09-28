@@ -114,7 +114,7 @@ window.onload = () => {
 //
 
 function setDeviceUp(device) {
-    // get elements
+    // get elements. if devices have been added via settings page, some elements might not exist until the user reloads the page.
     var deviceBox = document.getElementById(device.id + "-container");
     var statusDot = document.getElementById(device.id + "-dot");
     var statusPorts = document.getElementById(device.id + "-ports");
@@ -166,12 +166,12 @@ function setDeviceUp(device) {
 }
 
 function setDeviceDown(device) {
-    // get elements
+    // get elements. if devices have been added via settings page, some elements might not exist until the user reloads the page.
     var deviceBox = document.getElementById(device.id + "-container");
     var statusDot = document.getElementById(device.id + "-dot");
     var statusPorts = document.getElementById(device.id + "-ports");
     var wakeButton = document.getElementById(device.id + "-btn-wake");
-    var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");
+    var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");    
 
     // check if device was up before
     if (statusDot.classList.contains("dot-up") && enableNotifications ) {
@@ -295,6 +295,12 @@ socket.onmessage = function (event) {
             notif.show("Schedule deleted", "A wake up event has been deleted for " + message.delete_schedule.name, "is-info", 5000);
         }
     }
+
+    // reload page if device added via settings page
+    if ("reload" in message) {
+        window.location.reload(true);
+    }
+    
 }
 socket.onclose = function (event) {
     if (enableNotifications) {

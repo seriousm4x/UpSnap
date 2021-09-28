@@ -11,7 +11,8 @@ class DeviceAdmin(admin.ModelAdmin):
 
 class SettingsAdmin(admin.ModelAdmin):
     list_display = ["enable_notifications",
-                    "enable_console_logging", "sort_by"]
+                    "enable_console_logging", "sort_by",
+                    "scan_address"]
 
     class Meta:
         verbose_name_plural = "Settings"

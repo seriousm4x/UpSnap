@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/bulma-notifications.css' %}">
-    <link rel="stylesheet" href="{% static 'css/slider.css' %}">
 </head>
 
 <body>
@@ -49,19 +48,9 @@
             </p>
         </section>
         <section class="section pt-4 pb-3">
-            <article class="message is-info">
-                <div class="message-header">
-                    <p>Adding devices</p>
-                </div>
-                <div class="message-body">
-                    Adding devices is (for now) only possible via the <a href="/admin">/admin</a> backend. A frontend solution will be implemented in the future.
-                </div>
-            </article>
-        </section>
-        <section class="section py-3">
-            <form action="/save_settings/" method="post">
+            <form action="/save-settings/" method="post">
                 {% csrf_token %}
-                <div class="box">
+                <div class="box no-flex">
                     <h2 class="title is-size-3 mb-4">General</h2>
                     <div class="columns is-mobile">
                         <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
@@ -114,9 +103,34 @@
                             </div>
                         </div>
                     </div>
+                    <div class="columns is-mobile">
+                        <div class="column is-half-mobile is-one-thirds-tablet is-one-quarter-desktop is-one-fifth-widescreen">
+                            <label class="mr-2" for="ip-range"><strong>Network address for discovering devices:</strong></label>
+                        </div>
+                        <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen is-narrow">
+                            <input id="ip-range" class="input" type="text" placeholder="192.168.1.0/24" name="ip_range" value="{{ settings.scan_address }}">
+                        </div>
+                    </div>
                     <button class="button is-primary" type="submit" value="Submit">Save</button>
                 </div>
             </form>
+        </section>
+        <section class="section py-3">
+            <div class="box no-flex">
+                <h2 class="title is-size-3 mb-4">Add devices</h2>
+                <button id="scan-button" class="button is-primary">Scan network</button>
+                <div id="scan-table-container" class="table-container py-3 is-hidden">
+                    <table id="scan-table" class="table is-fullwidth">
+                        <thead>
+                            <th>Name</th>
+                            <th>IP</th>
+                            <th>MAC</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </section>
         <section class="section py-3">
             <div class="box">
@@ -213,6 +227,7 @@
 
 <footer>
     <script src="{% static 'js/bulma.js' %}"></script>
+    <script src="{% static 'js/scan.js' %}"></script>
 </footer>
 
 </html>
