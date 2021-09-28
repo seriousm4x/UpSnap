@@ -97,6 +97,10 @@
     .navbar-menu.is-active {
         box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2)
     }
+    
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
 }
 
 @keyframes green-pulse {
