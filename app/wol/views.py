@@ -1,9 +1,8 @@
 import json
 import os
 import platform
+import subprocess
 
-import arpreq
-import nmap
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.http import HttpResponseRedirect
@@ -66,21 +65,39 @@ def save_settings(request):
 
 
 def scan(request):
-    conf = Settings.objects.filter(id=1).get()
-    nm = nmap.PortScanner()
-    nm.scan(hosts=conf.scan_address, arguments='-sP')
-    up_hosts = nm.all_hosts()
-
     data = {
         "devices": []
     }
-    for address in up_hosts:
-        mac = arpreq.arpreq(address)
-        if mac:
+
+    conf = Settings.objects.filter(id=1).get()
+
+    if not conf.scan_address:
+        return JsonResponse(data=data)
+
+    p = subprocess.Popen(["nmap", "-sP", conf.scan_address], stdout=subprocess.PIPE)
+    out = p.communicate()[0].decode("utf-8")
+    ip_line = "Nmap scan report for"
+    mac_line = "MAC Address:"
+
+    for line in out.splitlines():
+        if line.startswith(ip_line):
+            line_splitted = line.split()
+            if len(line_splitted) == 6:
+                name = line_splitted[4]
+                ip = line_splitted[5]
+                ip = ip.replace("(", "")
+                ip = ip.replace(")", "")
+            else:
+                name = None
+                ip = line_splitted[4]    
+        elif line.startswith(mac_line):
+            line_splitted = line.split()
+            mac = line_splitted[2]
+        
             data["devices"].append({
-                "name": nm[address].hostname(),
-                "ip": address,
-                "mac": arpreq.arpreq(address)
+                "name": name,
+                "ip": ip,
+                "mac": mac
             })
 
     return JsonResponse(data=data)

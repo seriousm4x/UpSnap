@@ -4,6 +4,7 @@ async function scan() {
     const table = document.getElementById("scan-table").getElementsByTagName('tbody')[0];
     table.innerHTML = "";
     const tableContainer = document.getElementById("scan-table-container");
+    tableContainer.classList.add("is-hidden");
     document.getElementById("scan-button").classList.add("is-loading");
 
     const response = await fetch("/scan");

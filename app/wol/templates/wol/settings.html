@@ -108,7 +108,7 @@
                             <label class="mr-2" for="ip-range"><strong>Network address for discovering devices:</strong></label>
                         </div>
                         <div class="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen is-narrow">
-                            <input id="ip-range" class="input" type="text" placeholder="192.168.1.0/24" name="ip_range" value="{{ settings.scan_address }}">
+                            <input id="ip-range" class="input" type="text" placeholder="192.168.1.0/24" name="ip_range" value="{% if settings.scan_address %}{{ settings.scan_address }}{% endif %}" pattern="^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){2}(?:\.(?:0))(?:/[0-2]\d|/3[0-2])$">
                         </div>
                     </div>
                     <button class="button is-primary" type="submit" value="Submit">Save</button>
@@ -118,7 +118,16 @@
         <section class="section py-3">
             <div class="box no-flex">
                 <h2 class="title is-size-3 mb-4">Add devices</h2>
+                {% if settings.scan_address %}
                 <button id="scan-button" class="button is-primary">Scan network</button>
+                {% else %}
+                <article class="message is-danger">
+                    <div class="message-body">
+                        Please enter the network address above and save to use this feature. Network address should look like "192.168.1.0/24".
+                    </div>
+                </article>
+                <button id="scan-button" class="button is-primary" disabled>Scan network</button>
+                {% endif %}
                 <div id="scan-table-container" class="table-container py-3 is-hidden">
                     <table id="scan-table" class="table is-fullwidth">
                         <thead>
