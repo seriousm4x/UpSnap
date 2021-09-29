@@ -88,7 +88,7 @@ def scan(request):
                 ip = ip.replace("(", "")
                 ip = ip.replace(")", "")
             else:
-                name = None
+                name = "Unknown"
                 ip = line_splitted[4]    
         elif line.startswith(mac_line):
             line_splitted = line.split()
