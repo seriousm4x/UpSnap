@@ -74,7 +74,7 @@ def settings_scan(request):
     if not conf.scan_address:
         return JsonResponse(data=data)
 
-    p = subprocess.Popen(["sudo", "nmap", "-sP", conf.scan_address], stdout=subprocess.PIPE)
+    p = subprocess.Popen(["nmap", "-sP", conf.scan_address], stdout=subprocess.PIPE)
     out = p.communicate()[0].decode("utf-8")
     ip_line = "Nmap scan report for"
     mac_line = "MAC Address:"
