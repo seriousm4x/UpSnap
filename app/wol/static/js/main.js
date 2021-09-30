@@ -199,7 +199,7 @@ function setDeviceDown(device) {
     var deviceBox = document.getElementById(device.id + "-container");
     var statusDot = document.getElementById(device.id + "-dot");
     var statusPorts = document.getElementById(device.id + "-ports");
-    var wakeButton = document.getElementById(device.id + "-btn-wake");
+    var wakeButton = document.querySelector(`[id="btn-wake"][data-id="${device.id}"]`)
     var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");    
 
     // check if device was up before
@@ -240,8 +240,9 @@ function wakeDevice(id) {
     }));
 }
 
-function addSchedule(id, name) {
+function addSchedule(id) {
     var datetime = document.getElementById(id + "-input").value
+    document.querySelector(`[id="btn-schedule-delete"][data-id="${id}"]`).disabled = false;
     if (!(datetime)) {
         return;
     }
@@ -253,6 +254,7 @@ function addSchedule(id, name) {
 }
 
 function deleteSchedule(id) {
+    document.querySelector(`[id="btn-schedule-delete"][data-id="${id}"]`).disabled = true;
     socket.send(JSON.stringify({
         "message": "delete_schedule",
         "id": id
@@ -310,7 +312,7 @@ socket.onmessage = function (event) {
 
     // add schedule
     if ("add_schedule" in message) {
-        document.getElementById(message.add_schedule.id + "-schedule-notice").innerHTML = `<p>Scheduled wake set:<br>${message.add_schedule.datetime}</p>`;
+        document.getElementById(message.add_schedule.id + "-schedule-notice").innerHTML = `<p>Scheduled wake:<br>${message.add_schedule.datetime}</p>`;
         if (enableNotifications) {
             notif.show("Schedule added", "A wake up event has been scheduled for " + message.add_schedule.name, "is-info", 5000);
         }
