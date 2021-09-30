@@ -85,9 +85,15 @@ class BulmaNotification {
     }
 }
 
+//
+// init stuff
+//
+
 let notif;
 window.onload = () => {
     notif = new BulmaNotification();
+
+    // set date for schedule inputs
     var now = new Date();
     var utcString = now.toISOString().substring(0, 19);
     var year = now.getFullYear();
@@ -102,10 +108,33 @@ window.onload = () => {
         (hour < 10 ? "0" + hour.toString() : hour) + ":" +
         (minute < 10 ? "0" + minute.toString() : minute) +
         utcString.substring(16, 19);
+    
+    // prepare html elements
     var datetimeFields = document.querySelectorAll('[id*=-input]');
     for (let index = 0; index < datetimeFields.length; index++) {
         const element = datetimeFields[index];
         element.value = localDatetime;
+    }
+    var wakeButtons = document.querySelectorAll(`[id="btn-wake"]`)
+    for (let index = 0; index < wakeButtons.length; index++) {
+        const element = wakeButtons[index];
+        element.addEventListener('click', () => {
+            wakeDevice(element.dataset.id);
+        });
+    }
+    var scheduleSaveButtons = document.querySelectorAll(`[id="btn-schedule-save"]`)
+    for (let index = 0; index < scheduleSaveButtons.length; index++) {
+        const element = scheduleSaveButtons[index];
+        element.addEventListener('click', () => {
+            addSchedule(element.dataset.id);
+        });
+    }
+    var scheduleDeleteButtons = document.querySelectorAll(`[id="btn-schedule-delete"]`)
+    for (let index = 0; index < scheduleDeleteButtons.length; index++) {
+        const element = scheduleDeleteButtons[index];
+        element.addEventListener('click', () => {
+            deleteSchedule(element.dataset.id);
+        });
     }
 };
 
@@ -118,7 +147,7 @@ function setDeviceUp(device) {
     var deviceBox = document.getElementById(device.id + "-container");
     var statusDot = document.getElementById(device.id + "-dot");
     var statusPorts = document.getElementById(device.id + "-ports");
-    var wakeButton = document.getElementById(device.id + "-btn-wake");
+    var wakeButton = document.querySelector(`[id="btn-wake"][data-id="${device.id}"]`)
     var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");
 
     // check if device was down before
@@ -211,23 +240,22 @@ function wakeDevice(id) {
     }));
 }
 
-function addSchedule(id, name, datetime) {
+function addSchedule(id, name) {
+    var datetime = document.getElementById(id + "-input").value
     if (!(datetime)) {
         return;
     }
     socket.send(JSON.stringify({
         "message": "add_schedule",
         "id": id,
-        "name": name,
         "datetime": datetime
     }));
 }
 
-function deleteSchedule(id, name) {
+function deleteSchedule(id) {
     socket.send(JSON.stringify({
         "message": "delete_schedule",
-        "id": id,
-        "name": name
+        "id": id
     }));
 }
 

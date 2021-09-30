@@ -1,13 +1,22 @@
-document.getElementById("scan-button").addEventListener("click", scan)
+//
+// init stuff
+//
 
-var deleteButtons = document.querySelectorAll('[id*=-delete-button]');
-for (let index = 0; index < deleteButtons.length; index++) {
-    const element = deleteButtons[index];
-    element.addEventListener('click', () => {
-        element.disabled = true;
-        element.innerText = "Deleted";
-    });
+window.onload = () => {
+    document.getElementById("scan-button").addEventListener("click", scan)
+    var deleteButtons = document.querySelectorAll('[id*=-delete-button]');
+    for (let index = 0; index < deleteButtons.length; index++) {
+        const element = deleteButtons[index];
+        element.addEventListener('click', () => {
+            element.disabled = true;
+            element.innerText = "Deleted";
+        });
+    }
 }
+
+//
+// scan for devices and create table
+//
 
 async function scan() {
     const table = document.getElementById("scan-table").getElementsByTagName('tbody')[0];

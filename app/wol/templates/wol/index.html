@@ -94,8 +94,8 @@
                                     Actions
                                 </h1>
                                 <div class="buttons">
-                                    <button class="button is-success" id="{{ dev.id }}-btn-wake" name="wake"
-                                        aria-label="wake" onclick="wakeDevice({{ dev.id }})" disabled>
+                                    <button class="button is-success" id="btn-wake" name="wake"
+                                        aria-label="wake" data-id="{{ dev.id }}" disabled>
                                         <span>Wake</span>
                                         <span class="icon is-small">
                                             <i class="fas fa-play"></i>
@@ -133,10 +133,9 @@
                             <input type="datetime-local" id="{{ dev.id }}-input" class="input">
                         </section>
                         <footer class="modal-card-foot">
-                            <button class="button is-success" id="{{ dev.id }}-btn-schedule-save"
-                            onclick="addSchedule({{ dev.id }}, '{{ dev.name }}', document.getElementById('{{ dev.id }}-input').value)">Save changes</button>
+                            <button class="button is-success" id="btn-schedule-save" data-id="{{ dev.id }}">Save changes</button>
                             <button class="button is-light-dark">Cancel</button>
-                            <button class="button is-danger is-pulled-right" onclick="deleteSchedule({{ dev.id }}, '{{ dev.name }}')">Delete</button>
+                            <button class="button is-danger is-pulled-right" id="btn-schedule-delete" data-id="{{ dev.id }}">Delete</button>
                         </footer>
                     </div>
                 </div>

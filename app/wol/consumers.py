@@ -38,7 +38,6 @@ class WSConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data=None, bytes_data=None):
         received = json.loads(text_data)
-
         if received["message"] == "wake":
             dev = await self.get_json_from_device_id(received["id"])
             wake(dev["fields"]["mac"], dev["fields"]
@@ -59,15 +58,15 @@ class WSConsumer(AsyncWebsocketConsumer):
             if not received["datetime"]:
                 return
             d = make_aware(parse_datetime(received["datetime"]))
-            print(d.isoformat())
             await self.add_schedule(received["id"], d)
+            dev = await self.get_json_from_device_id(received["id"])
             await self.channel_layer.group_send(
                 "wol", {
                     "type": "send_group",
                     "message": {
                         "add_schedule": {
                             "id": received["id"],
-                            "name": received["name"],
+                            "name": dev["fields"]["name"],
                             "datetime": str(d.isoformat())
                         }
                     }
@@ -75,13 +74,14 @@ class WSConsumer(AsyncWebsocketConsumer):
             )
         elif received["message"] == "delete_schedule":
             await self.delete_schedule(received["id"])
+            dev = await self.get_json_from_device_id(received["id"])
             await self.channel_layer.group_send(
                 "wol", {
                     "type": "send_group",
                     "message": {
                         "delete_schedule": {
                             "id": received["id"],
-                            "name": received["name"]
+                            "name": dev["fields"]["name"]
                         }
                     }
                 }
