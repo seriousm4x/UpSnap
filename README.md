@@ -5,7 +5,7 @@
 <div align="center" width="100%">
     <h2>UpSnap</h2>
     <p>A simple wake on lan app written with Django, Django-Channels (websockets), Celery, Redis and nmap.</p>
-    <a target="_blank" href="https://github.com/seriousm4x/django-wake-on-lan"><img src="https://img.shields.io/github/stars/seriousm4x/django-wake-on-lan" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/django-wol"><img src="https://img.shields.io/docker/pulls/seriousm4x/django-wol" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/django-wol"><img src="https://img.shields.io/docker/v/seriousm4x/django-wol/latest?label=docker%20image%20ver." /></a> <a target="_blank" href="https://github.com/seriousm4x/django-wake-on-lan"><img src="https://img.shields.io/github/last-commit/seriousm4x/django-wake-on-lan" /></a>
+    <a target="_blank" href="https://github.com/seriousm4x/django-wake-on-lan"><img src="https://img.shields.io/github/stars/seriousm4x/django-wake-on-lan" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/upsnap"><img src="https://img.shields.io/docker/pulls/seriousm4x/upsnap" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/upsnap"><img src="https://img.shields.io/docker/v/seriousm4x/upsnap/latest?label=docker%20image%20ver." /></a> <a target="_blank" href="https://github.com/seriousm4x/django-wake-on-lan"><img src="https://img.shields.io/github/last-commit/seriousm4x/django-wake-on-lan" /></a>
 </div>
 
 ## ✨ Features
@@ -18,7 +18,7 @@
 * Devices only get pinged when there are 1 or more visitors
 * Dark/light mode via preferes-color-scheme
 * Settings page to add/delete device and show system infos
-* [Docker images](https://hub.docker.com/r/seriousm4x/django-wol) for amd64, arm64, arm/v7
+* [Docker images](https://hub.docker.com/r/seriousm4x/upsnap) for amd64, arm64, arm/v7
 
 ## 📸 Screenshots
 
