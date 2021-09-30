@@ -15,7 +15,7 @@
 
 ## ✨ Features
 
-* Dashboard to wake up devices on with 1 click
+* Dashboard to wake up devices with 1 click
 * Set date and time to schedule a wake event
 * Open port scan for VNC, RDP and SSH
 * Visualization of incoming websocket messages
