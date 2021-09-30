@@ -3,15 +3,10 @@
 </div>
 
 <div align="center" width="100%">
+    <h2>UpSnap</h2>
     <p>A simple wake on lan app written with Django, Django-Channels (websockets), Celery, Redis and nmap.</p>
     <a target="_blank" href="https://github.com/seriousm4x/django-wake-on-lan"><img src="https://img.shields.io/github/stars/seriousm4x/django-wake-on-lan" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/django-wol"><img src="https://img.shields.io/docker/pulls/seriousm4x/django-wol" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/django-wol"><img src="https://img.shields.io/docker/v/seriousm4x/django-wol/latest?label=docker%20image%20ver." /></a> <a target="_blank" href="https://github.com/seriousm4x/django-wake-on-lan"><img src="https://img.shields.io/github/last-commit/seriousm4x/django-wake-on-lan" /></a>
 </div>
-
-| Dark                 | Light                 |
-| -------------------- | --------------------- |
-| ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/front-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/front-light.png) |
-| ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/settings-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/settings-light.png) |
-| ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/schedule-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/schedule-light.png) |
 
 ## ✨ Features
 
@@ -24,6 +19,14 @@
 * Dark/light mode via preferes-color-scheme
 * Settings page to add/delete device and show system infos
 * [Docker images](https://hub.docker.com/r/seriousm4x/django-wol) for amd64, arm64, arm/v7
+
+## 📸 Screenshots
+
+| Dark                 | Light                 |
+| -------------------- | --------------------- |
+| ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/front-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/front-light.png) |
+| ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/settings-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/settings-light.png) |
+| ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/schedule-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/django-wake-on-lan/master/assets/schedule-light.png) |
 
 ## 🐳 Run your own instance
 
