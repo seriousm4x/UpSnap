@@ -15,7 +15,7 @@ jobs:
       - name: Prepare tags
         id: prep
         run: |
-          DOCKER_IMAGE=${{ secrets.DOCKER_HUB_USERNAME }}/django-wol
+          DOCKER_IMAGE=${{ secrets.DOCKER_HUB_USERNAME }}/UpSnap
           VERSION=${GITHUB_REF#refs/tags/}
           TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${VERSION:0:2},${DOCKER_IMAGE}:latest"
           echo ::set-output name=tags::${TAGS}

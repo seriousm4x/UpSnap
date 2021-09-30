@@ -1,12 +1,12 @@
 version: "3"
 services:
-  wol_django:
-    container_name: wol_django
-    image: seriousm4x/django-wol:latest
+  upsnap_django:
+    container_name: upsnap_django
+    image: seriousm4x/upsnap:latest
     network_mode: host
     depends_on:
-      - wol_redis
-      - wol_postgres
+      - upsnap_redis
+      - upsnap_postgres
     restart: always
     environment:
       - DJANGO_SUPERUSER_USER=admin
@@ -18,21 +18,21 @@ services:
       - DJANGO_PORT=8000
       - PING_INTERVAL=5
       - ENABLE_NOTIFICATIONS=True
-  wol_redis:
-    container_name: wol_redis
+  upsnap_redis:
+    container_name: upsnap_redis
     image: redis:6
     network_mode: host
     restart: always
-  wol_postgres:
-    container_name: wol_postgres
+  upsnap_postgres:
+    container_name: upsnap_postgres
     image: postgres:13-alpine
     restart: always
     network_mode: host
     environment:
-      - "POSTGRES_USER=wol"
-      - "POSTGRES_PASSWORD=wol"
-      - "POSTGRES_DB=wol"
+      - "POSTGRES_USER=upsnap"
+      - "POSTGRES_PASSWORD=upsnap"
+      - "POSTGRES_DB=upsnap"
     volumes:
-      - wol_db:/var/lib/postgresql/data
+      - upsnap_db:/var/lib/postgresql/data
 volumes:
-  wol_db:
+  upsnap_db:
