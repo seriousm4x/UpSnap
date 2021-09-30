@@ -1,5 +1,14 @@
 document.getElementById("scan-button").addEventListener("click", scan)
 
+var deleteButtons = document.querySelectorAll('[id*=-delete-button]');
+for (let index = 0; index < deleteButtons.length; index++) {
+    const element = deleteButtons[index];
+    element.addEventListener('click', () => {
+        element.disabled = true;
+        element.innerText = "Deleted";
+    });
+}
+
 async function scan() {
     const table = document.getElementById("scan-table").getElementsByTagName('tbody')[0];
     table.innerHTML = "";
@@ -7,7 +16,7 @@ async function scan() {
     tableContainer.classList.add("is-hidden");
     document.getElementById("scan-button").classList.add("is-loading");
 
-    const response = await fetch("/scan");
+    const response = await fetch("/settings/scan");
     const data = await response.json();
 
     if (data.devices.length == 0) {
@@ -36,6 +45,7 @@ async function scan() {
         button.addEventListener("click", function (event) {
             add_device(JSON.stringify(device));
             event.target.disabled = true;
+            event.target.innerText = "Added";
         });
         td4.appendChild(button);
     }
@@ -45,8 +55,16 @@ async function scan() {
 
 function add_device(data) {
     var xhr = new XMLHttpRequest();
-    var url = "/add-device/";
+    var url = "/settings/add/";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(data);
+}
+
+function del_device(devId) {
+    var xhr = new XMLHttpRequest();
+    var url = "/settings/del/";
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(devId);
 }

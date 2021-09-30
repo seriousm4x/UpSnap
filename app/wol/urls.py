@@ -5,7 +5,8 @@ from wol import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("settings/", views.settings, name="settings"),
-    path("save-settings/", views.save_settings, name="save_settings"),
-    path("scan/", views.scan, name="scan"),
-    path("add-device/", views.add_device, name="add_device")
+    path("settings/save/", views.settings_save, name="settings_save"),
+    path("settings/scan/", views.settings_scan, name="settings_scan"),
+    path("settings/add/", views.settings_add, name="settings_add"),
+    path("settings/del/", views.settings_del, name="settings_del")
 ]

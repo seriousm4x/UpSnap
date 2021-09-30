@@ -32,13 +32,13 @@ def index(request):
 
 def settings(request):
     conf = Settings.objects.first()
-    devices_count = Device.objects.all().count()
+    devices = Device.objects.all()
     visitors = Websocket.objects.first().visitors
 
     context = {
         "settings": conf,
         "ping_interval": os.getenv("PING_INTERVAL"),
-        "devices_count": devices_count,
+        "devices": devices,
         "platform": platform.uname(),
         "app_version": app_version,
         "debug": os.getenv("DJANGO_DEBUG"),
@@ -48,7 +48,7 @@ def settings(request):
     return render(request, "wol/settings.html", context)
 
 
-def save_settings(request):
+def settings_save(request):
     if request.method == "POST":
         form = SettingsForm(request.POST)
         if form.is_valid():
@@ -64,7 +64,7 @@ def save_settings(request):
     return HttpResponseRedirect('/settings/')
 
 
-def scan(request):
+def settings_scan(request):
     data = {
         "devices": []
     }
@@ -74,7 +74,7 @@ def scan(request):
     if not conf.scan_address:
         return JsonResponse(data=data)
 
-    p = subprocess.Popen(["nmap", "-sP", conf.scan_address], stdout=subprocess.PIPE)
+    p = subprocess.Popen(["sudo", "nmap", "-sP", conf.scan_address], stdout=subprocess.PIPE)
     out = p.communicate()[0].decode("utf-8")
     ip_line = "Nmap scan report for"
     mac_line = "MAC Address:"
@@ -104,7 +104,7 @@ def scan(request):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-def add_device(request):
+def settings_add(request):
     data = {}
     if request.method == "POST":
         post_body = json.loads(request.body.decode('utf-8'))
@@ -119,6 +119,24 @@ def add_device(request):
                 "ip": post_body["ip"]
             }
         )
+        data["status"] = 200
+    else:
+        data["status"] = 500
+
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "wol", {"type": "send_status", "status": json.dumps({
+            "reload": True
+        })})
+
+    return JsonResponse(data=data)
+
+@method_decorator(csrf_exempt, name="dispatch")
+def settings_del(request):
+    data = {}
+    if request.method == "POST":
+        dev_id = int(request.body.decode('utf-8'))
+        Device.objects.get(id=dev_id).delete()
         data["status"] = 200
     else:
         data["status"] = 500
