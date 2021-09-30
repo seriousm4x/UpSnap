@@ -160,7 +160,7 @@
                                         <td>{{ dev.name }}</td>
                                         <td>{{ dev.ip }}</td>
                                         <td>{{ dev.mac }}</td>
-                                        <td><button id="{{ dev.id }}-delete-button" class="button is-danger is-small" onclick="del_device({{ dev.id }})">Delete</button></td>
+                                        <td><button id="delete-button" class="button is-danger is-small" data-id="{{ dev.id }}">Delete</button></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

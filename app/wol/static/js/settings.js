@@ -3,11 +3,13 @@
 //
 
 window.onload = () => {
-    document.getElementById("scan-button").addEventListener("click", scan)
-    var deleteButtons = document.querySelectorAll('[id*=-delete-button]');
+    document.getElementById("scan-button").addEventListener("click", scan);
+
+    var deleteButtons = document.querySelectorAll('[id=delete-button]');
     for (let index = 0; index < deleteButtons.length; index++) {
         const element = deleteButtons[index];
         element.addEventListener('click', () => {
+            del_device(element.dataset.id);
             element.disabled = true;
             element.innerText = "Deleted";
         });
