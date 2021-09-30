@@ -82,9 +82,9 @@ CELERY_BROKER_URL = "redis://localhost:6379"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("POSTGRES_DB", "wol"),
-        "USER": os.getenv("POSTGRES_USER", "wol"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "wol"),
+        "NAME": os.getenv("POSTGRES_DB", "upsnap"),
+        "USER": os.getenv("POSTGRES_USER", "upsnap"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "upsnap"),
         "HOST": "localhost",
         "PORT": 5432,
         "OPTIONS": {"connect_timeout": 5},

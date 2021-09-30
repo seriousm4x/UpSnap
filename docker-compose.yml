@@ -16,6 +16,9 @@ services:
       - DJANGO_LANGUAGE_CODE=de
       - DJANGO_TIME_ZONE=Europe/Berlin
       - DJANGO_PORT=8000
+      - POSTGRES_DB=upsnap
+      - POSTGRES_USER=upsnap
+      - POSTGRES_PASSWORD=upsnap
       - PING_INTERVAL=5
       - ENABLE_NOTIFICATIONS=True
   upsnap_redis:
