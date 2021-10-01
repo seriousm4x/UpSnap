@@ -52,3 +52,4 @@ You can use the example [docker-compose.yml](docker-compose.yml) file and just r
 ## 📝 Other infos
 
 * The django container needs to run in host network mode to send the wakeonlan command on your local network. Therefore all other containers also need to run in host network mode. I don't like it but there is no way around.
+* Firefox 92 and below: The datetime picker for wake events will be available with version 93 and above. [see here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local#browser_compatibility)
