@@ -10,7 +10,7 @@ if [ -n "$DJANGO_SUPERUSER_USER" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
 fi
 
 # set visitors to 0
-    python -u manage.py shell -c "from wol.models import Websocket; [i.delete() for i in Websocket.objects.all()]; Websocket.objects.create(visitors=0)"
+python -u manage.py shell -c "from wol.models import Websocket; [i.delete() for i in Websocket.objects.all()]; Websocket.objects.create(visitors=0)"
 
 # set notifications
 if [ -n "$ENABLE_NOTIFICATIONS" ]; then
