@@ -295,7 +295,7 @@ socket.onmessage = function (event) {
 
     // set wake by client
     if ("wake" in message) {
-        document.getElementById(message.wake.id + "-btn-wake").classList.add("is-loading");
+        document.querySelector(`[id="btn-wake"][data-id="${message.wake.id}"]`).classList.add("is-loading");
         if (enableNotifications) {
             notif.show("Wake started", message.wake.name + " has been started.", "is-info", 5000);
         }
@@ -303,7 +303,7 @@ socket.onmessage = function (event) {
 
     // set wake by schedule
     if ("wake_schedule" in message) {
-        document.getElementById(message.wake_schedule.id + "-btn-wake").classList.add("is-loading");
+        document.querySelector(`[id="btn-wake"][data-id="${message.wake_schedule.id}"]`).classList.add("is-loading");
         document.getElementById(message.wake_schedule.id + "-schedule-notice").innerHTML = "";
         if (enableNotifications) {
             notif.show("Scheduled wake started", message.wake_schedule.name + " has been started.", "is-info", 5000);
