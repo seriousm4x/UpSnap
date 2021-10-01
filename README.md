@@ -32,6 +32,8 @@
 
 You can use the example [docker-compose.yml](docker-compose.yml) file and just run `docker-compose up -d`.
 
+The website will be available at [localhost:8000](http://localhost:8000). If you run it on a different pc, it will be `http://<your-ip>:8000`. You can change the port in the docker-compose file.
+
 ## 🔧 Available Env Vars
 
 | env var | type | info |
