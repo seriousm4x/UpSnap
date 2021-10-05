@@ -51,7 +51,7 @@
             <form action="/settings/save/" method="post">
                 {% csrf_token %}
                 <div class="box no-flex">
-                    <h2 class="title is-size-3 my-4">General</h2>
+                    <h2 class="title is-size-3 mb-5">General</h2>
                     <div class="columns">
                         <div class="column is-one-quarter">
                             <span class="mr-2"><strong>Notifications:</strong></span>
@@ -119,7 +119,7 @@
             <div class="columns is-multiline is-mobile">
                 <div class="column is-full-mobile is-full-tablet is-full-desktop is-full-widescreen is-half-fullhd">
                     <div class="box no-flex">
-                        <h2 class="title is-size-3 my-4">Add custom device</h2>
+                        <h2 class="title is-size-3 mb-5">Add custom device</h2>
                         <form action="/settings/custom_add/" method="post">
                             {% csrf_token %}
                             <table class="table is-fullwidth">
@@ -139,7 +139,7 @@
                                 </tbody>
                             </table>
                         </form>
-                        <h2 class="title is-size-3 my-4">Scan for devices</h2>
+                        <h2 class="title is-size-3 my-5">Scan for devices</h2>
                         {% if settings.scan_address %}
                         <button id="scan-button" class="button is-primary">Scan network</button>
                         {% else %}
@@ -165,7 +165,7 @@
                 </div>
                 <div class="column is-full-mobile is-full-tablet is-full-desktop is-full-widescreen is-half-fullhd">
                     <div class="box no-flex">
-                        <h2 class="title is-size-3 my-4">Delete devices</h2>
+                        <h2 class="title is-size-3 mb-5">Delete devices</h2>
                         <div id="delete-table-container" class="table-container py-3">
                             <table id="delete-table" class="table is-fullwidth">
                                 <thead>
@@ -194,7 +194,7 @@
             <div class="columns">
                 <div class="column">
                     <div class="box">
-                        <h2 class="title is-size-3 my-4">App info</h2>
+                        <h2 class="title is-size-3 mb-5">App info</h2>
                         <div class="columns is-mobile">
                             <div class="column">
                                 <span class="mr-2"><strong>App version:</strong></span>
@@ -239,7 +239,7 @@
                 </div>
                 <div class="column">
                     <div class="box">
-                        <h2 class="title is-size-3 my-4">System info</h2>
+                        <h2 class="title is-size-3 mb-5">System info</h2>
                         <div class="columns is-mobile">
                             <div class="column">
                                 <span class="mr-2"><strong>System:</strong></span>
