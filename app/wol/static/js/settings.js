@@ -66,7 +66,7 @@ async function scan() {
 
 function add_device(data) {
     var xhr = new XMLHttpRequest();
-    var url = "/settings/add/";
+    var url = "/settings/scan_add/";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(data);

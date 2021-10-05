@@ -11,3 +11,9 @@ class SettingsForm(forms.Form):
     console = forms.CharField(widget=forms.RadioSelect, label="console")
     sort = forms.ChoiceField(choices=[("name", "name"), ("ip", "ip")], widget=forms.RadioSelect, label="sort")
     ip_range = forms.CharField(label="ip_range")
+
+
+class AddCustomDevice(forms.Form):
+    custom_add_name = forms.CharField(label="custom_add_name")
+    custom_add_ip = forms.CharField(label="custom_add_ip")
+    custom_add_mac = forms.CharField(label="custom_add_mac")

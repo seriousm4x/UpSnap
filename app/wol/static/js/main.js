@@ -297,7 +297,7 @@ socket.onmessage = function (event) {
     if ("wake" in message) {
         document.querySelector(`[id="btn-wake"][data-id="${message.wake.id}"]`).classList.add("is-loading");
         if (enableNotifications) {
-            notif.show("Wake started", "Wake command for" message.wake.name + "has been sent.", "is-info", 5000);
+            notif.show("Wake started", "Wake command for" + message.wake.name + "has been sent.", "is-info", 5000);
         }
     }
 

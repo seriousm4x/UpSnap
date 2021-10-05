@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django_wol.settings import VERSION as app_version
 
-from .forms import SettingsForm
+from .forms import AddCustomDevice, SettingsForm
 from .models import Device, Settings, Websocket
 
 
@@ -74,7 +74,8 @@ def settings_scan(request):
     if not conf.scan_address:
         return JsonResponse(data=data)
 
-    p = subprocess.Popen(["nmap", "-sP", conf.scan_address], stdout=subprocess.PIPE)
+    p = subprocess.Popen(
+        ["nmap", "-sP", conf.scan_address], stdout=subprocess.PIPE)
     out = p.communicate()[0].decode("utf-8")
     ip_line = "Nmap scan report for"
     mac_line = "MAC Address:"
@@ -89,11 +90,11 @@ def settings_scan(request):
                 ip = ip.replace(")", "")
             else:
                 name = "Unknown"
-                ip = line_splitted[4]    
+                ip = line_splitted[4]
         elif line.startswith(mac_line):
             line_splitted = line.split()
             mac = line_splitted[2]
-        
+
             data["devices"].append({
                 "name": name,
                 "ip": ip,
@@ -103,8 +104,22 @@ def settings_scan(request):
     return JsonResponse(data=data)
 
 
+def settings_custom_add(request):
+    if request.method == "POST":
+        form = AddCustomDevice(request.POST)
+        if form.is_valid():
+            Device.objects.update_or_create(
+                mac=form.cleaned_data["custom_add_mac"],
+                defaults={
+                    "name": form.cleaned_data["custom_add_name"],
+                    "ip": form.cleaned_data["custom_add_ip"]
+                }
+            )
+    return HttpResponseRedirect('/settings/')
+
+
 @method_decorator(csrf_exempt, name="dispatch")
-def settings_add(request):
+def settings_scan_add(request):
     data = {}
     if request.method == "POST":
         post_body = json.loads(request.body.decode('utf-8'))
@@ -130,6 +145,7 @@ def settings_add(request):
         })})
 
     return JsonResponse(data=data)
+
 
 @method_decorator(csrf_exempt, name="dispatch")
 def settings_del(request):
