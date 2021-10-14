@@ -4,9 +4,6 @@ services:
     container_name: upsnap_django
     image: seriousm4x/upsnap:latest
     network_mode: host
-    depends_on:
-      - upsnap_redis
-      - upsnap_postgres
     restart: always
     environment:
       - DJANGO_SUPERUSER_USER=admin
@@ -21,20 +18,32 @@ services:
       - POSTGRES_PASSWORD=upsnap
       - PING_INTERVAL=5
       - ENABLE_NOTIFICATIONS=True
+    healthcheck:
+      test: curl --fail -s http://localhost:$DJANGO_PORT/health/ || exit 1
+      interval: 10s
+    depends_on:
+      - upsnap_redis
+      - upsnap_postgres
   upsnap_redis:
     container_name: upsnap_redis
     image: redis:6
     network_mode: host
     restart: always
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
   upsnap_postgres:
     container_name: upsnap_postgres
     image: postgres:13-alpine
-    restart: always
     network_mode: host
+    restart: always
     environment:
       - "POSTGRES_USER=upsnap"
       - "POSTGRES_PASSWORD=upsnap"
       - "POSTGRES_DB=upsnap"
+    healthcheck:
+      test: pg_isready
+      interval: 10s
     volumes:
       - upsnap_db:/var/lib/postgresql/data
 volumes:

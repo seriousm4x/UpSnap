@@ -6,7 +6,7 @@ import subprocess
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.http import HttpResponseRedirect
-from django.http.response import JsonResponse
+from django.http.response import HttpResponse, HttpResponseServerError, JsonResponse
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -164,3 +164,10 @@ def settings_del(request):
         })})
 
     return JsonResponse(data=data)
+
+def health(request):
+    try:
+        Settings.objects.all()
+        return HttpResponse("Ok")
+    except Exception:
+        return HttpResponseServerError("db: cannot connect to database.")

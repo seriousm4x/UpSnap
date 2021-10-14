@@ -1,4 +1,4 @@
-FROM python:3-slim-bullseye as base
+FROM python:3.9-slim-bullseye as base
 
 FROM base as builder
 
@@ -8,7 +8,7 @@ RUN apt-get update && apt-get -y install build-essential libssl-dev libffi-dev p
     mkdir /install
 WORKDIR /install
 COPY requirements.txt .
-RUN python -m pip install --prefix=/install --no-cache-dir --upgrade pip && \
+RUN python -m pip install --no-cache-dir --upgrade pip && \
     pip install --prefix=/install --no-cache-dir -r requirements.txt && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
@@ -19,7 +19,7 @@ COPY --from=builder /install /usr/local
 COPY app /app
 WORKDIR /app
 RUN apt-get update && \
-    apt-get -y install iputils-ping nmap && \
+    apt-get -y install iputils-ping nmap curl && \
     rm -rf /var/lib/apt/lists/*
 
 CMD ["./run.sh"]
