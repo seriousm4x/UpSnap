@@ -4,7 +4,7 @@ services:
     container_name: upsnap_django
     image: seriousm4x/upsnap:latest
     network_mode: host
-    restart: always
+    restart: unless-stopped
     environment:
       - DJANGO_SUPERUSER_USER=admin
       - DJANGO_SUPERUSER_PASSWORD=admin
@@ -28,7 +28,7 @@ services:
     container_name: upsnap_redis
     image: redis:6
     network_mode: host
-    restart: always
+    restart: unless-stopped
     healthcheck:
       test: redis-cli ping
       interval: 10s
@@ -36,13 +36,13 @@ services:
     container_name: upsnap_postgres
     image: postgres:13-alpine
     network_mode: host
-    restart: always
+    restart: unless-stopped
     environment:
       - "POSTGRES_USER=upsnap"
       - "POSTGRES_PASSWORD=upsnap"
       - "POSTGRES_DB=upsnap"
     healthcheck:
-      test: pg_isready
+      test: pg_isready -U $POSTGRES_USER
       interval: 10s
     volumes:
       - upsnap_db:/var/lib/postgresql/data
