@@ -17,6 +17,16 @@ if [ -n "$ENABLE_NOTIFICATIONS" ]; then
     python -u manage.py shell -c "from wol.models import Settings; Settings.objects.update_or_create(id=1, defaults={'enable_notifications': '$ENABLE_NOTIFICATIONS'})"
 fi
 
+# set ping interval
+if [ -z "$PING_INTERVAL" ]; then
+    PING_INTERVAL=5
+elif [ "$PING_INTERVAL" -lt 5 ]; then
+    echo ""
+    echo "Ping interval lower than 5 seconds is not recommended. Please use an interval of 5 seconds or higher. Automatically set to 5 seconds."
+    echo ""
+    PING_INTERVAL=5
+fi
+
 celery -A django_wol worker &
 celery -A django_wol beat &
 gunicorn --bind 0.0.0.0:"$DJANGO_PORT" --workers 4 django_wol.asgi:application -k uvicorn.workers.UvicornWorker
