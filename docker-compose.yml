@@ -39,7 +39,7 @@ services:
       - "POSTGRES_PASSWORD=upsnap"
       - "POSTGRES_DB=upsnap"
     healthcheck:
-      test: pg_isready -U $POSTGRES_USER
+      test: pg_isready -U upsnap
       interval: 10s
     volumes:
       - upsnap_db:/var/lib/postgresql/data
