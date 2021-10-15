@@ -18,9 +18,6 @@ services:
       - POSTGRES_PASSWORD=upsnap
       - PING_INTERVAL=5
       - ENABLE_NOTIFICATIONS=True
-    healthcheck:
-      test: curl --fail -s http://localhost:$DJANGO_PORT/health/ || exit 1
-      interval: 10s
     depends_on:
       - upsnap_redis
       - upsnap_postgres

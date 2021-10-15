@@ -22,4 +22,7 @@ RUN apt-get update && \
     apt-get -y install iputils-ping nmap curl && \
     rm -rf /var/lib/apt/lists/*
 
+HEALTHCHECK --interval=10s \
+    CMD curl -fs "http://localhost:$DJANGO_PORT/health/" || exit 1
+
 CMD ["./run.sh"]
