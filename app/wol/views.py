@@ -2,12 +2,16 @@ import json
 import os
 import platform
 import subprocess
+from io import StringIO
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from django.core import serializers
 from django.http import HttpResponseRedirect
-from django.http.response import HttpResponse, HttpResponseServerError, JsonResponse
+from django.http.response import (HttpResponse, HttpResponseServerError,
+                                  JsonResponse)
 from django.shortcuts import render
+from django.utils import dateformat, timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django_wol.settings import VERSION as app_version
@@ -61,7 +65,7 @@ def settings_save(request):
                     "scan_address": form.cleaned_data["ip_range"]
                 }
             )
-    return HttpResponseRedirect('/settings/')
+    return HttpResponseRedirect("/settings/")
 
 
 def settings_scan(request):
@@ -115,14 +119,14 @@ def settings_custom_add(request):
                     "ip": form.cleaned_data["custom_add_ip"]
                 }
             )
-    return HttpResponseRedirect('/settings/')
+    return HttpResponseRedirect("/settings/")
 
 
 @method_decorator(csrf_exempt, name="dispatch")
 def settings_scan_add(request):
     data = {}
     if request.method == "POST":
-        post_body = json.loads(request.body.decode('utf-8'))
+        post_body = json.loads(request.body.decode("utf-8"))
         if post_body["name"] == "":
             name = "Unknown"
         else:
@@ -151,7 +155,7 @@ def settings_scan_add(request):
 def settings_del(request):
     data = {}
     if request.method == "POST":
-        dev_id = int(request.body.decode('utf-8'))
+        dev_id = int(request.body.decode("utf-8"))
         Device.objects.get(id=dev_id).delete()
         data["status"] = 200
     else:
@@ -164,6 +168,40 @@ def settings_del(request):
         })})
 
     return JsonResponse(data=data)
+
+
+def settings_export(request):
+    if request.method == "GET":
+        file_data = {}
+        data = serializers.serialize("python", Device.objects.all())
+        for dev in data:
+            file_data[dev["fields"]["mac"]] = {
+                "name": dev["fields"]["name"],
+                "ip": dev["fields"]["ip"],
+                "netmask": dev["fields"]["netmask"]
+            }
+        now = dateformat.format(timezone.now(), "Y-m-d_H-i-s")
+        response = HttpResponse(
+            StringIO(json.dumps(file_data, indent=4)), content_type="application/json")
+        response["Content-Disposition"] = f"attachment;filename=upsnap_backup_{now}.json"
+        return response
+    return HttpResponseRedirect("/settings/")
+
+
+def settings_import(request):
+    if request.method == "POST":
+        data = json.loads(request.FILES["file"].read())
+        for key, value in data.items():
+            Device.objects.update_or_create(
+                mac=key,
+                defaults={
+                    "name": value["name"],
+                    "ip": value["ip"],
+                    "netmask": value["netmask"],
+                }
+            )
+    return HttpResponseRedirect("/settings/")
+
 
 def health(request):
     try:

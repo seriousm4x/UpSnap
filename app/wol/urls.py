@@ -10,5 +10,7 @@ urlpatterns = [
     path("settings/scan_add/", views.settings_scan_add, name="settings_scan_add"),
     path("settings/custom_add/", views.settings_custom_add, name="settings_custom_add"),
     path("settings/del/", views.settings_del, name="settings_del"),
+    path("settings/export/", views.settings_export, name="settings_export"),
+    path("settings/import/", views.settings_import, name="settings_import"),
     path("health/", views.health, name="health")
 ]
