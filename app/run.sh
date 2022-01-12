@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# wait for db and redis
+/usr/bin/env bash ./wait-for-it.sh 127.0.0.1:5432 -t 300 -s
+/usr/bin/env bash ./wait-for-it.sh 127.0.0.1:6379 -t 300 -s
+
 python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic --noinput

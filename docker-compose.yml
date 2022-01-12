@@ -13,9 +13,9 @@ services:
       - DJANGO_LANGUAGE_CODE=de
       - DJANGO_TIME_ZONE=Europe/Berlin
       - DJANGO_PORT=8000
-      - POSTGRES_DB=upsnap
       - POSTGRES_USER=upsnap
       - POSTGRES_PASSWORD=upsnap
+      - POSTGRES_DB=upsnap
       - PING_INTERVAL=5
       - ENABLE_NOTIFICATIONS=True
     depends_on:
@@ -31,7 +31,7 @@ services:
       interval: 10s
   upsnap_postgres:
     container_name: upsnap_postgres
-    image: postgres:13-alpine
+    image: postgres:14-alpine
     network_mode: host
     restart: unless-stopped
     environment:
