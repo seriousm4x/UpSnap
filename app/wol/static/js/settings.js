@@ -99,7 +99,7 @@ async function scan() {
         const td2 = row.insertCell();
         const td3 = row.insertCell();
         const td4 = row.insertCell();
-        const deviceName = "Unknown";
+        let deviceName = "Unknown";
         if (device.name != "") {
             deviceName = device.name;
         }
@@ -110,7 +110,7 @@ async function scan() {
         button.classList.add("button", "is-primary", "is-small");
         button.innerText = "Add";
         button.addEventListener("click", function (event) {
-            update_device(JSON.stringify(device));
+            post_settings("/settings/update/", JSON.stringify(device));
             event.target.disabled = true;
             event.target.innerText = "Added";
         });

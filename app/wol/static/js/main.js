@@ -108,7 +108,7 @@ window.onload = () => {
         (hour < 10 ? "0" + hour.toString() : hour) + ":" +
         (minute < 10 ? "0" + minute.toString() : minute) +
         utcString.substring(16, 19);
-    
+
     // prepare html elements
     var datetimeFields = document.querySelectorAll('[id*=-input]');
     for (let index = 0; index < datetimeFields.length; index++) {
@@ -200,10 +200,10 @@ function setDeviceDown(device) {
     var statusDot = document.getElementById(device.id + "-dot");
     var statusPorts = document.getElementById(device.id + "-ports");
     var wakeButton = document.querySelector(`[id="btn-wake"][data-id="${device.id}"]`)
-    var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");    
+    var scheduleModalButton = document.getElementById(device.id + "-btn-schedule");
 
     // check if device was up before
-    if (statusDot.classList.contains("dot-up") && enableNotifications ) {
+    if (statusDot.classList.contains("dot-up") && enableNotifications) {
         notif.show("Device now down!", device.name + " is now down.", "is-danger", 5000);
     }
 
@@ -287,9 +287,6 @@ socket.onmessage = function (event) {
             document.getElementById("visitors").innerHTML = message.visitors + ' visitor';
         } else {
             document.getElementById("visitors").innerHTML = message.visitors + ' visitors';
-            if (enableNotifications) {
-                notif.show("Visitors updated", "There are currently " + message.visitors + " visitors", "is-info", 5000);
-            }
         }
     }
 
@@ -330,7 +327,7 @@ socket.onmessage = function (event) {
     if ("reload" in message) {
         window.location.reload(true);
     }
-    
+
 }
 socket.onclose = function (event) {
     if (enableNotifications) {
