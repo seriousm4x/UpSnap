@@ -73,7 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'django_wol.wsgi.application'
 ASGI_APPLICATION = 'django_wol.asgi.application'
-CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_BROKER_URL = f"redis://{os.getenv('REDIS_HOST', '127.0.0.1')}:{os.getenv('REDIS_PORT', 6379)}"
 
 
 # Database
@@ -85,8 +85,8 @@ DATABASES = {
         "NAME": os.getenv("POSTGRES_DB", "upsnap"),
         "USER": os.getenv("POSTGRES_USER", "upsnap"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD", "upsnap"),
-        "HOST": "127.0.0.1",
-        "PORT": 5432,
+        "HOST": os.getenv("POSTGRES_HOST", "127.0.0.1"),
+        "PORT": os.getenv("POSTGRES_PORT", 5432),
         "OPTIONS": {"connect_timeout": 5},
     }
 }
@@ -97,7 +97,7 @@ CHANNEL_LAYERS  = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)]
+            "hosts": [(os.getenv("REDIS_HOST", "127.0.0.1"), os.getenv("REDIS_PORT", 6379))]
         }
     }
 }

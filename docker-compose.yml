@@ -13,9 +13,13 @@ services:
       - DJANGO_LANGUAGE_CODE=de
       - DJANGO_TIME_ZONE=Europe/Berlin
       - DJANGO_PORT=8000
+      - REDIS_HOST=127.0.0.1
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=127.0.0.1
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=upsnap
       - POSTGRES_USER=upsnap
       - POSTGRES_PASSWORD=upsnap
-      - POSTGRES_DB=upsnap
       - PING_INTERVAL=5
       - ENABLE_NOTIFICATIONS=True
     depends_on:
@@ -24,7 +28,8 @@ services:
   upsnap_redis:
     container_name: upsnap_redis
     image: redis:6
-    network_mode: host
+    ports:
+      - "6379:6379"
     restart: unless-stopped
     healthcheck:
       test: redis-cli ping
@@ -32,7 +37,8 @@ services:
   upsnap_postgres:
     container_name: upsnap_postgres
     image: postgres:14-alpine
-    network_mode: host
+    ports:
+      - "5432:5432"
     restart: unless-stopped
     environment:
       - "POSTGRES_USER=upsnap"
