@@ -10,7 +10,7 @@ class SettingsForm(forms.Form):
     notifications = forms.CharField(widget=forms.RadioSelect, label="notifications")
     console = forms.CharField(widget=forms.RadioSelect, label="console")
     sort = forms.ChoiceField(choices=[("name", "name"), ("ip", "ip")], widget=forms.RadioSelect, label="sort")
-    ip_range = forms.CharField(label="ip_range")
+    ip_range = forms.CharField(label="ip_range", required=False)
 
 
 class AddCustomDevice(forms.Form):
