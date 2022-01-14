@@ -36,7 +36,7 @@ def index(request):
 
 def settings(request):
     conf = Settings.objects.first()
-    devices = Device.objects.all()
+    devices = Device.objects.all().order_by(conf.sort_by)
     visitors = Websocket.objects.first().visitors
 
     context = {
