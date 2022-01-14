@@ -107,7 +107,14 @@
                             <input id="ip-range" class="input" type="text" placeholder="192.168.1.0/24" name="ip_range" value="{% if settings.scan_address %}{{ settings.scan_address }}{% endif %}" pattern="^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){2}(?:\.(?:0))(?:/[0-2]\d|/3[0-2])$">
                         </div>
                     </div>
-                    <button class="button is-primary" type="submit" value="Submit">Save</button>
+                    <button class="button is-primary" type="submit" value="Submit">
+                        <span class="icon is-small">
+                            <i class="fas fa-save"></i>
+                        </span>
+                        <span>
+                            Save
+                        </span>
+                    </button>
                 </div>
             </form>
         </section>
@@ -130,7 +137,14 @@
                         Please enter the network address above and save to use this feature. Network address should look like "192.168.1.0/24".
                     </div>
                 </article>
-                <button id="scan-button" class="button is-primary" disabled>Scan network</button>
+                <button id="scan-button" class="button is-primary" disabled>
+                    <span class="icon is-small">
+                        <i class="fas fa-network-wired"></i>
+                    </span>
+                    <span>
+                        Scan
+                    </span>
+                </button>
                 {% endif %}
                 <h3 class="title is-size-4 my-5">Add custom</h3>
                 <form action="/settings/custom_add/" method="post">
@@ -163,9 +177,9 @@
                         <tbody></tbody>
                     </table>
                 </div>
-                <h3 class="title is-size-4 my-5">Delete devices</h3>
-                <div id="delete-table-container" class="table-container">
-                    <table id="delete-table" class="table is-fullwidth">
+                <h3 class="title is-size-4 my-5">Edit devices</h3>
+                <div class="table-container">
+                    <table class="table is-fullwidth">
                         <thead>
                             <th>Name</th>
                             <th>IP</th>
@@ -175,10 +189,38 @@
                         <tbody>
                             {% for dev in devices %}
                             <tr>
-                                <td>{{ dev.name }}</td>
-                                <td>{{ dev.ip }}</td>
-                                <td>{{ dev.mac }}</td>
-                                <td><button id="delete-button" class="button is-danger is-small" data-id="{{ dev.id }}">Delete</button></td>
+                                <td id="dev-name" data-id="{{ dev.id }}">
+                                    <div id="dev-name-label-container" data-id="{{ dev.id }}">
+                                        {{ dev.name }}
+                                    </div>
+                                    <div id="dev-name-input-container" data-id="{{ dev.id }}" class="is-hidden">
+                                        <input id="dev-name-input" data-id="{{ dev.id }}" type="text" class="input" value="{{ dev.name }}">
+                                    </div>
+                                </td>
+                                <td id="dev-ip" data-id="{{ dev.id }}">
+                                    <div id="dev-ip-label-container" data-id="{{ dev.id }}">
+                                        {{ dev.ip }}
+                                    </div>
+                                    <div id="dev-ip-input-container" data-id="{{ dev.id }}" class="is-hidden">
+                                        <input id="dev-ip-input" data-id="{{ dev.id }}" type="text" class="input" value="{{ dev.ip }}">
+                                    </div>
+                                </td>
+                                <td id="dev-mac" data-id="{{ dev.id }}">
+                                    {{ dev.mac }}
+                                </td>
+                                <td>
+                                    <div class="buttons">
+                                        <button id="save-button" class="button is-primary is-small is-hidden" data-id="{{ dev.id }}">
+                                            Save
+                                        </button>
+                                        <button id="edit-button" class="button is-warning is-small" data-id="{{ dev.id }}">
+                                            Edit
+                                        </button>
+                                        <button id="delete-button" class="button is-danger is-small" data-id="{{ dev.id }}">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

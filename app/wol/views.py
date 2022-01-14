@@ -123,7 +123,7 @@ def settings_custom_add(request):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-def settings_scan_add(request):
+def settings_update(request):
     data = {}
     if request.method == "POST":
         post_body = json.loads(request.body.decode("utf-8"))
