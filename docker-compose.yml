@@ -27,7 +27,7 @@ services:
       - upsnap_postgres
   upsnap_redis:
     container_name: upsnap_redis
-    image: redis:6
+    image: redis:alpine
     ports:
       - "6379:6379"
     restart: unless-stopped
