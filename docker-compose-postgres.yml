@@ -15,11 +15,12 @@ services:
       - DJANGO_PORT=8000
       - REDIS_HOST=127.0.0.1
       - REDIS_PORT=6379
-      - POSTGRES_HOST=127.0.0.1
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=upsnap
-      - POSTGRES_USER=upsnap
-      - POSTGRES_PASSWORD=upsnap
+      - DB_TYPE=postgres
+      - DB_HOST=127.0.0.1
+      - DB_PORT=5432
+      - DB_NAME=upsnap
+      - DB_USER=upsnap
+      - DB_PASSWORD=upsnap
       - PING_INTERVAL=5
       - ENABLE_NOTIFICATIONS=True
     depends_on:

@@ -1,7 +1,10 @@
 #!/bin/sh
 
 # wait for db and redis
-/usr/bin/env bash ./wait-for-it.sh "${POSTGRES_HOST}":"${POSTGRES_PORT}" -t 300 -s
+if [ "${DB_TYPE}" != "sqlite" ]; then
+    /usr/bin/env bash ./wait-for-it.sh "${DB_HOST}":"${DB_PORT}" -t 300 -s
+    sleep 20
+fi
 /usr/bin/env bash ./wait-for-it.sh "${REDIS_HOST}":"${REDIS_PORT}" -t 300 -s
 
 python manage.py makemigrations

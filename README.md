@@ -30,9 +30,13 @@
 
 ## 🐳 Run your own instance
 
-You can use the example [docker-compose.yml](docker-compose.yml) file and just run `docker-compose up -d`.
+There are 3 example docker-compose files to choose from. The simplest is [docker-compose-sqlite.yml](docker-compose-sqlite.yml).
 
 The website will be available at [localhost:8000](http://localhost:8000). If you run it on a different pc, it will be `http://<your-ip>:8000`. You can change the port in the docker-compose file.
+
+### Databases
+
+Upsnap supports 3 different databases. Postgres, MySQL and SQLite. If you already have an existing database you want to use, delete the database container from the compose file. Always make sure to set the correct database type environment variable, e.g. DB_TYPE=mysql
 
 ## 🔧 Available Env Vars
 
@@ -45,9 +49,14 @@ The website will be available at [localhost:8000](http://localhost:8000). If you
 | DJANGO_LANGUAGE_CODE | Str | Language code in RFC 3066 (e.g. "en-us" or "de") |
 | DJANGO_TIME_ZONE | Str | e.g. Europe/Berlin |
 | DJANGO_PORT | Int | Web port |
-| POSTGRES_USER | Str | Database user |
-| POSTGRES_PASSWORD | Str | Database password |
-| POSTGRES_DB | Str | Database name |
+| REDIS_HOST | Str | The ip redis runs on |
+| REDIS_PORT | Int | The port redis runs on |
+| DB_TYPE | Str | Database type. Can be "postgres", "mysql" or "sqlite" |
+| DB_HOST | Str | The ip the database runs on |
+| DB_PORT | Str | The port the database runs on|
+| DB_NAME | Str | Database name |
+| DB_USER | Str | Database user |
+| DB_PASSWORD | Str | Database password |
 | PING_INTERVAL | Int | Time between pings |
 | ENABLE_NOTIFICATIONS | Bool | Show notifications in the bottom right corner |
 

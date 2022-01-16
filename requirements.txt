@@ -1,9 +1,10 @@
-django
-wakeonlan
+celery[redis]
 channels
 channels-redis
-celery[redis]
-psycopg2-binary
-whitenoise
+django
 gunicorn
+mysqlclient
+psycopg2-binary
 uvicorn[standard]
+wakeonlan
+whitenoise

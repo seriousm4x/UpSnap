@@ -79,17 +79,41 @@ CELERY_BROKER_URL = f"redis://{os.getenv('REDIS_HOST', '127.0.0.1')}:{os.getenv(
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("POSTGRES_DB", "upsnap"),
-        "USER": os.getenv("POSTGRES_USER", "upsnap"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "upsnap"),
-        "HOST": os.getenv("POSTGRES_HOST", "127.0.0.1"),
-        "PORT": os.getenv("POSTGRES_PORT", 5432),
-        "OPTIONS": {"connect_timeout": 5},
+if os.getenv("DB_TYPE") == "postgres":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": os.getenv("DB_NAME", "upsnap"),
+            "USER": os.getenv("DB_USER", "upsnap"),
+            "PASSWORD": os.getenv("DB_PASSWORD", "upsnap"),
+            "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+            "PORT": os.getenv("DB_PORT", 5432),
+            "OPTIONS": {
+                "connect_timeout": 30
+            }
+        }
     }
-}
+elif os.getenv("DB_TYPE") == "mysql":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.getenv("DB_NAME", "upsnap"),
+            "USER": os.getenv("DB_USER", "upsnap"),
+            "PASSWORD": os.getenv("DB_PASSWORD", "upsnap"),
+            "HOST": os.getenv("DB_HOST", "127.0.0.1"),
+            "PORT": os.getenv("DB_PORT", 3306),
+            "OPTIONS": {
+                "connect_timeout": 30
+            }
+        }
+    }
+elif os.getenv("DB_TYPE") == "sqlite":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME"  : "db.sqlite3",
+        }
+    }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 

@@ -5,7 +5,7 @@ FROM base as builder
 ENV PYTHONUNBUFFERED 1
 
 RUN apk update &&\
-    apk add python3-dev musl-dev build-base gcc libffi-dev libressl-dev postgresql-dev cargo &&\
+    apk add python3-dev musl-dev build-base gcc libffi-dev libressl-dev postgresql-dev mariadb-dev cargo &&\
     rm -rf /var/cache/apk/* &&\
     mkdir /install
 WORKDIR /install
@@ -19,7 +19,7 @@ COPY --from=builder /install /usr/local
 COPY app /app
 WORKDIR /app
 RUN apk update &&\
-    apk add iputils nmap curl bash &&\
+    apk add iputils nmap curl bash mariadb-dev &&\
     rm -rf /var/cache/apk/*
 
 HEALTHCHECK --interval=10s \
