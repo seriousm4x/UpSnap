@@ -18,6 +18,10 @@ window.onload = () => {
             const devIpInputContainer = document.querySelector(`[id=dev-ip-input-container][data-id="${element.dataset.id}"]`)
             const devIpInput = document.querySelector(`[id=dev-ip-input][data-id="${element.dataset.id}"]`)
 
+            const devNetmaskLabelContainer = document.querySelector(`[id=dev-netmask-label-container][data-id="${element.dataset.id}"]`)
+            const devNetmaskInputContainer = document.querySelector(`[id=dev-netmask-input-container][data-id="${element.dataset.id}"]`)
+            const devNetmaskInput = document.querySelector(`[id=dev-netmask-input][data-id="${element.dataset.id}"]`)
+
             const devMacLabel = document.querySelector(`[id=dev-mac][data-id="${element.dataset.id}"]`)
 
             devNameLabelContainer.innerText = devNameInput.value;
@@ -28,9 +32,14 @@ window.onload = () => {
             devIpInputContainer.classList.toggle("is-hidden");
             devIpLabelContainer.classList.toggle("is-hidden");
 
+            devNetmaskLabelContainer.innerText = devNetmaskInput.value;
+            devNetmaskInputContainer.classList.toggle("is-hidden");
+            devNetmaskLabelContainer.classList.toggle("is-hidden");
+
             post_settings("/settings/update/", JSON.stringify({
                 "name": devNameInput.value,
                 "ip": devIpInput.value,
+                "netmask": devNetmaskInput.value,
                 "mac": devMacLabel.innerText
             }));
             element.classList.toggle("is-hidden");
@@ -58,6 +67,11 @@ window.onload = () => {
             devIpLabelContainer.classList.toggle("is-hidden");
             const devIpInputContainer = document.querySelector(`[id=dev-ip-input-container][data-id="${element.dataset.id}"]`)
             devIpInputContainer.classList.toggle("is-hidden");
+
+            const devINetmaskLabelContainer = document.querySelector(`[id=dev-netmask-label-container][data-id="${element.dataset.id}"]`)
+            devINetmaskLabelContainer.classList.toggle("is-hidden");
+            const devNetmaskInputContainer = document.querySelector(`[id=dev-netmask-input-container][data-id="${element.dataset.id}"]`)
+            devNetmaskInputContainer.classList.toggle("is-hidden");
         });
     }
 
@@ -99,13 +113,15 @@ async function scan() {
         const td2 = row.insertCell();
         const td3 = row.insertCell();
         const td4 = row.insertCell();
+        const td5 = row.insertCell();
         let deviceName = "Unknown";
         if (device.name != "") {
             deviceName = device.name;
         }
         td1.appendChild(document.createTextNode(deviceName));
         td2.appendChild(document.createTextNode(device.ip));
-        td3.appendChild(document.createTextNode(device.mac));
+        td3.appendChild(document.createTextNode(device.netmask));
+        td4.appendChild(document.createTextNode(device.mac));
         const button = document.createElement("button");
         button.classList.add("button", "is-primary", "is-small");
         button.innerText = "Add";
@@ -114,7 +130,12 @@ async function scan() {
             event.target.disabled = true;
             event.target.innerText = "Added";
         });
-        td4.appendChild(button);
+        td5.appendChild(button);
+        td1.classList.add("is-vcentered", "w-20");
+        td2.classList.add("is-vcentered", "w-20");
+        td3.classList.add("is-vcentered", "w-20");
+        td4.classList.add("is-vcentered", "w-20");
+        td5.classList.add("is-vcentered", "w-20");
     }
     document.getElementById("scan-button").classList.remove("is-loading");
     tableContainer.classList.remove("is-hidden");

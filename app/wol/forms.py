@@ -16,4 +16,5 @@ class SettingsForm(forms.Form):
 class AddCustomDevice(forms.Form):
     custom_add_name = forms.CharField(label="custom_add_name")
     custom_add_ip = forms.CharField(label="custom_add_ip")
+    custom_add_netmask = forms.CharField(label="custom_add_netmask")
     custom_add_mac = forms.CharField(label="custom_add_mac")

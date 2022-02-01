@@ -151,15 +151,25 @@
                     {% csrf_token %}
                     <table class="table is-fullwidth">
                         <thead>
-                            <th>Name</th>
-                            <th>IP</th>
-                            <th>MAC</th>
-                            <th>Action</th>
+                            <th class="w-20">Name</th>
+                            <th class="w-20">IP</th>
+                            <th class="w-20">Netmask</th>
+                            <th class="w-20">MAC</th>
+                            <th class="w-20">Action</th>
                         </thead>
                         <tbody>
-                            <td><input type="text" class="input" name="custom_add_name"></td>
-                            <td><input type="text" class="input" name="custom_add_ip"></td>
-                            <td><input type="text" class="input" name="custom_add_mac"></td>
+                            <td class="is-vcentered">
+                                <input type="text" class="input" name="custom_add_name">
+                            </td>
+                            <td class="is-vcentered">
+                                <input type="text" class="input" name="custom_add_ip">
+                            </td>
+                            <td class="is-vcentered">
+                                <input type="text" class="input" name="custom_add_netmask" value="{{ netmask }}">
+                            </td>
+                            <td class="is-vcentered">
+                                <input type="text" class="input" name="custom_add_mac">
+                            </td>
                             <td class="is-vcentered">
                                 <button id="btn-custom-add" class="button is-primary is-small" type="submit">Add</button>
                             </td>
@@ -168,28 +178,24 @@
                 </form>
                 <div id="scan-table-container" class="table-container is-hidden">
                     <table id="scan-table" class="table is-fullwidth">
-                        <thead>
-                            <th>Name</th>
-                            <th>IP</th>
-                            <th>MAC</th>
-                            <th>Action</th>
-                        </thead>
                         <tbody></tbody>
                     </table>
                 </div>
+                {% if devices %}
                 <h3 class="title is-size-4 my-5">Edit devices</h3>
                 <div class="table-container">
                     <table class="table is-fullwidth">
                         <thead>
-                            <th>Name</th>
-                            <th>IP</th>
-                            <th>MAC</th>
-                            <th>Action</th>
+                            <th class="w-20">Name</th>
+                            <th class="w-20">IP</th>
+                            <th class="w-20">Netmask</th>
+                            <th class="w-20">MAC</th>
+                            <th class="w-20">Action</th>
                         </thead>
                         <tbody>
                             {% for dev in devices %}
                             <tr>
-                                <td id="dev-name" data-id="{{ dev.id }}">
+                                <td id="dev-name" data-id="{{ dev.id }}" class="is-vcentered">
                                     <div id="dev-name-label-container" data-id="{{ dev.id }}">
                                         {{ dev.name }}
                                     </div>
@@ -197,7 +203,7 @@
                                         <input id="dev-name-input" data-id="{{ dev.id }}" type="text" class="input" value="{{ dev.name }}">
                                     </div>
                                 </td>
-                                <td id="dev-ip" data-id="{{ dev.id }}">
+                                <td id="dev-ip" data-id="{{ dev.id }}" class="is-vcentered">
                                     <div id="dev-ip-label-container" data-id="{{ dev.id }}">
                                         {{ dev.ip }}
                                     </div>
@@ -205,7 +211,15 @@
                                         <input id="dev-ip-input" data-id="{{ dev.id }}" type="text" class="input" value="{{ dev.ip }}">
                                     </div>
                                 </td>
-                                <td id="dev-mac" data-id="{{ dev.id }}">
+                                <td id="dev-netmask" data-id="{{ dev.id }}" class="is-vcentered">
+                                    <div id="dev-netmask-label-container" data-id="{{ dev.id }}">
+                                        {{ dev.netmask }}
+                                    </div>
+                                    <div id="dev-netmask-input-container" data-id="{{ dev.id }}" class="is-hidden">
+                                        <input id="dev-netmask-input" data-id="{{ dev.id }}" type="text" class="input" value="{{ dev.netmask }}">
+                                    </div>
+                                </td>
+                                <td id="dev-mac" data-id="{{ dev.id }}" class="is-vcentered">
                                     {{ dev.mac }}
                                 </td>
                                 <td>
@@ -226,6 +240,7 @@
                         </tbody>
                     </table>
                 </div>
+                {% endif %}
                 <h3 class="title is-size-4 my-5">Backup / Restore</h3>
                 <div class="columns is-tablet">
                     <div class="column is-narrow">

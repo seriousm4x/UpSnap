@@ -1,3 +1,4 @@
+import ipaddress
 import json
 import os
 import platform
@@ -36,11 +37,16 @@ def index(request):
 
 def settings(request):
     conf = Settings.objects.first()
+    if conf.scan_address:
+        netmask = str(ipaddress.ip_network(conf.scan_address).netmask)
+    else:
+        netmask = ""
     devices = Device.objects.all().order_by(conf.sort_by)
     visitors = Websocket.objects.first().visitors
 
     context = {
         "settings": conf,
+        "netmask": netmask,
         "ping_interval": os.getenv("PING_INTERVAL"),
         "devices": devices,
         "platform": platform.uname(),
@@ -74,6 +80,7 @@ def settings_scan(request):
     }
 
     conf = Settings.objects.filter(id=1).get()
+    netmask = str(ipaddress.ip_network(conf.scan_address).netmask)
 
     if not conf.scan_address:
         return JsonResponse(data=data)
@@ -102,6 +109,7 @@ def settings_scan(request):
             data["devices"].append({
                 "name": name,
                 "ip": ip,
+                "netmask": netmask,
                 "mac": mac
             })
 
@@ -116,7 +124,8 @@ def settings_custom_add(request):
                 mac=form.cleaned_data["custom_add_mac"],
                 defaults={
                     "name": form.cleaned_data["custom_add_name"],
-                    "ip": form.cleaned_data["custom_add_ip"]
+                    "ip": form.cleaned_data["custom_add_ip"],
+                    "netmask": form.cleaned_data["custom_add_netmask"]
                 }
             )
     return HttpResponseRedirect("/settings/")
@@ -135,7 +144,8 @@ def settings_update(request):
             mac=post_body["mac"],
             defaults={
                 "name": name,
-                "ip": post_body["ip"]
+                "ip": post_body["ip"],
+                "netmask": post_body["netmask"]
             }
         )
         data["status"] = 200

@@ -39,7 +39,7 @@
     color: var(--waiting-gray);
 }
 
-.dot-up {
+.do>t-up {
     color: var(--up-green);
 }
 
@@ -80,6 +80,14 @@
     flex-direction: unset;
 }
 
+.w-20 {
+    width: 20%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
 @media (prefers-color-scheme: dark) {
     .box {
         background-color: var(--box-bg);
@@ -102,7 +110,7 @@
     .navbar-menu.is-active {
         box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2)
     }
-    
+
     input[type="datetime-local"]::-webkit-calendar-picker-indicator {
         filter: invert(1);
     }
