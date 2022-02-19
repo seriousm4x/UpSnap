@@ -31,33 +31,32 @@ class WolDevice:
 
     def start(self, dev):
         data = {
-            "device": {
-                "id": dev.id,
-                "name": dev.name,
-                "ip": dev.ip,
-                "mac": dev.mac,
-                "netmask": dev.netmask,
-                "up": False,
-                "ports": {}
-            }
+            "id": dev.id,
+            "name": dev.name,
+            "ip": dev.ip,
+            "mac": dev.mac,
+            "netmask": dev.netmask,
+            "up": False,
+            "ports": []
         }
-        for p in Port.objects.all():
-            data["device"]["ports"][str(p.number)] = {
+        for p in Port.objects.all().order_by("number"):
+            data["ports"].append({
                 "number": p.number,
                 "name": p.name,
-                "checked": False,
+                "checked": True if p in dev.port.all() else False,
                 "open": False
-            }
+            })
 
         if self.ping_device(dev.ip):
-            data["device"]["up"] = True
+            data["up"] = True
             for port in dev.port.all():
+                index = next(i for i, d in enumerate(data["ports"]) if d["number"] == port.number)
                 if self.check_port(dev.ip, port.number):
-                    data["device"]["ports"][str(port.number)]["checked"] = True
-                    data["device"]["ports"][str(port.number)]["open"] = True
+                    data["ports"][index]["checked"] = True
+                    data["ports"][index]["open"] = True
                 else:
-                    data["device"]["ports"][str(port.number)]["checked"] = True
-                    data["device"]["ports"][str(port.number)]["open"] = False
+                    data["ports"][index]["checked"] = True
+                    data["ports"][index]["open"] = False
 
         async_to_sync(channel_layer.group_send)(
             "wol", {"type": "send_group", "message": {

@@ -6,7 +6,7 @@
 
 </script>
 
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-sm bg-light">
 <div class="container-fluid">
     <a class="navbar-brand" href="/">
         <img src="/favicon.png" alt="Logo" width="24" height="24">

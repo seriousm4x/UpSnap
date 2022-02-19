@@ -1,9 +1,9 @@
 <script>
     import store from '../store.js';
     export let device;
-    export let ports;
 
     let modalDevice = JSON.parse(JSON.stringify(device));
+    let customPort = {}
 
 	function wake(id) {
         store.sendMessage({
@@ -12,28 +12,60 @@
         })
 	}
 
-    function openModal() {
-        modalDevice = Object.assign({}, device)
-
+	function deleteDevice(id) {
         store.sendMessage({
-            type: "get_ports"
-        })
-    }
-
-	function del(id) {
-        store.sendMessage({
-            type: "delete",
+            type: "delete_device",
             id: id
         })
 	}
 
-    function update(data) {
+    function updateDevice(data) {
+        device = data;
         store.sendMessage({
-            type: "update",
+            type: "update_device",
             data: data
         })
     }
 
+    function updatePort() {
+        if (!customPort.number) {
+            return
+        }
+        const index = modalDevice.ports.findIndex(x => x.number == customPort.number);
+        if (customPort.name) {
+            // add port
+            if (index === -1) {
+                customPort.checked = true;
+                modalDevice.ports.push(customPort);
+            } else {
+                customPort.checked = modalDevice.ports[index].checked;
+                modalDevice.ports[index] = JSON.parse(JSON.stringify(customPort));
+            }
+        } else {
+            // delete port
+            if (index >= 0) {
+                modalDevice.ports.splice(index, 1)
+            }
+        }
+        modalDevice = modalDevice;
+        // send to backend
+        store.sendMessage({
+            type: "update_port",
+            data: customPort
+        })
+    }
+
+    function openModal() {
+        modalDevice = Object.assign({}, device)
+    }
+
+    function validatePort() {
+        if (typeof customPort.number != "number") {
+            customPort.number = 1
+        } else if (customPort.number > 65535) {
+            customPort.number = 65535
+        }
+    }
 </script>
 
 <div id="device-col-{device.id}" class="col-xs-12 col-sm-6 col-md-4 col-lg-3 g-4">
@@ -43,7 +75,11 @@
                 <div class="col-auto me-auto">
                     <div id="spinner-{device.id}" class="spinner-border color-warning d-none" role="status"></div>
                     <div class="hover" on:click="{() => wake(device.id)}" role="button">
-                        <i id="dot-{device.id}" class="fa-solid fa-power-off fa-2x {device.up ? 'success' : 'danger'}"></i>
+                        {#if device.up === true || device.up === false}
+                            <i id="dot-{device.id}" class="fa-solid fa-power-off fa-2x {device.up ? 'success' : 'danger'}"></i>
+                        {:else}
+                            <i id="dot-{device.id}" class="fa-solid fa-power-off fa-2x text-muted"></i>
+                        {/if}
                     </div>
                 </div>
                 <div class="col-auto hover" data-bs-toggle="modal" data-bs-target="#device-modal-{device.id}" role="button" on:click="{() => openModal()}">
@@ -53,7 +89,7 @@
             <h5 class="card-title fw-bold my-2">{device.name}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{device.ip}</h6>
             <ul class="list-group">
-                {#each Object.entries(device.ports) as [_, port]}
+                {#each device.ports as port}
                     {#if port.checked === true}
                         <li class="list-group-item">
                             <i class="fa-solid fa-circle align-middle {port.open ? 'success' : 'danger'}"></i>
@@ -66,7 +102,7 @@
     </div>
 
     <div class="modal fade" id="device-modal-{device.id}" tabindex="-1" aria-labelledby="device-modal-{device.id}-label" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="device-modal-{modalDevice.id}-label">{modalDevice.name}</h5>
@@ -75,9 +111,19 @@
             <div class="modal-body">
                 <form>
                     <h5 class="fw-bold">General</h5>
-                    <div class="mb-3">
-                        <label for="inputName{modalDevice.id}" class="form-label">Device name</label>
-                        <input type="text" class="form-control" id="inputName{modalDevice.id}" bind:value="{modalDevice.name}">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="mb-3">
+                                <label for="inputName{modalDevice.id}" class="form-label">Device name</label>
+                                <input type="text" class="form-control" id="inputName{modalDevice.id}" bind:value="{modalDevice.name}">
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="mb-3">
+                                <label for="inputMac{modalDevice.id}" class="form-label">Mac address</label>
+                                <input type="text" class="form-control" id="inputMac{modalDevice.mac}" bind:value="{modalDevice.mac}">
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm">
@@ -94,17 +140,25 @@
                         </div>
                     </div>
                     <h5 class="fw-bold">Ports</h5>
-                    {#each ports as port}
+                    {#each modalDevice.ports as port}
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="{device.id}-port-{port.fields.name}" bind:checked="{modalDevice.ports[port.fields.number]['checked']}" >
-                            <label class="form-check-label" for="{device.id}-port-{port.fields.name}">{port.fields.name}</label>
+                            <input type="checkbox" class="form-check-input" id="{device.id}-port-{port.name}" bind:checked="{port['checked']}">
+                            <label class="form-check-label" for="{device.id}-port-{port.name}">{port.name} <span class="text-muted">({port.number})</span></label>
                         </div>
                     {/each}
+                    <label class="form-label mt-3" for="{device.id}-custom-port">Custom port</label>
+                    <div class="input-group mb-2">
+                        <input type="text" id="{device.id}-custom-port" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="button-addon2" bind:value={customPort.name} required>
+                        <input type="number" min="1" max="65535" class="form-control" placeholder="Port" aria-label="Port" aria-describedby="button-addon2" bind:value={customPort.number} on:input={validatePort} required>
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2" on:click="{updatePort}">Update Port</button>
+                    </div>
+                    <p>Port must be between 1 and 65535. Enter the same port with a differen name to change it. Leave name empty to delete port.</p>
+                    <h5 class="fw-bold">Scheduled wake</h5>
                 </form>
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" on:click="{() => del(modalDevice.id)}">Delete</button>
-                <button type="button" class="btn btn-outline-success" on:click="{() => update(modalDevice)}">Save changes</button>
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" on:click="{() => deleteDevice(modalDevice.id)}">Delete</button>
+                <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" on:click="{() => updateDevice(modalDevice)}">Save changes</button>
             </div>
             </div>
         </div>

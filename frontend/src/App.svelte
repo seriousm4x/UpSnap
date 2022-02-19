@@ -3,35 +3,36 @@
 	import store from './store.js';
 	import Navbar from "./components/Navbar.svelte";
 	import DeviceCard from "./components/DeviceCard.svelte"
-	import DummyDeviceCard from "./components/DummyDeviceCard.svelte"
 
 	let visitors = 0;
 	let devices = [];
-	let dummyDevices = 0;
-	let ports = [];
 
 	onMount(() => {
 		store.subscribe(currentMessage => {
 			if (currentMessage.type == "init") {
 				// create placeholder devices
-				dummyDevices = currentMessage.message;
+				for (let index = 0; index < currentMessage.message.length; index++) {
+					const element = currentMessage.message[index];
+					devices.push(element);
+					devices = devices;
+					devices.sort(compare)
+				}
 			} else if (currentMessage.type == "status") {
 				// set device array and sort
-				dummyDevices -= 1;
-				const index = devices.findIndex(x => x.id == currentMessage.message.device.id);
+				const index = devices.findIndex(x => x.id == currentMessage.message.id);
 				if (devices.length === 0 || index === -1) {
-					devices.push(currentMessage.message.device);
+					devices.push(currentMessage.message);
 					devices = devices;
 				} else {
-					devices[index] = currentMessage.message.device;
+					devices[index] = currentMessage.message;
 				}
 				devices.sort(compare)
 
 				// set device status
-				if (currentMessage.message.device.up == true) {
-					setUp(currentMessage.message.device.id);
+				if (currentMessage.message.up == true) {
+					setUp(currentMessage.message.id);
 				} else {
-					setDown(currentMessage.message.device.id);
+					setDown(currentMessage.message.id);
 				}
 			} else if (currentMessage.type == "wake") {
 				// set device waking
@@ -40,9 +41,6 @@
 			} else if (currentMessage.type == "visitor") {
 				// update visitor count
 				visitors = currentMessage.message;
-			} else if (currentMessage.type == "get_ports") {
-				// all available ports in db
-				ports = [...currentMessage.message];
 			} else if (currentMessage.type == "delete") {
 				// delete device
 				const devCol = document.querySelector(`#device-col-${currentMessage.message}`);
@@ -115,15 +113,10 @@
 
 <main>
 	<Navbar visitors={visitors} />
-	<div class="container">
+	<div class="container mb-3">
 		<div class="row">
-			{#if dummyDevices >= 1}
-				{#each Array(dummyDevices) as _, i}
-					<DummyDeviceCard/>
-				{/each}
-			{/if}
 			{#each devices as device}
-				<DeviceCard device={device} ports={ports}/>
+				<DeviceCard device={device}/>
 			{/each}
 		</div>
 	</div>

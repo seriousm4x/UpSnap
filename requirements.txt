@@ -2,7 +2,6 @@ celery[redis]
 channels
 channels-redis
 django
-django-rest-framework
 gunicorn
 mysqlclient
 psycopg2-binary
