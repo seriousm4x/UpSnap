@@ -6,8 +6,8 @@
 	import DummyDeviceCard from "./components/DummyDeviceCard.svelte"
 
 	let visitors = 0;
-	let devices = {};
-	let dummyDevices = [];
+	let devices = [];
+	let dummyDevices = 0;
 	let ports = [];
 
 	onMount(() => {
@@ -16,9 +16,18 @@
 				// create placeholder devices
 				dummyDevices = currentMessage.message;
 			} else if (currentMessage.type == "status") {
-				// set device status and pulse animation
+				// set device array and sort
 				dummyDevices -= 1;
-				devices[currentMessage.message.device.id] = currentMessage.message.device;
+				const index = devices.findIndex(x => x.id == currentMessage.message.device.id);
+				if (devices.length === 0 || index === -1) {
+					devices.push(currentMessage.message.device);
+					devices = devices;
+				} else {
+					devices[index] = currentMessage.message.device;
+				}
+				devices.sort(compare)
+
+				// set device status
 				if (currentMessage.message.device.up == true) {
 					setUp(currentMessage.message.device.id);
 				} else {
@@ -32,8 +41,10 @@
 				// update visitor count
 				visitors = currentMessage.message;
 			} else if (currentMessage.type == "get_ports") {
+				// all available ports in db
 				ports = [...currentMessage.message];
 			} else if (currentMessage.type == "delete") {
+				// delete device
 				const devCol = document.querySelector(`#device-col-${currentMessage.message}`);
 				devCol.remove();
 			}
@@ -89,6 +100,17 @@
 		dot.classList.add("d-none");
 		spinner.classList.remove("d-none");
 	}
+
+	function compare(a, b) {
+		if (a.name < b.name){
+			return -1;
+		}
+		if (a.name > b.name){
+			return 1;
+		}
+		return 0;
+	}
+
 </script>
 
 <main>
@@ -100,7 +122,7 @@
 					<DummyDeviceCard/>
 				{/each}
 			{/if}
-			{#each Object.entries(devices) as [id, device]}
+			{#each devices as device}
 				<DeviceCard device={device} ports={ports}/>
 			{/each}
 		</div>

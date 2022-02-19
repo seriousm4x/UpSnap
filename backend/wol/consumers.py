@@ -178,5 +178,5 @@ class WSConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_ports(self):
-        ports = Port.objects.all()
+        ports = Port.objects.all().order_by("name")
         return serializers.serialize("python", ports)

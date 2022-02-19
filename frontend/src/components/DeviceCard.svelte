@@ -4,9 +4,6 @@
     export let ports;
 
     let modalDevice = JSON.parse(JSON.stringify(device));
-    // for (const [key, _] of Object.entries(modalDevice.ports)) {
-    //     modalDevice.ports[key]["checked"] = true;
-    // }
 
 	function wake(id) {
         store.sendMessage({
