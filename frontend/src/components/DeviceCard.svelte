@@ -12,18 +12,18 @@
         })
 	}
 
-	function deleteDevice(id) {
+	function deleteDevice() {
         store.sendMessage({
             type: "delete_device",
-            id: id
+            id: modalDevice.id
         })
 	}
 
-    function updateDevice(data) {
-        device = data;
+    function updateDevice() {
+        device = modalDevice;
         store.sendMessage({
             type: "update_device",
-            data: data
+            data: modalDevice
         })
     }
 
@@ -109,7 +109,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="form-{modalDevice.id}">
+                    <form id="form-{modalDevice.id}" on:submit|preventDefault={updateDevice}>
                         <h5 class="fw-bold">General</h5>
                         <div class="row">
                             <div class="col-sm">
@@ -148,8 +148,8 @@
                         {/each}
                         <label class="form-label mt-3" for="{device.id}-custom-port">Custom port</label>
                         <div class="input-group mb-2">
-                            <input type="text" id="{device.id}-custom-port" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="button-addon2" bind:value={customPort.name} required>
-                            <input type="number" min="1" max="65535" class="form-control" placeholder="Port" aria-label="Port" aria-describedby="button-addon2" bind:value={customPort.number} on:input={validatePort} required>
+                            <input type="text" id="{device.id}-custom-port" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="button-addon2" bind:value={customPort.name}>
+                            <input type="number" min="1" max="65535" class="form-control" placeholder="Port" aria-label="Port" aria-describedby="button-addon2" bind:value={customPort.number} on:input={validatePort}>
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2" on:click="{updatePort}">Update Port</button>
                         </div>
                         <p>Port must be between 1 and 65535. Enter the same port with a differen name to change it. Leave name empty to delete port.</p>
@@ -157,8 +157,8 @@
                     </form>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" on:click="{() => deleteDevice(modalDevice.id)}">Delete</button>
-                    <button type="submit" form="form-{modalDevice.id}" class="btn btn-outline-success" on:click="{() => updateDevice(modalDevice)}">Save changes</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" on:click={deleteDevice}>Delete</button>
+                    <button type="submit" form="form-{modalDevice.id}" class="btn btn-outline-success">Save changes</button>
                 </div>
             </div>
         </div>
