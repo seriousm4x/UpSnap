@@ -2,9 +2,6 @@
     import store from '../store.js';
     export let visitors;
 
-    let label = visitors === 1 ? "Visitor" : "Visitors";
-    let icon = visitors === 1 ? "fa-user" : "fa-user-group";
-
     let addDevice = {}
 
     function updateDevice() {
@@ -38,7 +35,7 @@
             </button>
             <div class="card border-0">
                 <div class="card-body py-2 px-3">
-                    {visitors} {label}<i class="ms-1 fa-solid {icon} text-muted"></i>
+                    {visitors} {visitors === 1 ? "Visitor" : "Visitors"}<i class="ms-1 fa-solid {visitors === 1 ? "fa-user" : "fa-user-group"} text-muted"></i>
                 </div>
             </div>
         </span>
