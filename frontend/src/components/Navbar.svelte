@@ -17,28 +17,29 @@
 </script>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-<div class="container-fluid">
-    <a class="navbar-brand" href="/">
-        <img src="/favicon.png" alt="Logo" width="24" height="24">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav me-auto">
-            <a class="nav-link {window.location.pathname == "/" ? 'active' : ''}" href="/">Devices</a>
-            <a class="nav-link {window.location.pathname == "/settings" ? 'active' : ''}" href="/settings">Settings</a>
-        </div>
-        <span class="d-flex">
-            <button type="button" class="btn btn-light py-2 px-3 me-2" data-bs-toggle="modal" data-bs-target="#addDevice">
-                Add device<i class="ms-1 fa-solid fa-plus"></i>
-            </button>
-            <div class="card border-0">
-                <div class="card-body py-2 px-3">
-                    {visitors} {visitors === 1 ? "Visitor" : "Visitors"}<i class="ms-1 fa-solid {visitors === 1 ? "fa-user" : "fa-user-group"} text-muted"></i>
-                </div>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/favicon.png" alt="Logo" width="24" height="24">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav me-auto">
+                <a class="nav-link {window.location.pathname == "/" ? 'active' : ''}" href="/">Devices</a>
+                <a class="nav-link {window.location.pathname == "/settings" ? 'active' : ''}" href="/settings">Settings</a>
             </div>
-        </span>
+            <span class="d-flex">
+                <button type="button" class="btn btn-light py-2 px-3 me-2" data-bs-toggle="modal" data-bs-target="#addDevice">
+                    Add device<i class="ms-1 fa-solid fa-plus"></i>
+                </button>
+                <div class="card border-0">
+                    <div class="card-body py-2 px-3">
+                        {visitors} {visitors === 1 ? "Visitor" : "Visitors"}<i class="ms-1 fa-solid {visitors === 1 ? "fa-user" : "fa-user-group"} text-muted"></i>
+                    </div>
+                </div>
+            </span>
+        </div>
     </div>
 </nav>
 
