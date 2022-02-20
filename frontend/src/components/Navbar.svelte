@@ -1,38 +1,79 @@
 <script>
     import store from '../store.js';
     export let visitors;
+    export let settings;
 
-    let addDevice = {}
+    let addDevice = {
+        cron: {
+            enabled: false,
+            value: ""
+        }
+    }
 
-    function updateDevice() {
-        if (Object.keys(addDevice).length < 4) {
+    function updateDevice(data) {
+        if (Object.keys(data).length < 4) {
             return
         }
         store.sendMessage({
             type: "update_device",
-            data: addDevice
+            data: data
         })
     }
 
+    function updateSettings() {
+        store.sendMessage({
+            type: "update_settings",
+            data: settings
+        })
+    }
+
+    function scanNetwork() {
+        store.sendMessage({
+            type: "scan_network"
+        })
+        const btnScan = document.querySelector("#btnScan");
+        const btnScanSpinner = document.querySelector("#btnScanSpinner");
+        const btnScanText = document.querySelector("#btnScanText");
+        btnScan.disabled = true;
+        btnScanSpinner.classList.remove("d-none");
+        btnScanText.innerText = "Scanning...";
+    }
+
+    function addScan(i) {
+        document.querySelector(`#btnAdd${i}`).disabled = true;
+        const dev = settings.scan_network[i];
+        updateDevice(dev);
+    }
 </script>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
-            <img src="/favicon.png" alt="Logo" width="24" height="24">
+            <img src="/favicon.png" alt="Logo" width="24" height="24" class="me-2">
+            UpSnap
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav me-auto">
-                <a class="nav-link {window.location.pathname == "/" ? 'active' : ''}" href="/">Devices</a>
-                <a class="nav-link {window.location.pathname == "/settings" ? 'active' : ''}" href="/settings">Settings</a>
-            </div>
-            <span class="d-flex">
-                <button type="button" class="btn btn-light py-2 px-3 me-2" data-bs-toggle="modal" data-bs-target="#addDevice">
-                    Add device<i class="ms-1 fa-solid fa-plus"></i>
-                </button>
+            <span class="ms-auto d-flex">
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle px-3 me-2 py-2 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        More
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#addDevice">
+                                <i class="fa-solid fa-plus me-2"></i>Add device
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Settings">
+                                <i class="fa-solid fa-sliders me-2"></i>Settings
+                            </button>
+                        </li>
+                    </ul>
+                </div>
                 <div class="card border-0">
                     <div class="card-body py-2 px-3">
                         {visitors} {visitors === 1 ? "Visitor" : "Visitors"}<i class="ms-1 fa-solid {visitors === 1 ? "fa-user" : "fa-user-group"} text-muted"></i>
@@ -44,14 +85,14 @@
 </nav>
 
 <div class="modal fade" id="addDevice" tabindex="-1" aria-labelledby="addDeviceLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold" id="addDeviceLabel">Add device</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addForm" on:submit|preventDefault={updateDevice}>
+                <form id="addForm" on:submit|preventDefault={() => updateDevice(addDevice)}>
                     <div class="row">
                         <div class="col-sm">
                             <div class="mb-3">
@@ -80,16 +121,110 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-auto ms-auto">
+                            <button type="submit" form="addForm" class="btn btn-outline-success">Add device</button>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold">Network discovery</h5>
+                    {#if !settings.discovery}
+                        <div class="callout callout-danger">
+                            <p class="my-0">To enable this option, please enter your network address above.</p>
+                        </div>
+                    {/if}
+                    <button id="btnScan" class="btn btn-secondary" type="button" on:click={scanNetwork} disabled={!settings.discovery}>
+                        <span id="btnScanSpinner" class="spinner-grow spinner-grow-sm d-none" role="status" aria-hidden="true"></span>
+                        <span id="btnScanText">Scan</span>
+                    </button>
+                    {#if settings.scan_network?.length}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>IP</td>
+                                    <td>Netmask</td>
+                                    <td>MAC</td>
+                                    <td>Add</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {#each settings.scan_network as device, i}
+                                    <tr>
+                                        <td>{device.name}</td>
+                                        <td>{device.ip}</td>
+                                        <td>{device.netmask}</td>
+                                        <td>{device.mac}</td>
+                                        <td>
+                                            <button type="button" id="btnAdd{i}" class="btn btn-outline-secondary py-0" on:click={() => addScan(i)}>
+                                                <i class="fa-solid fa-plus fa-sm"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {/each}
+                            </tbody>
+                        </table>
+                    {/if}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Settings" tabindex="-1" aria-labelledby="settingsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="settingsLabel">Settings</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="settingsForm" on:submit|preventDefault={updateSettings}>
+                    <h5 class="fw-bold">General</h5>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="mb-3">
+                                <label for="inputNetworkDiscovery" class="form-label">Network discovery address</label>
+                                <input type="text" class="form-control" id="inputNetworkDiscovery" placeholder="192.168.1.0/24" bind:value="{settings.discovery}" pattern="^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){'{'}2{'}'}(?:\.(?:0))(?:/[0-2]\d|/3[0-2])$" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="mb-3">
+                                <label for="inputIntervalSettings" class="form-label">Interval</label>
+                                <input type="number" class="form-control" id="inputIntervalSettings" bind:value="{settings.interval}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Enable notifications
+                                    </label>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" bind:checked={settings.notifications}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="addForm" class="btn btn-outline-success">Add device</button>
+                <button type="submit" form="settingsForm" class="btn btn-outline-success">Save</button>
             </div>
         </div>
     </div>
 </div>
 
 <style lang="scss">
+    @import "../variables.scss";
+
+    .dropdown-item {
+        &:active {
+            color: #1e2125;
+            background-color: #e9ecef;
+        }
+    }
+
     .card {
         border-radius: 1em;
     }
@@ -97,6 +232,18 @@
     .btn-light {
         background-color: white;
         border-radius: 1em;
+    }
 
+    .callout {
+        padding: 1rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #e9ecef;
+        border-left-width: 0.25rem;
+        border-radius: 0.25rem;
+
+        &.callout-danger {
+            border-left-color: $danger;
+        }
     }
 </style>

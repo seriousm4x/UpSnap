@@ -20,7 +20,8 @@ Websocket.objects.create(visitors=0)
 Settings.objects.update_or_create(
     id=1,
     defaults={
-        "enable_notifications": os.getenv("ENABLE_NOTIFICATIONS")
+        "enable_notifications": os.getenv("ENABLE_NOTIFICATIONS"),
+        "interval": os.getenv("PING_INTERVAL")
     }
 )
 

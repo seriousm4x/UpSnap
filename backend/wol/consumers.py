@@ -1,14 +1,17 @@
+from array import array
+import ipaddress
 import json
+import subprocess
 
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.core import serializers
 from django.utils.dateparse import parse_datetime
 from django.utils.timezone import make_aware
+from django_celery_beat.models import (ClockedSchedule, CrontabSchedule,
+                                       PeriodicTask)
 
-from wol.models import Device, Port, Websocket
+from wol.models import Device, Port, Settings, Websocket
 from wol.wake import wake
-from django_celery_beat.models import PeriodicTask, ClockedSchedule, CrontabSchedule
 
 
 class WSConsumer(AsyncWebsocketConsumer):
@@ -17,10 +20,12 @@ class WSConsumer(AsyncWebsocketConsumer):
         await self.accept()
         await self.send(text_data=json.dumps({
             "type": "init",
-            "message": await self.get_all_devices()
+            "message": {
+                "devices": await self.get_all_devices(),
+                "settings": await self.get_settings()
+            }
         }))
         await self.add_visitor()
-
         await self.channel_layer.group_send(
             "wol", {
                 "type": "send_group",
@@ -47,9 +52,7 @@ class WSConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data=None):
         received = json.loads(text_data)
         if received["type"] == "wake":
-            dev = await self.get_device(received["id"])
-            wake(dev.mac, dev.ip, dev.netmask)
-
+            await self.wake_device(received["id"])
             await self.channel_layer.group_send(
                 "wol", {
                     "type": "send_group",
@@ -74,9 +77,15 @@ class WSConsumer(AsyncWebsocketConsumer):
             await self.update_device(received["data"])
         elif received["type"] == "update_port":
             await self.update_port(received["data"])
+        elif received["type"] == "update_settings":
+            await self.update_settings(received["data"])
         elif received["type"] == "celery":
             await self.celery_create_scheduled_wake(received["data"])
-
+        elif received["type"] == "scan_network":
+            await self.send(text_data=json.dumps({
+                "type": "scan_network",
+                "message": await self.scan_network()
+            }))
 
     async def send_group(self, event):
         await self.send(json.dumps(event["message"]))
@@ -98,10 +107,9 @@ class WSConsumer(AsyncWebsocketConsumer):
         return Websocket.objects.first().visitors
 
     @database_sync_to_async
-    def get_device(self, id):
+    def wake_device(self, id):
         dev = Device.objects.filter(id=id).first()
-        return dev
-
+        wake(dev.mac, dev.ip, dev.netmask)
 
     @database_sync_to_async
     def get_all_devices(self):
@@ -188,7 +196,6 @@ class WSConsumer(AsyncWebsocketConsumer):
                 task.enabled = False
                 task.save()
 
-
     @database_sync_to_async
     def update_port(self, data):
         if data.get("name"):
@@ -202,6 +209,28 @@ class WSConsumer(AsyncWebsocketConsumer):
             Port.objects.filter(number=data["number"]).delete()
 
     @database_sync_to_async
+    def get_settings(self):
+        conf = Settings.objects.get(id=1)
+        data = {
+            "notifications": conf.enable_notifications,
+            "discovery": conf.scan_address,
+            "interval": conf.interval,
+            "scan_network": []
+        }
+        return data
+
+    @database_sync_to_async
+    def update_settings(self, data):
+        Settings.objects.update_or_create(
+            id=1,
+            defaults={
+                "enable_notifications": data["notifications"],
+                "scan_address": data["discovery"],
+                "interval": data["interval"]
+            }
+        )
+
+    @database_sync_to_async
     def celery_create_scheduled_wake(self, data):
         aware_time = make_aware(parse_datetime(data["time"]))
         schedule, _ = ClockedSchedule.objects.get_or_create(
@@ -213,3 +242,40 @@ class WSConsumer(AsyncWebsocketConsumer):
             task="wol.tasks.scheduled_wake",
             args=json.dumps([data["id"]])
         )
+
+    @database_sync_to_async
+    def scan_network(self):
+        data = []
+        conf = Settings.objects.get(id=1)
+        netmask = str(ipaddress.ip_network(conf.scan_address).netmask)
+
+        if not conf.scan_address:
+            return
+
+        p = subprocess.Popen(
+            ["nmap", "-sP", conf.scan_address], stdout=subprocess.PIPE)
+        out = p.communicate()[0].decode("utf-8")
+        ip_line = "Nmap scan report for"
+        mac_line = "MAC Address:"
+
+        for line in out.splitlines():
+            if line.startswith(ip_line):
+                line_splitted = line.split()
+                if len(line_splitted) == 6:
+                    name = line_splitted[4]
+                    ip = line_splitted[5]
+                    ip = ip.replace("(", "")
+                    ip = ip.replace(")", "")
+                else:
+                    name = "Unknown"
+                    ip = line_splitted[4]
+            elif line.startswith(mac_line):
+                line_splitted = line.split()
+                mac = line_splitted[2]
+                data.append({
+                    "name": name,
+                    "ip": ip,
+                    "netmask": netmask,
+                    "mac": mac
+                })
+        return data

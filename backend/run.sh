@@ -7,12 +7,6 @@ if [ "${DB_TYPE}" != "sqlite" ]; then
 fi
 /usr/bin/env bash ./wait-for-it.sh "${REDIS_HOST}":"${REDIS_PORT}" -t 300 -s
 
-# init django
-python manage.py makemigrations
-python manage.py migrate
-python manage.py collectstatic --noinput
-python manage shell < setup.py
-
 # set ping interval
 if [ -z "$PING_INTERVAL" ]; then
     PING_INTERVAL=5
@@ -22,6 +16,12 @@ elif [ "$PING_INTERVAL" -lt 5 ]; then
     echo ""
     PING_INTERVAL=5
 fi
+
+# init django
+python manage.py makemigrations
+python manage.py migrate
+python manage.py collectstatic --noinput
+python manage shell < setup.py
 
 celery -A backend worker &
 celery -A backend beat &

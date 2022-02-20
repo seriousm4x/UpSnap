@@ -21,6 +21,6 @@ class Websocket(models.Model):
 
 class Settings(models.Model):
     enable_notifications = models.BooleanField(default=True)
-    enable_console_logging = models.BooleanField(default=False)
     sort_by = models.SlugField(default="name")
     scan_address = models.GenericIPAddressField(null=True, blank=True)
+    interval = models.PositiveSmallIntegerField(null=True, blank=True)

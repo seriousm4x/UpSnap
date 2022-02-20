@@ -1,7 +1,6 @@
 <script>
     import store from '../store.js';
     export let device;
-    console.log(device);
 
     let modalDevice = JSON.parse(JSON.stringify(device));
     let customPort = {}

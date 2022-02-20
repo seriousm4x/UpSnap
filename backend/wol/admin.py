@@ -11,17 +11,13 @@ class DeviceAdmin(admin.ModelAdmin):
     def ports(self, obj):
         return ", ".join([p.name for p in obj.port.all()])
 
-
 class PortAdmin(admin.ModelAdmin):
     list_display = ["number", "name"]
     search_fields = ["number", "name"]
     list_filter = ["number", "name"]
 
 class SettingsAdmin(admin.ModelAdmin):
-    list_display = ["enable_notifications",
-                    "enable_console_logging", "sort_by",
-                    "scan_address"]
-
+    list_display = ["enable_notifications", "sort_by", "scan_address", "interval"]
 
 
 admin.site.register(Device, DeviceAdmin)

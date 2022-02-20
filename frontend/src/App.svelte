@@ -6,17 +6,19 @@
 
 	let visitors = 0;
 	let devices = [];
+	let settings = {}
 
 	onMount(() => {
 		store.subscribe(currentMessage => {
 			if (currentMessage.type == "init") {
-				// create placeholder devices
-				for (let index = 0; index < currentMessage.message.length; index++) {
-					const element = currentMessage.message[index];
+				// create devices
+				for (let index = 0; index < currentMessage.message.devices.length; index++) {
+					const element = currentMessage.message.devices[index];
 					devices.push(element);
 					devices = devices;
-					devices.sort(compare)
 				}
+				devices.sort(compare);
+				settings = currentMessage.message.settings;
 			} else if (currentMessage.type == "status") {
 				// set device array and sort
 				const index = devices.findIndex(x => x.id == currentMessage.message.id);
@@ -45,16 +47,21 @@
 				// delete device
 				const devCol = document.querySelector(`#device-col-${currentMessage.message}`);
 				devCol.remove();
+			} else if (currentMessage.type == "scan_network") {
+				// set scanned network devices
+				if (!currentMessage.message) {
+					return
+				}
+				settings["scan_network"] = currentMessage.message;
+				const btnScan = document.querySelector("#btnScan");
+				const btnScanSpinner = document.querySelector("#btnScanSpinner");
+				const btnScanText = document.querySelector("#btnScanText");
+				btnScan.disabled = false;
+				btnScanSpinner.classList.add("d-none");
+				btnScanText.innerText = "Scan";
 			}
 		})
 	})
-
-	function onSendMessage() {
-		 if (message.length > 0) {
-			 store.sendMessage(message);
-			 message = "";
-		 }
-	}
 
 	function setUp(id) {
 		const dot = document.querySelector(`#dot-${id}`)
@@ -112,7 +119,7 @@
 </script>
 
 <main>
-	<Navbar visitors={visitors} />
+	<Navbar settings={settings} visitors={visitors} />
 	<div class="container mb-3">
 		<div class="row">
 			{#each devices as device}
