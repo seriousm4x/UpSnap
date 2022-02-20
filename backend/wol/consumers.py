@@ -158,21 +158,21 @@ class WSConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def update_device(self, data):
         obj, _ = Device.objects.update_or_create(
-            id=data["id"],
+            mac=data["mac"],
             defaults={
                 "name": data["name"],
                 "ip": data["ip"],
-                "mac": data["mac"],
                 "netmask": data["netmask"]
             }
         )
-        for port in data["ports"]:
-            if port["checked"]:
-                p, _ = Port.objects.get_or_create(number=port["number"], name=port["name"])
-                obj.port.add(p)
-            else:
-                p = Port.objects.get(number=port["number"])
-                obj.port.remove(p)
+        if data.get("ports"):
+            for port in data.get("ports"):
+                if port["checked"]:
+                    p, _ = Port.objects.get_or_create(number=port["number"], name=port["name"])
+                    obj.port.add(p)
+                else:
+                    p = Port.objects.get(number=port["number"])
+                    obj.port.remove(p)
 
     @database_sync_to_async
     def update_port(self, data):

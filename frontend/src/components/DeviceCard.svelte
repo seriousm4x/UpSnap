@@ -104,62 +104,62 @@
     <div class="modal fade" id="device-modal-{device.id}" tabindex="-1" aria-labelledby="device-modal-{device.id}-label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="device-modal-{modalDevice.id}-label">{modalDevice.name}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <h5 class="fw-bold">General</h5>
-                    <div class="row">
-                        <div class="col-sm">
-                            <div class="mb-3">
-                                <label for="inputName{modalDevice.id}" class="form-label">Device name</label>
-                                <input type="text" class="form-control" id="inputName{modalDevice.id}" bind:value="{modalDevice.name}">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="device-modal-{modalDevice.id}-label">{modalDevice.name}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-{modalDevice.id}">
+                        <h5 class="fw-bold">General</h5>
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="mb-3">
+                                    <label for="inputName{modalDevice.id}" class="form-label">Device name</label>
+                                    <input type="text" class="form-control" id="inputName{modalDevice.id}" bind:value="{modalDevice.name}" required>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="mb-3">
+                                    <label for="inputMac{modalDevice.id}" class="form-label">Mac address</label>
+                                    <input type="text" class="form-control" id="inputMac{modalDevice.mac}" bind:value="{modalDevice.mac}" required>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm">
-                            <div class="mb-3">
-                                <label for="inputMac{modalDevice.id}" class="form-label">Mac address</label>
-                                <input type="text" class="form-control" id="inputMac{modalDevice.mac}" bind:value="{modalDevice.mac}">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="mb-3">
+                                    <label for="inputIp{modalDevice.id}" class="form-label">IP address</label>
+                                    <input type="text" class="form-control" id="inputIp{modalDevice.id}" bind:value="{modalDevice.ip}" pattern="^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){'{'}3{'}'}$" required>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="mb-3">
+                                    <label for="inputNetmask{modalDevice.id}" class="form-label">Netmask</label>
+                                    <input type="text" class="form-control" id="inputNetmask{modalDevice.id}" bind:value="{modalDevice.netmask}" pattern="^(((255\.){'{'}3{'}'}(255|254|252|248|240|224|192|128|0+))|((255\.){'{'}2{'}'}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){'{'}2{'}'})|((255|254|252|248|240|224|192|128|0+)(\.0+){'{'}3{'}'}))$" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <div class="mb-3">
-                                <label for="inputIp{modalDevice.id}" class="form-label">IP address</label>
-                                <input type="text" class="form-control" id="inputIp{modalDevice.id}" bind:value="{modalDevice.ip}">
+                        <h5 class="fw-bold">Ports</h5>
+                        {#each modalDevice.ports as port}
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="{device.id}-port-{port.name}" bind:checked="{port['checked']}">
+                                <label class="form-check-label" for="{device.id}-port-{port.name}">{port.name} <span class="text-muted">({port.number})</span></label>
                             </div>
+                        {/each}
+                        <label class="form-label mt-3" for="{device.id}-custom-port">Custom port</label>
+                        <div class="input-group mb-2">
+                            <input type="text" id="{device.id}-custom-port" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="button-addon2" bind:value={customPort.name} required>
+                            <input type="number" min="1" max="65535" class="form-control" placeholder="Port" aria-label="Port" aria-describedby="button-addon2" bind:value={customPort.number} on:input={validatePort} required>
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2" on:click="{updatePort}">Update Port</button>
                         </div>
-                        <div class="col-sm">
-                            <div class="mb-3">
-                                <label for="inputNetmask{modalDevice.id}" class="form-label">Netmask</label>
-                                <input type="text" class="form-control" id="inputNetmask{modalDevice.id}" bind:value="{modalDevice.netmask}">
-                            </div>
-                        </div>
-                    </div>
-                    <h5 class="fw-bold">Ports</h5>
-                    {#each modalDevice.ports as port}
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="{device.id}-port-{port.name}" bind:checked="{port['checked']}">
-                            <label class="form-check-label" for="{device.id}-port-{port.name}">{port.name} <span class="text-muted">({port.number})</span></label>
-                        </div>
-                    {/each}
-                    <label class="form-label mt-3" for="{device.id}-custom-port">Custom port</label>
-                    <div class="input-group mb-2">
-                        <input type="text" id="{device.id}-custom-port" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="button-addon2" bind:value={customPort.name} required>
-                        <input type="number" min="1" max="65535" class="form-control" placeholder="Port" aria-label="Port" aria-describedby="button-addon2" bind:value={customPort.number} on:input={validatePort} required>
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2" on:click="{updatePort}">Update Port</button>
-                    </div>
-                    <p>Port must be between 1 and 65535. Enter the same port with a differen name to change it. Leave name empty to delete port.</p>
-                    <h5 class="fw-bold">Scheduled wake</h5>
-                </form>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" on:click="{() => deleteDevice(modalDevice.id)}">Delete</button>
-                <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" on:click="{() => updateDevice(modalDevice)}">Save changes</button>
-            </div>
+                        <p>Port must be between 1 and 65535. Enter the same port with a differen name to change it. Leave name empty to delete port.</p>
+                        <h5 class="fw-bold">Scheduled wake</h5>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" on:click="{() => deleteDevice(modalDevice.id)}">Delete</button>
+                    <button type="submit" form="form-{modalDevice.id}" class="btn btn-outline-success" on:click="{() => updateDevice(modalDevice)}">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
