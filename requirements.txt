@@ -2,6 +2,7 @@ celery[redis]
 channels
 channels-redis
 django
+django-celery-beat
 gunicorn
 mysqlclient
 psycopg2-binary

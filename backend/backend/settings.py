@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'wol',
-    'channels'
+    'channels',
+    'django_celery_beat',
+    'wol'
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 WSGI_APPLICATION = 'backend.wsgi.application'
 ASGI_APPLICATION = 'backend.asgi.application'
 CELERY_BROKER_URL = f"redis://{os.getenv('REDIS_HOST', '127.0.0.1')}:{os.getenv('REDIS_PORT', 6379)}"
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 # Database
@@ -119,7 +121,9 @@ CHANNEL_LAYERS  = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(os.getenv("REDIS_HOST", "127.0.0.1"), os.getenv("REDIS_PORT", 6379))]
+            "hosts": [(os.getenv("REDIS_HOST", "127.0.0.1"), os.getenv("REDIS_PORT", 6379))],
+            "capacity": 1000,
+            "expiry": 10
         }
     }
 }

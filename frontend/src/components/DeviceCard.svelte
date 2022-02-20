@@ -1,6 +1,7 @@
 <script>
     import store from '../store.js';
     export let device;
+    console.log(device);
 
     let modalDevice = JSON.parse(JSON.stringify(device));
     let customPort = {}
@@ -82,6 +83,9 @@
                         {/if}
                     </div>
                 </div>
+                <div class="col-auto" class:d-none={!device.cron.enabled} data-bs-toggle="tooltip" title="Crontab: {device.cron.value}">
+                    <i class="fa-solid fa-repeat fa-2x text-muted"></i>
+                </div>
                 <div class="col-auto hover" data-bs-toggle="modal" data-bs-target="#device-modal-{device.id}" role="button" on:click="{() => openModal()}">
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                 </div>
@@ -140,6 +144,7 @@
                             </div>
                         </div>
                         <h5 class="fw-bold">Ports</h5>
+                        <p>Select ports to check if they are open.</p>
                         {#each modalDevice.ports as port}
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="{device.id}-port-{port.name}" bind:checked="{port['checked']}">
@@ -152,8 +157,34 @@
                             <input type="number" min="1" max="65535" class="form-control" placeholder="Port" aria-label="Port" aria-describedby="button-addon2" bind:value={customPort.number} on:input={validatePort}>
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2" on:click="{updatePort}">Update Port</button>
                         </div>
-                        <p>Port must be between 1 and 65535. Enter the same port with a differen name to change it. Leave name empty to delete port.</p>
+                        <div class="callout callout-info">
+                            <p class="mb-0">Ports must be between 1 and 65535. Enter the same port with a differen name to change it. Leave name empty to delete port.</p>
+                        </div>
                         <h5 class="fw-bold">Scheduled wake</h5>
+                        <p>Wake your devices at a given time.</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioSchedule" id="flexRadioDisabled{modalDevice.id}"
+                                bind:group={modalDevice["cron"]["enabled"]} value={false} checked={!modalDevice["cron"]["enabled"]}>
+                            <label class="form-check-label" for="flexRadioDisabled{modalDevice.id}">
+                                Disabled
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioSchedule" id="flexRadioCron{modalDevice.id}"
+                                bind:group={modalDevice["cron"]["enabled"]} value={true} checked={modalDevice["cron"]["enabled"]}>
+                            <label class="form-check-label" for="flexRadioCron{modalDevice.id}">
+                                Cron
+                            </label>
+                        </div>
+                        <input id="inputCron{modalDevice.id}" type="text" class="form-control" placeholder="* /4 * * *" aria-label="Crontab" aria-describedby="addon-wrapping" bind:value={modalDevice["cron"]["value"]} disabled={!modalDevice["cron"]["enabled"]}>
+                        <div class="callout callout-info">
+                            <p class="my-2">The cron field uses common cron syntax. Valid examples:</p>
+                            <pre>Minute Hour DayOfMonth Month DayOfWeek
+                                * /4 * * * (Wake every 4 hours)
+                                0 9 * * 1-5 (Wake from Mo-Fr at 9 a.m.)
+                            </pre>
+                            <p class="mb-0">Read more about <a href="https://linux.die.net/man/5/crontab" target="_blank">valid syntax</a> here or <a href="https://crontab.guru/" target="_blank">generate</a> it. Expressions starting with "@..." are not supported.</p>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -167,6 +198,38 @@
 
 <style lang="scss">
     @import "../variables.scss";
+
+    button {
+        &.btn-outline-success {
+            border-color: $success;
+            &:hover {
+                background-color: $success;
+            }
+        }
+
+        &.btn-outline-danger {
+            border-color: $danger;
+            &:hover {
+                background-color: $danger;
+            }
+        }
+    }
+
+    i {
+        &.success {
+            color: $success;
+        }
+
+        &.danger {
+            color: $danger;
+        }
+    }
+
+    pre {
+        white-space: pre-line;
+        background-color: $light;
+        padding: 1em;
+    }
 
     .card {
         border-radius: 2em;
@@ -197,34 +260,20 @@
         color: $success;
     }
 
-    i {
-        &.success {
-            color: $success;
-        }
-
-        &.danger {
-            color: $danger;
-        }
-    }
-
-    button {
-        &.btn-outline-success {
-            border-color: $success;
-            &:hover {
-                background-color: $success;
-            }
-        }
-
-        &.btn-outline-danger {
-            border-color: $danger;
-            &:hover {
-                background-color: $danger;
-            }
-        }
-    }
-
     .color-warning {
         color: $warning;
     }
 
+    .callout {
+        padding: 1rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #e9ecef;
+        border-left-width: 0.25rem;
+        border-radius: 0.25rem;
+
+        &.callout-info {
+            border-left-color: $info;
+        }
+    }
 </style>

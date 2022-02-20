@@ -5,8 +5,7 @@ import threading
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
-from django.core import serializers
-from django.utils import timezone
+from django_celery_beat.models import PeriodicTask, CrontabSchedule
 
 from wol.models import Device, Port, Websocket
 from wol.wake import wake
@@ -37,8 +36,14 @@ class WolDevice:
             "mac": dev.mac,
             "netmask": dev.netmask,
             "up": False,
-            "ports": []
+            "ports": [],
+            "cron": {
+                "enabled": False,
+                "value": ""
+            }
         }
+
+        # add ports
         for p in Port.objects.all().order_by("number"):
             data["ports"].append({
                 "number": p.number,
@@ -47,6 +52,7 @@ class WolDevice:
                 "open": False
             })
 
+        # set status for device and ports
         if self.ping_device(dev.ip):
             data["up"] = True
             for port in dev.port.all():
@@ -58,6 +64,16 @@ class WolDevice:
                     data["ports"][index]["checked"] = True
                     data["ports"][index]["open"] = False
 
+        # set cron for scheduled wake
+        try:
+            task = PeriodicTask.objects.filter(name=data["name"], task="wol.tasks.scheduled_wake", crontab_id__isnull=False).get()
+            if task:
+                cron = CrontabSchedule.objects.get(id=task.crontab_id)
+                data["cron"]["enabled"] = task.enabled
+                data["cron"]["value"] = " ".join([cron.minute, cron.hour, cron.day_of_week, cron.day_of_month, cron.month_of_year])
+        except PeriodicTask.DoesNotExist:
+            pass
+
         async_to_sync(channel_layer.group_send)(
             "wol", {"type": "send_group", "message": {
                 "type": "status",
@@ -66,7 +82,7 @@ class WolDevice:
 
 
 @shared_task
-def status():
+def ping_all_devices():
     if Websocket.objects.first().visitors == 0:
         return
 
@@ -79,26 +95,12 @@ def status():
 
 
 @shared_task
-def scheduled_wakes():
-    if Websocket.objects.first().visitors == 0:
+def scheduled_wake(id):
+    try:
+        device = Device.objects.get(id=id)
+    except Device.DoesNotExist:
+        for task in PeriodicTask.objects.filter(args=id):
+            task.delete()
         return
 
-    devices = Device.objects.all()
-
-    for dev in devices:
-        if dev.scheduled_wake and dev.scheduled_wake <= timezone.now():
-            wake(dev.mac, dev.ip, dev.netmask)
-            dev.scheduled_wake = None
-            dev.save()
-            async_to_sync(channel_layer.group_send)(
-                "wol", {
-                    "type": "send_group",
-                    "message": {
-                        "type": "wake_schedule",
-                        "message": {
-                            "id": dev.id,
-                            "name": dev.name
-                        }
-                    }
-                }
-            )
+    wake(device.mac, device.ip, device.netmask)
