@@ -2,14 +2,15 @@ version: "3"
 services:
   upsnap_django:
     container_name: upsnap_django
-    image: seriousm4x/upsnap:latest
+    #image: seriousm4x/upsnap:latest
+    build: .
     network_mode: host
     restart: unless-stopped
     environment:
       - DJANGO_SUPERUSER_USER=admin
       - DJANGO_SUPERUSER_PASSWORD=admin
       - DJANGO_SECRET_KEY=secret
-      - DJANGO_DEBUG=False
+      - DJANGO_DEBUG=True
       - DJANGO_LANGUAGE_CODE=de
       - DJANGO_TIME_ZONE=Europe/Berlin
       - DJANGO_PORT=8000

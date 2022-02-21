@@ -217,8 +217,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="mb-3">
-                                <label for="inputIntervalSettings" class="form-label">Interval</label>
-                                <input type="number" class="form-control" id="inputIntervalSettings" bind:value="{settings.interval}" required>
+                                <label for="inputIntervalSettings" class="form-label">Interval (seconds)</label>
+                                <input type="number" class="form-control" id="inputIntervalSettings" min="5" bind:value="{settings.interval}" required>
                             </div>
                         </div>
                     </div>

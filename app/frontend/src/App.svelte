@@ -38,7 +38,6 @@
 				}
 			} else if (currentMessage.type == "wake") {
 				// set device waking
-				console.log("WAKE:", currentMessage.message);
 				setWake(currentMessage.message)
 			} else if (currentMessage.type == "visitor") {
 				// update visitor count

@@ -1,4 +1,3 @@
-from array import array
 import ipaddress
 import json
 import subprocess
@@ -8,7 +7,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from django.utils.dateparse import parse_datetime
 from django.utils.timezone import make_aware
 from django_celery_beat.models import (ClockedSchedule, CrontabSchedule,
-                                       PeriodicTask)
+                                       IntervalSchedule, PeriodicTask)
 
 from wol.models import Device, Port, Settings, Websocket
 from wol.wake import wake
@@ -141,11 +140,13 @@ class WSConsumer(AsyncWebsocketConsumer):
                     "open": False
                 })
             try:
-                task = PeriodicTask.objects.filter(name=data["name"], task="wol.tasks.scheduled_wake", crontab_id__isnull=False).get()
+                task = PeriodicTask.objects.filter(
+                    name=data["name"], task="wol.tasks.scheduled_wake", crontab_id__isnull=False).get()
                 if task:
                     cron = CrontabSchedule.objects.get(id=task.crontab_id)
                     data["cron"]["enabled"] = task.enabled
-                    data["cron"]["value"] = " ".join([cron.minute, cron.hour, cron.day_of_week, cron.day_of_month, cron.month_of_year])
+                    data["cron"]["value"] = " ".join(
+                        [cron.minute, cron.hour, cron.day_of_week, cron.day_of_month, cron.month_of_year])
             except PeriodicTask.DoesNotExist:
                 pass
             d.append(data)
@@ -169,11 +170,13 @@ class WSConsumer(AsyncWebsocketConsumer):
         if data.get("ports"):
             for port in data.get("ports"):
                 if port["checked"]:
-                    p, _ = Port.objects.get_or_create(number=port["number"], name=port["name"])
+                    p, _ = Port.objects.get_or_create(
+                        number=port["number"], name=port["name"])
                     obj.port.add(p)
                 else:
-                    p = Port.objects.get(number=port["number"])
-                    obj.port.remove(p)
+                    p = Port.objects.filter(number=port["number"])
+                    if p.exists():
+                        obj.port.remove(p)
 
         if data.get("cron"):
             if data["cron"]["enabled"]:
@@ -227,12 +230,24 @@ class WSConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def update_settings(self, data):
+        if data["interval"] > 5:
+            data["interval"] = 5
         Settings.objects.update_or_create(
             id=1,
             defaults={
                 "enable_notifications": data["notifications"],
                 "scan_address": data["discovery"],
                 "interval": data["interval"]
+            }
+        )
+        schedule, _ = IntervalSchedule.objects.get_or_create(
+            every=data["interval"],
+            period=IntervalSchedule.SECONDS,
+        )
+        PeriodicTask.objects.update_or_create(
+            task="wol.tasks.ping_all_devices",
+            defaults={
+                "interval": schedule
             }
         )
 

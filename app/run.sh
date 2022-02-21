@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd /app/backend/ || exit
+
 # wait for db and redis
 if [ "${DB_TYPE}" != "sqlite" ]; then
     /usr/bin/env bash ./wait-for-it.sh "${DB_HOST}":"${DB_PORT}" -t 300 -s
@@ -21,8 +23,11 @@ fi
 python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic --noinput
-python manage shell < setup.py
-
+python manage.py shell < setup.py
 celery -A backend worker &
 celery -A backend beat &
-gunicorn --bind 0.0.0.0:"$DJANGO_PORT" --workers 4 backend.asgi:application -k uvicorn.workers.UvicornWorker
+gunicorn --bind 0.0.0.0:"$DJANGO_PORT" --workers 4 backend.asgi:application -k uvicorn.workers.UvicornWorker &
+
+
+cd /app/frontend/ || exit
+npm start

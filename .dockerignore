@@ -1,0 +1,5 @@
+.git
+node_modules
+/app/frontend/public/build
+/app/frontend/scripts
+db.sqlite3

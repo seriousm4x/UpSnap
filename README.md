@@ -1,5 +1,5 @@
 <div align="center" width="100%">
-    <img src="app/wol/static/img/favicon.png" width="128" />
+    <img src="app/frontend/public/favicon.png" width="128" />
 </div>
 
 <div align="center" width="100%">
@@ -11,13 +11,13 @@
 ## ✨ Features
 
 * Dashboard to wake up devices with 1 click
-* Set date and time to schedule a wake event
-* Open port scan for VNC, RDP and SSH
-* Visualization of incoming websocket messages
+* Set timed wake events via cron
+* Scan devices for open ports you assigned
+* Discover devices by scanning network
+* Visualization of pings
 * Notifications on status changes
 * Devices only get pinged when there are 1 or more visitors
 * Dark/light mode via preferes-color-scheme
-* Settings page to add/delete device and show system infos
 * [Docker images](https://hub.docker.com/r/seriousm4x/upsnap) for amd64, arm64, arm/v7
 
 ## 📸 Screenshots

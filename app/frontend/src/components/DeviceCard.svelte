@@ -144,10 +144,13 @@
                         </div>
                         <h5 class="fw-bold">Ports</h5>
                         <p>Select ports to check if they are open.</p>
+                        {#if modalDevice.ports.length === 0}
+                            <p class="mb-0">No ports available. Add ports below.</p>
+                        {/if}
                         {#each modalDevice.ports as port}
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="{device.id}-port-{port.name}" bind:checked="{port['checked']}">
-                                <label class="form-check-label" for="{device.id}-port-{port.name}">{port.name} <span class="text-muted">({port.number})</span></label>
+                                <input type="checkbox" class="form-check-input" id="{device.id}-port-{port.number}" bind:checked="{port['checked']}">
+                                <label class="form-check-label" for="{device.id}-port-{port.number}">{port.name} <span class="text-muted">({port.number})</span></label>
                             </div>
                         {/each}
                         <label class="form-label mt-3" for="{device.id}-custom-port">Custom port</label>
