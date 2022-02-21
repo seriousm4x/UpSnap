@@ -59,6 +59,15 @@
 				btnScan.disabled = false;
 				btnScanSpinner.classList.add("d-none");
 				btnScanText.innerText = "Scan";
+			} else if (currentMessage.type == "backup") {
+				// download backup file
+				const now = new Date();
+				const fileName = `upsnap_backup_${now.toISOString()}.json`
+				const a = document.createElement("a");
+				const file = new Blob([JSON.stringify(currentMessage.message)], { type: "text/plain" });
+				a.href = URL.createObjectURL(file);
+				a.download = fileName;
+				a.click();
 			}
 		})
 	})

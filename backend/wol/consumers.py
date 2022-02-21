@@ -36,7 +36,7 @@ class WSConsumer(AsyncWebsocketConsumer):
             }
         )
 
-    async def disconnect(self, code):
+    async def disconnect(self, _):
         await self.channel_layer.group_discard("wol", self.channel_name)
         await self.remove_visitor()
         await self.channel_layer.group_send(
@@ -85,6 +85,11 @@ class WSConsumer(AsyncWebsocketConsumer):
             await self.send(text_data=json.dumps({
                 "type": "scan_network",
                 "message": await self.scan_network()
+            }))
+        elif received["type"] == "backup":
+            await self.send(text_data=json.dumps({
+                "type": "backup",
+                "message": await self.get_all_devices()
             }))
 
     async def send_group(self, event):
@@ -170,31 +175,32 @@ class WSConsumer(AsyncWebsocketConsumer):
                     p = Port.objects.get(number=port["number"])
                     obj.port.remove(p)
 
-        if data["cron"]["enabled"]:
-            cron_value = data["cron"]["value"].strip().split(" ")
-            if not len(cron_value) == 5:
-                return
-            minute, hour, dom, month, dow = cron_value
-            schedule, _ = CrontabSchedule.objects.get_or_create(
-                minute=minute,
-                hour=hour,
-                day_of_week=dow,
-                day_of_month=dom,
-                month_of_year=month
-            )
-            PeriodicTask.objects.update_or_create(
-                name=data["name"],
-                defaults={
-                    "crontab": schedule,
-                    "task": "wol.tasks.scheduled_wake",
-                    "args": json.dumps([data["id"]]),
-                    "enabled": True
-                }
-            )
-        else:
-            for task in PeriodicTask.objects.filter(name=data["name"], task="wol.tasks.scheduled_wake"):
-                task.enabled = False
-                task.save()
+        if data.get("cron"):
+            if data["cron"]["enabled"]:
+                cron_value = data["cron"]["value"].strip().split(" ")
+                if not len(cron_value) == 5:
+                    return
+                minute, hour, dom, month, dow = cron_value
+                schedule, _ = CrontabSchedule.objects.get_or_create(
+                    minute=minute,
+                    hour=hour,
+                    day_of_week=dow,
+                    day_of_month=dom,
+                    month_of_year=month
+                )
+                PeriodicTask.objects.update_or_create(
+                    name=data["name"],
+                    defaults={
+                        "crontab": schedule,
+                        "task": "wol.tasks.scheduled_wake",
+                        "args": json.dumps([data["id"]]),
+                        "enabled": True
+                    }
+                )
+            else:
+                for task in PeriodicTask.objects.filter(name=data["name"], task="wol.tasks.scheduled_wake"):
+                    task.enabled = False
+                    task.save()
 
     @database_sync_to_async
     def update_port(self, data):

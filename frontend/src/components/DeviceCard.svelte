@@ -182,7 +182,7 @@
                                 * /4 * * * (Wake every 4 hours)
                                 0 9 * * 1-5 (Wake from Mo-Fr at 9 a.m.)
                             </pre>
-                            <p class="mb-0">Read more about <a href="https://linux.die.net/man/5/crontab" target="_blank">valid syntax</a> here or <a href="https://crontab.guru/" target="_blank">generate</a> it. Expressions starting with "@..." are not supported.</p>
+                            <p class="mb-0">Read more about <a href="https://linux.die.net/man/5/crontab" target="_blank">valid syntax here</a> or <a href="https://crontab.guru/" target="_blank">generate</a> it. Expressions starting with "@..." are not supported.</p>
                         </div>
                     </form>
                 </div>

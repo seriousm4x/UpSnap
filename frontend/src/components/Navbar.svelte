@@ -44,6 +44,34 @@
         const dev = settings.scan_network[i];
         updateDevice(dev);
     }
+
+	const restoreFromFile = (e) => {
+        let file = e.target.files[0];
+        let reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = e => {
+            let data = JSON.parse(e.target.result);
+            if (Array.isArray(data)) {
+                // v2 file restore
+                data.forEach((device) => {
+                    updateDevice(device)
+                })
+            } else {
+                // v1 file restore
+                for (const [key, value] of Object.entries(data)) {
+                    value["mac"] = key
+                    updateDevice(value)
+                }
+            }
+        }
+    }
+
+    function backupToFile() {
+        store.sendMessage({
+            type: "backup"
+        })
+    }
+
 </script>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -196,20 +224,34 @@
                     </div>
                     <div class="row">
                         <div class="col-sm">
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Enable notifications
-                                    </label>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" bind:checked={settings.notifications}>
-                                </div>
+                            <div class="form-check">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Enable notifications
+                                </label>
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" bind:checked={settings.notifications}>
                             </div>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" form="settingsForm" class="btn btn-outline-success">Save</button>
+                <div class="row mb-3">
+                    <div class="col-auto ms-auto">
+                        <button type="submit" form="settingsForm" class="btn btn-outline-success">Save</button>
+                    </div>
+                </div>
+                <h5 class="fw-bold">Backup/Restore</h5>
+                <div class="callout callout-info">
+                    <p class="mb-0">Backup file structure has changed in v2. You can still restore both versions with this file upload.</p>
+                </div>
+                <div class="mb-3">
+                    <label for="inputRestore" class="form-label">Restore from .json</label>
+                    <input id="inputRestore" type="file" class="form-control" accept=".json" on:change={(e) => restoreFromFile(e)}>
+                </div>
+                <div class="mb-3">
+                    <button type="button" class="btn btn-secondary" on:click={backupToFile}>
+                        <i class="fa-solid fa-download me-2"></i>
+                        Export .json
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -241,6 +283,10 @@
         border: 1px solid #e9ecef;
         border-left-width: 0.25rem;
         border-radius: 0.25rem;
+
+         &.callout-info {
+            border-left-color: $info;
+        }
 
         &.callout-danger {
             border-left-color: $danger;
