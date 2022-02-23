@@ -2,8 +2,7 @@ version: "3"
 services:
   upsnap_django:
     container_name: upsnap_django
-    #image: seriousm4x/upsnap:latest
-    build: .
+    image: seriousm4x/upsnap:latest
     network_mode: host
     restart: unless-stopped
     environment:

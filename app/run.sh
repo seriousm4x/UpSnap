@@ -20,10 +20,10 @@ elif [ "$PING_INTERVAL" -lt 5 ]; then
 fi
 
 # init django
-python manage.py makemigrations
-python manage.py migrate
-python manage.py collectstatic --noinput
-python manage.py shell < setup.py
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py collectstatic --noinput
+python3 manage.py shell < setup.py
 celery -A backend worker &
 celery -A backend beat &
 gunicorn --bind 0.0.0.0:"$DJANGO_PORT" --workers 4 backend.asgi:application -k uvicorn.workers.UvicornWorker &
