@@ -1,26 +1,38 @@
-# build svelte app
-FROM node:17-alpine as npm-build
-WORKDIR /install
+FROM debian:bullseye-slim as base
+
+FROM base as python-build
+ENV PYTHONUNBUFFERED 1
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /python-build
+RUN apt-get update &&\
+apt-get install -y --no-install-recommends build-essential python3 python3-dev python3-pip python3-venv default-libmysqlclient-dev libpq-dev &&\
+python3 -m venv /python-build/venv
+ENV PATH="/python-build/venv/bin:$PATH"
+COPY app/backend/requirements.txt .
+RUN python3 -m pip install --no-cache-dir --upgrade pip &&\
+pip install --no-cache-dir -r requirements.txt
+
+FROM node:17-bullseye-slim as node-build
+WORKDIR /node-build
 COPY app/frontend/package*.json ./
-RUN npm install
 COPY app/frontend/src ./src
 COPY app/frontend/public ./public
 COPY app/frontend/rollup.config.js ./
+RUN npm install
 RUN npm run build
 
-# build python dependencies
-FROM python:3.10-alpine
-ENV PYTHONUNBUFFERED 1
+FROM base
 WORKDIR /app
-RUN apk update &&\
-    apk add musl-dev build-base gcc libffi-dev libressl-dev postgresql-dev mariadb-dev nodejs npm iputils nmap curl bash &&\
-    rm -rf /var/cache/apk/*
-COPY app/backend/requirements.txt .
-RUN python -m pip install --no-cache-dir --upgrade pip &&\
-    pip install --no-cache-dir -r requirements.txt &&\
-    apk del build-base gcc libffi-dev libressl-dev postgresql-dev
+ENV PYTHONUNBUFFERED 1
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update &&\
+apt-get install -y --no-install-recommends nodejs npm iputils-ping nmap &&\
+apt-get clean &&\
+rm -rf /var/lib/{apt,dpkg,cache,log}/
+COPY --from=python-build /python-build/venv /app/venv
+ENV PATH="/app/venv/bin:$PATH"
+COPY --from=node-build /node-build ./frontend
 COPY app/backend ./backend
-COPY --from=npm-build /install ./frontend
 COPY app/run.sh ./
 
 CMD ["./run.sh"]
