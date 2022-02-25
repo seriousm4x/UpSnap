@@ -36,7 +36,7 @@
             // add port
             if (index === -1) {
                 customPort.checked = true;
-                modalDevice.ports.push(customPort);
+                modalDevice.ports.push(JSON.parse(JSON.stringify(customPort)));
             } else {
                 customPort.checked = modalDevice.ports[index].checked;
                 modalDevice.ports[index] = JSON.parse(JSON.stringify(customPort));
