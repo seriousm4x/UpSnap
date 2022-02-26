@@ -1,7 +1,7 @@
 version: "3"
 services:
-  upsnap_django:
-    container_name: upsnap_django
+  app:
+    container_name: upsnap_app
     image: seriousm4x/upsnap:latest
     network_mode: host
     restart: unless-stopped
@@ -24,9 +24,11 @@ services:
       #- DJANGO_LANGUAGE_CODE=de # optional (default: en)
       #- DJANGO_TIME_ZONE=Europe/Berlin # optional (default: UTC)
     depends_on:
-      - upsnap_redis
-      - upsnap_mysql
-  upsnap_redis:
+      redis:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+  redis:
     container_name: upsnap_redis
     image: redis:alpine
     ports:
@@ -35,7 +37,7 @@ services:
     healthcheck:
       test: redis-cli ping
       interval: 10s
-  upsnap_mysql:
+  mysql:
     container_name: upsnap_mysql
     image: mysql
     restart: unless-stopped

@@ -19,7 +19,8 @@ services:
       #- DJANGO_LANGUAGE_CODE=de # optional (default: en)
       #- DJANGO_TIME_ZONE=Europe/Berlin # optional (default: UTC)
     depends_on:
-      - upsnap_redis
+      redis:
+        condition: service_healthy
   redis:
     container_name: upsnap_redis
     image: redis:alpine

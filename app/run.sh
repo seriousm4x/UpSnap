@@ -1,15 +1,5 @@
 #!/bin/sh
 
-cd /app/backend/ || exit
-
-# wait for db and redis
-if [ "${DB_TYPE}" != "sqlite" ]; then
-    /usr/bin/env bash ./wait-for-it.sh "${DB_HOST}":"${DB_PORT}" -t 300 -s
-    echo "sleeping 20"
-    sleep 20
-fi
-/usr/bin/env bash ./wait-for-it.sh "${REDIS_HOST}":"${REDIS_PORT}" -t 300 -s
-
 # set ping interval
 if [ -z "$PING_INTERVAL" ]; then
     PING_INTERVAL=5
@@ -21,6 +11,7 @@ elif [ "$PING_INTERVAL" -lt 5 ]; then
 fi
 
 # create django secret key
+cd /app/backend/ || exit
 if [ -z "$DJANGO_SECRET_KEY" ]; then
     DJANGO_SECRET_KEY=$(python3 -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')
     export DJANGO_SECRET_KEY
