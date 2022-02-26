@@ -1,27 +1,27 @@
 version: "3"
 services:
-  upsnap_django:
-    container_name: upsnap_django
+  app:
+    container_name: upsnap_app
     #image: seriousm4x/upsnap:latest
     build: .
     network_mode: host
     restart: unless-stopped
     environment:
-      - DJANGO_SUPERUSER_USER=admin
-      - DJANGO_SUPERUSER_PASSWORD=admin
-      - DJANGO_SECRET_KEY=secret
-      - DJANGO_DEBUG=True
-      - DJANGO_LANGUAGE_CODE=de
-      - DJANGO_TIME_ZONE=Europe/Berlin
-      - DJANGO_PORT=8000
-      - REDIS_HOST=127.0.0.1
-      - REDIS_PORT=6379
-      - DB_TYPE=sqlite
-      - PING_INTERVAL=5
-      - ENABLE_NOTIFICATIONS=True
+      - FRONTEND_PORT=8000
+      - BACKEND_PORT=8001
+      - DB_TYPE=sqlite # required
+      - REDIS_HOST=127.0.0.1 # required (make sure to use the same ip as below)
+      - REDIS_PORT=6379 # required (make sure to use the same port as below)
+      - PING_INTERVAL=5 # optional (default: 5 seconds)
+      - DJANGO_SUPERUSER_USER=admin # optional (default: backend login disabled)
+      - DJANGO_SUPERUSER_PASSWORD=admin # optional (default: backend login disabled)
+      - DJANGO_SECRET_KEY=secret # optional (default: randomly generated)
+      - DJANGO_DEBUG=True # optional (default: False)
+      - DJANGO_LANGUAGE_CODE=de # optional (default: en)
+      - DJANGO_TIME_ZONE=Europe/Berlin # optional (default: UTC)
     depends_on:
       - upsnap_redis
-  upsnap_redis:
+  redis:
     container_name: upsnap_redis
     image: redis:alpine
     ports:

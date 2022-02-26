@@ -221,7 +221,6 @@ class WSConsumer(AsyncWebsocketConsumer):
     def get_settings(self):
         conf = Settings.objects.get(id=1)
         data = {
-            "notifications": conf.enable_notifications,
             "discovery": conf.scan_address,
             "interval": conf.interval,
             "scan_network": []
@@ -235,7 +234,6 @@ class WSConsumer(AsyncWebsocketConsumer):
         Settings.objects.update_or_create(
             id=1,
             defaults={
-                "enable_notifications": data["notifications"],
                 "scan_address": data["discovery"],
                 "interval": data["interval"]
             }

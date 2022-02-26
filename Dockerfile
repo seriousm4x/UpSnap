@@ -18,8 +18,6 @@ COPY app/frontend/package*.json ./
 COPY app/frontend/src ./src
 COPY app/frontend/public ./public
 COPY app/frontend/rollup.config.js ./
-RUN npm install
-RUN npm run build
 
 FROM base
 WORKDIR /app

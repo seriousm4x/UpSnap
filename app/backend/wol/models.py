@@ -20,7 +20,6 @@ class Websocket(models.Model):
     visitors = models.PositiveSmallIntegerField(blank=False, null=False, default=0)
 
 class Settings(models.Model):
-    enable_notifications = models.BooleanField(default=True)
     sort_by = models.SlugField(default="name")
     scan_address = models.GenericIPAddressField(null=True, blank=True)
     interval = models.PositiveSmallIntegerField(null=True, blank=True)

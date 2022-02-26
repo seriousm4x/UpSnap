@@ -6,6 +6,10 @@ import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import preprocess from 'svelte-preprocess';
 import copy from 'rollup-plugin-copy';
+import dotenv from "dotenv";
+import replace from '@rollup/plugin-replace';
+
+dotenv.config()
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -44,7 +48,11 @@ export default {
 				// enable run-time checks when not in production
 				dev: !production,
 			},
-			preprocess: preprocess()
+			preprocess: preprocess(),
+		}),
+		replace({
+			BACKEND_PORT: JSON.stringify(process.env.BACKEND_PORT),
+			preventAssignment: true
 		}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance

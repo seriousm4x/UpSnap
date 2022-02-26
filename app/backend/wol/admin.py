@@ -17,7 +17,7 @@ class PortAdmin(admin.ModelAdmin):
     list_filter = ["number", "name"]
 
 class SettingsAdmin(admin.ModelAdmin):
-    list_display = ["enable_notifications", "sort_by", "scan_address", "interval"]
+    list_display = ["sort_by", "scan_address", "interval"]
 
 
 admin.site.register(Device, DeviceAdmin)
