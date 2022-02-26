@@ -1,5 +1,6 @@
 <script>
     import store from '../store.js';
+    import DarkToggle from "./DarkToggle.svelte";
     export let visitors;
     export let settings;
 
@@ -74,20 +75,21 @@
 
 </script>
 
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-expand-sm">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
+        <div class="navbar-brand" href="/">
             <img src="/favicon.png" alt="Logo" width="24" height="24" class="me-2">
             UpSnap
-        </a>
+        </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <span class="ms-auto d-flex">
+                <DarkToggle />
                 <div class="dropdown">
-                    <button class="btn btn-light dropdown-toggle px-3 me-2 py-2 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        More
+                    <button class="btn btn-light dropdown-toggle px-3 me-2 py-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-wrench me-2"></i>More
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li>
@@ -102,10 +104,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card border-0">
-                    <div class="card-body py-2 px-3">
-                        {visitors} {visitors === 1 ? "Visitor" : "Visitors"}<i class="ms-1 fa-solid {visitors === 1 ? "fa-user" : "fa-user-group"} text-muted"></i>
-                    </div>
+                <div class="btn btn-light px-3 me-2 py-2 pe-none">
+                    <i class="me-2 fa-solid {visitors === 1 ? "fa-user" : "fa-user-group"}"></i>{visitors} {visitors === 1 ? "Visitor" : "Visitors"}
                 </div>
             </span>
         </div>
@@ -157,7 +157,7 @@
                     <h5 class="fw-bold">Network discovery</h5>
                     {#if !settings.discovery}
                         <div class="callout callout-danger">
-                            <p class="my-0">To enable this option, please enter your network address above.</p>
+                            <p class="my-0">To enable this option, please enter your network address in the settings.</p>
                         </div>
                     {/if}
                     <button id="btnScan" class="btn btn-secondary" type="button" on:click={scanNetwork} disabled={!settings.discovery}>
@@ -212,7 +212,7 @@
                         <div class="col-sm-8">
                             <div class="mb-3">
                                 <label for="inputNetworkDiscovery" class="form-label">Network discovery address</label>
-                                <input type="text" class="form-control" id="inputNetworkDiscovery" placeholder="192.168.1.0/24" bind:value="{settings.discovery}" pattern="^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){'{'}2{'}'}(?:\.(?:0))(?:/[0-2]\d|/3[0-2])$" required>
+                                <input type="text" class="form-control" id="inputNetworkDiscovery" placeholder="192.168.1.0/24" bind:value="{settings.discovery}" pattern="^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){'{'}2{'}'}(?:\.(?:0))(?:/[0-2]\d|/3[0-2])$">
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -257,39 +257,34 @@
     </div>
 </div>
 
-<style lang="scss">
-    @import "../variables.scss";
+<style lang="scss" global>
+    .navbar-brand {
+        color: var(--color-text);
+    }
+
+    .dropdown-menu {
+        background-color: var(--bg-lighter);
+
+        li:first-child>button {
+            border-radius: 0.5rem 0.5rem 0rem 0rem;
+        }
+
+        li:last-child>button {
+            border-radius: 0rem 0rem 0.5rem 0.5rem;
+        }
+
+        li:only-child>button {
+            border-radius: 0.5rem;
+        }
+    }
 
     .dropdown-item {
-        &:active {
-            color: #1e2125;
-            background-color: #e9ecef;
-        }
-    }
+        color: var(--color-text);
+        background-color: var(--bg-lighter);
 
-    .card {
-        border-radius: 1em;
-    }
-
-    .btn-light {
-        background-color: white;
-        border-radius: 1em;
-    }
-
-    .callout {
-        padding: 1rem;
-        margin-top: 1.25rem;
-        margin-bottom: 1.25rem;
-        border: 1px solid #e9ecef;
-        border-left-width: 0.25rem;
-        border-radius: 0.25rem;
-
-         &.callout-info {
-            border-left-color: $info;
-        }
-
-        &.callout-danger {
-            border-left-color: $danger;
+        &:hover {
+            color: var(--color-bg);
+            background-color: var(--color-text);
         }
     }
 </style>

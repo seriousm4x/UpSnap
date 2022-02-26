@@ -69,11 +69,11 @@
 </script>
 
 <div id="device-col-{device.id}" class="col-xs-12 col-sm-6 col-md-4 col-lg-3 g-4">
-    <div class="card border-0 p-3 pt-2" >
+    <div class="card border-0 p-3 pt-2">
         <div class="card-body">
             <div class="row">
                 <div class="col-auto me-auto">
-                    <div id="spinner-{device.id}" class="spinner-border color-warning d-none" role="status"></div>
+                    <div id="spinner-{device.id}" class="spinner-border warning d-none" role="status"></div>
                     <div class="hover" on:click="{() => wake(device.id)}" role="button">
                         {#if device.up === true || device.up === false}
                             <i id="dot-{device.id}" class="fa-solid fa-power-off fa-2x {device.up ? 'success' : 'danger'}"></i>
@@ -157,7 +157,7 @@
                         <div class="input-group mb-2">
                             <input type="text" id="{device.id}-custom-port" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="button-addon2" bind:value={customPort.name}>
                             <input type="number" min="1" max="65535" class="form-control" placeholder="Port" aria-label="Port" aria-describedby="button-addon2" bind:value={customPort.number} on:input={validatePort}>
-                            <button class="btn btn-outline-secondary" type="button" id="button-addon2" on:click="{updatePort}">Update Port</button>
+                            <button class="btn btn-secondary" type="button" id="button-addon2" on:click="{updatePort}">Update Port</button>
                         </div>
                         <div class="callout callout-info">
                             <p class="mb-0">Ports must be between 1 and 65535. Enter the same port with a differen name to change it. Leave name empty to delete port.</p>
@@ -187,6 +187,7 @@
                             </pre>
                             <p class="mb-0">Read more about <a href="https://linux.die.net/man/5/crontab" target="_blank">valid syntax here</a> or <a href="https://crontab.guru/" target="_blank">generate</a> it. Expressions starting with "@..." are not supported.</p>
                         </div>
+                        <!-- TODO: add shutdown command -->
                     </form>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -199,42 +200,28 @@
 </div>
 
 <style lang="scss">
-    @import "../variables.scss";
-
-    button {
-        &.btn-outline-success {
-            border-color: $success;
-            &:hover {
-                background-color: $success;
-            }
-        }
-
-        &.btn-outline-danger {
-            border-color: $danger;
-            &:hover {
-                background-color: $danger;
-            }
-        }
+    .success {
+        color: var(--success);
     }
 
-    i {
-        &.success {
-            color: $success;
-        }
+    .warning {
+        color: var(--warning);
+    }
 
-        &.danger {
-            color: $danger;
-        }
+    .danger {
+        color: var(--danger);
     }
 
     pre {
         white-space: pre-line;
-        background-color: $light;
+        background-color: var(--color-bg);
         padding: 1em;
+        border-radius: 1em;
     }
 
     .card {
         border-radius: 2em;
+		background-color: var(--bg-lighter);
     }
 
     .spinner-border {
@@ -259,23 +246,9 @@
 
     .fa-circle {
         font-size: 0.8em;
-        color: $success;
     }
 
-    .color-warning {
-        color: $warning;
-    }
-
-    .callout {
-        padding: 1rem;
-        margin-top: 1.25rem;
-        margin-bottom: 1.25rem;
-        border: 1px solid #e9ecef;
-        border-left-width: 0.25rem;
-        border-radius: 0.25rem;
-
-        &.callout-info {
-            border-left-color: $info;
-        }
+    .list-group-item {
+        color: var(--color-text);
     }
 </style>

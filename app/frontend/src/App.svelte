@@ -2,11 +2,18 @@
 	import { onMount } from 'svelte';
 	import store from './store.js';
 	import Navbar from "./components/Navbar.svelte";
-	import DeviceCard from "./components/DeviceCard.svelte"
+	import DeviceCard from "./components/DeviceCard.svelte";
+	import Toast from "./components/Toast.svelte";
 
 	let visitors = 0;
 	let devices = [];
 	let settings = {}
+	let toast = {
+		title: "",
+		message: "",
+		color: "",
+		show: false
+	}
 
 	onMount(() => {
 		store.subscribe(currentMessage => {
@@ -32,9 +39,9 @@
 
 				// set device status
 				if (currentMessage.message.up == true) {
-					setUp(currentMessage.message.id);
+					setUp(currentMessage.message);
 				} else {
-					setDown(currentMessage.message.id);
+					setDown(currentMessage.message);
 				}
 			} else if (currentMessage.type == "wake") {
 				// set device waking
@@ -71,10 +78,13 @@
 		})
 	})
 
-	function setUp(id) {
-		const dot = document.querySelector(`#dot-${id}`)
-		const spinner = document.querySelector(`#spinner-${id}`);
+	function setUp(device) {
+		const dot = document.querySelector(`#dot-${device.id}`)
+		const spinner = document.querySelector(`#spinner-${device.id}`);
 		if (dot) {
+			if (dot.classList.contains("danger")) {
+				showToast(device.name, "Device is up!", "success")
+			}
 			dot.style.animation = "none";
 			dot.offsetWidth;
 			if (!spinner.classList.contains("d-none")) {
@@ -89,10 +99,13 @@
 		}
 	}
 
-	function setDown(id) {
-		const dot = document.querySelector(`#dot-${id}`)
-		const spinner = document.querySelector(`#spinner-${id}`);
+	function setDown(device) {
+		const dot = document.querySelector(`#dot-${device.id}`)
+		const spinner = document.querySelector(`#spinner-${device.id}`);
 		if (dot) {
+			if (dot.classList.contains("success")) {
+				showToast(device.name, "Device is down!", "danger")
+			}
 			dot.style.animation = "none";
 			dot.offsetWidth;
 			if (!spinner.classList.contains("d-none")) {
@@ -112,6 +125,19 @@
 		const spinner = document.querySelector(`#spinner-${id}`);
 		dot.classList.add("d-none");
 		spinner.classList.remove("d-none");
+	}
+
+	function showToast(title, message, color) {
+		if (settings.notifications === false) {
+			return
+		}
+		toast.title = title;
+		toast.message = message;
+		toast.color = color;
+		toast.show = true;
+		setTimeout(() => {
+			toast.show = false;
+		}, 4000)
 	}
 
 	function compare(a, b) {
@@ -135,14 +161,86 @@
 			{/each}
 		</div>
 	</div>
+	<Toast toast={toast} />
 </main>
 
 <style lang="scss" global>
-	@import "variables.scss";
+	@import "./variables.scss";
 	@import "../node_modules/bootstrap/scss/bootstrap";
 	@import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
 	@import "../node_modules/@fortawesome/fontawesome-free/scss/regular.scss";
 	@import "../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+	@import "theme.scss";
+
+	body {
+		color: var(--color-text);
+		background-color: var(--color-bg);
+	}
+
+	.modal-content {
+		background-color: var(--bg-lighter);
+	}
+
+	.modal-header {
+		border-bottom: 1px solid var(--color-text);
+
+		.btn-close {
+			background: var(--svg-close);
+		}
+	}
+
+	.modal-footer {
+		border-top: 1px solid var(--color-text);
+	}
+
+	.btn, button {
+		&.btn-light {
+			color: var(--color-text);
+			background-color: var(--bg-lighter);
+			border-width: 0px;
+		}
+
+        &.btn-outline-success {
+            border-color: $success;
+            &:hover {
+                background-color: $success;
+            }
+        }
+
+        &.btn-outline-danger {
+            border-color: $danger;
+            &:hover {
+                background-color: $danger;
+            }
+        }
+    }
+
+	.form-control{
+		&:focus {
+			border-color: inherit;
+			box-shadow: none;
+		}
+	}
+
+	.callout {
+        padding: 1rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border-left-width: 0.25rem;
+        border-radius: 0.25rem;
+
+         &.callout-info {
+			background-color: var(--info-dark-transparent);
+			border: 1px solid var(--info-dark-transparent);
+			border-left: 5px solid var(--info);
+        }
+
+        &.callout-danger {
+			background-color: var(--danger-dark-transparent);
+			border: 1px solid var(--danger-dark-transparent);
+			border-left: 5px solid var(--danger);
+        }
+    }
 
 	@keyframes on-pulse {
         0% {
