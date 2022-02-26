@@ -2,8 +2,7 @@ version: "3"
 services:
   app:
     container_name: upsnap_app
-    #image: seriousm4x/upsnap:latest
-    build: .
+    image: seriousm4x/upsnap:latest
     network_mode: host
     restart: unless-stopped
     environment:
@@ -12,13 +11,13 @@ services:
       - DB_TYPE=sqlite # required
       - REDIS_HOST=127.0.0.1 # required (make sure to use the same ip as below)
       - REDIS_PORT=6379 # required (make sure to use the same port as below)
-      - PING_INTERVAL=5 # optional (default: 5 seconds)
-      - DJANGO_SUPERUSER_USER=admin # optional (default: backend login disabled)
-      - DJANGO_SUPERUSER_PASSWORD=admin # optional (default: backend login disabled)
-      - DJANGO_SECRET_KEY=secret # optional (default: randomly generated)
-      - DJANGO_DEBUG=True # optional (default: False)
-      - DJANGO_LANGUAGE_CODE=de # optional (default: en)
-      - DJANGO_TIME_ZONE=Europe/Berlin # optional (default: UTC)
+      #- PING_INTERVAL=5 # optional (default: 5 seconds)
+      #- DJANGO_SUPERUSER_USER=admin # optional (default: backend login disabled)
+      #- DJANGO_SUPERUSER_PASSWORD=admin # optional (default: backend login disabled)
+      #- DJANGO_SECRET_KEY=secret # optional (default: randomly generated)
+      #- DJANGO_DEBUG=True # optional (default: False)
+      #- DJANGO_LANGUAGE_CODE=de # optional (default: en)
+      #- DJANGO_TIME_ZONE=Europe/Berlin # optional (default: UTC)
     depends_on:
       - upsnap_redis
   redis:

@@ -24,7 +24,7 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED 1
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update &&\
-apt-get install -y --no-install-recommends nodejs npm iputils-ping nmap &&\
+apt-get install -y --no-install-recommends default-mysql-client nodejs npm iputils-ping nmap &&\
 apt-get clean &&\
 rm -rf /var/lib/{apt,dpkg,cache,log}/
 COPY --from=python-build /python-build/venv /app/venv

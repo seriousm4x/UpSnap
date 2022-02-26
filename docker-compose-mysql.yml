@@ -6,23 +6,23 @@ services:
     network_mode: host
     restart: unless-stopped
     environment:
-      - DJANGO_SUPERUSER_USER=admin
-      - DJANGO_SUPERUSER_PASSWORD=admin
-      - DJANGO_SECRET_KEY=secret
-      - DJANGO_DEBUG=False
-      - DJANGO_LANGUAGE_CODE=de
-      - DJANGO_TIME_ZONE=Europe/Berlin
-      - DJANGO_PORT=8000
-      - REDIS_HOST=127.0.0.1
-      - REDIS_PORT=6379
-      - DB_TYPE=mysql
+      - FRONTEND_PORT=8000
+      - BACKEND_PORT=8001
+      - DB_TYPE=mysql # required
+      - REDIS_HOST=127.0.0.1 # required (make sure to use the same ip as below)
+      - REDIS_PORT=6379 # required (make sure to use the same port as below)
       - DB_HOST=127.0.0.1
       - DB_PORT=3306
       - DB_NAME=upsnap
       - DB_USER=upsnap
       - DB_PASSWORD=upsnap
-      - PING_INTERVAL=5
-      - ENABLE_NOTIFICATIONS=True
+      #- PING_INTERVAL=5 # optional (default: 5 seconds)
+      #- DJANGO_SUPERUSER_USER=admin # optional (default: backend login disabled)
+      #- DJANGO_SUPERUSER_PASSWORD=admin # optional (default: backend login disabled)
+      #- DJANGO_SECRET_KEY=secret # optional (default: randomly generated)
+      #- DJANGO_DEBUG=True # optional (default: False)
+      #- DJANGO_LANGUAGE_CODE=de # optional (default: en)
+      #- DJANGO_TIME_ZONE=Europe/Berlin # optional (default: UTC)
     depends_on:
       - upsnap_redis
       - upsnap_mysql
