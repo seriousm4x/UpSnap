@@ -178,7 +178,7 @@
                                 Cron
                             </label>
                         </div>
-                        <input id="inputCron{modalDevice.id}" type="text" class="form-control" placeholder="* /4 * * *" aria-label="Crontab" aria-describedby="addon-wrapping" bind:value={modalDevice["cron"]["value"]} disabled={!modalDevice["cron"]["enabled"]}>
+                        <input id="inputCron{modalDevice.id}" type="text" class="form-control" placeholder="* /4 * * *" aria-label="Crontab" aria-describedby="addon-wrapping" bind:value={modalDevice["cron"]["value"]} hidden={!modalDevice["cron"]["enabled"]}>
                         <div class="callout callout-info">
                             <p class="my-2">The cron field uses common cron syntax. Valid examples:</p>
                             <pre>Minute Hour DayOfMonth Month DayOfWeek
