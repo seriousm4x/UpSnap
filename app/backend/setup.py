@@ -17,7 +17,7 @@ if os.getenv("DJANGO_SUPERUSER_USER") and os.getenv("DJANGO_SUPERUSER_PASSWORD")
 [i.delete() for i in Websocket.objects.all()]
 Websocket.objects.create(visitors=0)
 
-# notifications
+# ping interval
 if os.environ.get("PING_INTERVAL"):
     ping_interval = os.environ.get("PING_INTERVAL")
 else:

@@ -19,11 +19,8 @@
 		store.subscribe(currentMessage => {
 			if (currentMessage.type == "init") {
 				// create devices
-				for (let index = 0; index < currentMessage.message.devices.length; index++) {
-					const element = currentMessage.message.devices[index];
-					devices.push(element);
-					devices = devices;
-				}
+				devices = [...currentMessage.message.devices]
+				devices = devices;
 				devices.sort(compare);
 				settings = currentMessage.message.settings;
 			} else if (currentMessage.type == "status") {
@@ -36,16 +33,15 @@
 					devices[index] = currentMessage.message;
 				}
 				devices.sort(compare)
-
 				// set device status
 				if (currentMessage.message.up == true) {
 					setUp(currentMessage.message);
 				} else {
 					setDown(currentMessage.message);
 				}
-			} else if (currentMessage.type == "wake") {
-				// set device waking
-				setWake(currentMessage.message)
+			} else if (currentMessage.type == "pending") {
+				// set device pending
+				setPending(currentMessage.message)
 			} else if (currentMessage.type == "visitor") {
 				// update visitor count
 				visitors = currentMessage.message;
@@ -120,7 +116,7 @@
 		}
 	}
 
-	function setWake(id) {
+	function setPending(id) {
 		const dot = document.querySelector(`#dot-${id}`);
 		const spinner = document.querySelector(`#spinner-${id}`);
 		dot.classList.add("d-none");
@@ -178,7 +174,7 @@
 	}
 
 	.modal-content {
-		background-color: var(--bg-lighter);
+		background-color: var(--bg-modal);
 	}
 
 	.modal-header {
@@ -224,8 +220,6 @@
 
 	.callout {
         padding: 1rem;
-        margin-top: 1.25rem;
-        margin-bottom: 1.25rem;
         border-left-width: 0.25rem;
         border-radius: 0.25rem;
 

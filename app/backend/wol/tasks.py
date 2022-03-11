@@ -5,10 +5,10 @@ import threading
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
-from django_celery_beat.models import PeriodicTask, CrontabSchedule
+from django_celery_beat.models import CrontabSchedule, PeriodicTask
 
+from wol.commands import shutdown, wake
 from wol.models import Device, Port, Websocket
-from wol.wake import wake
 
 channel_layer = get_channel_layer()
 
@@ -37,9 +37,14 @@ class WolDevice:
             "netmask": dev.netmask,
             "up": False,
             "ports": [],
-            "cron": {
+            "wake": {
                 "enabled": False,
-                "value": ""
+                "cron": ""
+            },
+            "shutdown": {
+                "enabled": False,
+                "cron": "",
+                "command": dev.shutdown_cmd
             }
         }
 
@@ -56,7 +61,8 @@ class WolDevice:
         if self.ping_device(dev.ip):
             data["up"] = True
             for port in dev.port.all():
-                index = next(i for i, d in enumerate(data["ports"]) if d["number"] == port.number)
+                index = next(i for i, d in enumerate(
+                    data["ports"]) if d["number"] == port.number)
                 if self.check_port(dev.ip, port.number):
                     data["ports"][index]["checked"] = True
                     data["ports"][index]["open"] = True
@@ -64,15 +70,19 @@ class WolDevice:
                     data["ports"][index]["checked"] = True
                     data["ports"][index]["open"] = False
 
-        # set cron for scheduled wake
-        try:
-            task = PeriodicTask.objects.filter(name=data["name"], task="wol.tasks.scheduled_wake", crontab_id__isnull=False).get()
-            if task:
-                cron = CrontabSchedule.objects.get(id=task.crontab_id)
-                data["cron"]["enabled"] = task.enabled
-                data["cron"]["value"] = " ".join([cron.minute, cron.hour, cron.day_of_week, cron.day_of_month, cron.month_of_year])
-        except PeriodicTask.DoesNotExist:
-            pass
+        # set cron for wake and shutdown
+        for action in ["wake", "shutdown"]:
+            try:
+                task = PeriodicTask.objects.filter(
+                    name=f"{data['name']}-{action}",
+                    task=f"wol.tasks.scheduled_{action}", crontab_id__isnull=False).get()
+                if task:
+                    wake = CrontabSchedule.objects.get(id=task.crontab_id)
+                    data[action]["enabled"] = task.enabled
+                    data[action]["cron"] = " ".join(
+                        [wake.minute, wake.hour, wake.day_of_week, wake.day_of_month, wake.month_of_year])
+            except PeriodicTask.DoesNotExist:
+                pass
 
         async_to_sync(channel_layer.group_send)(
             "wol", {"type": "send_group", "message": {
@@ -103,4 +113,32 @@ def scheduled_wake(id):
             task.delete()
         return
 
-    wake(device.mac, device.ip, device.netmask)
+    d = WolDevice()
+    up = d.ping_device(device.ip)
+    if not up:
+        wake(device.mac, device.ip, device.netmask)
+        async_to_sync(channel_layer.group_send)(
+            "wol", {"type": "send_group", "message": {
+                "type": "pending",
+                "message": id
+            }})
+
+
+@shared_task
+def scheduled_shutdown(id):
+    try:
+        device = Device.objects.get(id=id)
+    except Device.DoesNotExist:
+        for task in PeriodicTask.objects.filter(args=id):
+            task.delete()
+        return
+
+    d = WolDevice()
+    up = d.ping_device(device.ip)
+    if up:
+        shutdown(device.shutdown_cmd)
+        async_to_sync(channel_layer.group_send)(
+            "wol", {"type": "send_group", "message": {
+                "type": "pending",
+                "message": id
+            }})

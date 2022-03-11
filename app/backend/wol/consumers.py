@@ -4,13 +4,11 @@ import subprocess
 
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.utils.dateparse import parse_datetime
-from django.utils.timezone import make_aware
-from django_celery_beat.models import (ClockedSchedule, CrontabSchedule,
-                                       IntervalSchedule, PeriodicTask)
+from django_celery_beat.models import (CrontabSchedule, IntervalSchedule,
+                                       PeriodicTask)
 
+from wol.commands import shutdown, wake
 from wol.models import Device, Port, Settings, Websocket
-from wol.wake import wake
 
 
 class WSConsumer(AsyncWebsocketConsumer):
@@ -56,7 +54,18 @@ class WSConsumer(AsyncWebsocketConsumer):
                 "wol", {
                     "type": "send_group",
                     "message": {
-                        "type": "wake",
+                        "type": "pending",
+                        "message": received["id"]
+                    }
+                }
+            )
+        elif received["type"] == "shutdown":
+            await self.shutdown_device(received["id"])
+            await self.channel_layer.group_send(
+                "wol", {
+                    "type": "send_group",
+                    "message": {
+                        "type": "pending",
                         "message": received["id"]
                     }
                 }
@@ -78,8 +87,6 @@ class WSConsumer(AsyncWebsocketConsumer):
             await self.update_port(received["data"])
         elif received["type"] == "update_settings":
             await self.update_settings(received["data"])
-        elif received["type"] == "celery":
-            await self.celery_create_scheduled_wake(received["data"])
         elif received["type"] == "scan_network":
             await self.send(text_data=json.dumps({
                 "type": "scan_network",
@@ -116,6 +123,11 @@ class WSConsumer(AsyncWebsocketConsumer):
         wake(dev.mac, dev.ip, dev.netmask)
 
     @database_sync_to_async
+    def shutdown_device(self, id):
+        dev = Device.objects.filter(id=id).first()
+        shutdown(dev.shutdown_cmd)
+
+    @database_sync_to_async
     def get_all_devices(self):
         devices = Device.objects.all()
         d = []
@@ -127,9 +139,14 @@ class WSConsumer(AsyncWebsocketConsumer):
                 "mac": dev.mac,
                 "netmask": dev.netmask,
                 "ports": [],
-                "cron": {
+                "wake": {
                     "enabled": False,
-                    "value": ""
+                    "cron": ""
+                },
+                "shutdown": {
+                    "enabled": False,
+                    "cron": "",
+                    "command": dev.shutdown_cmd
                 }
             }
             for p in Port.objects.all().order_by("number"):
@@ -139,16 +156,18 @@ class WSConsumer(AsyncWebsocketConsumer):
                     "checked": False,
                     "open": False
                 })
-            try:
-                task = PeriodicTask.objects.filter(
-                    name=data["name"], task="wol.tasks.scheduled_wake", crontab_id__isnull=False).get()
-                if task:
-                    cron = CrontabSchedule.objects.get(id=task.crontab_id)
-                    data["cron"]["enabled"] = task.enabled
-                    data["cron"]["value"] = " ".join(
-                        [cron.minute, cron.hour, cron.day_of_week, cron.day_of_month, cron.month_of_year])
-            except PeriodicTask.DoesNotExist:
-                pass
+            for action in ["wake", "shutdown"]:
+                try:
+                    task = PeriodicTask.objects.filter(
+                        name=f"{data['name']}-{action}",
+                        task=f"wol.tasks.scheduled_{action}", crontab_id__isnull=False).get()
+                    if task:
+                        wake = CrontabSchedule.objects.get(id=task.crontab_id)
+                        data[action]["enabled"] = task.enabled
+                        data[action]["cron"] = " ".join(
+                            [wake.minute, wake.hour, wake.day_of_week, wake.day_of_month, wake.month_of_year])
+                except PeriodicTask.DoesNotExist:
+                    pass
             d.append(data)
         return d
 
@@ -164,7 +183,8 @@ class WSConsumer(AsyncWebsocketConsumer):
             defaults={
                 "name": data["name"],
                 "ip": data["ip"],
-                "netmask": data["netmask"]
+                "netmask": data["netmask"],
+                "shutdown_cmd": data["shutdown"]["command"]
             }
         )
         if data.get("ports"):
@@ -174,36 +194,37 @@ class WSConsumer(AsyncWebsocketConsumer):
                         number=port["number"], name=port["name"])
                     obj.port.add(p)
                 else:
-                    p = Port.objects.filter(number=port["number"])
-                    if p.exists():
+                    p = Port.objects.filter(number=port["number"]).first()
+                    if p and p in obj.port.all():
                         obj.port.remove(p)
 
-        if data.get("cron"):
-            if data["cron"]["enabled"]:
-                cron_value = data["cron"]["value"].strip().split(" ")
-                if not len(cron_value) == 5:
-                    return
-                minute, hour, dom, month, dow = cron_value
-                schedule, _ = CrontabSchedule.objects.get_or_create(
-                    minute=minute,
-                    hour=hour,
-                    day_of_week=dow,
-                    day_of_month=dom,
-                    month_of_year=month
-                )
-                PeriodicTask.objects.update_or_create(
-                    name=data["name"],
-                    defaults={
-                        "crontab": schedule,
-                        "task": "wol.tasks.scheduled_wake",
-                        "args": json.dumps([data["id"]]),
-                        "enabled": True
-                    }
-                )
-            else:
-                for task in PeriodicTask.objects.filter(name=data["name"], task="wol.tasks.scheduled_wake"):
-                    task.enabled = False
-                    task.save()
+        for action in ["wake", "shutdown"]:
+            if data.get(action):
+                if data[action]["enabled"]:
+                    cron = data[action]["cron"].strip().split(" ")
+                    if not len(cron) == 5:
+                        return
+                    minute, hour, dom, month, dow = cron
+                    schedule, _ = CrontabSchedule.objects.get_or_create(
+                        minute=minute,
+                        hour=hour,
+                        day_of_week=dow,
+                        day_of_month=dom,
+                        month_of_year=month
+                    )
+                    PeriodicTask.objects.update_or_create(
+                        name=f"{data['name']}-{action}",
+                        defaults={
+                            "crontab": schedule,
+                            "task": f"wol.tasks.scheduled_{action}",
+                            "args": json.dumps([data["id"]]),
+                            "enabled": True
+                        }
+                    )
+                else:
+                    for task in PeriodicTask.objects.filter(name=f"{data['name']}-{action}", task=f"wol.tasks.scheduled_{action}"):
+                        task.enabled = False
+                        task.save()
 
     @database_sync_to_async
     def update_port(self, data):
@@ -223,7 +244,8 @@ class WSConsumer(AsyncWebsocketConsumer):
         data = {
             "discovery": conf.scan_address,
             "interval": conf.interval,
-            "scan_network": []
+            "scan_network": [],
+            "notifications": conf.notifications
         }
         return data
 
@@ -235,7 +257,8 @@ class WSConsumer(AsyncWebsocketConsumer):
             id=1,
             defaults={
                 "scan_address": data["discovery"],
-                "interval": data["interval"]
+                "interval": data["interval"],
+                "notifications": data["notifications"]
             }
         )
         schedule, _ = IntervalSchedule.objects.get_or_create(
@@ -247,19 +270,6 @@ class WSConsumer(AsyncWebsocketConsumer):
             defaults={
                 "interval": schedule
             }
-        )
-
-    @database_sync_to_async
-    def celery_create_scheduled_wake(self, data):
-        aware_time = make_aware(parse_datetime(data["time"]))
-        schedule, _ = ClockedSchedule.objects.get_or_create(
-            clocked_time=aware_time
-        )
-        PeriodicTask.objects.get_or_create(
-            clocked=schedule,
-            name=data["name"],
-            task="wol.tasks.scheduled_wake",
-            args=json.dumps([data["id"]])
         )
 
     @database_sync_to_async

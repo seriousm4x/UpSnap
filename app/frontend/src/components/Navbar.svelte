@@ -5,9 +5,14 @@
     export let settings;
 
     let addDevice = {
-        cron: {
+        wake: {
             enabled: false,
-            value: ""
+            cron: ""
+        },
+        shutdown: {
+            enabled: false,
+            cron: "",
+            command: ""
         }
     }
 
@@ -125,13 +130,13 @@
                         <div class="col-sm">
                             <div class="mb-3">
                                 <label for="inputNameAddDevice" class="form-label">Device name</label>
-                                <input type="text" class="form-control" id="inputNameAddDevice" bind:value="{addDevice.name}" required>
+                                <input type="text" class="form-control" id="inputNameAddDevice" placeholder="Max PC" bind:value="{addDevice.name}" required>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                                 <label for="inputMacAddDevice" class="form-label">Mac address</label>
-                                <input type="text" class="form-control" id="inputMacAddDevice" bind:value="{addDevice.mac}" pattern="^([0-9A-Fa-f]{'{'}2{'}'}[:-]){'{'}5{'}'}([0-9A-Fa-f]{'{'}2{'}'})|([0-9a-fA-F]{'{'}4{'}'}\\.[0-9a-fA-F]{'{'}4{'}'}\\.[0-9a-fA-F]{'{'}4{'}'})$" required>
+                                <input type="text" class="form-control" id="inputMacAddDevice" placeholder="aa:aa:aa:aa:aa:aa" bind:value="{addDevice.mac}" pattern="^([0-9A-Fa-f]{'{'}2{'}'}[:-]){'{'}5{'}'}([0-9A-Fa-f]{'{'}2{'}'})|([0-9a-fA-F]{'{'}4{'}'}\\.[0-9a-fA-F]{'{'}4{'}'}\\.[0-9a-fA-F]{'{'}4{'}'})$" required>
                             </div>
                         </div>
                     </div>
@@ -139,13 +144,13 @@
                         <div class="col-sm">
                             <div class="mb-3">
                                 <label for="inputIpAddDevice" class="form-label">IP address</label>
-                                <input type="text" class="form-control" id="inputIpAddDevice" bind:value="{addDevice.ip}" pattern="^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){'{'}3{'}'}$" required>
+                                <input type="text" class="form-control" id="inputIpAddDevice" placeholder="192.168.1.1" bind:value="{addDevice.ip}" pattern="^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){'{'}3{'}'}$" required>
                             </div>
                         </div>
                         <div class="col-sm">
                             <div class="mb-3">
                                 <label for="inputNetmaskAddDevice" class="form-label">Netmask</label>
-                                <input type="text" class="form-control" id="inputNetmaskAddDevice" bind:value="{addDevice.netmask}" pattern="^(((255\.){'{'}3{'}'}(255|254|252|248|240|224|192|128|0+))|((255\.){'{'}2{'}'}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){'{'}2{'}'})|((255|254|252|248|240|224|192|128|0+)(\.0+){'{'}3{'}'}))$" required>
+                                <input type="text" class="form-control" id="inputNetmaskAddDevice" placeholder="255.255.255.0" bind:value="{addDevice.netmask}" pattern="^(((255\.){'{'}3{'}'}(255|254|252|248|240|224|192|128|0+))|((255\.){'{'}2{'}'}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){'{'}2{'}'})|((255|254|252|248|240|224|192|128|0+)(\.0+){'{'}3{'}'}))$" required>
                             </div>
                         </div>
                     </div>
@@ -156,8 +161,8 @@
                     </div>
                     <h5 class="fw-bold">Network discovery</h5>
                     {#if !settings.discovery}
-                        <div class="callout callout-danger">
-                            <p class="my-0">To enable this option, please enter your network address in the settings.</p>
+                        <div class="callout callout-danger mb-2">
+                            <p class="m-0">To enable this option, please enter your network address in the settings.</p>
                         </div>
                     {/if}
                     <button id="btnScan" class="btn btn-secondary" type="button" on:click={scanNetwork} disabled={!settings.discovery}>
@@ -239,8 +244,8 @@
                     </div>
                 </div>
                 <h5 class="fw-bold">Backup/Restore</h5>
-                <div class="callout callout-info">
-                    <p class="mb-0">Backup file structure has changed in v2. You can still restore both versions with this file upload.</p>
+                <div class="callout callout-info mb-2">
+                    <p class="m-0">Backup file structure has changed in v2. You can still restore both versions with this file upload.</p>
                 </div>
                 <div class="mb-3">
                     <label for="inputRestore" class="form-label">Restore from .json</label>
