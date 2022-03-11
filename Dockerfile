@@ -24,7 +24,7 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED 1
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update &&\
-apt-get install -y --no-install-recommends default-mysql-client nodejs npm iputils-ping nmap samba-common sshpass &&\
+apt-get install -y --no-install-recommends default-mysql-client nodejs npm iputils-ping nmap samba-common-bin openssh-client sshpass &&\
 apt-get clean &&\
 rm -rf /var/lib/{apt,dpkg,cache,log}/
 COPY --from=python-build /opt/venv /opt/venv

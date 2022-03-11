@@ -136,7 +136,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {JSON.stringify(modalDevice)}
                     <form id="form-{modalDevice.id}" on:submit|preventDefault={updateDevice}>
                         <!-- general -->
                         <h5 class="fw-bold">General</h5>
@@ -225,7 +224,7 @@
                         <p class="mb-2">Set the shutdown command here. This shell command will be executed when clicking the power button on the device card. You can use cron below, which will then execute the command at the given time.</p>
                         <div class="input-group">
                             <span class="input-group-text rounded-0 rounded-start" id="shutdown-command-{modalDevice.id}">Command</span>
-                            <input type="text" class="form-control rounded-0 rounded-end" placeholder="sshpass -p your_password ssh user@hostname 'sudo shutdown'" aria-label="Ccommand" aria-describedby="shutdown-command-{modalDevice.id}" bind:value={modalDevice["shutdown"]["command"]}>
+                            <input type="text" class="form-control rounded-0 rounded-end" placeholder="sshpass -p your_password ssh -o 'StrictHostKeyChecking=no' user@hostname 'sudo shutdown'" aria-label="Ccommand" aria-describedby="shutdown-command-{modalDevice.id}" bind:value={modalDevice["shutdown"]["command"]}>
                         </div>
                         <button class="btn btn-secondary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#info-shutdown" aria-expanded="false" aria-controls="info-shutdown">
                             <i class="fa-solid fa-angle-down me-2"></i>How to use
@@ -236,10 +235,10 @@
                                 <div class="callout callout-danger mb-2">Note: This command is safed as cleartext. Meaning, passwords are clearly visible in the database.</div>
                                 <p class="mb-2">Examples:</p>
                                 <pre class="mb-2"># wake linux hosts
-                                    sshpass -p your_password ssh user@hostname 'sudo shutdown'
+                                    sshpass -p your_password ssh -o 'StrictHostKeyChecking=no' user@hostname 'sudo shutdown'
 
                                     # wake windows hosts
-                                    net rpc shutdown --ipaddress 192.168.0.1 --user user%password
+                                    net rpc shutdown --ipaddress 192.168.1.1 --user user%password
                                 </pre>
                                 <p class="mb-0">Read more about <a href="https://linux.die.net/man/1/sshpass" target="_blank">sshpass</a> or <a href="https://linux.die.net/man/8/net" target="_blank">net rpc</a>.</p>
                             </div>

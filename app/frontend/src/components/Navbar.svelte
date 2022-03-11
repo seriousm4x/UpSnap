@@ -176,7 +176,7 @@
                                     <td>Name</td>
                                     <td>IP</td>
                                     <td>Netmask</td>
-                                    <td>MAC</td>
+                                    <td>Mac</td>
                                     <td>Add</td>
                                 </tr>
                             </thead>
@@ -263,6 +263,10 @@
 </div>
 
 <style lang="scss" global>
+    .table {
+        color: var(--color-text);
+    }
+
     .navbar-brand {
         color: var(--color-text);
     }

@@ -305,6 +305,16 @@ class WSConsumer(AsyncWebsocketConsumer):
                     "name": name,
                     "ip": ip,
                     "netmask": netmask,
-                    "mac": mac
+                    "mac": mac,
+                    "ports": [],
+                    "wake": {
+                        "enabled": False,
+                        "cron": ""
+                    },
+                    "shutdown": {
+                        "enabled": False,
+                        "cron": "",
+                        "command": ""
+                    }
                 })
         return data
