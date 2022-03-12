@@ -1,23 +1,7 @@
 #!/bin/sh
 
-# set ping interval
-if [ -z "$PING_INTERVAL" ]; then
-    PING_INTERVAL=5
-elif [ "$PING_INTERVAL" -lt 5 ]; then
-    echo ""
-    echo "Ping interval lower than 5 seconds is not recommended. Please use an interval of 5 seconds or higher. Automatically set to 5 seconds."
-    echo ""
-    PING_INTERVAL=5
-fi
-
-# create django secret key
-cd /app/backend/ || exit
-if [ -z "$DJANGO_SECRET_KEY" ]; then
-    DJANGO_SECRET_KEY=$(python3 -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')
-    export DJANGO_SECRET_KEY
-fi
-
 # init django
+cd /app/backend/ || exit
 python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py collectstatic --noinput

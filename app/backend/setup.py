@@ -1,7 +1,6 @@
 import os
 
 from django.contrib.auth.models import User
-from django.core.management.utils import get_random_secret_key
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
 
 from wol.models import Settings, Websocket
@@ -19,7 +18,11 @@ Websocket.objects.create(visitors=0)
 
 # ping interval
 if os.environ.get("PING_INTERVAL"):
-    ping_interval = os.environ.get("PING_INTERVAL")
+    if int(os.environ.get("PING_INTERVAL")) < 5:
+        print("Ping interval lower than 5 seconds is not recommended. Please use an interval of 5 seconds or higher. Automatically set to 5 seconds.")
+        ping_interval = 5
+    else:
+        ping_interval = int(os.environ.get("PING_INTERVAL"))
 else:
     ping_interval = 5
 Settings.objects.update_or_create(
