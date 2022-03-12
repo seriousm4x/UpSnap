@@ -23,7 +23,7 @@
 
 | Dark                 | Light                 |
 | -------------------- | --------------------- |
-| ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/index-dark.png.png) | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/index-light.png) |
+| ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/index-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/index-light.png) |
 | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/device-settings-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/device-settings-light.png) |
 | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/settings-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/settings-light.png) |
 | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/add-device-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/add-device-light.png) |
