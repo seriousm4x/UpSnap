@@ -184,7 +184,7 @@ class WSConsumer(AsyncWebsocketConsumer):
                 "name": data["name"],
                 "ip": data["ip"],
                 "netmask": data["netmask"],
-                "shutdown_cmd": data["shutdown"]["command"]
+                "shutdown_cmd": data["shutdown"]["command"] if data.get("shutdown") else ""
             }
         )
         if data.get("ports"):
