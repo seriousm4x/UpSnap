@@ -31,6 +31,7 @@
             type: "update_settings",
             data: settings
         })
+        hideModal("settings");
     }
 
     function scanNetwork() {
@@ -70,12 +71,19 @@
                 }
             }
         }
+        hideModal("settings");
     }
 
     function backupToFile() {
         store.sendMessage({
             type: "backup"
         })
+    }
+
+    function hideModal(id) {
+        const modalEl = document.querySelector(`#${id}`);
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        modal.hide();
     }
 
 </script>
@@ -103,7 +111,7 @@
                             </button>
                         </li>
                         <li>
-                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Settings">
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#settings">
                                 <i class="fa-solid fa-sliders me-2"></i>Settings
                             </button>
                         </li>
@@ -203,7 +211,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="Settings" tabindex="-1" aria-labelledby="settingsLabel" aria-hidden="true">
+<div class="modal fade" id="settings" tabindex="-1" aria-labelledby="settingsLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
