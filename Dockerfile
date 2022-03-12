@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED 1
 ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /python-build
 RUN apt-get update &&\
-apt-get install -y --no-install-recommends build-essential python3 python3-dev python3-pip python3-venv default-libmysqlclient-dev libpq-dev &&\
+apt-get install -y --no-install-recommends build-essential libffi-dev libssl-dev cargo python3 python3-dev python3-pip python3-venv default-libmysqlclient-dev libpq-dev &&\
 python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 COPY app/backend/requirements.txt .
