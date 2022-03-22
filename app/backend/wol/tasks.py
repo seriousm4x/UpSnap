@@ -5,6 +5,7 @@ import threading
 from asgiref.sync import async_to_sync
 from celery import shared_task
 from channels.layers import get_channel_layer
+from django.db import connection
 from django_celery_beat.models import CrontabSchedule, PeriodicTask
 
 from wol.commands import shutdown, wake
@@ -89,6 +90,8 @@ class WolDevice:
                 "type": "status",
                 "message": data
             }})
+
+        connection.close()
 
 
 @shared_task
