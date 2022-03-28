@@ -23,8 +23,8 @@
     "@rollup/plugin-replace": "^4.0.0",
     "bootstrap": "^5.1.3",
     "dotenv": "^16.0.0",
-    "node-sass": "^7.0.1",
     "postcss": "^8.4.6",
+    "sass": "^1.49.9",
     "sirv-cli": "^2.0.0",
     "svelte-preprocess": "^4.10.3"
   }
