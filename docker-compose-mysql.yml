@@ -39,7 +39,7 @@ services:
       interval: 10s
   mysql:
     container_name: upsnap_mysql
-    image: mysql
+    image: mariadb
     restart: unless-stopped
     ports:
       - "3306:3306"
