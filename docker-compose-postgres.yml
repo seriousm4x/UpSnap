@@ -34,6 +34,7 @@ services:
     ports:
       - "6379:6379"
     restart: unless-stopped
+    command: redis-server --loglevel warning
     healthcheck:
       test: redis-cli ping
       interval: 10s
