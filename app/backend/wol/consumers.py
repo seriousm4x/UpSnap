@@ -140,6 +140,7 @@ class WSConsumer(AsyncWebsocketConsumer):
                 "ip": dev.ip,
                 "mac": dev.mac,
                 "netmask": dev.netmask,
+                "link": dev.link,
                 "ports": [],
                 "wake": {
                     "enabled": False,
@@ -186,6 +187,7 @@ class WSConsumer(AsyncWebsocketConsumer):
                 "name": data["name"],
                 "ip": data["ip"],
                 "netmask": data["netmask"],
+                "link": data["link"],
                 "shutdown_cmd": data["shutdown"]["command"] if data.get("shutdown") else ""
             }
         )
@@ -309,6 +311,7 @@ class WSConsumer(AsyncWebsocketConsumer):
                     "ip": ip,
                     "netmask": netmask,
                     "mac": mac,
+                    "link": "",
                     "ports": [],
                     "wake": {
                         "enabled": False,

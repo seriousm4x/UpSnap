@@ -13,6 +13,7 @@ class Device(models.Model):
     ip = models.GenericIPAddressField()
     mac = models.CharField(max_length=17)
     netmask = models.CharField(max_length=15, default="255.255.255.0", blank=False, null=False)
+    link = models.URLField(blank=True, null=True)
     port = models.ManyToManyField(Port, blank=True)
     shutdown_cmd = models.TextField(null=True, blank=True)
 

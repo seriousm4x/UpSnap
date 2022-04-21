@@ -161,6 +161,13 @@
                                 <input type="text" class="form-control" id="inputNetmaskAddDevice" placeholder="255.255.255.0" bind:value="{addDevice.netmask}" pattern="^(((255\.){'{'}3{'}'}(255|254|252|248|240|224|192|128|0+))|((255\.){'{'}2{'}'}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){'{'}2{'}'})|((255|254|252|248|240|224|192|128|0+)(\.0+){'{'}3{'}'}))$" required>
                             </div>
                         </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="inputLinkAddDevice" class="form-label">Web link</label>
+                                <input type="text" class="form-control" id="inputILinkAddDevice" placeholder="http://...." bind:value="{addDevice.link}">
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-auto ms-auto">

@@ -113,7 +113,11 @@
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                 </div>
             </div>
-            <h5 class="card-title fw-bold my-2">{device.name}</h5>
+            {#if device.link}
+                <h5 class="card-title fw-bold my-2"><a class="inherit-color" href={device.link}>{device.name}</a></h5>
+            {:else}
+                <h5 class="card-title fw-bold my-2">{device.name}</h5>
+            {/if}
             <h6 class="card-subtitle mb-2 text-muted">{device.ip}</h6>
             <ul class="list-group">
                 {#each device.ports as port}
@@ -149,7 +153,7 @@
                                 <input type="text" class="form-control" id="inputMac{modalDevice.mac}" bind:value="{modalDevice.mac}" required>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-sm">
                                 <label for="inputIp{modalDevice.id}" class="form-label">IP address</label>
                                 <input type="text" class="form-control" id="inputIp{modalDevice.id}" bind:value="{modalDevice.ip}" pattern="^([01]?\d\d?|2[0-4]\d|25[0-5])(?:\.(?:[01]?\d\d?|2[0-4]\d|25[0-5])){'{'}3{'}'}$" required>
@@ -157,6 +161,14 @@
                             <div class="col-sm">
                                 <label for="inputNetmask{modalDevice.id}" class="form-label">Netmask</label>
                                 <input type="text" class="form-control" id="inputNetmask{modalDevice.id}" bind:value="{modalDevice.netmask}" pattern="^(((255\.){'{'}3{'}'}(255|254|252|248|240|224|192|128|0+))|((255\.){'{'}2{'}'}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){'{'}2{'}'})|((255|254|252|248|240|224|192|128|0+)(\.0+){'{'}3{'}'}))$" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label for="inputLinkAddDevice" class="form-label">Web link</label>
+                                    <input type="text" class="form-control" id="inputILinkAddDevice" placeholder="http://...." bind:value="{modalDevice.link}">
+                                </div>
                             </div>
                         </div>
                         <!-- ports -->
@@ -326,5 +338,9 @@
 
     .list-group-item {
         color: var(--color-text);
+    }
+
+    .inherit-color {
+        color: inherit;
     }
 </style>

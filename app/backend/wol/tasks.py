@@ -37,6 +37,7 @@ class WolDevice:
             "mac": dev.mac,
             "netmask": dev.netmask,
             "up": False,
+            "link": dev.link,
             "ports": [],
             "wake": {
                 "enabled": False,
