@@ -1,7 +1,9 @@
 import ipaddress
 import json
+import os
 import subprocess
 
+import pytz
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django_celery_beat.models import (CrontabSchedule, IntervalSchedule,
@@ -210,7 +212,8 @@ class WSConsumer(AsyncWebsocketConsumer):
                         hour=hour,
                         day_of_week=dow,
                         day_of_month=dom,
-                        month_of_year=month
+                        month_of_year=month,
+                        timezone = pytz.timezone(os.getenv("DJANGO_TIME_ZONE", "UTC"))
                     )
                     PeriodicTask.objects.update_or_create(
                         name=f"{data['name']}-{action}",

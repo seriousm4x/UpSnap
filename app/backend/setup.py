@@ -1,7 +1,7 @@
 import os
 
 from django.contrib.auth.models import User
-from django_celery_beat.models import IntervalSchedule, PeriodicTask
+from django_celery_beat.models import IntervalSchedule, PeriodicTask, PeriodicTasks
 
 from wol.models import Settings, Websocket
 
@@ -43,3 +43,9 @@ if created:
         name="Ping all devices",
         task="wol.tasks.ping_all_devices"
     )
+
+# reset last run to fix time zone changes
+# https://django-celery-beat.readthedocs.io/en/latest/#important-warning-about-time-zones
+PeriodicTask.objects.update(last_run_at=None)
+for task in PeriodicTask.objects.all():
+    PeriodicTasks.changed(task)
