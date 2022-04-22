@@ -162,12 +162,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-3">
-                                <label for="inputLinkAddDevice" class="form-label">Web link</label>
-                                <input type="text" class="form-control" id="inputILinkAddDevice" placeholder="http://...." bind:value="{addDevice.link}">
-                            </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="inputLinkAddDevice" class="form-label">Web link</label>
+                            <input type="text" class="form-control" id="inputILinkAddDevice" placeholder="http://...." bind:value="{addDevice.link}">
                         </div>
                     </div>
                     <div class="row">
