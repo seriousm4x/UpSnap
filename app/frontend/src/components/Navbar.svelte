@@ -67,6 +67,7 @@
                 // v1 file restore
                 for (const [key, value] of Object.entries(data)) {
                     value["mac"] = key
+                    value["link"] = ""
                     updateDevice(value)
                 }
             }
