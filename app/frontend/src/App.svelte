@@ -70,6 +70,12 @@
 				a.href = URL.createObjectURL(file);
 				a.download = fileName;
 				a.click();
+			} else if (currentMessage.type == "operationStatus") {
+				if (currentMessage.message == "Success") {
+					showToast(currentMessage.message, "Device was saved and will be visible on next ping", "success")
+				} else if (currentMessage.message == "Error") {
+					showToast(currentMessage.message, "Error while saving the device. Please check the logs.", "danger")
+				}
 			}
 		})
 	})

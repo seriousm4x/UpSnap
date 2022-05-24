@@ -84,7 +84,17 @@ class WSConsumer(AsyncWebsocketConsumer):
                 }
             )
         elif received["type"] == "update_device":
-            await self.update_device(received["data"])
+            try:
+                await self.update_device(received["data"])
+                await self.send(text_data=json.dumps({
+                    "type": "operationStatus",
+                    "message": "Success"
+                }))
+            except Exception as e:
+                await self.send(text_data=json.dumps({
+                    "type": "operationStatus",
+                    "message": "Error"
+                }))
         elif received["type"] == "update_port":
             await self.update_port(received["data"])
         elif received["type"] == "update_settings":
