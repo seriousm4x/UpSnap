@@ -90,7 +90,7 @@ class WSConsumer(AsyncWebsocketConsumer):
                     "type": "operationStatus",
                     "message": "Success"
                 }))
-            except Exception as e:
+            except Exception:
                 await self.send(text_data=json.dumps({
                     "type": "operationStatus",
                     "message": "Error"
