@@ -1,26 +1,26 @@
 <script>
-    import store from '../store.js';
+    import socketStore from '../socketStore.js';
     export let device;
 
     let modalDevice = JSON.parse(JSON.stringify(device));
     let customPort = {}
 
 	function wake(id) {
-        store.sendMessage({
+        socketStore.sendMessage({
             type: "wake",
             id: id
         })
 	}
 
     function shutdown(id) {
-        store.sendMessage({
+        socketStore.sendMessage({
             type: "shutdown",
             id: id
         })
 	}
 
 	function deleteDevice() {
-        store.sendMessage({
+        socketStore.sendMessage({
             type: "delete_device",
             id: modalDevice.id
         })
@@ -28,7 +28,7 @@
 
     function updateDevice() {
         device = modalDevice;
-        store.sendMessage({
+        socketStore.sendMessage({
             type: "update_device",
             data: modalDevice
         })
@@ -56,7 +56,7 @@
         }
         modalDevice = modalDevice;
         // send to backend
-        store.sendMessage({
+        socketStore.sendMessage({
             type: "update_port",
             data: customPort
         })

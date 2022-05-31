@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import store from './store.js';
+	import socketStore from './socketStore.js';
 	import Navbar from "./components/Navbar.svelte";
 	import DeviceCard from "./components/DeviceCard.svelte";
 	import Toast from "./components/Toast.svelte";
@@ -16,7 +16,17 @@
 	}
 
 	onMount(() => {
-		store.subscribe(currentMessage => {
+		socketStore.subscribeStatus(status => {
+			if (status == "open") {
+				showToast("Websocket", "Connected", "success")
+			} else if (status == "close") {
+				showToast("Websocket", "Connection closed. Trying to reconnect ...", "danger")
+			} else if (status == "error") {
+				showToast("Websocket", "Error when connecting to websocket", "danger")
+			}
+		})
+
+		socketStore.subscribeMsg(currentMessage => {
 			if (currentMessage.type == "init") {
 				// create devices
 				devices = [...currentMessage.message.devices]
@@ -72,7 +82,7 @@
 				a.click();
 			} else if (currentMessage.type == "operationStatus") {
 				if (currentMessage.message == "Success") {
-					showToast(currentMessage.message, "Device was saved and will be visible on next ping", "success")
+					showToast(currentMessage.message, "Changes were saved", "success")
 				} else if (currentMessage.message == "Error") {
 					showToast(currentMessage.message, "Error while saving the device. Please check the logs.", "danger")
 				}

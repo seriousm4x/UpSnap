@@ -1,5 +1,5 @@
 <script>
-    import store from '../store.js';
+    import socketStore from '../socketStore.js';
     import DarkToggle from "./DarkToggle.svelte";
     export let visitors;
     export let settings;
@@ -20,14 +20,14 @@
         if (Object.keys(data).length < 4) {
             return
         }
-        store.sendMessage({
+        socketStore.sendMessage({
             type: "update_device",
             data: data
         })
     }
 
     function updateSettings() {
-        store.sendMessage({
+        socketStore.sendMessage({
             type: "update_settings",
             data: settings
         })
@@ -35,7 +35,7 @@
     }
 
     function scanNetwork() {
-        store.sendMessage({
+        socketStore.sendMessage({
             type: "scan_network"
         })
         const btnScan = document.querySelector("#btnScan");
@@ -76,7 +76,7 @@
     }
 
     function backupToFile() {
-        store.sendMessage({
+        socketStore.sendMessage({
             type: "backup"
         })
     }
