@@ -178,7 +178,7 @@ class WSConsumer(AsyncWebsocketConsumer):
                         wake = CrontabSchedule.objects.get(id=task.crontab_id)
                         data[action]["enabled"] = task.enabled
                         data[action]["cron"] = " ".join(
-                            [wake.minute, wake.hour, wake.day_of_week, wake.day_of_month, wake.month_of_year])
+                            [wake.minute, wake.hour, wake.day_of_month, wake.month_of_year, wake.day_of_week])
                 except PeriodicTask.DoesNotExist:
                     pass
             d.append(data)
