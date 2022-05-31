@@ -38,6 +38,10 @@ The website will be available at [localhost:8000](http://localhost:8000). If you
 
 Upsnap supports 3 different databases. Postgres, MySQL and SQLite. If you already have an existing database you want to use, delete the database container from the compose file. Always make sure to set the correct database type environment variable, e.g. DB_TYPE=mysql
 
+### Windows
+
+There is a partly working solution in the [issue here](https://github.com/seriousm4x/UpSnap/issues/20#issuecomment-1142593360). Windows has problems with docker networking mode host, which breaks network scan. Sending wol packages works though.
+
 ## 📝 Other infos
 
 * The app container needs to run in host network mode to send the wakeonlan command on your local network. Therefore all other containers also need to run in host network mode. I don't like it but there is no way around.
