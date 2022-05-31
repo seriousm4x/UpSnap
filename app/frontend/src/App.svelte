@@ -90,11 +90,9 @@
 			dot.style.animation = "none";
 			dot.offsetWidth;
 			if (!spinner.classList.contains("d-none")) {
-				if (dot.classList.contains("danger")) {
-					spinner.classList.add("d-none");
-					dot.classList.remove("d-none", "danger");
-					dot.classList.add("success");
-				}
+				spinner.classList.add("d-none");
+				dot.classList.remove("d-none", "danger");
+				dot.classList.add("success");
 			} else {
 				dot.style.animation = "on-pulse 1s normal";
 			}
@@ -111,11 +109,9 @@
 			dot.style.animation = "none";
 			dot.offsetWidth;
 			if (!spinner.classList.contains("d-none")) {
-				if (dot.classList.contains("success")) {
-					spinner.classList.add("d-none");
-					dot.classList.remove("d-none", "success");
-					dot.classList.add("danger");
-				}
+				spinner.classList.add("d-none");
+				dot.classList.remove("d-none", "success");
+				dot.classList.add("danger");
 			} else {
 				dot.style.animation = "off-pulse 1s normal";
 			}
