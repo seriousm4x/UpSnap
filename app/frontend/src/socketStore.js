@@ -4,9 +4,10 @@ import {
 
 const status = writable('');
 const message = writable('');
+let socket;
 
 function initSocket() {
-    const socket = new WebSocket(`ws://${location.hostname}:${BACKEND_PORT}/wol/`);
+    socket = new WebSocket(`ws://${location.hostname}:${BACKEND_PORT}/wol/`);
 
     // Connection opened
     socket.addEventListener('open', function () {
