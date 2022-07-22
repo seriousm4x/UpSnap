@@ -8,7 +8,7 @@ let socket;
 
 function initSocket() {
     if (BACKEND_IS_PROXIED) {
-        const socketUrl = new URL('/wol/', window.location.href);
+        const socketUrl = new URL('wol/', window.location.href);
         socketUrl.protocol = socketUrl.protocol.replace('http', 'ws');
 
         socket = new WebSocket(socketUrl);
