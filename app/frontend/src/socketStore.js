@@ -7,7 +7,15 @@ const message = writable('');
 let socket;
 
 function initSocket() {
-    socket = new WebSocket(`ws://${location.hostname}:${BACKEND_PORT}/wol/`);
+    if (BACKEND_IS_PROXIED) {
+        const socketUrl = new URL('wol/', window.location.href);
+        socketUrl.protocol = socketUrl.protocol.replace('http', 'ws');
+
+        socket = new WebSocket(socketUrl);
+    }
+    else {
+        socket = new WebSocket(`ws://${location.hostname}:${BACKEND_PORT}/wol/`);
+    }
 
     // Connection opened
     socket.addEventListener('open', function () {

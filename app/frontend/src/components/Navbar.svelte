@@ -92,7 +92,7 @@
 <nav class="navbar navbar-expand-sm">
     <div class="container-fluid">
         <div class="navbar-brand" href="/">
-            <img src="/favicon.png" alt="Logo" width="24" height="24" class="me-2">
+            <img src="favicon.png" alt="Logo" width="24" height="24" class="me-2">
             UpSnap
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

@@ -285,3 +285,6 @@ $RECYCLE.BIN/
 
 .vscode
 staticfiles
+
+# JetBrains WebStorm
+.idea/
