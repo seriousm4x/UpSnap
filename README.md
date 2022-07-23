@@ -34,6 +34,18 @@ There are 3 example docker-compose files to choose from. The simplest is [docker
 
 The website will be available at [localhost:8000](http://localhost:8000). If you run it on a different pc, it will be `http://<your-ip>:8000`. You can change the port in the docker-compose file.
 
+### Reverse Proxy
+
+If you're using a reverse proxy, make sure to set `BACKEND_IS_PROXIED` to true in docker-compose. Set your reverse proxy to the `FRONTEND_PORT` and set `/wol/` to `BACKEND_PORT`.
+
+**Caddy example**
+```
+upsnap.example.com {
+    reverse_proxy localhost:8000
+    reverse_proxy /wol/ localhost:8001
+}
+```
+
 ### Databases
 
 Upsnap supports 3 different databases. Postgres, MySQL and SQLite. If you already have an existing database you want to use, delete the database container from the compose file. Always make sure to set the correct database type environment variable, e.g. DB_TYPE=mysql

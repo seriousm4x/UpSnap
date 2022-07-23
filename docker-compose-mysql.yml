@@ -8,6 +8,7 @@ services:
     environment:
       - FRONTEND_PORT=8000
       - BACKEND_PORT=8001
+      - BACKEND_IS_PROXIED=false # set this to true, if you use a reverse proxy
       - DB_TYPE=mysql # required
       - REDIS_HOST=127.0.0.1 # required (make sure to use the same ip as below)
       - REDIS_PORT=6379 # required (make sure to use the same port as below)
