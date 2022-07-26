@@ -288,3 +288,6 @@ staticfiles
 
 # JetBrains WebStorm
 .idea/
+
+# custom
+docker-compose.yml

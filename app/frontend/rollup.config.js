@@ -64,7 +64,9 @@ export default {
 					src: [
 						"node_modules/@fortawesome/fontawesome-free/webfonts",
 						"node_modules/bootstrap/dist/js/bootstrap.min.js",
-						"node_modules/bootstrap/dist/js/bootstrap.min.js.map"
+						"node_modules/bootstrap/dist/js/bootstrap.min.js.map",
+						"node_modules/@popperjs/core/dist/umd/popper.min.js",
+						"node_modules/@popperjs/core/dist/umd/popper.min.js.map"
 					],
 					dest: "public/build/"
 				}
