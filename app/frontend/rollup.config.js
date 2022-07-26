@@ -52,7 +52,7 @@ export default {
 		}),
 		replace({
 			BACKEND_PORT: JSON.stringify(process.env.BACKEND_PORT),
-			BACKEND_IS_PROXIED: JSON.stringify(process.env.BACKEND_IS_PROXIED).toLowerCase() === 'true',
+			BACKEND_IS_PROXIED: JSON.stringify(process.env.BACKEND_IS_PROXIED.toLowerCase() === 'true'),
 			preventAssignment: true
 		}),
 		// we'll extract any component CSS out into
