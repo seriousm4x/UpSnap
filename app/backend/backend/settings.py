@@ -116,7 +116,7 @@ elif os.getenv("DB_TYPE") == "sqlite":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME"  : "db.sqlite3",
+            "NAME": "/app/backend/db/db.sqlite3",
         }
     }
 
