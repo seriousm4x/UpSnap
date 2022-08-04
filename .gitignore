@@ -291,3 +291,4 @@ staticfiles
 
 # custom
 docker-compose.yml
+db/
