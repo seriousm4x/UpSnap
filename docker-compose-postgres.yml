@@ -24,6 +24,7 @@ services:
       #- DJANGO_DEBUG=True # optional (default: False)
       #- DJANGO_LANGUAGE_CODE=de # optional (default: en)
       #- DJANGO_TIME_ZONE=Europe/Berlin # optional (default: UTC)
+      #- NMAP_ARGS=-sP # optional, set this if your devices need special nmap args so they can be found (default: -sP)
     depends_on:
       redis:
         condition: service_healthy

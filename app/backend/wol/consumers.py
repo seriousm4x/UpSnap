@@ -225,7 +225,8 @@ class WSConsumer(AsyncWebsocketConsumer):
                         day_of_week=dow,
                         day_of_month=dom,
                         month_of_year=month,
-                        timezone = pytz.timezone(os.getenv("DJANGO_TIME_ZONE", "UTC"))
+                        timezone=pytz.timezone(
+                            os.getenv("DJANGO_TIME_ZONE", "UTC"))
                     )
                     PeriodicTask.objects.update_or_create(
                         name=f"{data['name']}-{action}",
@@ -297,7 +298,7 @@ class WSConsumer(AsyncWebsocketConsumer):
             return
 
         p = subprocess.Popen(
-            ["nmap", "-sP", conf.scan_address], stdout=subprocess.PIPE)
+            ["nmap", os.getenv("NMAP_ARGS", "-sP"), conf.scan_address], stdout=subprocess.PIPE)
         out = p.communicate()[0].decode("utf-8")
         ip_line = "Nmap scan report for"
         mac_line = "MAC Address:"
