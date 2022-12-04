@@ -3,10 +3,20 @@
 </script>
 
 <div class="position-fixed bottom-0 end-0 p-3 toast-container">
-    <div class="toast fade {toast.show ? 'show' : 'hide'} {toast.color}-bg" role="alert" aria-live="assertive" aria-atomic="true">
+    <div
+        class="toast fade {toast.show ? 'show' : 'hide'} {toast.color}-bg"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+    >
         <div class="toast-header">
             <strong id="toast-title" class="me-auto">{toast.title}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+            />
         </div>
         <div class="toast-body fw-bold">
             {toast.message}
@@ -18,19 +28,19 @@
     @import "../variables.scss";
 
     .toast-container {
-		z-index: 11;
-		border-radius: $toast-border-radius;
+        z-index: 11;
+        border-radius: $toast-border-radius;
 
-        div>.toast-body {
+        div > .toast-body {
             color: $dark-lighter;
         }
-	}
+    }
 
-	.success-bg {
+    .success-bg {
         background-color: var(--success);
     }
 
-	.danger-bg {
+    .danger-bg {
         background-color: var(--danger);
     }
 </style>
