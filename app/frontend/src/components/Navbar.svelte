@@ -3,6 +3,7 @@
     import DarkToggle from "./DarkToggle.svelte";
     export let visitors;
     export let settings;
+    const pagetitle = PAGE_TITLE ? PAGE_TITLE : "UpSnap";
 
     let addDevice = {
         wake: {
@@ -88,6 +89,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>{pagetitle}</title>
+</svelte:head>
+
 <nav class="navbar navbar-expand-sm">
     <div class="container-fluid">
         <div class="navbar-brand" href="/">
@@ -98,7 +103,7 @@
                 height="24"
                 class="me-2"
             />
-            UpSnap
+            {pagetitle}
         </div>
         <button
             class="navbar-toggler"

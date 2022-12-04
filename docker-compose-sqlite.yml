@@ -20,6 +20,7 @@ services:
       #- DJANGO_LANGUAGE_CODE=de # optional (default: en)
       #- DJANGO_TIME_ZONE=Europe/Berlin # optional (default: UTC)
       #- NMAP_ARGS=-sP # optional, set this if your devices need special nmap args so they can be found (default: -sP)
+      #- PAGE_TITLE=Custom Title # optional, set a custom page title (default: UpSnap)
     volumes:
       - ./db/:/app/backend/db/
     depends_on:
