@@ -1,6 +1,6 @@
 celery[redis]
 channels
-channels-redis
+channels-redis==3.4.1
 django
 django-celery-beat
 gunicorn
