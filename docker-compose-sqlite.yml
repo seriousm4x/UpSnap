@@ -1,12 +1,22 @@
 version: "3"
 services:
-  app:
-    container_name: upsnap_app
-    image: seriousm4x/upsnap:latest
+  upsnap_frontend:
+    container_name: upsnap_frontend
+    build:
+      context: app/frontend/
+    restart: unless-stopped
+    environment:
+      - PAGE_TITLE=Custom Title # optional, set a custom page title (default: UpSnap)
+    ports:
+      - 3000:3000
+  upsnap_backend:
+    container_name: upsnap_backend
+    #image: seriousm4x/upsnap:latest
+    build:
+      context: app/backend/
     network_mode: host
     restart: unless-stopped
     environment:
-      - FRONTEND_PORT=8000
       - BACKEND_PORT=8001
       - BACKEND_IS_PROXIED=false # set this to true, if you use a reverse proxy
       - DB_TYPE=sqlite # required
@@ -20,7 +30,6 @@ services:
       #- DJANGO_LANGUAGE_CODE=de # optional (default: en)
       #- DJANGO_TIME_ZONE=Europe/Berlin # optional (default: UTC)
       #- NMAP_ARGS=-sP # optional, set this if your devices need special nmap args so they can be found (default: -sP)
-      #- PAGE_TITLE=Custom Title # optional, set a custom page title (default: UpSnap)
     volumes:
       - ./db/:/app/backend/db/
     depends_on:
