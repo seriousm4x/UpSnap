@@ -1,4 +1,0 @@
-.git
-app/frontend/node_modules
-app/frontend/build
-**/db.sqlite3
