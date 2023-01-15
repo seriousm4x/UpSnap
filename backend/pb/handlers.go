@@ -1,4 +1,4 @@
-package networking
+package pb
 
 import (
 	"encoding/xml"
@@ -9,7 +9,45 @@ import (
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
+	"github.com/pocketbase/pocketbase/models"
+	"github.com/seriousm4x/upsnap/backend/logger"
+	"github.com/seriousm4x/upsnap/backend/networking"
 )
+
+func HandlerWake(c echo.Context) error {
+	record, err := App.Dao().FindFirstRecordByData("devices", "id", c.PathParam("id"))
+	if err != nil {
+		return apis.NewNotFoundError("The device does not exist.", err)
+	}
+	go func(*models.Record) {
+		record.Set("status", "pending")
+		App.Dao().SaveRecord(record)
+		isOnline := networking.WakeDevice(record)
+		if isOnline {
+			record.Set("status", "online")
+		} else {
+			record.Set("status", "offline")
+		}
+		App.Dao().SaveRecord(record)
+	}(record)
+	return c.JSON(http.StatusOK, record)
+}
+
+func HandlerShutdown(c echo.Context) error {
+	record, err := App.Dao().FindFirstRecordByData("devices", "id", c.PathParam("id"))
+	if err != nil {
+		return apis.NewNotFoundError("The device does not exist.", err)
+	}
+	shutdown_cmd := record.GetString("shutdown_cmd")
+	if shutdown_cmd != "" {
+		cmd := exec.Command(shutdown_cmd)
+		if err := cmd.Run(); err != nil {
+			logger.Error.Println(err)
+			return apis.NewBadRequestError(err.Error(), record)
+		}
+	}
+	return nil
+}
 
 type Nmaprun struct {
 	Host []struct {
@@ -21,7 +59,7 @@ type Nmaprun struct {
 	} `xml:"host"`
 }
 
-func ScanNetwork(c echo.Context) error {
+func HandlerScan(c echo.Context) error {
 	scanRange := os.Getenv("UPSNAP_SCAN_RANGE")
 	_, _, err := net.ParseCIDR(scanRange)
 	if err != nil {
