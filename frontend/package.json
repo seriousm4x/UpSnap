@@ -17,15 +17,18 @@
 		"eslint-plugin-svelte3": "^4.0.0",
 		"prettier": "^2.8.3",
 		"prettier-plugin-svelte": "^2.9.0",
-        "svelte": "^3.55.0",
-        "svelte-preprocess": "^4.10.7",
+		"svelte": "^3.55.0",
+		"svelte-preprocess": "^4.10.7",
 		"vite": "^4.0.4"
 	},
 	"type": "module",
 	"dependencies": {
+		"@fortawesome/free-solid-svg-icons": "^6.2.1",
 		"@popperjs/core": "^2.11.6",
 		"bootstrap": "5.3.0-alpha1",
+		"date-fns": "^2.29.3",
 		"pocketbase": "^0.10.0",
-		"sass": "^1.57.1"
+		"sass": "^1.57.1",
+		"svelte-fa": "^3.0.3"
 	}
 }

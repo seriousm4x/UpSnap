@@ -1,15 +1,40 @@
-// @import "../../node_modules/bootstrap/scss/functions";
-// @import "../../node_modules/bootstrap/scss/variables";
-// @import "../../node_modules/bootstrap/scss/variables-dark";
-// @import "../../node_modules/bootstrap/scss/maps";
-// @import "../../node_modules/bootstrap/scss/mixins";
-// @import "../../node_modules/bootstrap/scss/root";
-// @import "../../node_modules/bootstrap/scss/utilities";
-// @import "../../node_modules/bootstrap/scss/reboot";
-// @import "../../node_modules/bootstrap/scss/type";
-// @import "../../node_modules/bootstrap/scss/images";
-// @import "../../node_modules/bootstrap/scss/containers";
-// @import "../../node_modules/bootstrap/scss/grid";
-// @import "../../node_modules/bootstrap/scss/helpers";
-// @import "../../node_modules/bootstrap/scss/utilities/api";
-@import "../../node_modules/bootstrap/scss/bootstrap";
+// import bootstrap functions and variables
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+@import '../../node_modules/bootstrap/scss/variables-dark';
+
+// custom colors
+$gray-1000: #111;
+$grays: (
+	'100': $gray-100,
+	'200': $gray-200,
+	'300': $gray-300,
+	'400': $gray-400,
+	'500': $gray-500,
+	'600': $gray-600,
+	'700': $gray-700,
+	'800': $gray-800,
+	'900': $gray-900,
+	'1000': $gray-1000
+) !default;
+
+$body-bg-dark: $gray-1000;
+
+// import rest
+@import '../../node_modules/bootstrap/scss/maps';
+@import '../../node_modules/bootstrap/scss/mixins';
+@import '../../node_modules/bootstrap/scss/root';
+@import '../../node_modules/bootstrap/scss/utilities';
+@import '../../node_modules/bootstrap/scss/reboot';
+@import '../../node_modules/bootstrap/scss/type';
+@import '../../node_modules/bootstrap/scss/images';
+@import '../../node_modules/bootstrap/scss/containers';
+@import '../../node_modules/bootstrap/scss/grid';
+@import '../../node_modules/bootstrap/scss/helpers';
+@import '../../node_modules/bootstrap/scss/card';
+
+@import '../../node_modules/bootstrap/scss/utilities/api';
+
+.text-success {
+	color: $teal-500 !important;
+}

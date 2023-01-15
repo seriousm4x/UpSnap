@@ -1,10 +1,12 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@fortawesome/free-solid-svg-icons': ^6.2.1
   '@popperjs/core': ^2.11.6
   '@sveltejs/adapter-auto': ^1.0.1
   '@sveltejs/kit': ^1.1.1
   bootstrap: 5.3.0-alpha1
+  date-fns: ^2.29.3
   eslint: ^8.32.0
   eslint-config-prettier: ^8.6.0
   eslint-plugin-svelte3: ^4.0.0
@@ -13,14 +15,18 @@ specifiers:
   prettier-plugin-svelte: ^2.9.0
   sass: ^1.57.1
   svelte: ^3.55.0
+  svelte-fa: ^3.0.3
   svelte-preprocess: ^4.10.7
   vite: ^4.0.4
 
 dependencies:
+  '@fortawesome/free-solid-svg-icons': 6.2.1
   '@popperjs/core': 2.11.6
   bootstrap: 5.3.0-alpha1_@popperjs+core@2.11.6
+  date-fns: 2.29.3
   pocketbase: 0.10.0
   sass: 1.57.1
+  svelte-fa: 3.0.3
 
 devDependencies:
   '@sveltejs/adapter-auto': 1.0.1_@sveltejs+kit@1.1.1
@@ -250,6 +256,20 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@fortawesome/fontawesome-common-types/6.2.1:
+    resolution: {integrity: sha512-Sz07mnQrTekFWLz5BMjOzHl/+NooTdW8F8kDQxjWwbpOJcnoSg4vUDng8d/WR1wOxM0O+CY9Zw0nR054riNYtQ==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dev: false
+
+  /@fortawesome/free-solid-svg-icons/6.2.1:
+    resolution: {integrity: sha512-oKuqrP5jbfEPJWTij4sM+/RvgX+RMFwx3QZCZcK9PrBDgxC35zuc7AOFsyMjMd/PIFPeB2JxyqDr5zs/DZFPPw==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.2.1
+    dev: false
 
   /@humanwhocodes/config-array/0.11.8:
     resolution: {integrity: sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==}
@@ -519,6 +539,11 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
+
+  /date-fns/2.29.3:
+    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
+    engines: {node: '>=0.11'}
+    dev: false
 
   /debug/4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -1307,6 +1332,10 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
     dev: true
+
+  /svelte-fa/3.0.3:
+    resolution: {integrity: sha512-GIikJjcVCD+5Y/x9hZc2R4gvuA0gVftacuWu1a+zVQWSFjFYZ+hhU825x+QNs2slsppfrgmFiUyU9Sz9gj4Rdw==}
+    dev: false
 
   /svelte-hmr/0.15.1_svelte@3.55.1:
     resolution: {integrity: sha512-BiKB4RZ8YSwRKCNVdNxK/GfY+r4Kjgp9jCLEy0DuqAKfmQtpL38cQK3afdpjw4sqSs4PLi3jIPJIFp259NkZtA==}

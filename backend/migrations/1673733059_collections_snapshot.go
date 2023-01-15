@@ -61,6 +61,19 @@ func init() {
 					},
 					{
 						"system": false,
+						"id": "s8c5z7n0",
+						"name": "netmask",
+						"type": "text",
+						"required": true,
+						"unique": false,
+						"options": {
+							"min": null,
+							"max": null,
+							"pattern": ""
+						}
+					},
+					{
+						"system": false,
 						"id": "gdctb8hj",
 						"name": "link",
 						"type": "url",
@@ -103,19 +116,6 @@ func init() {
 						"name": "shutdown_cmd",
 						"type": "text",
 						"required": false,
-						"unique": false,
-						"options": {
-							"min": null,
-							"max": null,
-							"pattern": ""
-						}
-					},
-					{
-						"system": false,
-						"id": "s8c5z7n0",
-						"name": "netmask",
-						"type": "text",
-						"required": true,
 						"unique": false,
 						"options": {
 							"min": null,
