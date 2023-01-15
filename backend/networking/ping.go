@@ -1,6 +1,8 @@
 package networking
 
 import (
+	"runtime"
+
 	"github.com/go-ping/ping"
 	"github.com/pocketbase/pocketbase/models"
 	"github.com/seriousm4x/upsnap/backend/logger"
@@ -14,6 +16,9 @@ func PingDevice(device *models.Record) bool {
 	}
 	pinger.Count = 1
 	pinger.Timeout = 500 * 1000000 // 500ms
+	if runtime.GOOS == "windows" {
+		pinger.SetPrivileged(true)
+	}
 	err = pinger.Run()
 	if err != nil {
 		logger.Error.Println(err)

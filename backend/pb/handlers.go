@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"runtime"
+	"strings"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
@@ -66,9 +68,13 @@ func HandlerScan(c echo.Context) error {
 		return apis.NewBadRequestError(err.Error(), nil)
 	}
 
-	cmdOutput, err := exec.Command(
-		"sudo", "nmap", "-sP", "-oX", "-", scanRange,
-		"--host-timeout", "500ms").Output()
+	cmd := []string{}
+	if runtime.GOOS != "windows" {
+		cmd = []string{"sudo"}
+	}
+	cmd = append(cmd, "nmap", "-sn", "-oX", "-", scanRange, "--host-timeout", "500ms")
+
+	cmdOutput, err := exec.Command(strings.Join(cmd, " ")).Output()
 	if err != nil {
 		return err
 	}
