@@ -162,12 +162,10 @@ class WSConsumer(AsyncWebsocketConsumer):
                     "command": dev.shutdown_cmd
                 }
             }
-            for p in Port.objects.all().order_by("number"):
+            for p in dev.port.order_by("number"):
                 data["ports"].append({
                     "number": p.number,
-                    "name": p.name,
-                    "checked": False,
-                    "open": False
+                    "name": p.name
                 })
             for action in ["wake", "shutdown"]:
                 try:
