@@ -1,12 +1,14 @@
 <script>
-	import PocketBase from 'pocketbase';
 	import { onMount } from 'svelte';
+	import { pocketbase } from '@stores/pocketbase';
 
 	let pb;
 	let files;
 
 	onMount(() => {
-		pb = new PocketBase('http://127.0.0.1:8090');
+		pocketbase.subscribe((conn) => {
+			pb = conn;
+		});
 	});
 
 	async function restoreV2Backup(e) {
@@ -75,10 +77,15 @@
 </script>
 
 <div class="container">
-    <h1>Settings</h1>
-	<div class="input-group flex-nowrap">
+	<h1 class="h1">Settings</h1>
+	<section>
+		<h3>Restore</h3>
+		<div class="callout callout-info">
+			If you were running UpSnap v2.3.2 (or higher), you can restore your devices here. This will
+			wipe the existing database.
+		</div>
 		<input
-			class="form-control"
+			class="form-control w-50"
 			placeholder="Username"
 			aria-label="Username"
 			aria-describedby="addon-wrapping"
@@ -87,5 +94,5 @@
 			bind:files
 			on:change={(e) => restoreV2Backup(e)}
 		/>
-	</div>
+	</section>
 </div>

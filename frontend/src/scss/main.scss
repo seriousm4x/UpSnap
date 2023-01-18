@@ -32,9 +32,83 @@ $body-bg-dark: $gray-1000;
 @import '../../node_modules/bootstrap/scss/grid';
 @import '../../node_modules/bootstrap/scss/helpers';
 @import '../../node_modules/bootstrap/scss/card';
+@import '../../node_modules/bootstrap/scss/nav';
+@import '../../node_modules/bootstrap/scss/navbar';
+@import '../../node_modules/bootstrap/scss/forms';
 
 @import '../../node_modules/bootstrap/scss/utilities/api';
 
+section {
+	padding: 1rem;
+	margin: 1rem 0;
+	border-radius: 1rem;
+}
+
+.nav-link {
+	padding: 0.3rem 0.6rem !important;
+	border-radius: 0.4rem;
+
+	&.active {
+		background-color: $gray-300;
+	}
+}
+
 .text-success {
 	color: $teal-500 !important;
+}
+
+.text-warning {
+	color: $yellow !important;
+}
+
+.text-danger {
+	color: #ef476f !important;
+}
+
+.callout {
+	padding: 1rem;
+	border-radius: 0.3rem;
+	margin: 1rem 0;
+
+	&.callout-info {
+		background-color: #1177b21f;
+		border-left: 0.5rem solid #1177b21f;
+	}
+
+	&.callout-danger {
+		background-color: #ef476f1f;
+		border-left: 0.5rem solid #ef476f1f;
+	}
+}
+
+html[data-bs-theme='light'] {
+	html,
+	body {
+		background: #f0f1f2;
+	}
+
+	section,
+	.card {
+		background: #ffffff;
+		box-shadow: 0 1rem 1rem rgba(238, 238, 238, 0.7);
+	}
+}
+
+html[data-bs-theme='dark'] {
+	html,
+	body {
+		background: #171718;
+	}
+
+	section,
+	.card {
+		background: #252525;
+		box-shadow: 0 1rem 1rem rgba(32, 32, 32, 0.4);
+	}
+
+	.nav-link {
+		&.active {
+			background-color: $gray-800;
+		}
+	}
 }
