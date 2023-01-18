@@ -7,7 +7,7 @@
 
 	onMount(async () => {
 		let pb;
-		pocketbase.subscribe((conn) => {
+		pocketbase.subscribe(conn => {
 			pb = conn;
 		});
 

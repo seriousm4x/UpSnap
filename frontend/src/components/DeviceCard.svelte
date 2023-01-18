@@ -1,8 +1,8 @@
 <script>
-	import { parseISO, formatDistance } from 'date-fns';
-	import Fa from 'svelte-fa';
-	import { faPowerOff, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 	import { dev } from '$app/environment';
+	import { parseISO, formatDistance } from 'date-fns';
+	import { faPowerOff, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+	import Fa from 'svelte-fa';
 
 	export let device;
 	export let now;

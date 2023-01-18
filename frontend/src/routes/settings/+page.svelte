@@ -6,7 +6,7 @@
 	let files;
 
 	onMount(() => {
-		pocketbase.subscribe((conn) => {
+		pocketbase.subscribe(conn => {
 			pb = conn;
 		});
 	});

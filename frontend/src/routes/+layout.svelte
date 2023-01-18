@@ -3,29 +3,47 @@
 	import Transition from '@components/Transition.svelte';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import { theme } from '@stores/themestore';
 
 	let preferesDark;
 
-	onMount(() => {
-		preferesDark = window.matchMedia('(prefers-color-scheme: dark)');
-		preferesDark.addEventListener('change', (e) => {
-			setTheme(e.matches ? 'dark' : 'light');
-		});
-	});
+    onMount(() => {
+        preferesDark = window.matchMedia('(prefers-color-scheme: dark)');
+        preferesDark.addEventListener('change', (e) => {
+            if ($theme === 'auto') {
+                document.documentElement.setAttribute(
+                    'data-bs-theme',
+                    e.matches ? 'dark' : 'light'
+                );
+            }
+        });
 
-	function setTheme(newTheme) {
-		document.documentElement.setAttribute('data-bs-theme', newTheme);
-		localStorage.setItem('theme', newTheme);
-	}
+        theme.subscribe((t) => {
+            localStorage.setItem('theme', t);
+            if (t === 'auto') {
+                t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-bs-theme', t);
+        });
+    });
 </script>
 
 <svelte:head>
-	<script>
-		if (document) {
-			theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-			document.documentElement.setAttribute('data-bs-theme', theme);
-		}
-	</script>
+    <script>
+        if (document) {
+            preferesDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light';
+            let t = localStorage.getItem('theme');
+            if (!t) {
+                localStorage.setItem('theme', 'auto');
+                t = preferesDark;
+            } else if (t === 'auto') {
+                t = preferesDark;
+            }
+            document.documentElement.setAttribute('data-bs-theme', t);
+        }
+    </script>
 </svelte:head>
 
 <Navbar />
