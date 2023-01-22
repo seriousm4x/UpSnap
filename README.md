@@ -33,12 +33,12 @@ Open up [localhost:5173/](localhost:5173/)
   - [ ] add rest of settings page
   - [ ] form for adding new devices
   - [ ] add per device settings
-  - [x] theme toggle button
-  - [x] add device ports to cards
+  - [x] ~~theme toggle button~~
+  - [x] ~~add device ports to cards~~
 
 - backend
 
-  - [x] make sure ping works
+  - [x] ~~make sure ping works~~
   - [ ] make sure arp works
   - [ ] make sure wake works
   - [ ] remove nmap?

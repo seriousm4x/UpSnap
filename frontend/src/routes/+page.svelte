@@ -13,7 +13,8 @@
 
 		// get all devices in pocketbase
 		const result = await pb.collection('devices').getFullList(200, {
-			expand: 'ports'
+			expand: 'ports',
+			sort: 'name'
 		});
 		result.forEach((device) => {
 			devices[device.id] = device;
