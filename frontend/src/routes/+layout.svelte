@@ -1,9 +1,9 @@
 <script>
+	import { onMount } from 'svelte';
 	import Navbar from '@components/Navbar.svelte';
 	import Transition from '@components/Transition.svelte';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import { theme } from '@stores/themestore';
+	import { theme } from '@stores/theme';
 
 	let preferesDark;
 

@@ -56,7 +56,7 @@ section {
 	}
 }
 
-.text-success {
+.text-success, .port-up {
 	color: $teal-500 !important;
 }
 
@@ -64,7 +64,7 @@ section {
 	color: $yellow !important;
 }
 
-.text-danger {
+.text-danger, .port-down {
 	color: #ef476f !important;
 }
 

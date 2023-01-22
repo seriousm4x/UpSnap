@@ -1,7 +1,7 @@
 <script>
 	import { dev } from '$app/environment';
 	import { parseISO, formatDistance } from 'date-fns';
-	import { faPowerOff, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+	import { faPowerOff, faEllipsisVertical, faCircle } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 
 	export let device;
@@ -13,6 +13,10 @@
 
 	function wake() {
 		fetch(`${dev ? 'http://127.0.0.1:8090' : ''}/api/upsnap/wake/${device.id}`);
+	}
+
+	function sortPorts(a, b) {
+		return a.number - b.number;
 	}
 </script>
 
@@ -49,8 +53,18 @@
 				</div>
 			</div>
 			<p class="m-0 fw-bold fs-5">{device.name}</p>
-			<p class="text-muted">{device.ip}</p>
-			<p class="m-0 text-muted">
+			<p class="text-muted mb-2">{device.ip}</p>
+			{#if device?.expand?.ports}
+				<div class="mb-2">
+					{#each device.expand.ports.sort(sortPorts) as port}
+						<p class="m-0">
+							<Fa icon={faCircle} class="me-1 {port.status ? 'port-up' : 'port-down'}" />{port.name}
+							<span class="text-muted">({port.number})</span>
+						</p>
+					{/each}
+				</div>
+			{/if}
+			<p class="text-muted m-0">
 				{formatDistance(parseISO(device.updated), now, {
 					includeSeconds: true,
 					addSuffix: true

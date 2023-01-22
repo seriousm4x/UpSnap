@@ -33,28 +33,22 @@
 				return;
 			}
 
-			let createdPorts = {};
+			// loop devices
 			for (let index = 0; index < data.length; index++) {
 				const device = data[index];
 
 				// create ports
 				let thisDevicePorts = [];
 				for (let index = 0; index < device.ports.length; index++) {
-					// keep track of already created ports
 					const port = device.ports[index];
-					if (createdPorts[port.number] === undefined) {
-						const record = await pb.collection('ports').create(
-							{
-								name: port.name,
-								number: port.number
-							},
-							{ $autoCancel: false }
-						);
-						createdPorts[port.number] = record;
-						thisDevicePorts.push(record.id);
-					} else {
-						thisDevicePorts.push(createdPorts[port.number].id);
-					}
+					const record = await pb.collection('ports').create(
+						{
+							name: port.name,
+							number: port.number
+						},
+						{ $autoCancel: false }
+					);
+					thisDevicePorts.push(record.id);
 				}
 
 				// create device
@@ -64,7 +58,7 @@
 						ip: device.ip,
 						mac: device.mac,
 						netmask: device.netmask,
-						port: thisDevicePorts,
+						ports: thisDevicePorts,
 						link: device.link,
 						wake: device.wake,
 						shutdown: device.shutdown

@@ -1,7 +1,9 @@
 package networking
 
 import (
+	"net"
 	"runtime"
+	"time"
 
 	"github.com/go-ping/ping"
 	"github.com/pocketbase/pocketbase/models"
@@ -30,4 +32,17 @@ func PingDevice(device *models.Record) bool {
 	} else {
 		return true
 	}
+}
+
+func CheckPort(host string, port string) bool {
+	timeout := 500 * time.Millisecond
+	conn, err := net.DialTimeout("tcp", net.JoinHostPort(host, port), timeout)
+	if err != nil {
+		return false
+	}
+	if conn != nil {
+		defer conn.Close()
+		return true
+	}
+	return false
 }

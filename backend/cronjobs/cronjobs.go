@@ -42,7 +42,17 @@ func RunCron(app *pocketbase.PocketBase) {
 	// init cronjob
 	c := cron.New()
 	c.AddFunc(fmt.Sprintf("@every %s", interval), func() {
+		// expand ports field
+		expandFetchFunc := func(c *models.Collection, ids []string) ([]*models.Record, error) {
+			return app.Dao().FindRecordsByIds(c.Id, ids, nil)
+		}
+		merr := app.Dao().ExpandRecords(Devices, []string{"ports"}, expandFetchFunc)
+		if len(merr) > 0 {
+			return
+		}
+
 		for _, device := range Devices {
+			// ping
 			go func(device *models.Record) {
 				oldStatus := device.Get("status")
 				newStatus := networking.PingDevice(device)
@@ -54,6 +64,23 @@ func RunCron(app *pocketbase.PocketBase) {
 				} else {
 					if oldStatus == "online" || oldStatus == "" {
 						device.Set("status", "offline")
+						app.Dao().SaveRecord(device)
+					}
+				}
+			}(device)
+
+			// scan ports
+			go func(device *models.Record) {
+				ports, err := app.Dao().FindRecordsByIds("ports", device.GetStringSlice("ports"))
+				if err != nil {
+					logger.Error.Println(err)
+				}
+				for _, port := range ports {
+					isUp := networking.CheckPort(device.GetString("ip"), port.GetString("number"))
+					if isUp != port.GetBool("status") {
+						port.Set("status", isUp)
+						app.Dao().SaveRecord(port)
+						device.RefreshUpdated()
 						app.Dao().SaveRecord(device)
 					}
 				}
