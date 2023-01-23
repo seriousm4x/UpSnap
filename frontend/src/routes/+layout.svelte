@@ -8,6 +8,10 @@
 	let preferesDark;
 
     onMount(() => {
+        // import bootstrap js
+        import('bootstrap/js/dist/dropdown');
+
+        // set dark mode
         preferesDark = window.matchMedia('(prefers-color-scheme: dark)');
         preferesDark.addEventListener('change', (e) => {
             if ($theme === 'auto') {

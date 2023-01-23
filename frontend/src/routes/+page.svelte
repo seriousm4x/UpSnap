@@ -55,9 +55,15 @@
 </script>
 
 <div class="container text-body-emphasis">
-	<div class="row">
-		{#each Object.entries(devices) as [_, device]}
-			<DeviceCard {device} {now} />
-		{/each}
-	</div>
+	{#if Object.keys(devices).length > 0}
+		<div class="row">
+			{#each Object.entries(devices) as [_, device]}
+				<DeviceCard {device} {now} />
+			{/each}
+		</div>
+	{:else}
+		<div class="d-flex justify-content-center align-items-center">
+			<h4 class="text-muted">No devices</h4>
+		</div>
+	{/if}
 </div>

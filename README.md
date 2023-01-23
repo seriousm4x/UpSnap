@@ -24,13 +24,13 @@ pnpm i
 pnpm run dev
 ```
 
-Open up [localhost:5173/](localhost:5173/)
+Open up [http://localhost:5173/](http://localhost:5173/)
 
 ## To do
 
 - frontend
 
-  - [ ] add rest of settings page
+  - [x] add rest of settings page
   - [ ] form for adding new devices
   - [ ] add per device settings
   - [x] ~~theme toggle button~~

@@ -38,6 +38,7 @@ $dropdown-min-width: 0;
 @import '../../node_modules/bootstrap/scss/navbar';
 @import '../../node_modules/bootstrap/scss/forms';
 @import '../../node_modules/bootstrap/scss/dropdown';
+@import '../../node_modules/bootstrap/scss/buttons';
 
 @import '../../node_modules/bootstrap/scss/utilities/api';
 
@@ -54,6 +55,10 @@ section {
 	&.active {
 		background-color: $gray-300;
 	}
+}
+
+.btn {
+	border-radius: 0.5rem;
 }
 
 .text-success, .port-up {
@@ -97,20 +102,18 @@ html[data-bs-theme='light'] {
 	section,
 	.card {
 		background: #ffffff;
-		box-shadow: 0 1rem 1rem rgba(238, 238, 238, 0.7);
 	}
 }
 
 html[data-bs-theme='dark'] {
 	html,
 	body {
-		background: #171718;
+		background: #131316;
 	}
 
 	section,
 	.card {
-		background: #252525;
-		box-shadow: 0 1rem 1rem rgba(32, 32, 32, 0.4);
+		background: #25252b;
 	}
 
 	.nav-link,

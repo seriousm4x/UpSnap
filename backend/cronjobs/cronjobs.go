@@ -1,47 +1,25 @@
 package cronjobs
 
 import (
-	"fmt"
-	"os"
-	"time"
-
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/models"
-	"github.com/robfig/cron"
+	"github.com/robfig/cron/v3"
 	"github.com/seriousm4x/upsnap/backend/logger"
 	"github.com/seriousm4x/upsnap/backend/networking"
 )
 
 var Devices []*models.Record
+var Jobs *cron.Cron
 
 func RunCron(app *pocketbase.PocketBase) {
-	var interval time.Duration
-	var err error
-
-	// get ping interval from env var
-	// no env: fallback to 5 seconds
-	// below 1 sec: fallback to 1 second
-	interval_default := 5 * time.Second
-	interval_minimum := 1 * time.Second
-	interval_env := os.Getenv("UPSNAP_INTERVAL")
-	if interval_env == "" {
-		interval = interval_default
-	} else {
-		interval, err = time.ParseDuration(interval_env)
-		if err != nil {
-			logger.Error.Println(err)
-			interval = interval_default
-		}
-		if interval < interval_minimum {
-			logger.Warning.Printf("Ping interval below %s is not recommended", interval_minimum)
-			interval = interval_minimum
-		}
+	settingsRecords, err := app.Dao().FindRecordsByExpr("settings")
+	if err != nil {
+		logger.Error.Println(err)
 	}
-	logger.Debug.Println("Ping interval set to", interval)
 
 	// init cronjob
-	c := cron.New()
-	c.AddFunc(fmt.Sprintf("@every %s", interval), func() {
+	Jobs = cron.New()
+	Jobs.AddFunc(settingsRecords[0].GetString("interval"), func() {
 		// expand ports field
 		expandFetchFunc := func(c *models.Collection, ids []string) ([]*models.Record, error) {
 			return app.Dao().FindRecordsByIds(c.Id, ids, nil)
@@ -87,5 +65,5 @@ func RunCron(app *pocketbase.PocketBase) {
 			}(device)
 		}
 	})
-	c.Run()
+	Jobs.Run()
 }

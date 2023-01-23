@@ -1,13 +1,8 @@
 <script>
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { theme } from '@stores/theme';
 	import { faSun, faMoon, faCircleHalfStroke, faBrush } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
-
-	onMount(() => {
-		import('bootstrap/js/dist/dropdown');
-	})
 </script>
 
 <nav class="navbar navbar-expand">

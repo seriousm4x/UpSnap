@@ -4,11 +4,13 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
+	"github.com/pocketbase/pocketbase/models"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 	"github.com/seriousm4x/upsnap/backend/cronjobs"
 	"github.com/seriousm4x/upsnap/backend/logger"
@@ -60,6 +62,11 @@ func StartPocketBase() {
 			},
 		})
 
+		// import environment and set settings
+		if err := importSettings(); err != nil {
+			return err
+		}
+
 		// reset device states and run ping cronjob
 		if err := resetDeviceStates(); err != nil {
 			return err
@@ -68,15 +75,25 @@ func StartPocketBase() {
 		// run ping cronjob
 		go cronjobs.RunCron(App)
 
+		// add event hook before starting server.
+		// using this outside App.OnBeforeServe() would not work
+		App.OnModelAfterUpdate().Add(func(e *core.ModelEvent) error {
+			if e.Model.TableName() == "settings" {
+				for _, job := range cronjobs.Jobs.Entries() {
+					cronjobs.Jobs.Remove(job.ID)
+				}
+				go cronjobs.RunCron(App)
+			} else {
+				refreshDeviceList()
+			}
+			return nil
+		})
+
 		return nil
 	})
 
 	// refresh the device list on database events
 	App.OnModelAfterCreate().Add(func(e *core.ModelEvent) error {
-		refreshDeviceList()
-		return nil
-	})
-	App.OnModelAfterUpdate().Add(func(e *core.ModelEvent) error {
 		refreshDeviceList()
 		return nil
 	})
@@ -89,7 +106,57 @@ func StartPocketBase() {
 	if err := App.Start(); err != nil {
 		log.Fatal(err)
 	}
+}
 
+func importSettings() error {
+	// get first settings record
+	settingsRecords, err := App.Dao().FindRecordsByExpr("settings")
+	if err != nil {
+		return err
+	}
+	settingsCollection, err := App.Dao().FindCollectionByNameOrId("settings")
+	if err != nil {
+		return err
+	}
+	settings := models.NewRecord(settingsCollection)
+	if len(settingsRecords) > 0 {
+		settings = settingsRecords[0]
+	}
+
+	// set ping interval and notification settings. priority:
+	// 1st: env var
+	// 2nd: database entry
+	// 3rd: default values
+	interval := "@every 3s"
+	if settings.GetString("interval") != "" {
+		interval = settings.GetString("interval")
+	}
+	if os.Getenv("UPSNAP_INTERVAL") != "" {
+		interval = os.Getenv("UPSNAP_INTERVAL")
+	}
+	notifications := true
+	if settings.GetBool("notifications") {
+		notifications = settings.GetBool("notifications")
+	}
+	if os.Getenv("UPSNAP_NOTIFICATIONS") != "" {
+		notificationsParsed, err := strconv.ParseBool(os.Getenv("UPSNAP_NOTIFICATIONS"))
+		if err != nil {
+			return err
+		} else {
+			notifications = notificationsParsed
+		}
+	}
+
+	// save settings to db
+	settings.Set("interval", interval)
+	settings.Set("notifications", notifications)
+	if err := App.Dao().SaveRecord(settings); err != nil {
+		return err
+	}
+
+	logger.Debug.Println("Ping interval set to", interval)
+	logger.Debug.Println("Notifications set to", notifications)
+	return nil
 }
 
 func resetDeviceStates() error {

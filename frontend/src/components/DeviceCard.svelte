@@ -22,7 +22,7 @@
 
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 g-4">
 	<div
-		class="card border-0 rounded-5 px-2"
+		class="card border-0 rounded-5 px-3 shadow-sm"
 		class:offline={device.status == 'offline' ? true : false}
 		class:online={device.status == 'online' ? true : false}
 		class:pending={device.status == 'pending' ? true : false}
@@ -52,7 +52,13 @@
 					<Fa icon={faEllipsisVertical} />
 				</div>
 			</div>
-			<p class="m-0 fw-bold fs-5">{device.name}</p>
+			{#if device.link}
+				<p class="m-0 fw-bold fs-5">
+					<a class="text-reset" target="_blank" rel="noreferrer" href={device.link}>{device.name}</a>
+				</p>
+			{:else}
+				<p class="m-0 fw-bold fs-5">{device.name}</p>
+			{/if}
 			<p class="text-muted mb-2">{device.ip}</p>
 			{#if device?.expand?.ports}
 				<div class="mb-2">

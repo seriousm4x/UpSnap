@@ -13,30 +13,40 @@ func init() {
 	m.Register(func(db dbx.Builder) error {
 		jsonData := `{
 			"id": "nmj3ko20gzkg8n3",
-			"created": "2023-01-22 23:21:44.281Z",
-			"updated": "2023-01-22 23:21:44.281Z",
+			"created": "2023-01-23 19:32:19.965Z",
+			"updated": "2023-01-23 19:32:19.965Z",
 			"name": "settings",
 			"type": "base",
 			"system": false,
 			"schema": [
 				{
 					"system": false,
-					"id": "ysutxavs",
+					"id": "ph88gaa5",
 					"name": "interval",
-					"type": "number",
-					"required": true,
+					"type": "text",
+					"required": false,
 					"unique": false,
 					"options": {
-						"min": 1,
-						"max": null
+						"min": null,
+						"max": null,
+						"pattern": ""
 					}
+				},
+				{
+					"system": false,
+					"id": "7ehvglvv",
+					"name": "notifications",
+					"type": "bool",
+					"required": false,
+					"unique": false,
+					"options": {}
 				}
 			],
-			"listRule": null,
-			"viewRule": null,
-			"createRule": null,
-			"updateRule": null,
-			"deleteRule": null,
+			"listRule": "",
+			"viewRule": "",
+			"createRule": "",
+			"updateRule": "",
+			"deleteRule": "",
 			"options": {}
 		}`
 

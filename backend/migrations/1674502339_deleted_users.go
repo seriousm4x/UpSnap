@@ -22,8 +22,8 @@ func init() {
 	}, func(db dbx.Builder) error {
 		jsonData := `{
 			"id": "_pb_users_auth_",
-			"created": "2023-01-22 23:21:16.599Z",
-			"updated": "2023-01-22 23:21:16.600Z",
+			"created": "2023-01-23 19:31:58.918Z",
+			"updated": "2023-01-23 19:31:58.919Z",
 			"name": "users",
 			"type": "auth",
 			"system": false,
