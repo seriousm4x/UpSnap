@@ -13,8 +13,8 @@ func init() {
 	m.Register(func(db dbx.Builder) error {
 		jsonData := `{
 			"id": "z5lghx2r3tm45n1",
-			"created": "2023-01-23 19:32:19.965Z",
-			"updated": "2023-01-23 19:32:19.965Z",
+			"created": "2023-01-26 14:28:42.378Z",
+			"updated": "2023-01-26 14:28:42.378Z",
 			"name": "devices",
 			"type": "base",
 			"system": false,
@@ -111,8 +111,8 @@ func init() {
 				},
 				{
 					"system": false,
-					"id": "1a7yrwo9",
-					"name": "shutdown",
+					"id": "kzvdbbws",
+					"name": "wake_cron",
 					"type": "text",
 					"required": false,
 					"unique": false,
@@ -124,8 +124,34 @@ func init() {
 				},
 				{
 					"system": false,
-					"id": "kzvdbbws",
-					"name": "wake",
+					"id": "91bs6clw",
+					"name": "shutdown_cron",
+					"type": "text",
+					"required": false,
+					"unique": false,
+					"options": {
+						"min": null,
+						"max": null,
+						"pattern": ""
+					}
+				},
+				{
+					"system": false,
+					"id": "1a7yrwo9",
+					"name": "shutdown_cmd",
+					"type": "text",
+					"required": false,
+					"unique": false,
+					"options": {
+						"min": null,
+						"max": null,
+						"pattern": ""
+					}
+				},
+				{
+					"system": false,
+					"id": "iarksm3l",
+					"name": "password",
 					"type": "text",
 					"required": false,
 					"unique": false,

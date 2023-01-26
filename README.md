@@ -31,7 +31,7 @@ Open up [http://localhost:5173/](http://localhost:5173/)
 - frontend
 
   - [x] add rest of settings page
-  - [ ] form for adding new devices
+  - [x] form for adding new devices
   - [ ] add per device settings
   - [x] ~~theme toggle button~~
   - [x] ~~add device ports to cards~~
