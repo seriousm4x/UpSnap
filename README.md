@@ -40,11 +40,11 @@ Open up [http://localhost:5173/](http://localhost:5173/)
 
   - [x] ~~make sure ping works~~
   - [ ] make sure arp works
-  - [ ] make sure wake works
+  - [x] make sure wake works
   - [ ] remove nmap?
   - [ ] add shutdown command
   - [ ] add scheduled wake
-  - [ ] [#34 Add support for WOL passwords](https://github.com/seriousm4x/UpSnap/issues/34)
+  - [x] [#34 Add support for WOL passwords](https://github.com/seriousm4x/UpSnap/issues/34)
   - [x] [~~#33 Seemingly High Ram usage~~](https://github.com/seriousm4x/UpSnap/issues/33)
   - [x] [~~#32 API available?~~](https://github.com/seriousm4x/UpSnap/issues/32)
 

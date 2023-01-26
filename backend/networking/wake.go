@@ -8,7 +8,7 @@ import (
 )
 
 func WakeDevice(device *models.Record) bool {
-	err := SendMagicPacket(device.GetString("mac"), device.GetString("netmask"))
+	err := SendMagicPacket(device)
 	if err != nil {
 		logger.Error.Println(err)
 		return false

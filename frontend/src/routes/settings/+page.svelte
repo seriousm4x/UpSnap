@@ -48,6 +48,13 @@
 	async function addDevice() {
 		buttons.add_device.state = 'waiting';
 		try {
+			if (
+				newDevice.password.length != 0 &&
+				newDevice.password.length != 4 &&
+				newDevice.password.length != 6
+			) {
+				throw 'Password must be 0, 4 or 6 characters long';
+			}
 			await pb.collection('devices').create(newDevice, { $autoCancel: false });
 			setTimeout(() => {
 				buttons.add_device.state = 'none';
@@ -274,6 +281,7 @@
 							aria-describedby="addon-wrapping"
 							type={passwordType}
 							value={newDevice.password}
+							maxlength="6"
 							on:input={onPasswordInput}
 						/>
 						<button
@@ -316,74 +324,77 @@
 						</li>
 					</ul>
 					<p class="m-0">
-						(3) Some network cards have the option to set a password for magic packets.
+						(3) Some network cards have the option to set a password for magic packets, also called
+						"SecureON". Password can only be 0, 4 or 6 characters in length.
 					</p>
 				</div>
 			</div>
 		</div>
 	</section>
 	<section class="m-0 mt-4 p-4 shadow-sm">
-		<h3 class="mb-3">Ping interval</h3>
-		<div class="row">
-			<div class="col-md-6">
-				<p>Sets the interval in which the devices are pinged.</p>
-				<div class="input-group mb-3">
-					<span class="input-group-text">Cron</span>
-					<input
-						class="form-control"
-						placeholder="e.g. '@every 5s' or '@every 1m'"
-						aria-label="Interval"
-						aria-describedby="addon-wrapping"
-						type="text"
-						bind:value={settings.interval}
-					/>
+		<form on:submit|preventDefault={saveSettings}>
+			<h3 class="mb-3">Ping interval</h3>
+			<div class="row">
+				<div class="col-md-6">
+					<p>Sets the interval in which the devices are pinged.</p>
+					<div class="input-group mb-3">
+						<span class="input-group-text">Cron</span>
+						<input
+							class="form-control"
+							placeholder="e.g. '@every 5s' or '@every 1m'"
+							aria-label="Interval"
+							aria-describedby="addon-wrapping"
+							type="text"
+							bind:value={settings.interval}
+						/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="callout callout-info m-0">
+						<p class="m-0">
+							Leave blank to use default value of <span class="fw-bold">"@every 3s"</span>.
+						</p>
+						<p class="m-0">
+							Read more about valid cron syntax at <a
+								target="_blank"
+								rel="noreferrer"
+								href="https://pkg.go.dev/github.com/robfig/cron"
+								>pkg.go.dev/github.com/robfig/cron</a
+							>
+						</p>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
-				<div class="callout callout-info m-0">
-					<p class="m-0">
-						Leave blank to use default value of <span class="fw-bold">"@every 3s"</span>.
-					</p>
-					<p class="m-0">
-						Read more about valid cron syntax at <a
-							target="_blank"
-							rel="noreferrer"
-							href="https://pkg.go.dev/github.com/robfig/cron">pkg.go.dev/github.com/robfig/cron</a
-						>
-					</p>
-				</div>
+			<h3 class="my-3">Notifications</h3>
+			<p>Show toast notifications in the bottom right corner.</p>
+			<div class="form-check form-switch">
+				<label class="form-check-label" for="settings-notifications">Enable notifications</label>
+				<input
+					class="form-check-input"
+					type="checkbox"
+					id="settings-notifications"
+					role="switch"
+					bind:checked={settings.notifications}
+				/>
 			</div>
-		</div>
-		<h3 class="my-3">Notifications</h3>
-		<p>Show toast notifications in the bottom right corner.</p>
-		<div class="form-check form-switch">
-			<label class="form-check-label" for="settings-notifications">Enable notifications</label>
-			<input
-				class="form-check-input"
-				type="checkbox"
-				id="settings-notifications"
-				role="switch"
-				bind:checked={settings.notifications}
-			/>
-		</div>
-		<button
-			type="button"
-			class="btn btn-secondary mt-3"
-			class:btn-success={buttons.saved.state === 'success' ? true : false}
-			class:btn-warning={buttons.saved.state === 'waiting' ? true : false}
-			class:btn-danger={buttons.saved.state === 'failed' ? true : false}
-			on:click={() => saveSettings()}
-		>
-			{#if buttons.saved.state === 'none'}
-				Save
-			{:else if buttons.saved.state === 'success'}
-				Saved
-			{:else if buttons.saved.state === 'waiting'}
-				Waiting
-			{:else if buttons.saved.state === 'failed'}
-				Failed: {buttons.add_device.error}
-			{/if}
-		</button>
+			<button
+				type="submit"
+				class="btn btn-secondary mt-3"
+				class:btn-success={buttons.saved.state === 'success' ? true : false}
+				class:btn-warning={buttons.saved.state === 'waiting' ? true : false}
+				class:btn-danger={buttons.saved.state === 'failed' ? true : false}
+			>
+				{#if buttons.saved.state === 'none'}
+					Save
+				{:else if buttons.saved.state === 'success'}
+					Saved
+				{:else if buttons.saved.state === 'waiting'}
+					Waiting
+				{:else if buttons.saved.state === 'failed'}
+					Failed: {buttons.add_device.error}
+				{/if}
+			</button>
+		</form>
 	</section>
 	<section class="m-0 my-4 p-4 shadow-sm">
 		<h3 class="mb-3">Restore</h3>
