@@ -22,18 +22,17 @@
 
 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 g-4">
 	<div
-		class="card border-0 rounded-5 px-3 shadow-sm"
+		class="card border-0 rounded-5 px-3 py-2 shadow-sm"
 		class:offline={device.status == 'offline' ? true : false}
 		class:online={device.status == 'online' ? true : false}
 		class:pending={device.status == 'pending' ? true : false}
 	>
 		<div class="card-body">
-			<div class="row fs-4">
+			<div class="row">
 				<div class="col-auto me-auto">
 					<span
 						class:text-danger={device.status == 'offline' ? true : false}
 						class:text-success={device.status == 'online' ? true : false}
-						class:text-warning={device.status == 'pending' ? true : false}
 						on:click={device.status == 'offline'
 							? () => wake()
 							: device.status == 'online'
@@ -45,7 +44,19 @@
 							? () => shutdown()
 							: ''}
 					>
-						<Fa icon={faPowerOff} />
+						{#if device.status === 'pending'}
+							<div
+								class="spinner-border text-warning"
+								style="width: 23px;height: 23px;"
+								role="status"
+							>
+								<span class="visually-hidden">Loading...</span>
+							</div>
+						{:else}
+							<div role="button">
+								<Fa icon={faPowerOff} class="fs-4 power-hover" />
+							</div>
+						{/if}
 					</span>
 				</div>
 				<div class="col-auto">
@@ -54,7 +65,8 @@
 			</div>
 			{#if device.link}
 				<p class="m-0 fw-bold fs-5">
-					<a class="text-reset" target="_blank" rel="noreferrer" href={device.link}>{device.name}</a>
+					<a class="text-reset" target="_blank" rel="noreferrer" href={device.link}>{device.name}</a
+					>
 				</p>
 			{:else}
 				<p class="m-0 fw-bold fs-5">{device.name}</p>
