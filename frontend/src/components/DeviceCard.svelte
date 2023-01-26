@@ -30,36 +30,37 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-auto me-auto">
-					<span
-						class:text-danger={device.status == 'offline' ? true : false}
-						class:text-success={device.status == 'online' ? true : false}
-						on:click={device.status == 'offline'
-							? () => wake()
-							: device.status == 'online'
-							? () => shutdown()
-							: ''}
-						on:keydown={device.status == 'offline'
-							? () => wake()
-							: device.status == 'online'
-							? () => shutdown()
-							: ''}
-					>
-						{#if device.status === 'pending'}
-							<div
-								class="spinner-border text-warning"
-								style="width: 23px;height: 23px;"
-								role="status"
-							>
-								<span class="visually-hidden">Loading...</span>
-							</div>
-						{:else}
+					{#if device.status === 'offline'}
+						<span class="text-danger" on:click={() => wake()} on:keydown={() => wake()}>
 							<div role="button">
 								<Fa icon={faPowerOff} class="fs-4 power-hover" />
 							</div>
+						</span>
+					{:else if device.status === 'online'}
+						{#if device.shutdown_cmd !== ''}
+							<span class="text-success" on:click={() => shutdown()} on:keydown={() => shutdown()}>
+								<div role="button">
+									<Fa icon={faPowerOff} class="fs-4 power-hover" />
+								</div>
+							</span>
+						{:else}
+							<span class="text-success">
+								<div>
+									<Fa icon={faPowerOff} class="fs-4" />
+								</div>
+							</span>
 						{/if}
-					</span>
+					{:else if device.status === 'pending'}
+						<div
+							class="spinner-border text-warning"
+							style="width: 23px;height: 23px;"
+							role="status"
+						>
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					{/if}
 				</div>
-				<div class="col-auto">
+				<div class="col-auto fs-5">
 					<Fa icon={faEllipsisVertical} />
 				</div>
 			</div>

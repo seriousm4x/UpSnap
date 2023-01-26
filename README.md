@@ -30,8 +30,8 @@ Open up [http://localhost:5173/](http://localhost:5173/)
 
 - frontend
 
-  - [x] add rest of settings page
-  - [x] form for adding new devices
+  - [x] ~~add rest of settings page~~
+  - [x] ~~form for adding new devices~~
   - [ ] add per device settings
   - [x] ~~theme toggle button~~
   - [x] ~~add device ports to cards~~
@@ -40,11 +40,11 @@ Open up [http://localhost:5173/](http://localhost:5173/)
 
   - [x] ~~make sure ping works~~
   - [ ] make sure arp works
-  - [x] make sure wake works
+  - [x] ~~make sure wake works~~
   - [ ] remove nmap?
   - [ ] add shutdown command
   - [ ] add scheduled wake
-  - [x] [#34 Add support for WOL passwords](https://github.com/seriousm4x/UpSnap/issues/34)
+  - [x] [~~#34 Add support for WOL passwords~~](https://github.com/seriousm4x/UpSnap/issues/34)
   - [x] [~~#33 Seemingly High Ram usage~~](https://github.com/seriousm4x/UpSnap/issues/33)
   - [x] [~~#32 API available?~~](https://github.com/seriousm4x/UpSnap/issues/32)
 
