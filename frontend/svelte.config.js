@@ -13,6 +13,9 @@ const config = {
 		alias: {
 			'@components': path.resolve('./src/components'),
 			'@stores': path.resolve('./src/stores')
+		},
+		prerender: {
+			entries: ['/device/[id]']
 		}
 	}
 };

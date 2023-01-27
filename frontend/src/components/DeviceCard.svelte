@@ -61,7 +61,9 @@
 					{/if}
 				</div>
 				<div class="col-auto fs-5">
-					<Fa icon={faEllipsisVertical} />
+					<a href="/device/{device.id}" class="text-reset text-center ellipsis power-hover">
+						<Fa icon={faEllipsisVertical} />
+					</a>
 				</div>
 			</div>
 			{#if device.link}

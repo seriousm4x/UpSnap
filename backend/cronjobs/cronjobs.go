@@ -20,6 +20,11 @@ func RunCron(app *pocketbase.PocketBase) {
 	// init cronjob
 	Jobs = cron.New()
 	Jobs.AddFunc(settingsRecords[0].GetString("interval"), func() {
+		// skip cron if no realtime clients connected
+		realtimeClients := len(app.SubscriptionsBroker().Clients())
+		if realtimeClients == 0 {
+			return
+		}
 		// expand ports field
 		expandFetchFunc := func(c *models.Collection, ids []string) ([]*models.Record, error) {
 			return app.Dao().FindRecordsByIds(c.Id, ids, nil)

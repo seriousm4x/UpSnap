@@ -1,18 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
 	import { pocketbase } from '@stores/pocketbase';
-	import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-	import Fa from 'svelte-fa';
+	import DeviceForm from '@components/DeviceForm.svelte';
 
 	let pb;
 	let files;
 	let settings = {};
+	let timeout;
 	let buttons = {
-		add_device: {
-			state: 'none',
-			error: ''
-		},
-		saved: {
+		settings: {
 			state: 'none',
 			error: ''
 		},
@@ -26,15 +22,16 @@
 		ip: '',
 		mac: '',
 		netmask: '255.255.255.0',
+		expand: {
+			ports: []
+		},
+		ports: [],
 		link: '',
 		wake_cron: '',
 		shutdown_cron: '',
 		shutdown_cmd: '',
 		password: ''
 	};
-
-	let passwordShow = false;
-	$: passwordType = passwordShow ? 'text' : 'password';
 
 	onMount(async () => {
 		pocketbase.subscribe((conn) => {
@@ -45,53 +42,29 @@
 		settings = result.items[0];
 	});
 
-	async function addDevice() {
-		buttons.add_device.state = 'waiting';
-		try {
-			if (
-				newDevice.password.length != 0 &&
-				newDevice.password.length != 4 &&
-				newDevice.password.length != 6
-			) {
-				throw 'Password must be 0, 4 or 6 characters long';
-			}
-			await pb.collection('devices').create(newDevice, { $autoCancel: false });
-			setTimeout(() => {
-				buttons.add_device.state = 'none';
-			}, 3000);
-			buttons.add_device.state = 'success';
-		} catch (error) {
-			setTimeout(() => {
-				buttons.add_device.error = '';
-				buttons.add_device.state = 'none';
-			}, 3000);
-			buttons.add_device.error = error;
-			buttons.add_device.state = 'failed';
-		}
-	}
-
 	async function saveSettings() {
-		buttons.saved.state = 'waiting';
+		buttons.settings.state = 'waiting';
 		try {
-			await pb.collection('settings').update(
-				settings.id,
-				{
-					interval: settings.interval,
-					notifications: settings.notifications
-				},
-				{ $autoCancel: false }
-			);
-			setTimeout(() => {
-				buttons.saved.state = 'none';
+			if (settings.interval === '') {
+				settings.interval = '@every 3s';
+			}
+			await pb.collection('settings').update(settings.id, {
+				interval: settings.interval,
+				notifications: settings.notifications
+			});
+			clearTimeout(timeout);
+			timeout = setTimeout(() => {
+				buttons.settings.state = 'none';
 			}, 3000);
-			buttons.saved.state = 'success';
+			buttons.settings.state = 'success';
 		} catch (error) {
-			setTimeout(() => {
-				buttons.saved.error = '';
-				buttons.saved.state = 'none';
+			clearTimeout(timeout);
+			timeout = setTimeout(() => {
+				buttons.settings.error = '';
+				buttons.settings.state = 'none';
 			}, 3000);
-			buttons.saved.error = error;
-			buttons.saved.state = 'failed';
+			buttons.settings.error = error;
+			buttons.settings.state = 'failed';
 		}
 	}
 
@@ -127,30 +100,24 @@
 					let thisDevicePorts = [];
 					for (let index = 0; index < device.ports.length; index++) {
 						const port = device.ports[index];
-						const record = await pb.collection('ports').create(
-							{
-								name: port.name,
-								number: port.number
-							},
-							{ $autoCancel: false }
-						);
+						const record = await pb.collection('ports').create({
+							name: port.name,
+							number: port.number
+						});
 						thisDevicePorts.push(record.id);
 					}
 
 					// create device
-					await pb.collection('devices').create(
-						{
-							name: device.name,
-							ip: device.ip,
-							mac: device.mac,
-							netmask: device.netmask,
-							ports: thisDevicePorts,
-							link: device.link,
-							wake: device.wake,
-							shutdown: device.shutdown
-						},
-						{ $autoCancel: false }
-					);
+					await pb.collection('devices').create({
+						name: device.name,
+						ip: device.ip,
+						mac: device.mac,
+						netmask: device.netmask,
+						ports: thisDevicePorts,
+						link: device.link,
+						wake: device.wake,
+						shutdown: device.shutdown
+					});
 				}
 			};
 			setTimeout(() => {
@@ -166,171 +133,10 @@
 			buttons.restore.state = 'failed';
 		}
 	}
-
-	function onPasswordInput(event) {
-		newDevice.password = event.target.value;
-	}
 </script>
 
 <div class="container">
-	<section class="m-0 mt-4 p-4 shadow-sm">
-		<h3 class="mb-3">Add new device</h3>
-		<div class="row">
-			<div class="col-md-6">
-				<form on:submit|preventDefault={addDevice}>
-					<h5>Required:</h5>
-					<div class="input-group mb-3">
-						<span class="input-group-text">Name</span>
-						<input
-							class="form-control"
-							placeholder="Office Pc"
-							aria-label="Name"
-							aria-describedby="addon-wrapping"
-							type="text"
-							required
-							bind:value={newDevice.name}
-						/>
-					</div>
-					<div class="input-group mb-3">
-						<span class="input-group-text">IP</span>
-						<input
-							class="form-control"
-							placeholder="192.168.1.34"
-							aria-label="IP"
-							aria-describedby="addon-wrapping"
-							type="text"
-							required
-							bind:value={newDevice.ip}
-						/>
-					</div>
-					<div class="input-group mb-3">
-						<span class="input-group-text">MAC</span>
-						<input
-							class="form-control"
-							placeholder="aa:bb:cc:dd:ee:ff"
-							aria-label="MAC"
-							aria-describedby="addon-wrapping"
-							type="text"
-							required
-							bind:value={newDevice.mac}
-						/>
-					</div>
-					<div class="input-group mb-3">
-						<span class="input-group-text">Netmask</span>
-						<input
-							class="form-control"
-							placeholder="Most likely 255.255.255.0 or 255.255.0.0"
-							aria-label="Netmask"
-							aria-describedby="addon-wrapping"
-							type="text"
-							required
-							bind:value={newDevice.netmask}
-						/>
-					</div>
-					<h5 class="mt-4">Optional:</h5>
-					<div class="input-group mb-3">
-						<span class="input-group-text">Link</span>
-						<input
-							class="form-control"
-							placeholder="Clickable link on device card"
-							aria-label="Link"
-							aria-describedby="addon-wrapping"
-							type="url"
-							bind:value={newDevice.link}
-						/>
-					</div>
-					<div class="input-group mb-3">
-						<span class="input-group-text">Wake Cron<sup>(1)</sup></span>
-						<input
-							class="form-control"
-							placeholder="Automatically wake device with cron"
-							aria-label="Wake Cron"
-							aria-describedby="addon-wrapping"
-							type="text"
-							bind:value={newDevice.wake_cron}
-						/>
-					</div>
-					<div class="input-group mb-3">
-						<span class="input-group-text">Shutdown Cron<sup>(1)</sup></span>
-						<input
-							class="form-control"
-							placeholder="Automatically shutdown device with cron"
-							aria-label="Shutdown Cron"
-							aria-describedby="addon-wrapping"
-							type="text"
-							bind:value={newDevice.shutdown_cron}
-						/>
-					</div>
-					<div class="input-group mb-3">
-						<span class="input-group-text">Shutdown Cmd<sup>(2)</sup></span>
-						<input
-							class="form-control"
-							placeholder="Command to shutdown device"
-							aria-label="Shutdown Cmd"
-							aria-describedby="addon-wrapping"
-							type="text"
-							bind:value={newDevice.shutdown_cmd}
-						/>
-					</div>
-					<div class="input-group mb-3">
-						<span class="input-group-text">Password<sup>(3)</sup></span>
-						<input
-							class="form-control"
-							placeholder="BIOS password for wol"
-							aria-label="IP"
-							aria-describedby="addon-wrapping"
-							type={passwordType}
-							value={newDevice.password}
-							maxlength="6"
-							on:input={onPasswordInput}
-						/>
-						<button
-							class="btn btn-outline-secondary"
-							type="button"
-							on:click={() => (passwordShow = !passwordShow)}
-						>
-							<Fa icon={passwordShow ? faEyeSlash : faEye} />
-						</button>
-					</div>
-					<button
-						type="submit"
-						class="btn btn-secondary"
-						class:btn-success={buttons.add_device.state === 'success' ? true : false}
-						class:btn-warning={buttons.add_device.state === 'waiting' ? true : false}
-						class:btn-danger={buttons.add_device.state === 'failed' ? true : false}
-					>
-						{#if buttons.add_device.state === 'none'}
-							Add device
-						{:else if buttons.add_device.state === 'success'}
-							Added successfully
-						{:else if buttons.add_device.state === 'waiting'}
-							Waiting
-						{:else if buttons.add_device.state === 'failed'}
-							Failed: {buttons.add_device.error}
-						{/if}
-					</button>
-				</form>
-			</div>
-			<div class="col-md-6">
-				<div class="callout callout-info mb-0">
-					<h5>Optional:</h5>
-					<p class="m-0">(1) Same cron syntax as for ping interval.</p>
-					<p class="m-0">(2) Shell command to be executed. e.g.:</p>
-					<ul>
-						<li>Windows: "net rpc shutdown -I 192.168.1.13 -U test%test"</li>
-						<li>
-							Linux: "sshpass -p your_password ssh -o 'StrictHostKeyChecking=no' user@hostname 'sudo
-							shutdown'"
-						</li>
-					</ul>
-					<p class="m-0">
-						(3) Some network cards have the option to set a password for magic packets, also called
-						"SecureON". Password can only be 0, 4 or 6 characters in length.
-					</p>
-				</div>
-			</div>
-		</div>
-	</section>
+	<DeviceForm bind:device={newDevice} mode="add" />
 	<section class="m-0 mt-4 p-4 shadow-sm">
 		<form on:submit|preventDefault={saveSettings}>
 			<h3 class="mb-3">Ping interval</h3>
@@ -380,18 +186,19 @@
 			<button
 				type="submit"
 				class="btn btn-secondary mt-3"
-				class:btn-success={buttons.saved.state === 'success' ? true : false}
-				class:btn-warning={buttons.saved.state === 'waiting' ? true : false}
-				class:btn-danger={buttons.saved.state === 'failed' ? true : false}
+				class:btn-success={buttons.settings.state === 'success' ? true : false}
+				class:btn-warning={buttons.settings.state === 'waiting' ? true : false}
+				class:btn-danger={buttons.settings.state === 'failed' ? true : false}
+				disabled={buttons.settings.state !== 'none' ? true : false}
 			>
-				{#if buttons.saved.state === 'none'}
+				{#if buttons.settings.state === 'none'}
 					Save
-				{:else if buttons.saved.state === 'success'}
+				{:else if buttons.settings.state === 'success'}
 					Saved
-				{:else if buttons.saved.state === 'waiting'}
+				{:else if buttons.settings.state === 'waiting'}
 					Waiting
-				{:else if buttons.saved.state === 'failed'}
-					Failed: {buttons.add_device.error}
+				{:else if buttons.settings.state === 'failed'}
+					Failed: {buttons.settings.error}
 				{/if}
 			</button>
 		</form>

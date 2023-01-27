@@ -199,3 +199,4 @@ frontend/vite.config.ts.timestamp-*
 
 backend/pb_data
 backend/pb_public/*
+!backend/pb_public/.gitkeep

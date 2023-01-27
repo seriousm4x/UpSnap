@@ -8,7 +8,7 @@
 <nav class="navbar navbar-expand">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="/">
-			<img src="favicon.png" alt="UpSnap" width="30" height="30" />
+			<img src="/favicon.png" alt="UpSnap" width="30" height="30" />
 		</a>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
@@ -31,8 +31,8 @@
 						data-bs-toggle="dropdown"
 						aria-expanded="false"
 					>
-					<Fa icon={faBrush} class="me-2" />
-					Theme
+						<Fa icon={faBrush} class="me-2" />
+						Theme
 					</div>
 					<ul class="dropdown-menu border-0 p-1">
 						<li>
