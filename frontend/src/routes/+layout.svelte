@@ -1,11 +1,11 @@
 <script>
-	import { onMount } from 'svelte';
-	import Navbar from '@components/Navbar.svelte';
-	import Transition from '@components/Transition.svelte';
-	import { page } from '$app/stores';
-	import { theme } from '@stores/theme';
+    import { onMount } from 'svelte';
+    import Navbar from '@components/Navbar.svelte';
+    import Transition from '@components/Transition.svelte';
+    import { page } from '$app/stores';
+    import { theme } from '@stores/theme';
 
-	let preferesDark;
+    let preferesDark;
 
     onMount(() => {
         // import bootstrap js
@@ -53,9 +53,9 @@
 <Navbar />
 
 <Transition url={$page.url}>
-	<slot />
+    <slot />
 </Transition>
 
 <style lang="scss" global>
-	@import '../scss/main.scss';
+    @import '../scss/main.scss';
 </style>
