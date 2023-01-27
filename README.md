@@ -41,9 +41,8 @@ Open up [http://localhost:5173/](http://localhost:5173/)
 - backend
 
   - [x] ~~make sure ping works~~
-  - [ ] make sure arp works
+  - [x] ~~make sure arp works~~
   - [x] ~~make sure wake works~~
-  - [ ] remove nmap?
   - [ ] add shutdown command
   - [ ] add scheduled wake
   - [x] [~~#34 Add support for WOL passwords~~](https://github.com/seriousm4x/UpSnap/issues/34)
