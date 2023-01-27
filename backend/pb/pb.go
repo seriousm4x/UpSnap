@@ -152,6 +152,9 @@ func importSettings() error {
 	// save settings to db
 	settings.Set("interval", interval)
 	settings.Set("notifications", notifications)
+	if scanRange := os.Getenv("UPSNAP_SCAN_RANGE"); scanRange != "" {
+		settings.Set("scan_range", scanRange)
+	}
 	if err := App.Dao().SaveRecord(settings); err != nil {
 		return err
 	}

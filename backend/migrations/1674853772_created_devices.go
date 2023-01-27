@@ -13,8 +13,8 @@ func init() {
 	m.Register(func(db dbx.Builder) error {
 		jsonData := `{
 			"id": "z5lghx2r3tm45n1",
-			"created": "2023-01-26 14:28:42.378Z",
-			"updated": "2023-01-26 14:28:42.378Z",
+			"created": "2023-01-27 21:09:32.861Z",
+			"updated": "2023-01-27 21:09:32.861Z",
 			"name": "devices",
 			"type": "base",
 			"system": false,

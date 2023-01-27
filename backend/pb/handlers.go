@@ -2,12 +2,12 @@ package pb
 
 import (
 	"encoding/xml"
+	"errors"
 	"net"
 	"net/http"
 	"os"
 	"os/exec"
 	"runtime"
-	"strings"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
@@ -62,23 +62,47 @@ type Nmaprun struct {
 }
 
 func HandlerScan(c echo.Context) error {
-	scanRange := os.Getenv("UPSNAP_SCAN_RANGE")
-	_, _, err := net.ParseCIDR(scanRange)
+	if runtime.GOOS == "windows" {
+		// check for admin on windows by trying to open physicaldrive
+		_, err := os.Open("\\\\.\\PHYSICALDRIVE0")
+		if err != nil {
+			err := errors.New("network scan requires upsnap to be run as administrator")
+			return apis.NewBadRequestError(err.Error(), nil)
+		}
+	} else {
+		// check for root on anything else
+		sudoUID := os.Getenv("SUDO_UID")
+		if sudoUID == "" {
+			err := errors.New("network scan requires upsnap to be run as root")
+			return apis.NewBadRequestError(err.Error(), nil)
+		}
+	}
+
+	// check if nmap installed
+	if _, err := exec.LookPath("nmap"); err != nil {
+		return apis.NewBadRequestError(err.Error(), nil)
+	}
+
+	// check if scan range is valid
+	allSettings, err := App.Dao().FindRecordsByExpr("settings")
+	if err != nil {
+		return err
+	}
+	settings := allSettings[0]
+	scanRange := settings.GetString("scan_range")
+	_, _, err = net.ParseCIDR(scanRange)
 	if err != nil {
 		return apis.NewBadRequestError(err.Error(), nil)
 	}
 
-	cmd := []string{}
-	if runtime.GOOS != "windows" {
-		cmd = []string{"sudo"}
-	}
-	cmd = append(cmd, "nmap", "-sn", "-oX", "-", scanRange, "--host-timeout", "500ms")
-
-	cmdOutput, err := exec.Command(strings.Join(cmd, " ")).Output()
+	// run nmap
+	cmd := exec.Command("nmap", "-sn", "-oX", "-", scanRange, "--host-timeout", "500ms")
+	cmdOutput, err := cmd.Output()
 	if err != nil {
 		return err
 	}
 
+	// unmarshal xml
 	nmapOutput := Nmaprun{}
 	if err := xml.Unmarshal(cmdOutput, &nmapOutput); err != nil {
 		return err
@@ -91,6 +115,7 @@ func HandlerScan(c echo.Context) error {
 	}
 	data := []Device{}
 
+	// extract info from struct into data
 	for _, host := range nmapOutput.Host {
 		dev := Device{}
 		for _, addr := range host.Address {

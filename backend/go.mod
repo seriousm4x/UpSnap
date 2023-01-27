@@ -3,6 +3,7 @@ module github.com/seriousm4x/upsnap/backend
 go 1.19
 
 require (
+	github.com/Ullaakut/nmap/v2 v2.2.2
 	github.com/go-ping/ping v1.1.0
 	github.com/labstack/echo/v5 v5.0.0-20220201181537-ed2888cfa198
 	github.com/mdlayher/wol v0.0.0-20220221231636-b763a792253a
@@ -58,6 +59,7 @@ require (
 	github.com/mdlayher/packet v1.0.0 // indirect
 	github.com/mdlayher/socket v0.2.1 // indirect
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20220927061507-ef77025ab5aa // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/cobra v1.6.1 // indirect
