@@ -1,59 +1,55 @@
-<div align="center" width="100%">
-    <img src="app/frontend/public/favicon.png" width="128" />
-</div>
+# UpSnap v3
 
-<div align="center" width="100%">
-    <h2>UpSnap</h2>
-    <p>A simple wake on lan app written with Svelte, Django, Django-Channels (websockets), Celery, Redis and nmap.</p>
-    <a target="_blank" href="https://github.com/seriousm4x/upsnap"><img src="https://img.shields.io/github/stars/seriousm4x/upsnap" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/upsnap"><img src="https://img.shields.io/docker/pulls/seriousm4x/upsnap" /></a> <a target="_blank" href="https://hub.docker.com/r/seriousm4x/upsnap"><img src="https://img.shields.io/docker/v/seriousm4x/upsnap/latest?label=docker%20image%20ver." /></a> <a target="_blank" href="https://github.com/seriousm4x/upsnap"><img src="https://img.shields.io/github/last-commit/seriousm4x/upsnap" /></a>
-</div>
+## Stable version can be found on [v2 branch](https://github.com/seriousm4x/UpSnap/tree/v2)
 
-## ✨ Features
+> This is the dev branch for v3. It's very much in progress but will have a release candidate once all boxes below are checked.
 
-* Dashboard to wake up devices with 1 click
-* Set timed wake and shutdown events via cron
-* Add custom ports to devices which will be scanned
-* Discover devices by scanning network
-* Notifications on status changes
-* Devices only get pinged when there are 1 or more visitors
-* Dark/light or system prefered color scheme
-* [Docker images](https://hub.docker.com/r/seriousm4x/upsnap) for amd64, arm64, arm/v7
+## Help developing
 
-## 📸 Screenshots
+Fork this branch and clone it.
 
-| Dark                 | Light                 |
-| -------------------- | --------------------- |
-| ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/index-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/index-light.png) |
-| ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/device-settings-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/device-settings-light.png) |
-| ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/settings-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/settings-light.png) |
-| ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/add-device-dark.png) | ![](https://raw.githubusercontent.com/seriousm4x/upsnap/master/assets/add-device-light.png) |
+1. Start backend
 
-## 🐳 Run your own instance
-
-There are 3 example docker-compose files to choose from. The simplest is [docker-compose-sqlite.yml](docker-compose-sqlite.yml).
-
-The website will be available at [localhost:8000](http://localhost:8000). If you run it on a different pc, it will be `http://<your-ip>:8000`. You can change the port in the docker-compose file.
-
-### Reverse Proxy
-
-If you're using a reverse proxy, make sure to set `BACKEND_IS_PROXIED` to true in docker-compose. Set your reverse proxy to the `FRONTEND_PORT` and set `/wol/` to `BACKEND_PORT`.
-
-**Caddy example**
-```
-upsnap.example.com {
-    reverse_proxy localhost:8000
-    reverse_proxy /wol/ localhost:8001
-}
+```sh
+cd backend
+go mod tidy
+go run main.go serve
 ```
 
-### Databases
+Log in to [http://127.0.0.1:8090/\_/](http://127.0.0.1:8090/_/), create an admin user and add some devices.
 
-Upsnap supports 3 different databases. Postgres, MySQL and SQLite. If you already have an existing database you want to use, delete the database container from the compose file. Always make sure to set the correct database type environment variable, e.g. DB_TYPE=mysql
+2. Start frontend
 
-### Windows
+```sh
+cd frontend
+pnpm i
+pnpm run dev
+```
 
-There is a partly working solution in the [issue here](https://github.com/seriousm4x/UpSnap/issues/20#issuecomment-1142593360). Windows has problems with docker networking mode host, which breaks network scan. Sending wol packages works though.
+Open up [http://localhost:5173/](http://localhost:5173/)
 
-## 📝 Other infos
+## To do
 
-* The app container needs to run in host network mode to send the wakeonlan command on your local network. Therefore all other containers also need to run in host network mode. I don't like it but there is no way around.
+- frontend
+
+  - [x] ~~add rest of settings page~~
+  - [x] ~~form for adding new devices~~
+  - [x] ~~add per device settings~~
+  - [x] ~~theme toggle button~~
+  - [x] ~~add device ports to cards~~
+
+- backend
+
+  - [x] ~~make sure ping works~~
+  - [ ] make sure arp works
+  - [x] ~~make sure wake works~~
+  - [ ] remove nmap?
+  - [ ] add shutdown command
+  - [ ] add scheduled wake
+  - [x] [~~#34 Add support for WOL passwords~~](https://github.com/seriousm4x/UpSnap/issues/34)
+  - [x] [~~#33 Seemingly High Ram usage~~](https://github.com/seriousm4x/UpSnap/issues/33)
+  - [x] [~~#32 API available?~~](https://github.com/seriousm4x/UpSnap/issues/32)
+
+- [x] ~~add db import from v2~~
+- [ ] move docker images to github packages and setup new workflow file
+- [ ] create dockerfile and docker-compose.yml
