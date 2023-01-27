@@ -21,6 +21,8 @@ var App *pocketbase.PocketBase
 
 func StartPocketBase() {
 	App = pocketbase.New()
+	App.RootCmd.Short = "UpSnap CLI"
+	App.RootCmd.Version = "3.0.0b1"
 
 	// auto migrate db
 	migratecmd.MustRegister(App, App.RootCmd, &migratecmd.Options{
@@ -154,8 +156,8 @@ func importSettings() error {
 		return err
 	}
 
-	logger.Debug.Println("Ping interval set to", interval)
-	logger.Debug.Println("Notifications set to", notifications)
+	logger.Info.Println("Ping interval set to", interval)
+	logger.Info.Println("Notifications set to", notifications)
 	return nil
 }
 
