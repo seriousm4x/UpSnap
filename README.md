@@ -1,5 +1,7 @@
 # UpSnap v3
 
+## Stable version can be found on [v2 branch](https://github.com/seriousm4x/UpSnap/tree/v2)
+
 > This is the dev branch for v3. It's very much in progress but will have a release candidate once all boxes below are checked.
 
 ## Help developing
