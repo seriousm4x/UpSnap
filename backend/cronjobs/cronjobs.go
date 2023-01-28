@@ -80,7 +80,7 @@ func RunWakeShutdown() {
 		wake_cron := device.GetString("wake_cron")
 		wake_cron_enabled := device.GetBool("wake_cron_enabled")
 		shutdown_cron := device.GetString("shutdown_cron")
-		shutdown_cron_enabled := device.GetBool("wake_cron_enabled")
+		shutdown_cron_enabled := device.GetBool("shutdown_cron_enabled")
 
 		if wake_cron_enabled && wake_cron != "" {
 			CronWakeShutdown.AddFunc(wake_cron, func() {
@@ -98,4 +98,5 @@ func RunWakeShutdown() {
 			})
 		}
 	}
+	CronWakeShutdown.Run()
 }
