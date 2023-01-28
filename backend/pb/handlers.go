@@ -8,6 +8,8 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"strconv"
+	"strings"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
@@ -85,7 +87,7 @@ func HandlerScan(c echo.Context) error {
 	}
 	settings := allSettings[0]
 	scanRange := settings.GetString("scan_range")
-	_, _, err = net.ParseCIDR(scanRange)
+	_, ipNet, err := net.ParseCIDR(scanRange)
 	if err != nil {
 		return apis.NewBadRequestError(err.Error(), nil)
 	}
@@ -108,9 +110,19 @@ func HandlerScan(c echo.Context) error {
 		IP   string `json:"ip"`
 		MAC  string `json:"mac"`
 	}
-	data := []Device{}
 
 	// extract info from struct into data
+	type Response struct {
+		Netmask string   `json:"netmask"`
+		Devices []Device `json:"devices"`
+	}
+	res := Response{}
+	var nm []string
+	for _, octet := range ipNet.Mask {
+		nm = append(nm, strconv.Itoa(int(octet)))
+	}
+	res.Netmask = strings.Join(nm, ".")
+
 	for _, host := range nmapOutput.Host {
 		dev := Device{}
 		for _, addr := range host.Address {
@@ -129,8 +141,8 @@ func HandlerScan(c echo.Context) error {
 		if dev.Name == "" {
 			dev.Name = "Unknown"
 		}
-		data = append(data, dev)
+		res.Devices = append(res.Devices, dev)
 	}
 
-	return c.JSON(http.StatusOK, data)
+	return c.JSON(http.StatusOK, res)
 }

@@ -1,7 +1,10 @@
 <script>
     import { onMount } from 'svelte';
+    import { dev } from '$app/environment';
     import { pocketbase } from '@stores/pocketbase';
     import DeviceForm from '@components/DeviceForm.svelte';
+    import { faPlus } from '@fortawesome/free-solid-svg-icons';
+    import Fa from 'svelte-fa';
 
     let pb;
     let files;
@@ -13,6 +16,10 @@
             error: ''
         },
         restore: {
+            state: 'none',
+            error: ''
+        },
+        scan: {
             state: 'none',
             error: ''
         }
@@ -34,6 +41,7 @@
         shutdown_cmd: '',
         password: ''
     };
+    let scannedDevices = {};
 
     onMount(async () => {
         pocketbase.subscribe((conn) => {
@@ -65,6 +73,45 @@
             buttons.settings.error = error;
             buttons.settings.state = 'failed';
         }
+    }
+
+    async function scanDevices() {
+        buttons.scan.state = 'waiting';
+        await pb.collection('settings').update(settings.id, settings);
+
+        fetch(`${dev ? 'http://127.0.0.1:8090' : ''}/api/upsnap/scan`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.message) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        buttons.scan.error = '';
+                        buttons.scan.state = 'none';
+                    }, 3000);
+                    buttons.scan.error = data.message;
+                    buttons.scan.state = 'failed';
+                } else {
+                    scannedDevices = data;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        buttons.scan.state = 'none';
+                    }, 3000);
+                    buttons.scan.state = 'success';
+                }
+            })
+            .catch((error) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    buttons.scan.error = '';
+                    buttons.scan.state = 'none';
+                }, 3000);
+                buttons.scan.error = error;
+                buttons.scan.state = 'failed';
+            });
+    }
+
+    async function addDevice(device) {
+        await pb.collection('devices').create(device);
     }
 
     async function restoreV2Backup() {
@@ -207,6 +254,102 @@
                 {/if}
             </button>
         </form>
+    </section>
+    <DeviceForm bind:device={newDevice} mode="add" />
+    <section class="m-0 my-4 p-4 shadow-sm">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="mb-3">Network scan</h3>
+                <p>Set the network address to scan.</p>
+                <form on:submit|preventDefault={scanDevices}>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="ip-range">IP range</span>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="e.g. '192.168.1.0/24'"
+                            aria-label="ip-range"
+                            aria-describedby="ip-range"
+                            bind:value={settings.scan_range}
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        class="btn btn-secondary"
+                        class:btn-success={buttons.scan.state === 'success' ? true : false}
+                        class:btn-warning={buttons.scan.state === 'waiting' ? true : false}
+                        class:btn-danger={buttons.scan.state === 'failed' ? true : false}
+                        disabled={settings.scan_range === '' || buttons.scan.state !== 'none'
+                            ? true
+                            : false}
+                    >
+                        {#if buttons.scan.state === 'none'}
+                            Scan
+                        {:else if buttons.scan.state === 'success'}
+                            Scanned
+                        {:else if buttons.scan.state === 'waiting'}
+                            Scan running (might take some seconds)
+                        {:else if buttons.scan.state === 'failed'}
+                            Failed: {buttons.scan.error}
+                        {/if}
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <div class="callout callout-info mb-0">
+                    <p class="m-0">
+                        For network scan to work, you need to run UpSnap as root/admin and have nmap
+                        installed and available in your $PATH. (For docker users, thats already the
+                        case and you don't need to do anything.)
+                    </p>
+                </div>
+            </div>
+        </div>
+        {#if scannedDevices.devices}
+            <div class="mt-3">
+                <div class="row align-items-center my-1">
+                    <div class="col-md fw-bold">Name</div>
+                    <div class="col-md fw-bold">IP</div>
+                    <div class="col-md fw-bold">MAC</div>
+                    <div class="col-md fw-bold">Netmask</div>
+                    <div class="col-md fw-bold">Add</div>
+                </div>
+                {#each scannedDevices?.devices as device}
+                    <hr class="my-1" />
+                    <div class="row align-items-center my-1">
+                        <div class="col-md">
+                            {device.name}
+                        </div>
+                        <div class="col-md">
+                            {device.ip}
+                        </div>
+                        <div class="col-md">
+                            {device.mac}
+                        </div>
+                        <div class="col-md">
+                            {scannedDevices.netmask}
+                        </div>
+                        <div class="col-md">
+                            <button
+                                class="btn btn-sm btn-secondary py-0"
+                                on:click={async (e) => {
+                                    device.netmask = scannedDevices.netmask;
+                                    await addDevice(device);
+                                    e.target.disabled = true;
+                                }}
+                                on:keydown={async (e) => {
+                                    device.netmask = scannedDevices.netmask;
+                                    await addDevice(device);
+                                    e.target.disabled = true;
+                                }}
+                            >
+                                Add <Fa icon={faPlus} />
+                            </button>
+                        </div>
+                    </div>
+                {/each}
+            </div>
+        {/if}
     </section>
     <section class="m-0 my-4 p-4 shadow-sm">
         <h3 class="mb-3">Restore</h3>
