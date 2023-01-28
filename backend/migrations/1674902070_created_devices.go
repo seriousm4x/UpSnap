@@ -13,8 +13,8 @@ func init() {
 	m.Register(func(db dbx.Builder) error {
 		jsonData := `{
 			"id": "z5lghx2r3tm45n1",
-			"created": "2023-01-27 21:09:32.861Z",
-			"updated": "2023-01-27 21:09:32.861Z",
+			"created": "2023-01-28 10:34:30.781Z",
+			"updated": "2023-01-28 10:34:30.781Z",
 			"name": "devices",
 			"type": "base",
 			"system": false,
@@ -124,6 +124,15 @@ func init() {
 				},
 				{
 					"system": false,
+					"id": "dcd3vuc3",
+					"name": "wake_cron_enabled",
+					"type": "bool",
+					"required": false,
+					"unique": false,
+					"options": {}
+				},
+				{
+					"system": false,
 					"id": "91bs6clw",
 					"name": "shutdown_cron",
 					"type": "text",
@@ -134,6 +143,15 @@ func init() {
 						"max": null,
 						"pattern": ""
 					}
+				},
+				{
+					"system": false,
+					"id": "vnlymcuw",
+					"name": "shutdown_cron_enabled",
+					"type": "bool",
+					"required": false,
+					"unique": false,
+					"options": {}
 				},
 				{
 					"system": false,

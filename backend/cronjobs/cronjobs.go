@@ -9,17 +9,18 @@ import (
 )
 
 var Devices []*models.Record
-var Jobs *cron.Cron
+var CronPing *cron.Cron
+var CronWakeShutdown *cron.Cron
 
-func RunCron(app *pocketbase.PocketBase) {
+func RunPing(app *pocketbase.PocketBase) {
 	settingsRecords, err := app.Dao().FindRecordsByExpr("settings")
 	if err != nil {
 		logger.Error.Println(err)
 	}
 
 	// init cronjob
-	Jobs = cron.New()
-	Jobs.AddFunc(settingsRecords[0].GetString("interval"), func() {
+	CronPing = cron.New()
+	CronPing.AddFunc(settingsRecords[0].GetString("interval"), func() {
 		// skip cron if no realtime clients connected
 		realtimeClients := len(app.SubscriptionsBroker().Clients())
 		if realtimeClients == 0 {
@@ -70,5 +71,31 @@ func RunCron(app *pocketbase.PocketBase) {
 			}(device)
 		}
 	})
-	Jobs.Run()
+	CronPing.Run()
+}
+
+func RunWakeShutdown() {
+	CronWakeShutdown = cron.New()
+	for _, device := range Devices {
+		wake_cron := device.GetString("wake_cron")
+		wake_cron_enabled := device.GetBool("wake_cron_enabled")
+		shutdown_cron := device.GetString("shutdown_cron")
+		shutdown_cron_enabled := device.GetBool("wake_cron_enabled")
+
+		if wake_cron_enabled && wake_cron != "" {
+			CronWakeShutdown.AddFunc(wake_cron, func() {
+				if err := networking.WakeDevice(device); err != nil {
+					logger.Error.Println(err)
+				}
+			})
+		}
+
+		if shutdown_cron_enabled && shutdown_cron != "" {
+			CronWakeShutdown.AddFunc(shutdown_cron, func() {
+				if err := networking.ShutdownDevice(device); err != nil {
+					logger.Error.Println(err)
+				}
+			})
+		}
+	}
 }

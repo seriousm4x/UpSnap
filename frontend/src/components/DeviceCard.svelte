@@ -1,7 +1,14 @@
 <script>
     import { dev } from '$app/environment';
     import { parseISO, formatDistance } from 'date-fns';
-    import { faPowerOff, faEllipsisVertical, faCircle } from '@fortawesome/free-solid-svg-icons';
+    import {
+        faPowerOff,
+        faEllipsisVertical,
+        faCircle,
+        faCircleUp,
+        faCircleDown,
+        faLock
+    } from '@fortawesome/free-solid-svg-icons';
     import Fa from 'svelte-fa';
 
     export let device;
@@ -95,6 +102,39 @@
                         </p>
                     {/each}
                 </div>
+            {/if}
+            {#if device.wake_cron !== ''}
+                <span
+                    class="badge rounded-pill {device.wake_cron_enabled
+                        ? 'text-bg-success'
+                        : 'text-bg-danger'}"
+                    data-toggle="tooltip"
+                    title="Wake cron {device.wake_cron_enabled ? 'enabled' : 'disabled'}"
+                >
+                    <Fa icon={faCircleUp} class="me-1" />
+                    {device.wake_cron}
+                </span>
+            {/if}
+            {#if device.shutdown_cron !== ''}
+                <span
+                    class="badge rounded-pill {device.shutdown_cron_enabled
+                        ? 'text-bg-success'
+                        : 'text-bg-danger'}"
+                    data-toggle="tooltip"
+                    title="Shutdown cron {device.shutdown_cron_enabled ? 'enabled' : 'disabled'}"
+                >
+                    <Fa icon={faCircleDown} class="me-1" />
+                    {device.shutdown_cron}
+                </span>
+            {/if}
+            {#if device.password !== ''}
+                <span
+                    class="badge rounded-pill text-bg-secondary"
+                    data-toggle="tooltip"
+                    title="Wake password set"
+                >
+                    <Fa icon={faLock} class="mx-1" />
+                </span>
             {/if}
             <p class="text-muted m-0">
                 {formatDistance(parseISO(device.updated), now, {

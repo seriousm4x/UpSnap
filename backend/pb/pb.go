@@ -74,23 +74,29 @@ func StartPocketBase() {
 			return err
 		}
 
-		// run ping cronjob
-		go cronjobs.RunCron(App)
+		// run cronjobs
+		go cronjobs.RunPing(App)
+		go cronjobs.RunWakeShutdown()
 
+		// restart ping cronjobs or wake/shutdown cronjobs on model update
 		// add event hook before starting server.
 		// using this outside App.OnBeforeServe() would not work
 		App.OnModelAfterUpdate().Add(func(e *core.ModelEvent) error {
 			if e.Model.TableName() == "settings" {
-				for _, job := range cronjobs.Jobs.Entries() {
-					cronjobs.Jobs.Remove(job.ID)
+				for _, job := range cronjobs.CronPing.Entries() {
+					cronjobs.CronPing.Remove(job.ID)
 				}
-				go cronjobs.RunCron(App)
-			} else {
+				go cronjobs.RunPing(App)
+			} else if e.Model.TableName() == "devices" {
+				logger.Debug.Println(e.Model)
 				refreshDeviceList()
+				for _, job := range cronjobs.CronWakeShutdown.Entries() {
+					cronjobs.CronWakeShutdown.Remove(job.ID)
+				}
+				go cronjobs.RunWakeShutdown()
 			}
 			return nil
 		})
-
 		return nil
 	})
 

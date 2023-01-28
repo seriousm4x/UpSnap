@@ -252,6 +252,17 @@
                         type="text"
                         bind:value={device.wake_cron}
                     />
+                    <div class="input-group-text form-switch">
+                        <label class="form-check-label" for="wake-cron-enabled">Enable</label>
+                        <input
+                            id="wake-cron-enabled"
+                            class="form-check-input mt-0 ms-1"
+                            type="checkbox"
+                            role="switch"
+                            aria-label="Enable/Disable wake cron"
+                            bind:checked={device.wake_cron_enabled}
+                        />
+                    </div>
                 </div>
                 <div class="input-group mb-1">
                     <span class="input-group-text">Shutdown Cron<sup>(1)</sup></span>
@@ -263,6 +274,17 @@
                         type="text"
                         bind:value={device.shutdown_cron}
                     />
+                    <div class="input-group-text form-switch">
+                        <label class="form-check-label" for="wake-shutdown-enabled">Enable</label>
+                        <input
+                            id="wake-shutdown-enabled"
+                            class="form-check-input mt-0 ms-1"
+                            type="checkbox"
+                            role="switch"
+                            aria-label="Enable/Disable wake cron"
+                            bind:checked={device.shutdown_cron_enabled}
+                        />
+                    </div>
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">Shutdown Cmd<sup>(2)</sup></span>

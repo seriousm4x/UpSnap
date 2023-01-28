@@ -28,7 +28,9 @@
         ports: [],
         link: '',
         wake_cron: '',
+        wake_cron_enabled: false,
         shutdown_cron: '',
+        shutdown_cron_enabled: false,
         shutdown_cmd: '',
         password: ''
     };
@@ -115,8 +117,11 @@
                         netmask: device.netmask,
                         ports: thisDevicePorts,
                         link: device.link,
-                        wake: device.wake,
-                        shutdown: device.shutdown
+                        wake_cron: device.wake.cron,
+                        wake_cron_enabled: device.wake.enabled,
+                        shutdown_cron: device.shutdown.cron,
+                        shutdown_cron_enabled: device.shutdown.cron.enabled,
+                        shutdown_cmd: device.shutdown.command
                     });
                 }
             };

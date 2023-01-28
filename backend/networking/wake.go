@@ -1,17 +1,16 @@
 package networking
 
 import (
+	"errors"
 	"time"
 
 	"github.com/pocketbase/pocketbase/models"
-	"github.com/seriousm4x/upsnap/backend/logger"
 )
 
-func WakeDevice(device *models.Record) bool {
+func WakeDevice(device *models.Record) error {
 	err := SendMagicPacket(device)
 	if err != nil {
-		logger.Error.Println(err)
-		return false
+		return err
 	}
 
 	// we wait 1 minute for the device to come up
@@ -19,8 +18,7 @@ func WakeDevice(device *models.Record) bool {
 	time.Sleep(1 * time.Minute)
 	isOnline := PingDevice(device)
 	if isOnline {
-		return true
-	} else {
-		return false
+		return nil
 	}
+	return errors.New("device not online after 1 min")
 }

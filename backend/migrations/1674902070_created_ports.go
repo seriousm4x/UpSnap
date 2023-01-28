@@ -12,19 +12,31 @@ import (
 func init() {
 	m.Register(func(db dbx.Builder) error {
 		jsonData := `{
-			"id": "nmj3ko20gzkg8n3",
-			"created": "2023-01-27 21:09:32.861Z",
-			"updated": "2023-01-27 21:09:32.861Z",
-			"name": "settings",
+			"id": "cti4l8f4mz8df3r",
+			"created": "2023-01-28 10:34:30.781Z",
+			"updated": "2023-01-28 10:34:30.781Z",
+			"name": "ports",
 			"type": "base",
 			"system": false,
 			"schema": [
 				{
 					"system": false,
-					"id": "ph88gaa5",
-					"name": "interval",
+					"id": "8nwuncgg",
+					"name": "number",
+					"type": "number",
+					"required": true,
+					"unique": false,
+					"options": {
+						"min": null,
+						"max": 65535
+					}
+				},
+				{
+					"system": false,
+					"id": "o0he3pu6",
+					"name": "name",
 					"type": "text",
-					"required": false,
+					"required": true,
 					"unique": false,
 					"options": {
 						"min": null,
@@ -34,25 +46,12 @@ func init() {
 				},
 				{
 					"system": false,
-					"id": "7ehvglvv",
-					"name": "notifications",
+					"id": "w0bh39gv",
+					"name": "status",
 					"type": "bool",
 					"required": false,
 					"unique": false,
 					"options": {}
-				},
-				{
-					"system": false,
-					"id": "agw2fyd1",
-					"name": "scan_range",
-					"type": "text",
-					"required": false,
-					"unique": false,
-					"options": {
-						"min": null,
-						"max": null,
-						"pattern": ""
-					}
 				}
 			],
 			"listRule": "",
@@ -72,7 +71,7 @@ func init() {
 	}, func(db dbx.Builder) error {
 		dao := daos.New(db);
 
-		collection, err := dao.FindCollectionByNameOrId("nmj3ko20gzkg8n3")
+		collection, err := dao.FindCollectionByNameOrId("cti4l8f4mz8df3r")
 		if err != nil {
 			return err
 		}

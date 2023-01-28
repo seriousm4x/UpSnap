@@ -24,11 +24,10 @@ func HandlerWake(c echo.Context) error {
 	go func(*models.Record) {
 		record.Set("status", "pending")
 		App.Dao().SaveRecord(record)
-		isOnline := networking.WakeDevice(record)
-		if isOnline {
-			record.Set("status", "online")
-		} else {
+		if err := networking.WakeDevice(record); err != nil {
 			record.Set("status", "offline")
+		} else {
+			record.Set("status", "online")
 		}
 		App.Dao().SaveRecord(record)
 	}(record)
@@ -40,13 +39,9 @@ func HandlerShutdown(c echo.Context) error {
 	if err != nil {
 		return apis.NewNotFoundError("The device does not exist.", err)
 	}
-	shutdown_cmd := record.GetString("shutdown_cmd")
-	if shutdown_cmd != "" {
-		cmd := exec.Command(shutdown_cmd)
-		if err := cmd.Run(); err != nil {
-			logger.Error.Println(err)
-			return apis.NewBadRequestError(err.Error(), record)
-		}
+	if err := networking.ShutdownDevice(record); err != nil {
+		logger.Error.Println(err)
+		return apis.NewBadRequestError(err.Error(), record)
 	}
 	return nil
 }

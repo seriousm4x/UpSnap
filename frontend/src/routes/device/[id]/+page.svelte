@@ -18,6 +18,9 @@
         const result = await pb.collection('devices').getOne(id, {
             expand: 'ports'
         });
+        if (!result.expand.ports) {
+            result.expand.ports = [];
+        }
         device = result;
     });
 </script>
