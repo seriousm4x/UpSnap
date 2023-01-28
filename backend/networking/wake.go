@@ -13,12 +13,17 @@ func WakeDevice(device *models.Record) error {
 		return err
 	}
 
-	// we wait 1 minute for the device to come up
-	// after that, we check the state
-	time.Sleep(1 * time.Minute)
-	isOnline := PingDevice(device)
-	if isOnline {
-		return nil
+	// check state every second for 2 min
+	start := time.Now()
+	for {
+		time.Sleep(1 * time.Second)
+		isOnline := PingDevice(device)
+		if isOnline {
+			return nil
+		}
+		if time.Since(start) >= 2*time.Minute {
+			break
+		}
 	}
 	return errors.New("device not online after 1 min")
 }
