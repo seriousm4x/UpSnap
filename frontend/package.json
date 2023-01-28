@@ -38,7 +38,7 @@
         "svelte-fa": "^3.0.3"
     },
     "lint-staged": {
-        "*.{js,svelte}": "eslint --fix --ignore-path .gitignore frontend/",
-        "*.{js,css,md,svelte,scss}": "prettier --write --ignore-path .gitignore --plugin-search-dir=frontend/ frontend/"
+        "*.{js,svelte}": "eslint --fix --ignore-path ../.gitignore .",
+        "*.{js,css,md,svelte,scss}": "prettier --write --ignore-path ../.gitignore --plugin-search-dir=. ."
     }
 }

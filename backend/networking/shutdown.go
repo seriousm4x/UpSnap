@@ -2,7 +2,9 @@ package networking
 
 import (
 	"errors"
+	"fmt"
 	"os/exec"
+	"runtime"
 	"time"
 
 	"github.com/pocketbase/pocketbase/models"
@@ -10,11 +12,23 @@ import (
 
 func ShutdownDevice(device *models.Record) error {
 	shutdown_cmd := device.GetString("shutdown_cmd")
-	if shutdown_cmd != "" {
-		cmd := exec.Command(shutdown_cmd)
-		if err := cmd.Run(); err != nil {
-			return err
-		}
+	if shutdown_cmd == "" {
+		return fmt.Errorf("%s: no shutdown_cmd definded", device.GetString("name"))
+	}
+
+	var shell string
+	var shell_arg string
+	if runtime.GOOS == "windows" {
+		shell = "cmd"
+		shell_arg = "/C"
+	} else {
+		shell = "/bin/sh"
+		shell_arg = "-c"
+	}
+
+	cmd := exec.Command(shell, shell_arg, shutdown_cmd)
+	if err := cmd.Run(); err != nil {
+		return err
 	}
 
 	// check state every second for 2 min

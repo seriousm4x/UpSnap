@@ -346,7 +346,7 @@
                     <li>Windows: "net rpc shutdown -I 192.168.1.13 -U test%test"</li>
                     <li>
                         Linux: "sshpass -p your_password ssh -o 'StrictHostKeyChecking=no'
-                        user@hostname 'sudo shutdown'"
+                        user@hostname 'sudo poweroff'"
                     </li>
                 </ul>
                 <p class="m-0">
