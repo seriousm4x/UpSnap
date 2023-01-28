@@ -1,0 +1,40 @@
+name: Publish binaries
+
+on:
+  push:
+    tags:
+      - "v3.*.*"
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+      # pull code
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # install latest node
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+
+      # build sveltekit frontend
+      - name: Build frontend
+        run: npm --prefix=./frontend ci && npm --prefix=./frontend run build && cp -r ./frontend/build/* ./backend/pb_public/
+
+      # install latest golang
+      - name: Set up Go
+        uses: actions/setup-go@v3
+
+      # build
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v4
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

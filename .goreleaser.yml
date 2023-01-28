@@ -1,0 +1,44 @@
+project_name: upsnap
+
+dist: .builds
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - main: ./backend
+    binary: upsnap
+    ldflags:
+      - -s -w -X github.com/seriousm4x/UpSnap.Version={{ .Version }}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - arm
+    goarm:
+      - 7
+    ignore:
+      - goos: windows
+        goarch: arm
+      - goos: darwin
+        goarch: arm
+
+release:
+  draft: true
+
+archives:
+  - format: zip
+    files:
+      - LICENSE*
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"

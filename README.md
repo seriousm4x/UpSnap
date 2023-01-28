@@ -52,5 +52,5 @@ Open up [http://localhost:5173/](http://localhost:5173/)
   - [x] [~~#32 API available?~~](https://github.com/seriousm4x/UpSnap/issues/32)
 
 - [x] ~~add db import from v2~~
-- [ ] move docker images to github packages and setup new workflow file
-- [ ] create dockerfile and docker-compose.yml
+- [x] ~~move docker images to github packages and setup new workflow file~~
+- [x] ~~create dockerfile and docker-compose.yml~~
