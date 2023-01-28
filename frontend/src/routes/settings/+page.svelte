@@ -50,10 +50,7 @@
             if (settings.interval === '') {
                 settings.interval = '@every 3s';
             }
-            await pb.collection('settings').update(settings.id, {
-                interval: settings.interval,
-                notifications: settings.notifications
-            });
+            await pb.collection('settings').update(settings.id, settings);
             clearTimeout(timeout);
             timeout = setTimeout(() => {
                 buttons.settings.state = 'none';
@@ -159,6 +156,19 @@
                             bind:value={settings.interval}
                         />
                     </div>
+                    <h3 class="my-3">Website title</h3>
+                    <p>Set the website title in the navbar.</p>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="website-title">Title</span>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="e.g. 'UpSnap'"
+                            aria-label="Website title"
+                            aria-describedby="website-title"
+                            bind:value={settings.website_title}
+                        />
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="callout callout-info m-0">
@@ -178,23 +188,9 @@
                     </div>
                 </div>
             </div>
-            <h3 class="my-3">Notifications</h3>
-            <p>Show toast notifications in the bottom right corner.</p>
-            <div class="form-check form-switch">
-                <label class="form-check-label" for="settings-notifications"
-                    >Enable notifications</label
-                >
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="settings-notifications"
-                    role="switch"
-                    bind:checked={settings.notifications}
-                />
-            </div>
             <button
                 type="submit"
-                class="btn btn-secondary mt-3"
+                class="btn btn-secondary"
                 class:btn-success={buttons.settings.state === 'success' ? true : false}
                 class:btn-warning={buttons.settings.state === 'waiting' ? true : false}
                 class:btn-danger={buttons.settings.state === 'failed' ? true : false}
@@ -219,17 +215,16 @@
         </p>
         <div class="callout callout-danger fw-bold">This will wipe the existing database!</div>
         <input
-            class="form-control"
-            placeholder="Username"
-            aria-label="Username"
-            aria-describedby="addon-wrapping"
+            class="form-control mb-3"
+            aria-label="Restore"
+            aria-describedby="Restore"
             type="file"
             accept=".json"
             bind:files
         />
         <button
             type="button"
-            class="btn btn-secondary mt-3"
+            class="btn btn-secondary"
             class:btn-success={buttons.restore.state === 'success' ? true : false}
             class:btn-warning={buttons.restore.state === 'waiting' ? true : false}
             class:btn-danger={buttons.restore.state === 'failed' ? true : false}

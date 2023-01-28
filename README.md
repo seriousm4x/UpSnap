@@ -38,7 +38,7 @@ Open up [http://localhost:5173/](http://localhost:5173/)
   - [x] ~~theme toggle button~~
   - [x] ~~add device ports to cards~~
   - [ ] settings: add network scan
-  - [ ] settings: add option for website title
+  - [x] settings: add option for website title
 
 - backend
 

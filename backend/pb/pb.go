@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
@@ -130,7 +129,7 @@ func importSettings() error {
 		settings = settingsRecords[0]
 	}
 
-	// set ping interval and notification settings. priority:
+	// set ping interval settings. priority:
 	// 1st: env var
 	// 2nd: database entry
 	// 3rd: default values
@@ -141,31 +140,20 @@ func importSettings() error {
 	if os.Getenv("UPSNAP_INTERVAL") != "" {
 		interval = os.Getenv("UPSNAP_INTERVAL")
 	}
-	notifications := true
-	if settings.GetBool("notifications") {
-		notifications = settings.GetBool("notifications")
-	}
-	if os.Getenv("UPSNAP_NOTIFICATIONS") != "" {
-		notificationsParsed, err := strconv.ParseBool(os.Getenv("UPSNAP_NOTIFICATIONS"))
-		if err != nil {
-			return err
-		} else {
-			notifications = notificationsParsed
-		}
-	}
 
 	// save settings to db
 	settings.Set("interval", interval)
-	settings.Set("notifications", notifications)
 	if scanRange := os.Getenv("UPSNAP_SCAN_RANGE"); scanRange != "" {
 		settings.Set("scan_range", scanRange)
+	}
+	if scanRange := os.Getenv("UPSNAP_WEBSITE_TITLE"); scanRange != "" {
+		settings.Set("website_title", scanRange)
 	}
 	if err := App.Dao().SaveRecord(settings); err != nil {
 		return err
 	}
 
 	logger.Info.Println("Ping interval set to", interval)
-	logger.Info.Println("Notifications set to", notifications)
 	return nil
 }
 
