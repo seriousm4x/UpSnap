@@ -1,0 +1,12 @@
+.git
+.gitignore
+.dockerignore
+Dockerfile
+README.md
+
+frontend/.svelte-kit
+frontend/node_modules
+frontend/build
+
+backend/pb_data
+backend/pb_public

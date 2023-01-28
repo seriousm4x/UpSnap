@@ -341,7 +341,10 @@
             <div class="callout callout-info mb-auto">
                 <h5>Optional:</h5>
                 <p class="m-0">(1) Same cron syntax as for ping interval.</p>
-                <p class="m-0">(2) Shell command to be executed. e.g.:</p>
+                <p class="m-0">
+                    (2) Shell command to be executed. "net rpc", "sshpass" and "nmap" are available.
+                    e.g.:
+                </p>
                 <ul>
                     <li>Windows: "net rpc shutdown -I 192.168.1.13 -U test%test"</li>
                     <li>

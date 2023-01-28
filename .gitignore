@@ -192,10 +192,7 @@ package
 
 # End of https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,svelte,node
 
-frontend/build
-frontend/.svelte-kit
-frontend/vite.config.js.timestamp-*
-frontend/vite.config.ts.timestamp-*
+build
 
 backend/pb_data
 backend/pb_public/*

@@ -1,0 +1,11 @@
+version: "3"
+services:
+  upsnap:
+    build: .
+    network_mode: host
+    command: ["./upsnap", "serve", "--http", "0.0.0.0:8090"]
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8090/api/health"]
+      interval: 1m
+      timeout: 10s
+      retries: 3

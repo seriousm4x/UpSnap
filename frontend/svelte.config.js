@@ -9,7 +9,9 @@ const config = {
     preprocess: preprocess(),
 
     kit: {
-        adapter: adapter(),
+        adapter: adapter({
+            fallback: 'index.html'
+        }),
         alias: {
             '@components': path.resolve('./src/components'),
             '@stores': path.resolve('./src/stores')

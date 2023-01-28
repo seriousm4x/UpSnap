@@ -1,6 +1,7 @@
 package pb
 
 import (
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
@@ -18,7 +19,7 @@ import (
 
 var App *pocketbase.PocketBase
 
-func StartPocketBase() {
+func StartPocketBase(distDirFS fs.FS) {
 	App = pocketbase.New()
 	App.RootCmd.Short = "UpSnap CLI"
 	App.RootCmd.Version = "3.0.0b1"
@@ -31,7 +32,7 @@ func StartPocketBase() {
 	// event hooks
 	App.OnBeforeServe().Add(func(e *core.ServeEvent) error {
 		// set static website path
-		e.Router.GET("/*", apis.StaticDirectoryHandler(os.DirFS("./pb_public"), true))
+		e.Router.GET("/*", apis.StaticDirectoryHandler(distDirFS, true))
 
 		// add wake route to api
 		e.Router.AddRoute(echo.Route{
