@@ -88,7 +88,6 @@ func StartPocketBase() {
 				}
 				go cronjobs.RunPing(App)
 			} else if e.Model.TableName() == "devices" {
-				logger.Debug.Println(e.Model)
 				refreshDeviceList()
 				for _, job := range cronjobs.CronWakeShutdown.Entries() {
 					cronjobs.CronWakeShutdown.Remove(job.ID)
