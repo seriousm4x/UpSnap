@@ -56,7 +56,7 @@
             if (mode === 'add') {
                 await pb.collection('devices').create(device);
             } else {
-                await pb.collection('devices').update(device.id);
+                await pb.collection('devices').update(device.id, device);
             }
 
             // show button with timeout
@@ -178,7 +178,7 @@
                 </div>
                 <h5 class="mt-4">Optional:</h5>
                 {#if device?.expand?.ports}
-                    {#each device?.expand?.ports as port, idx}
+                    {#each device.expand.ports as port, idx}
                         <div class="input-group mb-1">
                             <span class="input-group-text">Port</span>
                             <input
