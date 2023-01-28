@@ -64,8 +64,11 @@
             {/each}
         </div>
     {:else}
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="text-center">
             <h4 class="text-muted">No devices</h4>
+            <p>
+                <a class="text-muted" href="/settings">Go to settings to add devices...</a>
+            </p>
         </div>
     {/if}
 </div>

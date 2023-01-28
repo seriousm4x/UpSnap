@@ -13,8 +13,8 @@ func init() {
 	m.Register(func(db dbx.Builder) error {
 		jsonData := `{
 			"id": "nmj3ko20gzkg8n3",
-			"created": "2023-01-28 10:34:30.781Z",
-			"updated": "2023-01-28 10:34:30.781Z",
+			"created": "2023-01-28 19:10:29.223Z",
+			"updated": "2023-01-28 19:10:29.223Z",
 			"name": "settings",
 			"type": "base",
 			"system": false,
@@ -34,17 +34,21 @@ func init() {
 				},
 				{
 					"system": false,
-					"id": "7ehvglvv",
-					"name": "notifications",
-					"type": "bool",
+					"id": "agw2fyd1",
+					"name": "scan_range",
+					"type": "text",
 					"required": false,
 					"unique": false,
-					"options": {}
+					"options": {
+						"min": null,
+						"max": null,
+						"pattern": ""
+					}
 				},
 				{
 					"system": false,
-					"id": "agw2fyd1",
-					"name": "scan_range",
+					"id": "slrjkipw",
+					"name": "website_title",
 					"type": "text",
 					"required": false,
 					"unique": false,
