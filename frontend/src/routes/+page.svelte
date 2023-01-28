@@ -47,10 +47,10 @@
 
     // update device date
     let now = Date.now();
-    let clear;
+    let interval;
     $: {
-        clearInterval(clear);
-        clear = setInterval(() => {
+        clearInterval(interval);
+        interval = setInterval(() => {
             now = Date.now();
         }, 1000);
     }

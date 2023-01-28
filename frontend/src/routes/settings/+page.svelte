@@ -185,7 +185,6 @@
 </script>
 
 <div class="container">
-    <DeviceForm bind:device={newDevice} mode="add" />
     <section class="m-0 mt-4 p-4 shadow-sm">
         <form on:submit|preventDefault={saveSettings}>
             <h3 class="mb-3">Ping interval</h3>
