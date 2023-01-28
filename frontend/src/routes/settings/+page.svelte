@@ -333,14 +333,14 @@
                             <button
                                 class="btn btn-sm btn-secondary py-0"
                                 on:click={async (e) => {
+                                    e.target.disabled = true;
                                     device.netmask = scannedDevices.netmask;
                                     await addDevice(device);
-                                    e.target.disabled = true;
                                 }}
                                 on:keydown={async (e) => {
+                                    e.target.disabled = true;
                                     device.netmask = scannedDevices.netmask;
                                     await addDevice(device);
-                                    e.target.disabled = true;
                                 }}
                             >
                                 Add <Fa icon={faPlus} />
