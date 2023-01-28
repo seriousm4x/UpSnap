@@ -25,5 +25,5 @@ func WakeDevice(device *models.Record) error {
 			break
 		}
 	}
-	return errors.New("device not online after 1 min")
+	return errors.New("device not online after 2 min")
 }

@@ -17,12 +17,17 @@ func ShutdownDevice(device *models.Record) error {
 		}
 	}
 
-	// we wait 1 minute for the device to come up
-	// after that, we check the state
-	time.Sleep(1 * time.Minute)
-	isOnline := PingDevice(device)
-	if isOnline {
-		return errors.New("device not offline after 1 min")
+	// check state every second for 2 min
+	start := time.Now()
+	for {
+		time.Sleep(1 * time.Second)
+		isOnline := PingDevice(device)
+		if !isOnline {
+			return nil
+		}
+		if time.Since(start) >= 2*time.Minute {
+			break
+		}
 	}
-	return nil
+	return errors.New("device not offline after 2 min")
 }
