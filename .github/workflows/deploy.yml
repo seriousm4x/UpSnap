@@ -3,7 +3,7 @@ name: Deploy release
 on:
   push:
     tags:
-      - "3.*.*"
+      - "v3.*.*"
   workflow_dispatch:
 
 jobs:
