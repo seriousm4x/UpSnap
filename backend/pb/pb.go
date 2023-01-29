@@ -83,12 +83,14 @@ func StartPocketBase(distDirFS fs.FS) {
 		// using this outside App.OnBeforeServe() would not work
 		App.OnModelAfterUpdate().Add(func(e *core.ModelEvent) error {
 			if e.Model.TableName() == "settings" {
+				logger.Debug.Println("restart CronPing")
 				for _, job := range cronjobs.CronPing.Entries() {
 					cronjobs.CronPing.Remove(job.ID)
 				}
 				go cronjobs.RunPing(App)
 			} else if e.Model.TableName() == "devices" {
 				refreshDeviceList()
+				logger.Debug.Println("restart CronWakeShutdown")
 				for _, job := range cronjobs.CronWakeShutdown.Entries() {
 					cronjobs.CronWakeShutdown.Remove(job.ID)
 				}

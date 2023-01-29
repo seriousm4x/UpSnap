@@ -5,9 +5,11 @@ import (
 	"time"
 
 	"github.com/pocketbase/pocketbase/models"
+	"github.com/seriousm4x/upsnap/backend/logger"
 )
 
 func WakeDevice(device *models.Record) error {
+	logger.Debug.Println("wake triggered for", device.GetString("name"))
 	err := SendMagicPacket(device)
 	if err != nil {
 		return err
