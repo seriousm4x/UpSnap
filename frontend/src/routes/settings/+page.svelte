@@ -6,6 +6,8 @@
     import { faPlus } from '@fortawesome/free-solid-svg-icons';
     import Fa from 'svelte-fa';
 
+    let version = import.meta.env.UPSNAP_VERSION;
+
     let pb;
     let files;
     let settings = {};
@@ -384,4 +386,13 @@
             {/if}
         </button>
     </section>
+    <p class="m-0 my-4 p-4 text-center text-muted">
+        {#if version !== undefined}
+            <a href="https://github.com/seriousm4x/UpSnap/releases/tag/{version}" class="text-reset"
+                >UpSnap version: {version}</a
+            >
+        {:else}
+            UpSnap version: (untracked)
+        {/if}
+    </p>
 </div>
