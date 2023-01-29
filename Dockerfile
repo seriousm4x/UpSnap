@@ -6,9 +6,9 @@ ARG VERSION
 ENV BUILDX_ARCH="${TARGETOS:-linux}_${TARGETARCH:-amd64}${TARGETVARIANT}"
 WORKDIR /app
 RUN wget https://github.com/seriousm4x/UpSnap/releases/download/${VERSION}/UpSnap_${VERSION}_${BUILDX_ARCH}.zip &&\
-    unzip -q upsnap_${VERSION}_${BUILDX_ARCH}.zip &&\
-    rm -f upsnap_${VERSION}_${BUILDX_ARCH}.zip &&\
-    chmod +x /upsnap
+    unzip UpSnap_${VERSION}_${BUILDX_ARCH}.zip &&\
+    rm -f UpSnap_${VERSION}_${BUILDX_ARCH}.zip &&\
+    chmod +x upsnap
 
 FROM alpine:3
 RUN apk update &&\
