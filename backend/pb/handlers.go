@@ -11,7 +11,6 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/models"
-	"github.com/seriousm4x/upsnap/backend/logger"
 	"github.com/seriousm4x/upsnap/backend/networking"
 )
 
@@ -38,11 +37,17 @@ func HandlerShutdown(c echo.Context) error {
 	if err != nil {
 		return apis.NewNotFoundError("The device does not exist.", err)
 	}
-	if err := networking.ShutdownDevice(record); err != nil {
-		logger.Error.Println(err)
-		return apis.NewBadRequestError(err.Error(), record)
-	}
-	return nil
+	go func(*models.Record) {
+		record.Set("status", "pending")
+		App.Dao().SaveRecord(record)
+		if err := networking.ShutdownDevice(record); err != nil {
+			record.Set("status", "online")
+		} else {
+			record.Set("status", "offline")
+		}
+		App.Dao().SaveRecord(record)
+	}(record)
+	return c.JSON(http.StatusOK, record)
 }
 
 type Nmaprun struct {
