@@ -3,7 +3,7 @@ name: Deploy release
 on:
   push:
     tags:
-      - "v3.*.*"
+      - "3.*.*"
   workflow_dispatch:
 
 jobs:
@@ -60,10 +60,11 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            name/app
+            ghcr.io/seriousm4x/UpSnap
           tags: |
-            type=ref,event=push tag
+            type=ref,event=tag
             type=semver,pattern={{version}}
+            type=semver,pattern={{major}}
             type=semver,pattern={{major}}.{{minor}}
 
       # qemu

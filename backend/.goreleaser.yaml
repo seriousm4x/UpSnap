@@ -1,5 +1,5 @@
 release:
-  draft: true
+  # draft: true
   prerelease: auto
 before:
   hooks:
