@@ -2,12 +2,9 @@ package pb
 
 import (
 	"encoding/xml"
-	"errors"
 	"net"
 	"net/http"
-	"os"
 	"os/exec"
-	"runtime"
 	"strconv"
 	"strings"
 
@@ -59,25 +56,6 @@ type Nmaprun struct {
 }
 
 func HandlerScan(c echo.Context) error {
-	if runtime.GOOS == "windows" {
-		// check for admin on windows by trying to open physicaldrive
-		_, err := os.Open("\\\\.\\PHYSICALDRIVE0")
-		if err != nil {
-			err := errors.New("network scan requires upsnap to be run as administrator")
-			return apis.NewBadRequestError(err.Error(), nil)
-		}
-	} else {
-		// check for root on anything else
-		uid, err := exec.Command("id", "-u").Output()
-		if err != nil {
-			return err
-		}
-		if string(uid) != "0" {
-			err := errors.New("network scan requires upsnap to be run as root")
-			return apis.NewBadRequestError(err.Error(), nil)
-		}
-	}
-
 	// check if nmap installed
 	if _, err := exec.LookPath("nmap"); err != nil {
 		return apis.NewBadRequestError(err.Error(), nil)
