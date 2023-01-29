@@ -84,31 +84,47 @@ func RunWakeShutdown(app *pocketbase.PocketBase) {
 		shutdown_cron_enabled := device.GetBool("shutdown_cron_enabled")
 
 		if wake_cron_enabled && wake_cron != "" {
-			CronWakeShutdown.AddFunc(wake_cron, func() {
-				device.Set("status", "pending")
-				app.Dao().SaveRecord(device)
-				if err := networking.WakeDevice(device); err != nil {
+			// avoid using last element
+			// https://github.com/robfig/cron/issues/115
+			go func(d *models.Record) {
+				_, err := CronWakeShutdown.AddFunc(wake_cron, func() {
+					d.Set("status", "pending")
+					app.Dao().SaveRecord(d)
+					if err := networking.WakeDevice(d); err != nil {
+						logger.Error.Println(err)
+						d.Set("status", "offline")
+						app.Dao().SaveRecord(d)
+					} else {
+						d.Set("status", "online")
+						app.Dao().SaveRecord(d)
+					}
+				})
+				if err != nil {
 					logger.Error.Println(err)
-					device.Set("status", "offline")
-					app.Dao().SaveRecord(device)
 				}
-				device.Set("status", "online")
-				app.Dao().SaveRecord(device)
-			})
+			}(device)
 		}
 
 		if shutdown_cron_enabled && shutdown_cron != "" {
-			CronWakeShutdown.AddFunc(shutdown_cron, func() {
-				device.Set("status", "pending")
-				app.Dao().SaveRecord(device)
-				if err := networking.ShutdownDevice(device); err != nil {
+			// avoid using last element
+			// https://github.com/robfig/cron/issues/115
+			go func(d *models.Record) {
+				_, err := CronWakeShutdown.AddFunc(shutdown_cron, func() {
+					d.Set("status", "pending")
+					app.Dao().SaveRecord(d)
+					if err := networking.ShutdownDevice(d); err != nil {
+						logger.Error.Println(err)
+						d.Set("status", "online")
+						app.Dao().SaveRecord(d)
+					} else {
+						d.Set("status", "offline")
+						app.Dao().SaveRecord(d)
+					}
+				})
+				if err != nil {
 					logger.Error.Println(err)
-					device.Set("status", "online")
-					app.Dao().SaveRecord(device)
 				}
-				device.Set("status", "offline")
-				app.Dao().SaveRecord(device)
-			})
+			}(device)
 		}
 	}
 	logger.Debug.Println("CronWakeShutdown entries:", CronWakeShutdown.Entries())
