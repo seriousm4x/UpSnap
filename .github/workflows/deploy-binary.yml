@@ -25,6 +25,12 @@ jobs:
       - name: Build frontend
         run: npm --prefix=./frontend i && npm --prefix=./frontend run build && cp -r ./frontend/build/* ./backend/pb_public/
 
+      # setup go
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ">=1.19.5"
+
       # build
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
