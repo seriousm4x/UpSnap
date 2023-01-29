@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "v3.*.*"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,19 +18,10 @@ jobs:
       - name: Prepare tags
         id: prep
         run: |
-          DOCKER_IMAGE=${{ secrets.DOCKER_HUB_USERNAME }}/upsnap
-          VERSION=${GITHUB_REF#refs/tags/}
+          DOCKER_IMAGE=ghcr.io/seriousm4x/upsnap
+          VERSION=${{github.ref_name}}
           TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${VERSION:0:2},${DOCKER_IMAGE}:latest"
           echo ::set-output name=tags::${TAGS}
-
-      # docker caching
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
 
       # qemu
       - name: Set up QEMU
@@ -59,8 +51,6 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ steps.prep.outputs.tags }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

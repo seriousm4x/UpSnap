@@ -1,4 +1,5 @@
 release:
+  draft: true
   prerelease: auto
 before:
   hooks:
@@ -7,18 +8,28 @@ builds:
   - binary: upsnap
     env:
       - CGO_ENABLED=0
+    ldflags:
+      - -s -w
     goos:
       - linux
       - windows
       - darwin
+    goarch:
+      - amd64
+      - arm64
+      - arm
+    goarm:
+      - 7
     ignore:
       - goos: windows
-        goarch: 386
+        goarch: arm
+      - goos: darwin
+        goarch: arm
 archives:
   - format: zip
 checksum:
   name_template: "checksums.txt"
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  name_template: "{{ .Version }}"
 changelog:
   sort: asc

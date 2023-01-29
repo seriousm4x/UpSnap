@@ -1,22 +1,18 @@
-FROM node:19-alpine as frontend
-COPY frontend /app
+FROM alpine:3 as downloader
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT
+ARG VERSION
+ENV BUILDX_ARCH="${TARGETOS:-linux}_${TARGETARCH:-amd64}${TARGETVARIANT}"
 WORKDIR /app
-RUN npm i &&\
-    npm run build
+RUN wget https://github.com/seriousm4x/upsnap/releases/download/v${VERSION}/upsnap_${VERSION}_${BUILDX_ARCH}.zip &&\
+    unzip upsnap_${VERSION}_${BUILDX_ARCH}.zip &&\
+    chmod +x /upsnap
 
-FROM golang:1.19-alpine as backend
-COPY backend /app
-WORKDIR /app
-COPY --from=frontend /app/build pb_public
+FROM alpine:3
 RUN apk update &&\
-    apk add gcc musl-dev &&\
-    go mod tidy &&\
-    go build -ldflags "-s -w" -o upsnap main.go
-
-FROM alpine:3.17
-WORKDIR /app
-COPY --from=backend /app/upsnap .
-RUN apk update &&\
-    apk add --no-cache nmap curl samba-common-tools &&\
+    apk add --no-cache ca-certificates nmap samba-common-tools &&\
     rm -rf /var/cache/apk/*
-CMD ["./upsnap", "serve", "--http", "0.0.0.0:8090"]
+WORKDIR /app
+COPY --from=downloader /app/upsnap upsnap
+ENTRYPOINT ["./upsnap", "serve", "--http=0.0.0.0:8090"]
