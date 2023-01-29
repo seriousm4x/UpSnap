@@ -60,7 +60,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            name/app
+            ghcr.io/${{ GITHUB_REPOSITORY }}
           tags: |
             type=ref,event=tag
             type=semver,pattern={{version}}
