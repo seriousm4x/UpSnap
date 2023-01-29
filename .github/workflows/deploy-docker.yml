@@ -51,6 +51,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ steps.prep.outputs.tags }}
+          build-args: |
+            VERSION=${{github.ref_name}}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
