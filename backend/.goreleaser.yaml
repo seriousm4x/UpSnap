@@ -1,3 +1,5 @@
+release:
+  prerelease: auto
 before:
   hooks:
     - go mod tidy
