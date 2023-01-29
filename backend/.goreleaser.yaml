@@ -9,7 +9,7 @@ builds:
     env:
       - CGO_ENABLED=0
     ldflags:
-      - -s -w
+      - -s -w -X github.com/seriousm4x/upsnap/pb.Version={{ .Version }}
     goos:
       - linux
       - windows

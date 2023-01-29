@@ -1,4 +1,4 @@
-module github.com/seriousm4x/upsnap/backend
+module github.com/seriousm4x/upsnap
 
 go 1.19
 

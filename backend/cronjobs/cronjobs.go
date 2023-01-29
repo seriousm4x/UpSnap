@@ -4,8 +4,8 @@ import (
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/models"
 	"github.com/robfig/cron/v3"
-	"github.com/seriousm4x/upsnap/backend/logger"
-	"github.com/seriousm4x/upsnap/backend/networking"
+	"github.com/seriousm4x/upsnap/logger"
+	"github.com/seriousm4x/upsnap/networking"
 )
 
 var Devices []*models.Record

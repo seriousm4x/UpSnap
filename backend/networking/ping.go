@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-ping/ping"
 	"github.com/pocketbase/pocketbase/models"
-	"github.com/seriousm4x/upsnap/backend/logger"
+	"github.com/seriousm4x/upsnap/logger"
 )
 
 func PingDevice(device *models.Record) bool {

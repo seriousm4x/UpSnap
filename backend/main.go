@@ -4,7 +4,7 @@ import (
 	"embed"
 
 	"github.com/labstack/echo/v5"
-	"github.com/seriousm4x/upsnap/backend/pb"
+	"github.com/seriousm4x/upsnap/pb"
 )
 
 //go:embed all:pb_public

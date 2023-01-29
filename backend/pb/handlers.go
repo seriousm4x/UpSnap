@@ -11,7 +11,7 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/models"
-	"github.com/seriousm4x/upsnap/backend/networking"
+	"github.com/seriousm4x/upsnap/networking"
 )
 
 func HandlerWake(c echo.Context) error {

@@ -12,17 +12,18 @@ import (
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/models"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
-	"github.com/seriousm4x/upsnap/backend/cronjobs"
-	"github.com/seriousm4x/upsnap/backend/logger"
-	_ "github.com/seriousm4x/upsnap/backend/migrations"
+	"github.com/seriousm4x/upsnap/cronjobs"
+	"github.com/seriousm4x/upsnap/logger"
+	_ "github.com/seriousm4x/upsnap/migrations"
 )
 
 var App *pocketbase.PocketBase
+var Version = "(untracked)"
 
 func StartPocketBase(distDirFS fs.FS) {
 	App = pocketbase.New()
 	App.RootCmd.Short = "UpSnap CLI"
-	App.RootCmd.Version = "3.0.0b1"
+	App.RootCmd.Version = Version
 
 	// auto migrate db
 	migratecmd.MustRegister(App, App.RootCmd, &migratecmd.Options{

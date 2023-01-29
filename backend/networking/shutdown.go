@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/pocketbase/pocketbase/models"
-	"github.com/seriousm4x/upsnap/backend/logger"
+	"github.com/seriousm4x/upsnap/logger"
 )
 
 func ShutdownDevice(device *models.Record) error {
