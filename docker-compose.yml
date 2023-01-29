@@ -11,8 +11,8 @@ services:
       timeout: 10s
       retries: 3
     # environment:
-    #   - TZ=Europe/Berlin
-    #   - UPSNAP_INTERVAL=@every 10s
-    #   - UPSNAP_SCAN_RANGE=192.168.1.0/24
-    #   - UPSNAP_WEBSITE_TITLE=Custom name
-    # command: ["./upsnap", "serve", "--http", "0.0.0.0:8090"]
+    #   - TZ=Europe/Berlin # Set container timezone for cron schedules
+    #   - UPSNAP_INTERVAL=@every 10s # Sets the interval in which the devices are pinged
+    #   - UPSNAP_SCAN_RANGE=192.168.1.0/24 # Scan range is used for device discovery on local network
+    #   - UPSNAP_WEBSITE_TITLE=Custom name # Custom website title
+    # command: ["./upsnap", "serve", "--http", "0.0.0.0:8090"] # Uncomment this if you want to change the port for example

@@ -1,8 +1,55 @@
-# UpSnap v3
+<div align="center" width="100%">
+    <img src="frontend/static/favicon.png" width="128" />
+</div>
 
-## Stable version can be found on [v2 branch](https://github.com/seriousm4x/UpSnap/tree/v2)
+<div align="center" width="100%">
+    <h2>UpSnap</h2>
+    <p>A simple wake on lan app written with SvelteKit, Go, PocketBase and nmap.</p>
+    <a target="_blank" href="https://github.com/seriousm4x/upsnap"><img src="https://img.shields.io/github/stars/seriousm4x/upsnap" /></a>
+    <a target="_blank" href="https://github.com/seriousm4x/UpSnap/releases"><img src="https://img.shields.io/github/downloads/seriousm4x/upsnap/total" /></a>
+    <a target="_blank" href="https://github.com/seriousm4x/UpSnap/releases"><img src="https://img.shields.io/github/v/release/seriousm4x/upsnap?display_name=tag" /></a>
+    <a target="_blank" href="https://github.com/seriousm4x/UpSnap/actions"><img src="https://img.shields.io/github/actions/workflow/status/seriousm4x/upsnap/deploy.yml" /></a>
+    <a target="_blank" href="https://github.com/seriousm4x/UpSnap/commits/master"><img src="https://img.shields.io/github/last-commit/seriousm4x/upsnap" /></a>
+</div>
 
-> This is the dev branch for v3. It's very much in progress but will have a release candidate once all boxes below are checked.
+## ✨ Features
+
+- Dashboard to wake up devices with one click
+- Set timed wake and shutdown events via cron
+- Add custom ports to devices which will be pinged
+- Discover devices by scanning network
+- Dark/light or system prefered color scheme
+- [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7
+
+## 📸 Screenshots
+
+| Dark                           | Light                           |
+| ------------------------------ | ------------------------------- |
+| ![](/assets/home_dark.png)     | ![](/assets/home_light.png)     |
+| ![](/assets/device_dark.png)   | ![](/assets/device_light.png)   |
+| ![](/assets/settings_dark.png) | ![](/assets/settings_light.png) |
+
+## 🚀 Run the binary
+
+Just download the latest binary from the [release page](https://github.com/seriousm4x/UpSnap/releases) and run it.
+
+Run `./upsnap serve --http=0.0.0.0:8090`. For more options check `./upsnap --help`.
+
+If you need network discovery, make sure to have nmap installed and run upsnap as root/admin.
+
+## 🐳 Run in docker
+
+Alternatively use the [docker-compose](docker-compose.yml) example. See the comments in the file for customization.
+
+### Reverse Proxy
+
+**Caddy example**
+
+```
+upsnap.example.com {
+    reverse_proxy localhost:8090
+}
+```
 
 ## Help developing
 
@@ -27,30 +74,3 @@ pnpm run dev
 ```
 
 Open up [http://localhost:5173/](http://localhost:5173/)
-
-## To do
-
-- frontend
-
-  - [x] ~~add rest of settings page~~
-  - [x] ~~form for adding new devices~~
-  - [x] ~~add per device settings~~
-  - [x] ~~theme toggle button~~
-  - [x] ~~add device ports to cards~~
-  - [x] ~~settings: add network scan~~
-  - [x] ~~settings: add option for website title~~
-
-- backend
-
-  - [x] ~~make sure ping works~~
-  - [x] ~~make sure arp works~~
-  - [x] ~~make sure wake works~~
-  - [x] ~~add shutdown command~~
-  - [x] ~~add scheduled wake~~
-  - [x] [~~#34 Add support for WOL passwords~~](https://github.com/seriousm4x/UpSnap/issues/34)
-  - [x] [~~#33 Seemingly High Ram usage~~](https://github.com/seriousm4x/UpSnap/issues/33)
-  - [x] [~~#32 API available?~~](https://github.com/seriousm4x/UpSnap/issues/32)
-
-- [x] ~~add db import from v2~~
-- [x] ~~move docker images to github packages and setup new workflow file~~
-- [x] ~~create dockerfile and docker-compose.yml~~
