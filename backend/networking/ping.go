@@ -2,7 +2,6 @@ package networking
 
 import (
 	"net"
-	"runtime"
 	"time"
 
 	"github.com/go-ping/ping"
@@ -18,9 +17,7 @@ func PingDevice(device *models.Record) bool {
 	}
 	pinger.Count = 1
 	pinger.Timeout = 500 * 1000000 // 500ms
-	if runtime.GOOS == "windows" {
-		pinger.SetPrivileged(true)
-	}
+	pinger.SetPrivileged(true)
 	err = pinger.Run()
 	if err != nil {
 		logger.Error.Println(err)
