@@ -30,6 +30,6 @@ archives:
 checksum:
   name_template: "checksums.txt"
 snapshot:
-  name_template: "{{ .Version }}"
+  name_template: "v{{ .Version }}"
 changelog:
   sort: asc
