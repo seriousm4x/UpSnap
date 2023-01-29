@@ -8,7 +8,7 @@ on:
 
 jobs:
   goreleaser:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       # pull code
       - name: Checkout
@@ -48,7 +48,7 @@ jobs:
 
   docker:
     needs: goreleaser
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       # pull code
       - name: Check Out Repo
