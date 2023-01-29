@@ -15,11 +15,11 @@
     export let now;
 
     function shutdown() {
-        fetch(`${dev ? 'http://127.0.0.1:8090' : ''}/api/upsnap/shutdown/${device.id}`);
+        fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/shutdown/${device.id}`);
     }
 
     function wake() {
-        fetch(`${dev ? 'http://127.0.0.1:8090' : ''}/api/upsnap/wake/${device.id}`);
+        fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/wake/${device.id}`);
     }
 
     function sortPorts(a, b) {

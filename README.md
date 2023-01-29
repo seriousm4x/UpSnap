@@ -63,7 +63,7 @@ go mod tidy
 go run main.go serve
 ```
 
-Log in to [http://127.0.0.1:8090/\_/](http://127.0.0.1:8090/_/), create an admin user and add some devices.
+Log in to [http://localhost:8090/\_/](http://localhost:8090/_/), create an admin user and add some devices.
 
 2. Start frontend
 

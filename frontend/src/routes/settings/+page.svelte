@@ -79,7 +79,7 @@
         buttons.scan.state = 'waiting';
         await pb.collection('settings').update(settings.id, settings);
 
-        fetch(`${dev ? 'http://127.0.0.1:8090' : ''}/api/upsnap/scan`)
+        fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/scan`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.message) {
