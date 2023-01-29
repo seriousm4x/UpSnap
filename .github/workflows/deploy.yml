@@ -64,7 +64,11 @@ jobs:
           tags: |
             type=ref,event=tag
             type=semver,pattern={{version}}
+            type=semver,pattern={{major}}
             type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}.{{minor}}.{{patch}}
+          flavor: |
+            latest=true
 
       # qemu
       - name: Set up QEMU
