@@ -1,7 +1,6 @@
 package networking
 
 import (
-	"errors"
 	"fmt"
 	"os/exec"
 	"runtime"
@@ -45,5 +44,5 @@ func ShutdownDevice(device *models.Record) error {
 			break
 		}
 	}
-	return errors.New("device not offline after 2 min")
+	return fmt.Errorf(device.GetString("name"), "not offline after 2 min")
 }

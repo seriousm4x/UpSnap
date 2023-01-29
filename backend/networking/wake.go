@@ -1,7 +1,7 @@
 package networking
 
 import (
-	"errors"
+	"fmt"
 	"time"
 
 	"github.com/pocketbase/pocketbase/models"
@@ -27,5 +27,5 @@ func WakeDevice(device *models.Record) error {
 			break
 		}
 	}
-	return errors.New("device not online after 2 min")
+	return fmt.Errorf(device.GetString("name"), "not online after 2 min")
 }
