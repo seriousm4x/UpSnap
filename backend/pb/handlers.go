@@ -68,8 +68,11 @@ func HandlerScan(c echo.Context) error {
 		}
 	} else {
 		// check for root on anything else
-		sudoUID := os.Getenv("SUDO_UID")
-		if sudoUID == "" {
+		uid, err := exec.Command("id", "-u").Output()
+		if err != nil {
+			return err
+		}
+		if string(uid) != "0" {
 			err := errors.New("network scan requires upsnap to be run as root")
 			return apis.NewBadRequestError(err.Error(), nil)
 		}
