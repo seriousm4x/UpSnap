@@ -19,9 +19,9 @@ jobs:
         id: prep
         run: |
           DOCKER_IMAGE=ghcr.io/seriousm4x/upsnap
-          VERSION=${{github.ref_name}}
+          VERSION=${GITHUB_REF#refs/tags/}
           TAGS="${DOCKER_IMAGE}:${VERSION},${DOCKER_IMAGE}:${VERSION:0:2},${DOCKER_IMAGE}:latest"
-          echo ::set-output name=tags::${TAGS}
+          echo "tags=${TAGS}" >> ${GITHUB_OUTPUT}
 
       # qemu
       - name: Set up QEMU
