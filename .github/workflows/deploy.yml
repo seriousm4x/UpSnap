@@ -62,7 +62,7 @@ jobs:
           images: |
             name/app
           tags: |
-            type=ref,event=push tag
+            type=ref,event=tag
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
 
