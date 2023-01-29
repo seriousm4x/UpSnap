@@ -12,7 +12,7 @@ import (
 )
 
 func ShutdownDevice(device *models.Record) error {
-	logger.Debug.Println("shutdown triggered for", device.GetString("name"))
+	logger.Info.Println("shutdown triggered for", device.GetString("name"))
 	shutdown_cmd := device.GetString("shutdown_cmd")
 	if shutdown_cmd == "" {
 		return fmt.Errorf("%s: no shutdown_cmd definded", device.GetString("name"))

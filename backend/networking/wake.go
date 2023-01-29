@@ -9,7 +9,7 @@ import (
 )
 
 func WakeDevice(device *models.Record) error {
-	logger.Debug.Println("wake triggered for", device.GetString("name"))
+	logger.Info.Println("wake triggered for", device.GetString("name"))
 	err := SendMagicPacket(device)
 	if err != nil {
 		return err
