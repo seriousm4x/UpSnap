@@ -71,7 +71,6 @@ func RunPing(app *pocketbase.PocketBase) {
 			}(device)
 		}
 	})
-	logger.Debug.Println("CronPing entries:", CronPing.Entries())
 	CronPing.Run()
 }
 
@@ -127,6 +126,5 @@ func RunWakeShutdown(app *pocketbase.PocketBase) {
 			}(device)
 		}
 	}
-	logger.Debug.Println("CronWakeShutdown entries:", CronWakeShutdown.Entries())
 	CronWakeShutdown.Run()
 }
