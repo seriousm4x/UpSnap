@@ -75,7 +75,7 @@ func RunPing(app *pocketbase.PocketBase) {
 	CronPing.Run()
 }
 
-func RunWakeShutdown() {
+func RunWakeShutdown(app *pocketbase.PocketBase) {
 	CronWakeShutdown = cron.New()
 	for _, device := range Devices {
 		wake_cron := device.GetString("wake_cron")
@@ -85,17 +85,29 @@ func RunWakeShutdown() {
 
 		if wake_cron_enabled && wake_cron != "" {
 			CronWakeShutdown.AddFunc(wake_cron, func() {
+				device.Set("status", "pending")
+				app.Dao().SaveRecord(device)
 				if err := networking.WakeDevice(device); err != nil {
 					logger.Error.Println(err)
+					device.Set("status", "offline")
+					app.Dao().SaveRecord(device)
 				}
+				device.Set("status", "online")
+				app.Dao().SaveRecord(device)
 			})
 		}
 
 		if shutdown_cron_enabled && shutdown_cron != "" {
 			CronWakeShutdown.AddFunc(shutdown_cron, func() {
+				device.Set("status", "pending")
+				app.Dao().SaveRecord(device)
 				if err := networking.ShutdownDevice(device); err != nil {
 					logger.Error.Println(err)
+					device.Set("status", "online")
+					app.Dao().SaveRecord(device)
 				}
+				device.Set("status", "offline")
+				app.Dao().SaveRecord(device)
 			})
 		}
 	}

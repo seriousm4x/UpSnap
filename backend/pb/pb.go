@@ -76,7 +76,7 @@ func StartPocketBase(distDirFS fs.FS) {
 
 		// run cronjobs
 		go cronjobs.RunPing(App)
-		go cronjobs.RunWakeShutdown()
+		go cronjobs.RunWakeShutdown(App)
 
 		// restart ping cronjobs or wake/shutdown cronjobs on model update
 		// add event hook before starting server.
@@ -94,7 +94,7 @@ func StartPocketBase(distDirFS fs.FS) {
 				for _, job := range cronjobs.CronWakeShutdown.Entries() {
 					cronjobs.CronWakeShutdown.Remove(job.ID)
 				}
-				go cronjobs.RunWakeShutdown()
+				go cronjobs.RunWakeShutdown(App)
 			}
 			return nil
 		})
