@@ -3,6 +3,7 @@ services:
   upsnap:
     image: ghcr.io/seriousm4x/upsnap:3
     network_mode: host
+    restart: unless-stopped
     volumes:
       - ./data:/app/pb_data
     healthcheck:
