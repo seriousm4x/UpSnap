@@ -23,11 +23,7 @@ jobs:
 
       # build sveltekit frontend
       - name: Build frontend
-        run: npm --prefix=./frontend ci && npm --prefix=./frontend run build && cp -r ./frontend/build/* ./backend/pb_public/
-
-      # install latest golang
-      - name: Set up Go
-        uses: actions/setup-go@v3
+        run: npm --prefix=./frontend i && npm --prefix=./frontend run build && cp -r ./frontend/build/* ./backend/pb_public/
 
       # build
       - name: Run GoReleaser
@@ -36,5 +32,6 @@ jobs:
           distribution: goreleaser
           version: latest
           args: release --rm-dist
+          workdir: backend
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

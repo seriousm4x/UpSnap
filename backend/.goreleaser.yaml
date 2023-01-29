@@ -1,0 +1,22 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - binary: upsnap
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    ignore:
+      - goos: windows
+        goarch: 386
+archives:
+  - format: zip
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
