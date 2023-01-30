@@ -226,7 +226,13 @@
                             >.
                         </p>
                         <p class="m-0">
-                            Read more about valid cron syntax at <a
+                            Read more about valid cron syntax on <a
+                                href="https://en.wikipedia.org/wiki/Cron"
+                                target="_blank"
+                                rel="noreferrer">wikipedia</a
+                            >
+                            or the package documentation
+                            <a
                                 target="_blank"
                                 rel="noreferrer"
                                 href="https://pkg.go.dev/github.com/robfig/cron"

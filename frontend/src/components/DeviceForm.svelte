@@ -340,16 +340,33 @@
         <div class="col-md-6 d-flex align-items-start flex-column">
             <div class="callout callout-info mb-auto">
                 <h5>Optional:</h5>
-                <p class="m-0">(1) Same cron syntax as for ping interval.</p>
                 <p class="m-0">
-                    (2) Shell command to be executed. "net rpc", "sshpass" and "nmap" are available.
+                    (1) Read more about valid cron syntax on <a
+                        href="https://en.wikipedia.org/wiki/Cron"
+                        target="_blank"
+                        rel="noreferrer">wikipedia</a
+                    >
+                    or the package documentation
+                    <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href="https://pkg.go.dev/github.com/robfig/cron"
+                        >pkg.go.dev/github.com/robfig/cron</a
+                    >
+                </p>
+                <p class="m-0">
+                    (2) Shell command to be executed. "net rpc", "sshpass" and "curl" are available.
                     e.g.:
                 </p>
                 <ul>
-                    <li>Windows: "net rpc shutdown -I 192.168.1.13 -U test%test"</li>
                     <li>
-                        Linux: "sshpass -p your_password ssh -o 'StrictHostKeyChecking=no'
-                        user@hostname 'sudo poweroff'"
+                        Windows: <code>net rpc shutdown -I 192.168.1.13 -U "user%password"</code>
+                    </li>
+                    <li>
+                        Linux: <code
+                            >sshpass -p your_password ssh -o "StrictHostKeyChecking=no"
+                            user@hostname "sudo poweroff"</code
+                        >
                     </li>
                 </ul>
                 <p class="m-0">
