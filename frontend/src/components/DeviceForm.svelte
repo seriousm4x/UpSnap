@@ -341,17 +341,15 @@
             <div class="callout callout-info mb-auto">
                 <h5>Optional:</h5>
                 <p class="m-0">
-                    (1) Read more about valid cron syntax on <a
-                        href="https://en.wikipedia.org/wiki/Cron"
-                        target="_blank"
-                        rel="noreferrer">wikipedia</a
+                    (1) Learn more about the correct syntax for cron on
+                    <a href="https://en.wikipedia.org/wiki/Cron" target="_blank" rel="noreferrer"
+                        >wikipedia</a
                     >
-                    or the package documentation
+                    or refer to the
                     <a
                         target="_blank"
                         rel="noreferrer"
-                        href="https://pkg.go.dev/github.com/robfig/cron"
-                        >pkg.go.dev/github.com/robfig/cron</a
+                        href="https://pkg.go.dev/github.com/robfig/cron">package documentation</a
                     >
                 </p>
                 <p class="m-0">

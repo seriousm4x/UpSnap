@@ -223,20 +223,18 @@
                         <p class="m-0">
                             Leave blank to use default value of <span class="fw-bold"
                                 >"@every 3s"</span
-                            >.
-                        </p>
-                        <p class="m-0">
-                            Read more about valid cron syntax on <a
+                            >. Learn more about the correct syntax for cron on
+                            <a
                                 href="https://en.wikipedia.org/wiki/Cron"
                                 target="_blank"
                                 rel="noreferrer">wikipedia</a
                             >
-                            or the package documentation
+                            or refer to the
                             <a
                                 target="_blank"
                                 rel="noreferrer"
                                 href="https://pkg.go.dev/github.com/robfig/cron"
-                                >pkg.go.dev/github.com/robfig/cron</a
+                                >package documentation</a
                             >
                         </p>
                     </div>
@@ -361,7 +359,8 @@
     <section class="m-0 my-4 p-4 shadow-sm">
         <h3 class="mb-3">Restore</h3>
         <p>
-            If you had UpSnap v2.3.2 (or higher) running before, you can restore your devices here.
+            If you had UpSnap &gt;=2.3.2 and &lt;3.0.0 running before, you can restore your devices
+            here.
         </p>
         <div class="callout callout-danger fw-bold">This will wipe the existing database!</div>
         <input
