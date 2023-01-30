@@ -136,7 +136,11 @@
                     <Fa icon={faLock} class="mx-1" />
                 </span>
             {/if}
-            <p class="text-muted m-0">
+            <p
+                class="text-muted m-0"
+                data-toggle="tooltip"
+                title="Last status change: {device.updated}"
+            >
                 {formatDistance(parseISO(device.updated), now, {
                     includeSeconds: true,
                     addSuffix: true
