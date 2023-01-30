@@ -4,8 +4,25 @@
     import { theme } from '@stores/theme';
     import Navbar from '@components/Navbar.svelte';
     import Transition from '@components/Transition.svelte';
+    import { pocketbase, settings, devices } from '@stores/pocketbase';
 
     let preferesDark;
+
+    onMount(async () => {
+        let settingsRes = {};
+        settingsRes = await $pocketbase.collection('settings').getList(1, 1);
+        settings.set(settingsRes.items[0]);
+
+        let tempDevices = {};
+        const devicesRes = await $pocketbase.collection('devices').getFullList(200, {
+            sort: 'name',
+            expand: 'ports'
+        });
+        devicesRes.forEach((device) => {
+            tempDevices[device.id] = device;
+        });
+        devices.set(tempDevices);
+    });
 
     onMount(() => {
         // import bootstrap js

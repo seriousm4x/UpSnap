@@ -1,6 +1,6 @@
 <script>
     import { goto } from '$app/navigation';
-    import { pocketbase } from '@stores/pocketbase';
+    import { pocketbase, devices } from '@stores/pocketbase';
     import { faEye, faEyeSlash, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
     import Fa from 'svelte-fa';
 
@@ -73,10 +73,11 @@
     async function deleteDevice() {
         deleteButton.state = 'waiting';
         try {
+            await $pocketbase.collection('devices').delete(device.id);
             device.ports.forEach(async (port) => {
                 await $pocketbase.collection('ports').delete(port);
             });
-            await $pocketbase.collection('devices').delete(device.id);
+            delete $devices[device.id];
             goto('/');
         } catch (error) {
             clearTimeout(timeout);
