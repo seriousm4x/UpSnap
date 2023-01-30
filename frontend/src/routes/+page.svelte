@@ -6,13 +6,8 @@
     let devices = {};
 
     onMount(async () => {
-        let pb;
-        pocketbase.subscribe((conn) => {
-            pb = conn;
-        });
-
         // get all devices in pocketbase
-        const result = await pb.collection('devices').getFullList(200, {
+        const result = await $pocketbase.collection('devices').getFullList(200, {
             expand: 'ports',
             sort: 'name'
         });
@@ -21,11 +16,11 @@
         });
 
         // subscribe to database events
-        pb.collection('devices').subscribe('*', async (e) => {
+        $pocketbase.collection('devices').subscribe('*', async (e) => {
             if (e.action === 'create') {
                 devices[e.record.id] = e.record;
             } else if (e.action === 'update') {
-                const device = await pb.collection('devices').getOne(e.record.id, {
+                const device = await $pocketbase.collection('devices').getOne(e.record.id, {
                     expand: 'ports'
                 });
                 devices[device.id] = device;
@@ -33,9 +28,9 @@
                 delete devices[e.record.id];
             }
         });
-        pb.collection('ports').subscribe('*', async (e) => {
+        $pocketbase.collection('ports').subscribe('*', async (e) => {
             if (e.action === 'update') {
-                const device = await pb
+                const device = await $pocketbase
                     .collection('devices')
                     .getFirstListItem(`ports.id ?= "${e.record.id}"`, {
                         expand: 'ports'

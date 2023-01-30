@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import PocketBase from 'pocketbase';
 
-let backend_url;
+let backend_url = '';
 let isDevMode = import.meta.env.DEV;
 if (isDevMode) {
     backend_url = 'http://localhost:8090';

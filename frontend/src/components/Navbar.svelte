@@ -6,17 +6,13 @@
     import Fa from 'svelte-fa';
     import { onMount } from 'svelte';
 
-    let pb;
     let website_title = '';
 
     onMount(async () => {
-        pocketbase.subscribe((conn) => {
-            pb = conn;
-        });
-        const result = await pb.collection('settings').getList(1, 1);
+        const result = await $pocketbase.collection('settings').getList(1, 1);
         website_title = result.items[0].website_title;
 
-        pb.collection('settings').subscribe('*', function (e) {
+        $pocketbase.collection('settings').subscribe('*', function (e) {
             website_title = e.record.website_title;
             document.title = website_title;
         });

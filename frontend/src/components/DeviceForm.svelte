@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import { pocketbase } from '@stores/pocketbase';
     import { faEye, faEyeSlash, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +7,6 @@
     export let device;
     export let mode;
 
-    let pb;
     let timeout;
     let button = {
         state: 'none',
@@ -24,12 +22,6 @@
     };
     let passwordShow = false;
     $: passwordType = passwordShow ? 'text' : 'password';
-
-    onMount(async () => {
-        pocketbase.subscribe((conn) => {
-            pb = conn;
-        });
-    });
 
     async function addOrUpdateDevice() {
         button.state = 'waiting';
@@ -47,16 +39,16 @@
             for (let i = 0; i < device.expand.ports.length; i++) {
                 const port = device.expand.ports[i];
                 if (!port.id) {
-                    const result = await pb.collection('ports').create(port);
+                    const result = await $pocketbase.collection('ports').create(port);
                     device.ports = [...device.ports, result.id];
                 }
             }
 
             // create or update device
             if (mode === 'add') {
-                await pb.collection('devices').create(device);
+                await $pocketbase.collection('devices').create(device);
             } else {
-                await pb.collection('devices').update(device.id, device);
+                await $pocketbase.collection('devices').update(device.id, device);
             }
 
             // show button with timeout
@@ -80,9 +72,9 @@
         deleteButton.state = 'waiting';
         try {
             device.ports.forEach(async (port) => {
-                await pb.collection('ports').delete(port);
+                await $pocketbase.collection('ports').delete(port);
             });
-            await pb.collection('devices').delete(device.id);
+            await $pocketbase.collection('devices').delete(device.id);
             goto('/');
         } catch (error) {
             clearTimeout(timeout);
@@ -100,7 +92,7 @@
         // ports with id exist in db, ports without id are not created yet
         const port = device.expand.ports[idx];
         if (port.id) {
-            await pb.collection('ports').delete(port.id);
+            await $pocketbase.collection('ports').delete(port.id);
             const i = device.ports.indexOf(port.id);
             if (i !== -1) {
                 device.ports.splice(i, 1);
