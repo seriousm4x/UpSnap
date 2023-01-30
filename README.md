@@ -8,8 +8,9 @@
     <a target="_blank" href="https://github.com/seriousm4x/upsnap"><img src="https://img.shields.io/github/stars/seriousm4x/upsnap" /></a>
     <a target="_blank" href="https://github.com/seriousm4x/UpSnap/releases"><img src="https://img.shields.io/github/downloads/seriousm4x/upsnap/total" /></a>
     <a target="_blank" href="https://github.com/seriousm4x/UpSnap/releases"><img src="https://img.shields.io/github/v/release/seriousm4x/upsnap?display_name=tag" /></a>
-    <a target="_blank" href="https://github.com/seriousm4x/UpSnap/actions"><img src="https://img.shields.io/github/actions/workflow/status/seriousm4x/upsnap/deploy.yml" /></a>
+    <a target="_blank" href="https://github.com/seriousm4x/UpSnap/actions"><img src="https://github.com/seriousm4x/upsnap/actions/workflows/deploy.yml/badge.svg?event=push" /></a>
     <a target="_blank" href="https://github.com/seriousm4x/UpSnap/commits/master"><img src="https://img.shields.io/github/last-commit/seriousm4x/upsnap" /></a>
+    <h3><a href="https://github.com/seriousm4x/UpSnap/releases/tag/3.0.0">v3 is here! 🤩 Check it out</a></h3>
 </div>
 
 ## ✨ Features
