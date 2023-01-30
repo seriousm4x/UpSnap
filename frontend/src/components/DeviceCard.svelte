@@ -10,6 +10,7 @@
         faLock
     } from '@fortawesome/free-solid-svg-icons';
     import Fa from 'svelte-fa';
+    import { sortPorts } from '../sorts';
 
     export let device;
     export let now;
@@ -20,10 +21,6 @@
 
     function wake() {
         fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/wake/${device.id}`);
-    }
-
-    function sortPorts(a, b) {
-        return a.number - b.number;
     }
 </script>
 

@@ -1,27 +1,22 @@
 <script>
     import { page } from '$app/stores';
     import { theme } from '@stores/theme';
-    import { pocketbase } from '@stores/pocketbase';
+    import { pocketbase, settings } from '@stores/pocketbase';
     import { faSun, faMoon, faCircleHalfStroke, faBrush } from '@fortawesome/free-solid-svg-icons';
     import Fa from 'svelte-fa';
     import { onMount } from 'svelte';
 
-    let website_title = '';
-
     onMount(async () => {
-        const result = await $pocketbase.collection('settings').getList(1, 1);
-        website_title = result.items[0].website_title;
-
         $pocketbase.collection('settings').subscribe('*', function (e) {
-            website_title = e.record.website_title;
-            document.title = website_title;
+            settings.set(e.record);
+            document.title = $settings.website_title;
         });
     });
 </script>
 
 <svelte:head>
-    {#if website_title !== ''}
-        <title>{website_title}</title>
+    {#if $settings.website_title !== ''}
+        <title>{$settings.website_title}</title>
     {:else}
         <title>UpSnap</title>
     {/if}
@@ -35,8 +30,8 @@
                 alt="UpSnap"
                 width="30"
                 height="30"
-                class:me-2={website_title !== ''}
-            />{website_title ? website_title : ''}
+                class:me-2={$settings.website_title !== ''}
+            />{$settings.website_title ? $settings.website_title : ''}
         </a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">

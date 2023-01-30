@@ -1,16 +1,13 @@
 <script>
-    import { onMount } from 'svelte';
     import { dev } from '$app/environment';
-    import { pocketbase } from '@stores/pocketbase';
+    import { pocketbase, settings, devices } from '@stores/pocketbase';
     import DeviceForm from '@components/DeviceForm.svelte';
     import { faPlus } from '@fortawesome/free-solid-svg-icons';
     import Fa from 'svelte-fa';
 
     let version = import.meta.env.UPSNAP_VERSION;
 
-    let pb;
     let files;
-    let settings = {};
     let timeout;
     let buttons = {
         settings: {
@@ -45,22 +42,13 @@
     };
     let scannedDevices = {};
 
-    onMount(async () => {
-        pocketbase.subscribe((conn) => {
-            pb = conn;
-        });
-
-        const result = await pb.collection('settings').getList(1, 1);
-        settings = result.items[0];
-    });
-
     async function saveSettings() {
         buttons.settings.state = 'waiting';
         try {
-            if (settings.interval === '') {
-                settings.interval = '@every 3s';
+            if ($settings.interval === '') {
+                $settings.interval = '@every 3s';
             }
-            await pb.collection('settings').update(settings.id, settings);
+            await $pocketbase.collection('settings').update($settings.id, $settings);
             clearTimeout(timeout);
             timeout = setTimeout(() => {
                 buttons.settings.state = 'none';
@@ -79,7 +67,7 @@
 
     async function scanDevices() {
         buttons.scan.state = 'waiting';
-        await pb.collection('settings').update(settings.id, settings);
+        await $pocketbase.collection('settings').update($settings.id, $settings);
 
         fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/scan`)
             .then((res) => res.json())
@@ -113,7 +101,8 @@
     }
 
     async function addDevice(device) {
-        await pb.collection('devices').create(device);
+        await $pocketbase.collection('devices').create(device);
+        $devices[device.id] = device;
     }
 
     async function restoreV2Backup() {
@@ -121,14 +110,14 @@
 
         try {
             // delete all devices in pocketbase
-            let result = await pb.collection('devices').getFullList();
+            let result = await $pocketbase.collection('devices').getFullList();
             for (let index = 0; index < result.length; index++) {
-                pb.collection('devices').delete(result[index].id);
+                $pocketbase.collection('devices').delete(result[index].id);
             }
             // delete all ports in pocketbase
-            result = await pb.collection('ports').getFullList();
+            result = await $pocketbase.collection('ports').getFullList();
             for (let index = 0; index < result.length; index++) {
-                await pb.collection('ports').delete(result[index].id);
+                await $pocketbase.collection('ports').delete(result[index].id);
             }
 
             let reader = new FileReader();
@@ -148,7 +137,7 @@
                     let thisDevicePorts = [];
                     for (let index = 0; index < device.ports.length; index++) {
                         const port = device.ports[index];
-                        const record = await pb.collection('ports').create({
+                        const record = await $pocketbase.collection('ports').create({
                             name: port.name,
                             number: port.number
                         });
@@ -156,7 +145,7 @@
                     }
 
                     // create device
-                    await pb.collection('devices').create({
+                    await $pocketbase.collection('devices').create({
                         name: device.name,
                         ip: device.ip,
                         mac: device.mac,
@@ -201,7 +190,7 @@
                             aria-label="Interval"
                             aria-describedby="addon-wrapping"
                             type="text"
-                            bind:value={settings.interval}
+                            bind:value={$settings.interval}
                         />
                     </div>
                     <h3 class="my-3">Website title</h3>
@@ -214,7 +203,7 @@
                             placeholder="e.g. 'UpSnap'"
                             aria-label="Website title"
                             aria-describedby="website-title"
-                            bind:value={settings.website_title}
+                            bind:value={$settings.website_title}
                         />
                     </div>
                 </div>
@@ -275,7 +264,7 @@
                             placeholder="e.g. '192.168.1.0/24'"
                             aria-label="ip-range"
                             aria-describedby="ip-range"
-                            bind:value={settings.scan_range}
+                            bind:value={$settings.scan_range}
                         />
                     </div>
                     <button
@@ -284,7 +273,7 @@
                         class:btn-success={buttons.scan.state === 'success' ? true : false}
                         class:btn-warning={buttons.scan.state === 'waiting' ? true : false}
                         class:btn-danger={buttons.scan.state === 'failed' ? true : false}
-                        disabled={settings.scan_range === '' || buttons.scan.state !== 'none'
+                        disabled={$settings.scan_range === '' || buttons.scan.state !== 'none'
                             ? true
                             : false}
                     >

@@ -1,41 +1,35 @@
 <script>
     import { onMount } from 'svelte';
     import DeviceCard from '@components/DeviceCard.svelte';
-    import { pocketbase } from '@stores/pocketbase';
-
-    let devices = {};
+    import { pocketbase, devices } from '@stores/pocketbase';
+    import { sortDevices } from '../sorts';
 
     onMount(async () => {
-        // get all devices in pocketbase
-        const result = await $pocketbase.collection('devices').getFullList(200, {
-            expand: 'ports',
-            sort: 'name'
-        });
-        result.forEach((device) => {
-            devices[device.id] = device;
-        });
-
         // subscribe to database events
         $pocketbase.collection('devices').subscribe('*', async (e) => {
             if (e.action === 'create') {
-                devices[e.record.id] = e.record;
+                $devices[e.record.id] = e.record;
             } else if (e.action === 'update') {
                 const device = await $pocketbase.collection('devices').getOne(e.record.id, {
                     expand: 'ports'
                 });
-                devices[device.id] = device;
+                $devices[device.id] = device;
             } else if (e.action === 'delete') {
-                delete devices[e.record.id];
+                delete $devices[e.record.id];
             }
         });
         $pocketbase.collection('ports').subscribe('*', async (e) => {
             if (e.action === 'update') {
-                const device = await $pocketbase
-                    .collection('devices')
-                    .getFirstListItem(`ports.id ?= "${e.record.id}"`, {
-                        expand: 'ports'
-                    });
-                devices[device.id] = device;
+                const device = Object.values($devices).find((dev) =>
+                    dev.ports.includes(e.record.id)
+                );
+                if (!device) {
+                    return;
+                }
+
+                // replace device.expand.ports with updated record
+                const portIdx = device.expand.ports.findIndex((port) => port.id === e.record.id);
+                $devices[device.id].expand.ports[portIdx] = e.record;
             }
         });
     });
@@ -51,10 +45,10 @@
     }
 </script>
 
-<div class="container text-body-emphasis">
-    {#if Object.keys(devices).length > 0}
+<div class="container text-body-emphasis mb-4">
+    {#if Object.keys($devices).length > 0}
         <div class="row">
-            {#each Object.entries(devices) as [_, device]}
+            {#each Object.values($devices).sort(sortDevices) as device}
                 <DeviceCard {device} {now} />
             {/each}
         </div>
