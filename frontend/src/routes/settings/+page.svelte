@@ -388,8 +388,9 @@
     </section>
     <p class="m-0 my-4 p-4 text-center text-muted">
         {#if version !== undefined}
-            <a href="https://github.com/seriousm4x/UpSnap/releases/tag/{version}" class="text-reset"
-                >UpSnap version: {version}</a
+            UpSnap version: <a
+                href="https://github.com/seriousm4x/UpSnap/releases/tag/{version}"
+                class="text-reset">{version}</a
             >
         {:else}
             UpSnap version: (untracked)
