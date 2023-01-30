@@ -32,11 +32,11 @@
 
 ## 🚀 Run the binary
 
-Just download the latest binary from the [release page](https://github.com/seriousm4x/UpSnap/releases) and run it.
+Just download the latest binary from the [release page](https://github.com/seriousm4x/UpSnap/releases) and run it `./upsnap serve --http=0.0.0.0:8090`.
 
-Run `./upsnap serve --http=0.0.0.0:8090`. For more options check `./upsnap --help`.
+For more options check `./upsnap --help` or visit [PocketBase documentation](https://pocketbase.io/docs).
 
-If you need network discovery, make sure to have nmap installed and run upsnap as root/admin.
+If you need network discovery, make sure to have `nmap` installed and run upsnap as root/admin.
 
 ## 🐳 Run in docker
 
