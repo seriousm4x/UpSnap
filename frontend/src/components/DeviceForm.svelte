@@ -41,9 +41,9 @@
                 if (!port.id) {
                     const result = await $pocketbase.collection('ports').create(port);
                     device.ports = [...device.ports, result.id];
-                    return;
+                } else {
+                    await $pocketbase.collection('ports').update(port.id, port);
                 }
-                await $pocketbase.collection('ports').update(port.id, port);
             }
 
             // create or update device
