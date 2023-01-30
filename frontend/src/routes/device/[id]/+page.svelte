@@ -4,7 +4,7 @@
 
     export let data;
     let device = $devices[data.params.id];
-    if (!device.expand.ports) {
+    if (!device?.expand?.ports) {
         device.expand.ports = [];
     }
 </script>
