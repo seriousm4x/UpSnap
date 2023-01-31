@@ -4,13 +4,13 @@ import (
 	"net"
 	"time"
 
-	"github.com/go-ping/ping"
 	"github.com/pocketbase/pocketbase/models"
+	probing "github.com/prometheus-community/pro-bing"
 	"github.com/seriousm4x/upsnap/logger"
 )
 
 func PingDevice(device *models.Record) bool {
-	pinger, err := ping.NewPinger(device.GetString("ip"))
+	pinger, err := probing.NewPinger(device.GetString("ip"))
 	if err != nil {
 		logger.Error.Println(err)
 		return false
