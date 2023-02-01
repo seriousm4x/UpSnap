@@ -1,4 +1,4 @@
-name: Deploy release
+name: v3 build
 
 on:
   push:
