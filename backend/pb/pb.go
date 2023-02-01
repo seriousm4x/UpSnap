@@ -2,7 +2,6 @@ package pb
 
 import (
 	"io/fs"
-	"log"
 	"net/http"
 	"os"
 
@@ -112,7 +111,7 @@ func StartPocketBase(distDirFS fs.FS) {
 
 	// start pocketbase
 	if err := App.Start(); err != nil {
-		log.Fatal(err)
+		logger.Error.Fatalln(err)
 	}
 }
 

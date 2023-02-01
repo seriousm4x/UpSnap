@@ -1,6 +1,7 @@
 package networking
 
 import (
+	"bytes"
 	"fmt"
 	"os/exec"
 	"runtime"
@@ -28,8 +29,13 @@ func ShutdownDevice(device *models.Record) error {
 	}
 
 	cmd := exec.Command(shell, shell_arg, shutdown_cmd)
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
 		return err
+	}
+	if stderr.Len() > 0 {
+		return fmt.Errorf("%s", stderr.String())
 	}
 
 	// check state every second for 2 min

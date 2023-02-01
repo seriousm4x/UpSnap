@@ -11,6 +11,7 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/models"
+	"github.com/seriousm4x/upsnap/logger"
 	"github.com/seriousm4x/upsnap/networking"
 )
 
@@ -23,6 +24,7 @@ func HandlerWake(c echo.Context) error {
 		record.Set("status", "pending")
 		App.Dao().SaveRecord(record)
 		if err := networking.WakeDevice(record); err != nil {
+			logger.Error.Println(err)
 			record.Set("status", "offline")
 		} else {
 			record.Set("status", "online")
@@ -41,6 +43,7 @@ func HandlerShutdown(c echo.Context) error {
 		record.Set("status", "pending")
 		App.Dao().SaveRecord(record)
 		if err := networking.ShutdownDevice(record); err != nil {
+			logger.Error.Println(err)
 			record.Set("status", "online")
 		} else {
 			record.Set("status", "offline")
