@@ -26,7 +26,7 @@ jobs:
       - name: Build frontend
         run: |
           npm --prefix=./frontend i
-          UPSNAP_VERSION=${GITHUB_REF##*/} npm --prefix=./frontend run build 
+          UPSNAP_VERSION=${GITHUB_REF##*/} npm --prefix=./frontend run build
           cp -r ./frontend/build/* ./backend/pb_public/
 
       # setup go
@@ -41,7 +41,7 @@ jobs:
         with:
           distribution: goreleaser
           version: latest
-          args: release --rm-dist
+          args: release --clean
           workdir: backend
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
