@@ -42,6 +42,8 @@ If you need network discovery, make sure to have `nmap` installed and run upsnap
 
 Alternatively use the [docker-compose](docker-compose.yml) example. See the comments in the file for customization.
 
+If you need additional packages inside the container, uncomment the `entrypoint` inside the compose file. You can search for your needed package [here](https://pkgs.alpinelinux.org/packages).
+
 ### Reverse Proxy
 
 **Caddy example**
