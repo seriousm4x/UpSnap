@@ -1,13 +1,13 @@
 package networking
 
 import (
-	"encoding/binary"
 	"errors"
 	"fmt"
 	"net"
 
 	"github.com/mdlayher/wol"
 	"github.com/pocketbase/pocketbase/models"
+	"github.com/seriousm4x/upsnap/logger"
 )
 
 func SendMagicPacket(device *models.Record) error {
@@ -17,17 +17,9 @@ func SendMagicPacket(device *models.Record) error {
 	password := device.GetString("password")
 
 	// parse inputs
-	parsedIP := net.ParseIP(ip)
-	if parsedIP == nil {
-		return fmt.Errorf("error: invalid ip address")
-	}
 	parsedMac, err := net.ParseMAC(mac)
 	if err != nil {
 		return err
-	}
-	parsedNetmask := net.ParseIP(netmask)
-	if parsedNetmask == nil {
-		return fmt.Errorf("error: invalid netmask")
 	}
 	var bytePassword []byte
 	if len(password) == 0 || len(password) == 4 || len(password) == 6 {
@@ -37,15 +29,12 @@ func SendMagicPacket(device *models.Record) error {
 	}
 
 	// get target addr
-	ipNet := &net.IPNet{
-		IP:   parsedIP,
-		Mask: parsedNetmask.DefaultMask(),
-	}
-	broadcastIp, err := getBroadcastIp(ipNet)
+	broadcastIp, err := getBroadcastIp(ip, netmask)
 	if err != nil {
 		return err
 	}
 	targetAddr := fmt.Sprintf("%s:%d", broadcastIp, 9)
+	logger.Debug.Println(targetAddr)
 
 	// send wake via udp port 9
 	if err := wakeUDP(targetAddr, parsedMac, bytePassword); err != nil {
@@ -64,11 +53,23 @@ func wakeUDP(addr string, target net.HardwareAddr, password []byte) error {
 	return c.WakePassword(addr, target, password)
 }
 
-func getBroadcastIp(n *net.IPNet) (net.IP, error) {
-	if n.IP.To4() == nil {
-		return net.IP{}, errors.New("does not support IPv6 addresses")
+func getBroadcastIp(ipStr, maskStr string) (string, error) {
+	ip := net.ParseIP(ipStr)
+	if ip == nil {
+		return "", errors.New("invalid IP address")
 	}
-	ip := make(net.IP, len(n.IP.To4()))
-	binary.BigEndian.PutUint32(ip, binary.BigEndian.Uint32(n.IP.To4())|^binary.BigEndian.Uint32(net.IP(n.Mask).To4()))
-	return ip, nil
+	mask := net.ParseIP(maskStr)
+	if mask == nil {
+		return "", errors.New("invalid subnet mask")
+	}
+
+	ip = ip.To4()
+	mask = mask.To4()
+
+	broadcast := make(net.IP, 4)
+	for i := range ip {
+		broadcast[i] = ip[i] | ^mask[i]
+	}
+
+	return broadcast.String(), nil
 }
