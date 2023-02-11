@@ -32,9 +32,6 @@ func ShutdownDevice(device *models.Record) error {
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
-		return err
-	}
-	if stderr.Len() > 0 {
 		return fmt.Errorf("%s", stderr.String())
 	}
 
