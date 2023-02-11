@@ -56,13 +56,20 @@ func getBroadcastIp(ipStr, maskStr string) (string, error) {
 	if ip == nil {
 		return "", errors.New("invalid IP address")
 	}
+	ip = ip.To4()
+	if ip == nil {
+		return "", errors.New("ip not a valid ipv4 addresses")
+	}
+
 	mask := net.ParseIP(maskStr)
 	if mask == nil {
 		return "", errors.New("invalid subnet mask")
 	}
-
-	ip = ip.To4()
 	mask = mask.To4()
+	ip = ip.To4()
+	if ip == nil {
+		return "", errors.New("mac not a valid ipv4 addresses")
+	}
 
 	broadcast := make(net.IP, 4)
 	for i := range ip {
