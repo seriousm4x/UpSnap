@@ -6,11 +6,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./data:/app/pb_data
-    healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
-      interval: 1m
-      timeout: 10s
-      retries: 3
     # environment:
     #   - TZ=Europe/Berlin # Set container timezone for cron schedules
     #   - UPSNAP_INTERVAL=@every 10s # Sets the interval in which the devices are pinged

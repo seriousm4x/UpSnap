@@ -16,4 +16,6 @@ RUN apk update &&\
     rm -rf /var/cache/apk/*
 WORKDIR /app
 COPY --from=downloader /app/upsnap upsnap
+HEALTHCHECK --interval=10s \
+    CMD curl -fs "http://localhost:8090/api/health " || exit 1
 ENTRYPOINT ["./upsnap", "serve", "--http=0.0.0.0:8090"]
