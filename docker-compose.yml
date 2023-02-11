@@ -1,6 +1,7 @@
 version: "3"
 services:
   upsnap:
+    container_name: upsnap
     image: ghcr.io/seriousm4x/upsnap:3
     network_mode: host
     restart: unless-stopped
