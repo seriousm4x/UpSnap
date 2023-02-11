@@ -7,7 +7,6 @@ import (
 
 	"github.com/mdlayher/wol"
 	"github.com/pocketbase/pocketbase/models"
-	"github.com/seriousm4x/upsnap/logger"
 )
 
 func SendMagicPacket(device *models.Record) error {
@@ -34,7 +33,6 @@ func SendMagicPacket(device *models.Record) error {
 		return err
 	}
 	targetAddr := fmt.Sprintf("%s:%d", broadcastIp, 9)
-	logger.Debug.Println(targetAddr)
 
 	// send wake via udp port 9
 	if err := wakeUDP(targetAddr, parsedMac, bytePassword); err != nil {
