@@ -1,5 +1,8 @@
 export function sortDevices(a, b) {
-    return a.name > b.name;
+    return a.name.localeCompare(b.name, undefined, {
+        numeric: true,
+        sensitivity: 'base'
+    });
 }
 
 export function sortPorts(a, b) {
