@@ -43,7 +43,22 @@ If you need network discovery, make sure to have `nmap` installed and run upsnap
 
 Alternatively use the [docker-compose](docker-compose.yml) example. See the comments in the file for customization.
 
-If you need additional packages inside the container, uncomment the `entrypoint` inside the compose file. You can search for your needed package [here](https://pkgs.alpinelinux.org/packages).
+If you want to change the port, change the following (5000 in this case):
+
+```yml
+entrypoint: /bin/sh -c "./upsnap serve --http 0.0.0.0:5000"
+healthcheck:
+  test: curl -fs "http://localhost:5000/api/health" || exit 1
+  interval: 10s
+```
+
+And if you need additional packages inside the container, do this:
+
+```yml
+entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http 0.0.0.0:8090"
+```
+
+You can search for your needed package [here](https://pkgs.alpinelinux.org/packages).
 
 ### Reverse Proxy
 
