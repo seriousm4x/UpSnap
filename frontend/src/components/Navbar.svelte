@@ -12,8 +12,6 @@
             document.title = $settings.website_title;
         });
     });
-
-    $: console.log($page.url.pathname);
 </script>
 
 <svelte:head>
