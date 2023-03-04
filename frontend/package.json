@@ -12,9 +12,9 @@
     },
     "devDependencies": {
         "@sveltejs/adapter-static": "^1.0.6",
-        "@sveltejs/kit": "^1.8.5",
-        "@typescript-eslint/eslint-plugin": "^5.53.0",
-        "@typescript-eslint/parser": "^5.53.0",
+        "@sveltejs/kit": "^1.10.0",
+        "@typescript-eslint/eslint-plugin": "^5.54.0",
+        "@typescript-eslint/parser": "^5.54.0",
         "eslint": "^8.35.0",
         "eslint-config-prettier": "^8.6.0",
         "eslint-plugin-svelte3": "^4.0.0",
