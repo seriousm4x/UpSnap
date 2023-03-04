@@ -12,6 +12,8 @@
             document.title = $settings.website_title;
         });
     });
+
+    $: console.log($page.url.pathname);
 </script>
 
 <svelte:head>
@@ -45,8 +47,8 @@
                 <li class="nav-item">
                     <a
                         class="nav-link"
-                        class:active={$page.url.pathname === '/settings' ? true : false}
-                        href="/settings">Settings</a
+                        class:active={$page.url.pathname === '/settings/' ? true : false}
+                        href="/settings/">Settings</a
                     >
                 </li>
                 <li class="nav-item dropdown ms-3">
