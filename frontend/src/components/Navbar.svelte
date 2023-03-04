@@ -59,7 +59,7 @@
                         <Fa icon={faBrush} class="me-2" />
                         Theme
                     </div>
-                    <ul class="dropdown-menu border-0 p-1">
+                    <ul class="dropdown-menu border-0 p-1 shadow-sm">
                         <li>
                             <div
                                 class="dropdown-item"
