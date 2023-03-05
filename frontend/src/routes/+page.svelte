@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import DeviceCard from '@components/DeviceCard.svelte';
-    import { pocketbase, devices } from '@stores/pocketbase';
+    import { pocketbase, devices, settings } from '@stores/pocketbase';
     import { sortDevices } from '../sorts';
 
     onMount(async () => {
@@ -32,6 +32,20 @@
                 $devices[device.id].expand.ports[portIdx] = e.record;
             }
         });
+
+        let settingsRes = {};
+        settingsRes = await $pocketbase.collection('settings').getList(1, 1);
+        settings.set(settingsRes.items[0]);
+
+        let tempDevices = {};
+        const devicesRes = await $pocketbase.collection('devices').getFullList(200, {
+            sort: 'name',
+            expand: 'ports'
+        });
+        devicesRes.forEach((device) => {
+            tempDevices[device.id] = device;
+        });
+        devices.set(tempDevices);
     });
 
     // update device date

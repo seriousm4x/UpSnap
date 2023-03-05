@@ -18,3 +18,4 @@ export const settings = writable({
     website_title: ''
 });
 export const devices = writable({});
+export const authorizedStore = writable(false);

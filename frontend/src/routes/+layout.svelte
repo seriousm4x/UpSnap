@@ -1,32 +1,19 @@
 <script>
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
-    import { theme } from '@stores/theme';
     import Navbar from '@components/Navbar.svelte';
+    import Login from '@components/Login.svelte';
     import Transition from '@components/Transition.svelte';
-    import { pocketbase, settings, devices } from '@stores/pocketbase';
+    import { theme } from '@stores/theme';
+    import { pocketbase, authorizedStore } from '@stores/pocketbase';
 
     let preferesDark;
-
-    onMount(async () => {
-        let settingsRes = {};
-        settingsRes = await $pocketbase.collection('settings').getList(1, 1);
-        settings.set(settingsRes.items[0]);
-
-        let tempDevices = {};
-        const devicesRes = await $pocketbase.collection('devices').getFullList(200, {
-            sort: 'name',
-            expand: 'ports'
-        });
-        devicesRes.forEach((device) => {
-            tempDevices[device.id] = device;
-        });
-        devices.set(tempDevices);
-    });
+    let isAuth = false;
 
     onMount(() => {
         // import bootstrap js
         import('bootstrap/js/dist/dropdown');
+        import('bootstrap/js/dist/collapse');
 
         // set dark mode
         preferesDark = window.matchMedia('(prefers-color-scheme: dark)');
@@ -46,6 +33,16 @@
             }
             document.documentElement.setAttribute('data-bs-theme', t);
         });
+
+        authorizedStore.subscribe((state) => {
+            isAuth = state;
+        });
+
+        const pbCookie = localStorage.getItem('pocketbase_auth');
+        if (pbCookie) {
+            $pocketbase.authStore.loadFromCookie('pb_auth=' + pbCookie);
+            authorizedStore.set($pocketbase.authStore.isValid);
+        }
     });
 </script>
 
@@ -67,11 +64,14 @@
     </script>
 </svelte:head>
 
-<Navbar />
-
-<Transition url={$page.url}>
-    <slot />
-</Transition>
+{#if isAuth}
+    <Navbar />
+    <Transition url={$page.url}>
+        <slot />
+    </Transition>
+{:else}
+    <Login />
+{/if}
 
 <style lang="scss" global>
     @import '../scss/main.scss';

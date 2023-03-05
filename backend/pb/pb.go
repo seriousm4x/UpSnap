@@ -41,6 +41,7 @@ func StartPocketBase(distDirFS fs.FS) {
 			Handler: HandlerWake,
 			Middlewares: []echo.MiddlewareFunc{
 				apis.ActivityLogger(App),
+				apis.RequireAdminOrRecordAuth("users"),
 			},
 		})
 
@@ -51,6 +52,7 @@ func StartPocketBase(distDirFS fs.FS) {
 			Handler: HandlerShutdown,
 			Middlewares: []echo.MiddlewareFunc{
 				apis.ActivityLogger(App),
+				apis.RequireAdminOrRecordAuth("users"),
 			},
 		})
 
@@ -61,6 +63,7 @@ func StartPocketBase(distDirFS fs.FS) {
 			Handler: HandlerScan,
 			Middlewares: []echo.MiddlewareFunc{
 				apis.ActivityLogger(App),
+				apis.RequireAdminAuth(),
 			},
 		})
 

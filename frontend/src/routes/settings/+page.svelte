@@ -67,7 +67,18 @@
 
     async function scanDevices() {
         buttons.scan.state = 'waiting';
-        await $pocketbase.collection('settings').update($settings.id, $settings);
+        await $pocketbase
+            .collection('settings')
+            .update($settings.id, $settings)
+            .catch((err) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    buttons.scan.error = '';
+                    buttons.scan.state = 'none';
+                }, 3000);
+                buttons.scan.error = err;
+                buttons.scan.state = 'failed';
+            });
 
         fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/scan`)
             .then((res) => res.json())

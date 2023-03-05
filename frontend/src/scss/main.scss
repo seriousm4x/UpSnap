@@ -41,6 +41,7 @@ $dropdown-min-width: 0;
 @import '../../node_modules/bootstrap/scss/buttons';
 @import '../../node_modules/bootstrap/scss/spinners';
 @import '../../node_modules/bootstrap/scss/badge';
+@import '../../node_modules/bootstrap/scss/transitions';
 
 @import '../../node_modules/bootstrap/scss/utilities/api';
 
@@ -56,6 +57,12 @@ section {
 
     &.active {
         background-color: $gray-300;
+    }
+}
+
+.navbar-toggler {
+    &:focus {
+        box-shadow: none !important;
     }
 }
 

@@ -1,17 +1,44 @@
 <script>
+    import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { theme } from '@stores/theme';
-    import { pocketbase, settings } from '@stores/pocketbase';
-    import { faSun, faMoon, faCircleHalfStroke, faBrush } from '@fortawesome/free-solid-svg-icons';
+    import { pocketbase, authorizedStore, settings } from '@stores/pocketbase';
+    import {
+        faSun,
+        faMoon,
+        faCircleHalfStroke,
+        faBrush,
+        faRightFromBracket
+    } from '@fortawesome/free-solid-svg-icons';
     import Fa from 'svelte-fa';
-    import { onMount } from 'svelte';
+
+    let userInfo = {
+        usernameOrEmail: '',
+        role: ''
+    };
 
     onMount(async () => {
         $pocketbase.collection('settings').subscribe('*', function (e) {
             settings.set(e.record);
             document.title = $settings.website_title;
         });
+
+        if ($pocketbase.authStore.baseModel?.collectionName === 'users') {
+            userInfo.role = 'user';
+        } else {
+            userInfo.role = 'admin';
+        }
+        if ($pocketbase.authStore.baseModel?.username) {
+            userInfo.usernameOrEmail = $pocketbase.authStore.baseModel.username;
+        } else {
+            userInfo.usernameOrEmail = $pocketbase.authStore.baseModel.email;
+        }
     });
+
+    async function logout() {
+        $pocketbase.authStore.clear();
+        authorizedStore.set(false);
+    }
 </script>
 
 <svelte:head>
@@ -22,7 +49,7 @@
     {/if}
 </svelte:head>
 
-<nav class="navbar navbar-expand">
+<nav class="navbar navbar-expand-sm">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img
@@ -33,23 +60,36 @@
                 class:me-2={$settings.website_title !== ''}
             />{$settings.website_title ? $settings.website_title : ''}
         </a>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <button
+            class="navbar-toggler border-0"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon" />
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        class:active={$page.url.pathname === '/' ? true : false}
-                        href="/">Home</a
-                    >
-                </li>
-                <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        class:active={$page.url.pathname === '/settings/' ? true : false}
-                        href="/settings/">Settings</a
-                    >
-                </li>
-                <li class="nav-item dropdown ms-3">
+                {#if userInfo.role !== 'user'}
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            class:active={$page.url.pathname === '/' ? true : false}
+                            href="/">Home</a
+                        >
+                    </li>
+                    <li class="nav-item me-3">
+                        <a
+                            class="nav-link"
+                            class:active={$page.url.pathname === '/settings/' ? true : false}
+                            href="/settings/">Settings</a
+                        >
+                    </li>
+                {/if}
+                <li class="nav-item dropdown">
                     <div
                         class="nav-link dropdown-toggle"
                         role="button"
@@ -59,7 +99,7 @@
                         <Fa icon={faBrush} class="me-2" />
                         Theme
                     </div>
-                    <ul class="dropdown-menu border-0 p-1 shadow-sm">
+                    <ul class="dropdown-menu border-0 p-1 shadow-sm mb-2">
                         <li>
                             <div
                                 class="dropdown-item"
@@ -96,6 +136,16 @@
                     </ul>
                 </li>
             </ul>
+            <div class="ms-auto d-flex">
+                <button
+                    class="text-dark-emphasis nav-link active border-0"
+                    data-toggle="tooltip"
+                    title="Logged in as {userInfo.role} &quot;{userInfo.usernameOrEmail}&quot;"
+                    on:click={() => logout()}
+                >
+                    <Fa icon={faRightFromBracket} class="me-2" />Logout
+                </button>
+            </div>
         </div>
     </div>
 </nav>

@@ -1,6 +1,7 @@
 <script>
     import { dev } from '$app/environment';
     import { parseISO, formatDistance } from 'date-fns';
+    import { pocketbase } from '@stores/pocketbase';
     import {
         faPowerOff,
         faEllipsisVertical,
@@ -16,11 +17,19 @@
     export let now;
 
     function shutdown() {
-        fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/shutdown/${device.id}`);
+        fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/shutdown/${device.id}`, {
+            headers: {
+                Authorization: $pocketbase.authStore.baseToken
+            }
+        });
     }
 
     function wake() {
-        fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/wake/${device.id}`);
+        fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/wake/${device.id}`, {
+            headers: {
+                Authorization: $pocketbase.authStore.baseToken
+            }
+        });
     }
 </script>
 
