@@ -72,9 +72,9 @@ upsnap.example.com {
 }
 ```
 
-## 🔒 Authentification
+## 🔒 Authorisation
 
-**Since version 3.1 authentification is enabled by default.**
+**Since version 3.1 authorisation is enabled by default.**
 
 User management is done through the PocketBase webinterface at [http://localhost:8090/\_/](http://localhost:8090/_/). This is mainly for internal use, such as within a home or corporate network. For external use please see below.
 
@@ -96,7 +96,7 @@ Api permissions listed by user role:
 
 ## 🌍 Exposing to the open web
 
-Although UpSnap has user authentification, it is **not recommended to expose it to the open web** and make it accessible by everyone!
+Although UpSnap has user authorisation, it is **not recommended to expose it to the open web** and make it accessible by everyone!
 
 **Reason**: The shutdown device command is basically a command piped to #sh (root if you run docker). If anyone gains unauthorized access and can abuse this api route in any way, the attacker has access to a (root) shell on your local network.
 
