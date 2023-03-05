@@ -11,7 +11,6 @@
     <a target="_blank" href="https://github.com/seriousm4x/UpSnap/releases"><img src="https://img.shields.io/github/v/release/seriousm4x/upsnap?display_name=tag" /></a>
     <a target="_blank" href="https://github.com/seriousm4x/UpSnap/actions"><img src="https://github.com/seriousm4x/upsnap/actions/workflows/deploy.yml/badge.svg?event=push" /></a>
     <a target="_blank" href="https://github.com/seriousm4x/UpSnap/commits/master"><img src="https://img.shields.io/github/last-commit/seriousm4x/upsnap" /></a>
-    <h3><a href="https://github.com/seriousm4x/UpSnap/releases/tag/3.0.0">v3 is here! 🤩 Check it out</a></h3>
 </div>
 
 ## ✨ Features
@@ -43,7 +42,7 @@ If you need network discovery, make sure to have `nmap` installed and run upsnap
 
 ## 🐳 Run in docker
 
-Alternatively use the [docker-compose](docker-compose.yml) example. See the comments in the file for customization.
+You can use the [docker-compose](docker-compose.yml) example. See the comments in the file for customization.
 
 If you want to change the port, change the following (5000 in this case):
 
