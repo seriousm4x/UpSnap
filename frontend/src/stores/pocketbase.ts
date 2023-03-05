@@ -2,11 +2,7 @@ import { writable } from 'svelte/store';
 import PocketBase from 'pocketbase';
 
 // set backend url based on environment
-let backend_url = '/';
-let isDevMode = import.meta.env.DEV;
-if (isDevMode) {
-    backend_url = 'http://127.0.0.1:8090';
-}
+let backend_url = import.meta.env.DEV ? 'http://127.0.0.1:8090' : '/';
 
 // get default values for stores
 const pb = new PocketBase(backend_url);

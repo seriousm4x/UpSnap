@@ -20,6 +20,7 @@
 - Set timed wake and shutdown events via cron
 - Add custom ports to devices which will be pinged
 - Discover devices by scanning network
+- User/Password protected login
 - Dark/light or system prefered color scheme
 - [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7
 
@@ -27,6 +28,7 @@
 
 | Dark                           | Light                           |
 | ------------------------------ | ------------------------------- |
+| ![](/assets/login_dark.png)    | ![](/assets/login_light.png)    |
 | ![](/assets/home_dark.png)     | ![](/assets/home_light.png)     |
 | ![](/assets/device_dark.png)   | ![](/assets/device_light.png)   |
 | ![](/assets/settings_dark.png) | ![](/assets/settings_light.png) |
@@ -69,6 +71,36 @@ upsnap.example.com {
     reverse_proxy localhost:8090
 }
 ```
+
+## 🔒 Authentification
+
+**Since version 3.1 authentification is enabled by default.**
+
+User management is done through the PocketBase webinterface at [http://localhost:8090/\_/](http://localhost:8090/_/). This is mainly for internal use, such as within a home or corporate network. For external use please see below.
+
+- To manage users, click the "Collections" icon on the left and select "users".
+- To manage admins, click the "Settings" icon on the left and select "Admin".
+
+Api permissions listed by user role:
+
+| Api              | Unauthorized | Users | Admins |
+| ---------------- | ------------ | ----- | ------ |
+| List/Search Rule | ❌           | ✅    | ✅     |
+| View Rule        | ❌           | ✅    | ✅     |
+| Create Rule      | ❌           | ❌    | ✅     |
+| Delete Rule      | ❌           | ❌    | ✅     |
+| Manage Rule      | ❌           | ❌    | ✅     |
+| Wake devices     | ❌           | ✅    | ✅     |
+| Shutdown devices | ❌           | ✅    | ✅     |
+| Scan network     | ❌           | ❌    | ✅     |
+
+## 🌍 Exposing to the open web
+
+Although UpSnap has user authentification, it is **not recommended to expose it to the open web** and make it accessible by everyone!
+
+**Reason**: The shutdown device command is basically a command piped to #sh (root if you run docker). If anyone gains unauthorized access and can abuse this api route in any way, the attacker has access to a (root) shell on your local network.
+
+**Recommended**: If you need access from outside your network, please use a vpn. Wireguard or OpenVPN is your way to go.
 
 ## 🔧 Help developing
 
