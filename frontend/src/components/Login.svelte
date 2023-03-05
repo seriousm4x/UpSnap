@@ -10,7 +10,6 @@
         title: '',
         msg: ''
     };
-    const welcomeMsg = import.meta.env?.UPSNAP_WELCOME_MESSAGE || '';
 
     async function login() {
         if (isAdmin) {
@@ -51,10 +50,6 @@
     </div>
     <div class="row justify-content-center align-items-center p-2">
         <div class="col-md-6 col-lg-5 p-4 login rounded-5 shadow-sm">
-            {#if welcomeMsg !== ''}
-                <h5 class="text-center fw-bold">{welcomeMsg}</h5>
-                <hr />
-            {/if}
             <form class="w-100" on:submit|preventDefault={login}>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username or email address</label>

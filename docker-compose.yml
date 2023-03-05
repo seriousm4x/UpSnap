@@ -12,7 +12,6 @@ services:
     #   - UPSNAP_INTERVAL=@every 10s # Sets the interval in which the devices are pinged
     #   - UPSNAP_SCAN_RANGE=192.168.1.0/24 # Scan range is used for device discovery on local network
     #   - UPSNAP_WEBSITE_TITLE=Custom name # Custom website title
-    #   - UPSNAP_WELCOME_MESSAGE="Welcome to my wake on lan dashboard" # Show this message on the login form
     # you can change the listen ip:port inside the container like this:
     # entrypoint: /bin/sh -c "./upsnap serve --http 0.0.0.0:5000"
     # healthcheck:
