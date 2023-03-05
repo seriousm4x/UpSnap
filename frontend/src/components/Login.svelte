@@ -1,5 +1,4 @@
 <script>
-    import { goto } from '$app/navigation';
     import { pocketbase, authorizedStore } from '@stores/pocketbase';
 
     let username;
@@ -91,11 +90,7 @@
             </form>
             <p class="text-center m-0 mt-3">
                 <!-- hacky way of linking a non existing route in svelte -->
-                <span
-                    on:click={() => goto('/_/')}
-                    on:keydown={() => goto('/_/')}
-                    class="text-muted cursor-pointer">Manage users</span
-                >
+                <a href="/_/" rel="external" class="text-muted cursor-pointer">Manage users</a>
             </p>
         </div>
     </div>
