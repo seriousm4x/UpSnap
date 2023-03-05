@@ -17,7 +17,7 @@ const config = {
             '@stores': path.resolve('./src/stores')
         },
         prerender: {
-            entries: ['/device/[id]']
+            entries: ['/device/[id]', '/settings', '/']
         }
     }
 };

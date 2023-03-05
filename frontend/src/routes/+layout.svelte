@@ -5,7 +5,7 @@
     import Login from '@components/Login.svelte';
     import Transition from '@components/Transition.svelte';
     import { theme } from '@stores/theme';
-    import { pocketbase, authorizedStore } from '@stores/pocketbase';
+    import { pocketbase, authorizedStore, devices, settings } from '@stores/pocketbase';
 
     let preferesDark;
     let isAuth = false;
@@ -44,6 +44,26 @@
             authorizedStore.set($pocketbase.authStore.isValid);
         }
     });
+
+    async function getSettingsAndDevices() {
+        let settingsRes = {};
+        settingsRes = await $pocketbase.collection('settings').getList(1, 1);
+        settings.set(settingsRes.items[0]);
+
+        let tempDevices = {};
+        const devicesRes = await $pocketbase.collection('devices').getFullList(200, {
+            sort: 'name',
+            expand: 'ports'
+        });
+        devicesRes.forEach((device) => {
+            tempDevices[device.id] = device;
+        });
+        devices.set(tempDevices);
+    }
+
+    $: if (isAuth) {
+        getSettingsAndDevices();
+    }
 </script>
 
 <svelte:head>

@@ -143,7 +143,7 @@
                     title="Logged in as {userInfo.role} &quot;{userInfo.usernameOrEmail}&quot;"
                     on:click={() => logout()}
                 >
-                    <Fa icon={faRightFromBracket} class="me-2" />Logout
+                    <Fa icon={faRightFromBracket} class="me-2" />Logout ({userInfo.usernameOrEmail})
                 </button>
             </div>
         </div>

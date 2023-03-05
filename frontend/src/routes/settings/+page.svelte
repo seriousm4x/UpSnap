@@ -1,6 +1,7 @@
 <script>
     import { dev } from '$app/environment';
     import { pocketbase, settings, devices } from '@stores/pocketbase';
+    import UnauthorizedMsg from '@components/UnauthorizedMsg.svelte';
     import DeviceForm from '@components/DeviceForm.svelte';
     import { faPlus } from '@fortawesome/free-solid-svg-icons';
     import Fa from 'svelte-fa';
@@ -187,6 +188,7 @@
 </script>
 
 <div class="container">
+    <UnauthorizedMsg />
     <section class="m-0 mt-4 p-4 shadow-sm">
         <form on:submit|preventDefault={saveSettings}>
             <h3 class="mb-3">Ping interval</h3>

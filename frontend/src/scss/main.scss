@@ -21,6 +21,10 @@ $grays: (
 $body-bg-dark: $gray-1000;
 $dropdown-link-active-bg: $gray-1000;
 $dropdown-min-width: 0;
+$form-check-input-checked-bg-color: $orange-300;
+$form-check-input-checked-border-color: $orange-500;
+$input-focus-border-color: $gray-500;
+$input-focus-box-shadow: $gray-900;
 
 // import rest
 @import '../../node_modules/bootstrap/scss/maps';
@@ -123,7 +127,8 @@ html[data-bs-theme='light'] {
     }
 
     section,
-    .card {
+    .card,
+    .login {
         background: #ffffff;
     }
 }
@@ -135,7 +140,8 @@ html[data-bs-theme='dark'] {
     }
 
     section,
-    .card {
+    .card,
+    .login {
         background: #25252b;
     }
 

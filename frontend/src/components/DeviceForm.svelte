@@ -185,6 +185,7 @@
                             />
                             <input
                                 type="number"
+                                min="0"
                                 max="65535"
                                 aria-label="Number"
                                 class="form-control"
@@ -212,6 +213,7 @@
                     />
                     <input
                         type="number"
+                        min="0"
                         max="65535"
                         aria-label="Number"
                         class="form-control"
