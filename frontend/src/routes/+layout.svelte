@@ -10,7 +10,7 @@
     let preferesDark;
     let isAuth = false;
 
-    onMount(() => {
+    onMount(async () => {
         // import bootstrap js
         import('bootstrap/js/dist/dropdown');
         import('bootstrap/js/dist/collapse');
@@ -38,9 +38,19 @@
             isAuth = state;
         });
 
+        // load auth from localstorage
         const pbCookie = localStorage.getItem('pocketbase_auth');
         if (pbCookie) {
             $pocketbase.authStore.loadFromCookie('pb_auth=' + pbCookie);
+
+            // try to refresh auth token if valid
+            if ($pocketbase.authStore.isValid) {
+                if ($pocketbase.authStore.model?.collectionName === 'users') {
+                    await $pocketbase.collection('users').authRefresh();
+                } else {
+                    await $pocketbase.admins.authRefresh();
+                }
+            }
             authorizedStore.set($pocketbase.authStore.isValid);
         }
     });
