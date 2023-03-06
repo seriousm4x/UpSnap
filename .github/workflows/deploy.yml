@@ -54,6 +54,15 @@ jobs:
       - name: Check Out Repo
         uses: actions/checkout@v3
 
+      # qemu
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      # docker buildx
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
       # image tags
       - name: Docker meta
         id: meta
@@ -66,15 +75,6 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}
             type=semver,pattern={{major}}.{{minor}}
-
-      # qemu
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
-      # docker buildx
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2
 
       # ghcr.io login
       - name: Log in to the Container registry
