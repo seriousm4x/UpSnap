@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
+
   goreleaser:
     runs-on: ubuntu-latest
     steps:
