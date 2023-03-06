@@ -9,6 +9,7 @@ on:
 jobs:
 
   goreleaser:
+    name: Build code
     runs-on: ubuntu-latest
     steps:
 
@@ -44,6 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docker:
+    name: Build and Push Image
     needs: goreleaser
     runs-on: ubuntu-latest
     steps:
