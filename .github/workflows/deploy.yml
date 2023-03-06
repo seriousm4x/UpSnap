@@ -2,9 +2,16 @@ name: v3 build
 
 on:
   push:
+    branches:
+      - master
     tags:
       - "3.*.*"
+  pull_request:
+    branches:
+      - master
   workflow_dispatch:
+    branches:
+      - master
 
 jobs:
 
@@ -44,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  docker:
+  build-and-push-image:
     name: Build and Push Image
     needs: goreleaser
     runs-on: ubuntu-latest
