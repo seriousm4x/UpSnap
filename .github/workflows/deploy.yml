@@ -141,33 +141,9 @@ jobs:
             sarif_file: results.sarif
             category: results
 
-  test-image:
-      name: Test image with Docker Compose
-      needs: [build-test-image]
-      runs-on: ubuntu-latest
-
-      permissions:
-        packages: read
-
-      steps:
-
-        - name: Checkout git repo
-          uses: actions/checkout@v3
-
-        - name: Login to ghcr.io registry
-          uses: docker/login-action@v2
-          with:
-            registry: ghcr.io
-            username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
-
-        # TODO - Add smoke test later, I've got a good boiler plate exemple for this
-        - name: Pull image to scan
-          run: echo "TODO - Add smoke test later"
-
   build-and-push-image:
     name: Build and Push Image
-    needs: [scan-image, test-image]
+    needs: [scan-image]
     runs-on: ubuntu-latest
 
     steps:
