@@ -15,7 +15,7 @@ on:
 
 jobs:
 
-  goreleaser:
+  build-code:
     name: Build code
     runs-on: ubuntu-latest
     steps:
@@ -53,7 +53,7 @@ jobs:
 
   build-and-push-image:
     name: Build and Push Image
-    needs: goreleaser
+    needs: build-code
     runs-on: ubuntu-latest
     steps:
 
