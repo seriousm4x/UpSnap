@@ -12,7 +12,7 @@ RUN wget https://github.com/seriousm4x/UpSnap/releases/download/${VERSION}/UpSna
 
 FROM alpine:3
 RUN apk update &&\
-    apk add --no-cache tzdata ca-certificates nmap samba-common-tools openssh sshpass curl &&\
+    apk add --no-cache tzdata ca-certificates nmap samba samba-common-tools openssh sshpass curl &&\
     rm -rf /var/cache/apk/*
 WORKDIR /app
 COPY --from=downloader /app/upsnap upsnap
