@@ -81,7 +81,11 @@
                 buttons.scan.state = 'failed';
             });
 
-        fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/scan`)
+        fetch(`${dev ? 'http://localhost:8090' : ''}/api/upsnap/scan`, {
+            headers: {
+                Authorization: $pocketbase.authStore.baseToken
+            }
+        })
             .then((res) => res.json())
             .then((data) => {
                 if (data.message) {
