@@ -49,14 +49,14 @@
     {/if}
 </svelte:head>
 
-<nav class="navbar navbar-expand-sm">
+<nav class="navbar navbar-expand-sm pt-0">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img
-                src="/favicon.png"
+                src="/gopher.svg"
                 alt="UpSnap"
-                width="30"
-                height="30"
+                width="45"
+                height="45"
                 class:me-2={$settings.website_title !== ''}
             />{$settings.website_title ? $settings.website_title : ''}
         </a>

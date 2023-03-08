@@ -43,7 +43,7 @@
 <div class="container text-dark-emphasis">
     <div class="row justify-content-center align-items-center">
         <div class="col text-center p-3 p-md-5">
-            <img src="/favicon.png" alt="Logo" class="logo pe-none user-select-none" />
+            <img src="/gopher.svg" alt="Logo" class="logo pe-none user-select-none" />
             <h2 class="text-dark-emphasis fw-bold text-center mt-3">Login</h2>
         </div>
     </div>
@@ -98,9 +98,9 @@
 
 <style lang="scss">
     .logo {
-        width: 100%;
+        width: 40%;
         min-width: 50px;
-        max-width: 100px;
+        max-width: 200px;
     }
 
     .cursor-pointer {

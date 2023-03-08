@@ -1,5 +1,5 @@
 <div align="center" width="100%">
-    <img src="frontend/static/favicon.png" width="128" />
+    <img src="frontend/static/gopher.svg" width="150" />
 </div>
 
 <div align="center" width="100%">
