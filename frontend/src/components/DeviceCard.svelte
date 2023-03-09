@@ -10,7 +10,7 @@
         faCircleDown,
         faLock
     } from '@fortawesome/free-solid-svg-icons';
-    import Fa from 'svelte-fa';
+    import Fa from 'svelte-fa/src/fa.svelte';
     import { sortPorts } from '../sorts';
 
     export let device;
