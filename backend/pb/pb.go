@@ -91,7 +91,10 @@ func StartPocketBase(distDirFS fs.FS) {
 				}
 				go cronjobs.RunPing(App)
 			} else if e.Model.TableName() == "devices" {
-				refreshDeviceList()
+				if err := refreshDeviceList(); err != nil {
+					logger.Error.Println(err)
+					return err
+				}
 				for _, job := range cronjobs.CronWakeShutdown.Entries() {
 					cronjobs.CronWakeShutdown.Remove(job.ID)
 				}
@@ -105,29 +108,30 @@ func StartPocketBase(distDirFS fs.FS) {
 	// refresh the device list on database events
 	App.OnModelAfterCreate().Add(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_admins" {
-			totalAdmins, err := App.Dao().TotalAdmins()
-			if err != nil {
-				return err
-			}
-			settingsPublicRecords, err := App.Dao().FindRecordsByExpr("settings_public")
-			if err != nil {
-				return err
-			}
-			if totalAdmins > 0 {
-				settingsPublicRecords[0].Set("setup_completed", true)
-			} else {
-				settingsPublicRecords[0].Set("setup_completed", false)
-			}
-			if err := App.Dao().SaveRecord(settingsPublicRecords[0]); err != nil {
+			if err := setSetupCompleted(); err != nil {
+				logger.Error.Println(err)
 				return err
 			}
 		} else {
-			refreshDeviceList()
+			if err := refreshDeviceList(); err != nil {
+				logger.Error.Println(err)
+				return err
+			}
 		}
 		return nil
 	})
 	App.OnModelAfterDelete().Add(func(e *core.ModelEvent) error {
-		refreshDeviceList()
+		if e.Model.TableName() == "_admins" {
+			if err := setSetupCompleted(); err != nil {
+				logger.Error.Println(err)
+				return err
+			}
+		} else {
+			if err := refreshDeviceList(); err != nil {
+				logger.Error.Println(err)
+				return err
+			}
+		}
 		return nil
 	})
 
@@ -188,21 +192,16 @@ func importSettings() error {
 	if websiteTitle := os.Getenv("UPSNAP_WEBSITE_TITLE"); websiteTitle != "" {
 		settingsPublic.Set("website_title", websiteTitle)
 	}
-	if totalAdmins, err := App.Dao().TotalAdmins(); err != nil {
-		return err
-	} else {
-		if totalAdmins > 0 {
-			settingsPublic.Set("setup_completed", true)
-		} else {
-			settingsPublic.Set("setup_completed", false)
-		}
-	}
 
 	// save records
 	if err := App.Dao().SaveRecord(settingsPrivate); err != nil {
 		return err
 	}
 	if err := App.Dao().SaveRecord(settingsPublic); err != nil {
+		return err
+	}
+	if err := setSetupCompleted(); err != nil {
+		logger.Error.Println(err)
 		return err
 	}
 
@@ -225,10 +224,30 @@ func resetDeviceStates() error {
 	return nil
 }
 
-func refreshDeviceList() {
+func refreshDeviceList() error {
 	var err error
-	cronjobs.Devices, err = App.Dao().FindRecordsByExpr("devices")
-	if err != nil {
-		logger.Error.Println(err)
+	if cronjobs.Devices, err = App.Dao().FindRecordsByExpr("devices"); err != nil {
+		return err
 	}
+	return nil
+}
+
+func setSetupCompleted() error {
+	totalAdmins, err := App.Dao().TotalAdmins()
+	if err != nil {
+		return err
+	}
+	settingsPublicRecords, err := App.Dao().FindRecordsByExpr("settings_public")
+	if err != nil {
+		return err
+	}
+	if totalAdmins > 0 {
+		settingsPublicRecords[0].Set("setup_completed", true)
+	} else {
+		settingsPublicRecords[0].Set("setup_completed", false)
+	}
+	if err := App.Dao().SaveRecord(settingsPublicRecords[0]); err != nil {
+		return err
+	}
+	return nil
 }
