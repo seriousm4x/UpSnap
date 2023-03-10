@@ -164,6 +164,9 @@ func importSettings() error {
 	if scanRange := os.Getenv("UPSNAP_SCAN_RANGE"); scanRange != "" {
 		settingsPrivate.Set("scan_range", scanRange)
 	}
+	if err := App.Dao().SaveRecord(settingsPrivate); err != nil {
+		return err
+	}
 	if websiteTitle := os.Getenv("UPSNAP_WEBSITE_TITLE"); websiteTitle != "" {
 		settingsPublic.Set("website_title", websiteTitle)
 	}
