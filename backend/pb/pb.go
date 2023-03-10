@@ -104,7 +104,26 @@ func StartPocketBase(distDirFS fs.FS) {
 
 	// refresh the device list on database events
 	App.OnModelAfterCreate().Add(func(e *core.ModelEvent) error {
-		refreshDeviceList()
+		if e.Model.TableName() == "_admins" {
+			totalAdmins, err := App.Dao().TotalAdmins()
+			if err != nil {
+				return err
+			}
+			settingsPublicRecords, err := App.Dao().FindRecordsByExpr("settings_public")
+			if err != nil {
+				return err
+			}
+			if totalAdmins > 0 {
+				settingsPublicRecords[0].Set("setup_completed", true)
+			} else {
+				settingsPublicRecords[0].Set("setup_completed", false)
+			}
+			if err := App.Dao().SaveRecord(settingsPublicRecords[0]); err != nil {
+				return err
+			}
+		} else {
+			refreshDeviceList()
+		}
 		return nil
 	})
 	App.OnModelAfterDelete().Add(func(e *core.ModelEvent) error {
@@ -159,16 +178,29 @@ func importSettings() error {
 		interval = os.Getenv("UPSNAP_INTERVAL")
 	}
 
-	// save settings to db
+	// set private settings
 	settingsPrivate.Set("interval", interval)
 	if scanRange := os.Getenv("UPSNAP_SCAN_RANGE"); scanRange != "" {
 		settingsPrivate.Set("scan_range", scanRange)
 	}
-	if err := App.Dao().SaveRecord(settingsPrivate); err != nil {
-		return err
-	}
+
+	// set public settings
 	if websiteTitle := os.Getenv("UPSNAP_WEBSITE_TITLE"); websiteTitle != "" {
 		settingsPublic.Set("website_title", websiteTitle)
+	}
+	if totalAdmins, err := App.Dao().TotalAdmins(); err != nil {
+		return err
+	} else {
+		if totalAdmins > 0 {
+			settingsPublic.Set("setup_completed", true)
+		} else {
+			settingsPublic.Set("setup_completed", false)
+		}
+	}
+
+	// save records
+	if err := App.Dao().SaveRecord(settingsPrivate); err != nil {
+		return err
 	}
 	if err := App.Dao().SaveRecord(settingsPublic); err != nil {
 		return err
