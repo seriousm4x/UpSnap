@@ -238,7 +238,7 @@
                         />
                     </div>
                     <h3 class="my-3">Title</h3>
-                    <p>Set the website title in the navbar.</p>
+                    <p>Sets the title of the website and in the browser tab.</p>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="website-title">Title</span>
                         <input
@@ -258,9 +258,7 @@
                         bind:this={iconPreview}
                     />
                     <div class="mb-3">
-                        <label for="iconInput" class="form-label"
-                            >Set a custom favicon (.ico, .png, .svg, .jpg/.jpeg).</label
-                        >
+                        <label for="iconInput" class="form-label">Set a custom favicon.</label>
                         <div class="input-group">
                             <input
                                 class="form-control"
@@ -282,7 +280,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="callout callout-info m-0">
-                        <p class="m-0">
+                        <h5>Ping interval:</h5>
+                        <p>
                             Leave blank to use default value of <span class="fw-bold"
                                 >"@every 3s"</span
                             >. Learn more about the correct syntax for cron on
@@ -298,6 +297,15 @@
                                 href="https://pkg.go.dev/github.com/robfig/cron"
                                 >package documentation</a
                             >
+                        </p>
+                        <h5>Icon:</h5>
+                        <p class="m-0">
+                            Supported file types are
+                            <span class="badge text-bg-secondary">.ico</span>,
+                            <span class="badge text-bg-secondary">.png</span>,
+                            <span class="badge text-bg-secondary">.svg</span>,
+                            <span class="badge text-bg-secondary">.gif</span> and
+                            <span class="badge text-bg-secondary">.jpg/.jpeg</span>.
                         </p>
                     </div>
                 </div>
