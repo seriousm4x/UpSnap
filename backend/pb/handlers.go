@@ -70,12 +70,12 @@ func HandlerScan(c echo.Context) error {
 	}
 
 	// check if scan range is valid
-	allSettings, err := App.Dao().FindRecordsByExpr("settings")
+	allPrivateSettings, err := App.Dao().FindRecordsByExpr("settings_private")
 	if err != nil {
 		return err
 	}
-	settings := allSettings[0]
-	scanRange := settings.GetString("scan_range")
+	settingsPrivate := allPrivateSettings[0]
+	scanRange := settingsPrivate.GetString("scan_range")
 	_, ipNet, err := net.ParseCIDR(scanRange)
 	if err != nil {
 		return apis.NewBadRequestError(err.Error(), nil)

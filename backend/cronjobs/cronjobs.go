@@ -13,14 +13,14 @@ var CronPing *cron.Cron
 var CronWakeShutdown *cron.Cron
 
 func RunPing(app *pocketbase.PocketBase) {
-	settingsRecords, err := app.Dao().FindRecordsByExpr("settings")
+	settingsPrivateRecords, err := app.Dao().FindRecordsByExpr("settings_private")
 	if err != nil {
 		logger.Error.Println(err)
 	}
 
 	// init cronjob
 	CronPing = cron.New()
-	CronPing.AddFunc(settingsRecords[0].GetString("interval"), func() {
+	CronPing.AddFunc(settingsPrivateRecords[0].GetString("interval"), func() {
 		// skip cron if no realtime clients connected
 		realtimeClients := len(app.SubscriptionsBroker().Clients())
 		if realtimeClients == 0 {

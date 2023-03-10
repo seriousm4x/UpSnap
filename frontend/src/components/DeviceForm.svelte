@@ -1,8 +1,8 @@
 <script>
     import { goto } from '$app/navigation';
     import { pocketbase, devices } from '@stores/pocketbase';
+    import Fa from 'svelte-fa/src/fa.svelte';
     import { faEye, faEyeSlash, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-    import Fa from 'svelte-fa';
 
     export let device;
     export let mode;

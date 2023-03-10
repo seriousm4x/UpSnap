@@ -2,6 +2,7 @@
     import { dev } from '$app/environment';
     import { parseISO, formatDistance } from 'date-fns';
     import { pocketbase } from '@stores/pocketbase';
+    import Fa from 'svelte-fa/src/fa.svelte';
     import {
         faPowerOff,
         faEllipsisVertical,
@@ -10,7 +11,6 @@
         faCircleDown,
         faLock
     } from '@fortawesome/free-solid-svg-icons';
-    import Fa from 'svelte-fa/src/fa.svelte';
     import { sortPorts } from '../sorts';
 
     export let device;

@@ -2,7 +2,8 @@
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { theme } from '@stores/theme';
-    import { pocketbase, authorizedStore, settings } from '@stores/pocketbase';
+    import { pocketbase, authorizedStore, settings_public } from '@stores/pocketbase';
+    import Fa from 'svelte-fa/src/fa.svelte';
     import {
         faSun,
         faMoon,
@@ -10,7 +11,6 @@
         faBrush,
         faRightFromBracket
     } from '@fortawesome/free-solid-svg-icons';
-    import Fa from 'svelte-fa';
 
     let userInfo = {
         usernameOrEmail: '',
@@ -18,11 +18,6 @@
     };
 
     onMount(async () => {
-        $pocketbase.collection('settings').subscribe('*', function (e) {
-            settings.set(e.record);
-            document.title = $settings.website_title;
-        });
-
         if ($pocketbase.authStore.baseModel?.collectionName === 'users') {
             userInfo.role = 'user';
         } else {
@@ -41,24 +36,18 @@
     }
 </script>
 
-<svelte:head>
-    {#if $settings.website_title !== ''}
-        <title>{$settings.website_title}</title>
-    {:else}
-        <title>UpSnap</title>
-    {/if}
-</svelte:head>
-
 <nav class="navbar navbar-expand-sm pt-0">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img
-                src="/gopher.svg"
-                alt="UpSnap"
+                src={$settings_public.favicon !== ''
+                    ? `${$pocketbase.baseUrl}/api/files/settings_public/${$settings_public.id}/${$settings_public.favicon}`
+                    : '/gopher.svg'}
+                alt={$settings_public.website_title ? $settings_public.website_title : 'UpSnap'}
                 width="45"
                 height="45"
-                class:me-2={$settings.website_title !== ''}
-            />{$settings.website_title ? $settings.website_title : ''}
+                class:me-2={$settings_public.website_title !== ''}
+            />{$settings_public.website_title ? $settings_public.website_title : ''}
         </a>
         <button
             class="navbar-toggler border-0"

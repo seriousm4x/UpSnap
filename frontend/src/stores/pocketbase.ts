@@ -10,8 +10,13 @@ pb.autoCancellation(false);
 
 // export stores
 export const pocketbase = writable(pb);
-export const settings = writable({
-    website_title: ''
+export const settings_private = writable({
+    interal: '',
+    scan_range: ''
+});
+export const settings_public = writable({
+    website_title: '',
+    favicon: ''
 });
 export const devices = writable({});
 export const authorizedStore = writable(false);

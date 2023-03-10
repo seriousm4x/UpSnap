@@ -1,14 +1,16 @@
 <script>
     import { dev } from '$app/environment';
-    import { pocketbase, settings, devices } from '@stores/pocketbase';
+    import { pocketbase, settings_private, settings_public, devices } from '@stores/pocketbase';
     import UnauthorizedMsg from '@components/UnauthorizedMsg.svelte';
     import DeviceForm from '@components/DeviceForm.svelte';
+    import Fa from 'svelte-fa/src/fa.svelte';
     import { faPlus } from '@fortawesome/free-solid-svg-icons';
-    import Fa from 'svelte-fa';
 
     let version = import.meta.env.UPSNAP_VERSION;
 
-    let files;
+    let iconFiles = [];
+    let iconPreview;
+    let restoreFiles = [];
     let timeout;
     let buttons = {
         settings: {
@@ -43,13 +45,38 @@
     };
     let scannedDevices = {};
 
+    $: if (iconPreview && iconFiles.length > 0) {
+        iconPreview.src = URL.createObjectURL(iconFiles[0]);
+    } else if (iconPreview && $settings_public.favicon !== '') {
+        iconPreview.src = `${$pocketbase.baseUrl}/api/files/settings_public/${$settings_public.id}/${$settings_public.favicon}`;
+    } else if (iconPreview) {
+        iconPreview.src = '/gopher.svg';
+    }
+
     async function saveSettings() {
         buttons.settings.state = 'waiting';
         try {
-            if ($settings.interval === '') {
-                $settings.interval = '@every 3s';
+            // update settings private
+            if ($settings_private.interval === '') {
+                $settings_private.interval = '@every 3s';
             }
-            await $pocketbase.collection('settings').update($settings.id, $settings);
+            await $pocketbase
+                .collection('settings_private')
+                .update($settings_private.id, $settings_private);
+
+            // update settings public
+            if (iconFiles.length > 0) {
+                const formData = new FormData();
+                formData.append('favicon', iconFiles[0]);
+                await $pocketbase
+                    .collection('settings_public')
+                    .update($settings_public.id, formData);
+            }
+            await $pocketbase
+                .collection('settings_public')
+                .update($settings_public.id, $settings_public);
+
+            //set button
             clearTimeout(timeout);
             timeout = setTimeout(() => {
                 buttons.settings.state = 'none';
@@ -69,8 +96,8 @@
     async function scanDevices() {
         buttons.scan.state = 'waiting';
         await $pocketbase
-            .collection('settings')
-            .update($settings.id, $settings)
+            .collection('settings_private')
+            .update($settings_private.id, $settings_private)
             .catch((err) => {
                 clearTimeout(timeout);
                 timeout = setTimeout(() => {
@@ -137,7 +164,7 @@
             }
 
             let reader = new FileReader();
-            reader.readAsText(files[0]);
+            reader.readAsText(restoreFiles[0]);
             reader.onload = async (e) => {
                 // parse uploaded file
                 let data = JSON.parse(e.target.result);
@@ -195,9 +222,9 @@
     <UnauthorizedMsg />
     <section class="m-0 mt-4 p-4 shadow-sm">
         <form on:submit|preventDefault={saveSettings}>
-            <h3 class="mb-3">Ping interval</h3>
             <div class="row">
                 <div class="col-md-6">
+                    <h3 class="mb-3">Ping interval</h3>
                     <p>Sets the interval in which the devices are pinged.</p>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Cron</span>
@@ -207,10 +234,10 @@
                             aria-label="Interval"
                             aria-describedby="addon-wrapping"
                             type="text"
-                            bind:value={$settings.interval}
+                            bind:value={$settings_private.interval}
                         />
                     </div>
-                    <h3 class="my-3">Website title</h3>
+                    <h3 class="my-3">Title</h3>
                     <p>Set the website title in the navbar.</p>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="website-title">Title</span>
@@ -220,8 +247,37 @@
                             placeholder="e.g. 'UpSnap'"
                             aria-label="Website title"
                             aria-describedby="website-title"
-                            bind:value={$settings.website_title}
+                            bind:value={$settings_public.website_title}
                         />
+                    </div>
+                    <h3 class="my-3">Icon</h3>
+                    <img
+                        src=""
+                        alt=""
+                        class="img-fluid icon-preview mb-3"
+                        bind:this={iconPreview}
+                    />
+                    <div class="mb-3">
+                        <label for="iconInput" class="form-label"
+                            >Set a custom favicon (.ico, .png, .svg, .jpg/.jpeg).</label
+                        >
+                        <div class="input-group">
+                            <input
+                                class="form-control"
+                                type="file"
+                                id="iconInput"
+                                accept=".ico,.png,.svg,.gif,.jpg,.jpeg"
+                                bind:files={iconFiles}
+                            />
+                            <button
+                                type="button"
+                                class="btn btn-outline-danger"
+                                on:click={() => {
+                                    iconFiles = [];
+                                    $settings_public.favicon = '';
+                                }}>Back to Gopher</button
+                            >
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -281,7 +337,7 @@
                             placeholder="e.g. '192.168.1.0/24'"
                             aria-label="ip-range"
                             aria-describedby="ip-range"
-                            bind:value={$settings.scan_range}
+                            bind:value={$settings_private.scan_range}
                         />
                     </div>
                     <button
@@ -290,7 +346,8 @@
                         class:btn-success={buttons.scan.state === 'success' ? true : false}
                         class:btn-warning={buttons.scan.state === 'waiting' ? true : false}
                         class:btn-danger={buttons.scan.state === 'failed' ? true : false}
-                        disabled={$settings.scan_range === '' || buttons.scan.state !== 'none'
+                        disabled={$settings_private.scan_range === '' ||
+                        buttons.scan.state !== 'none'
                             ? true
                             : false}
                     >
@@ -375,7 +432,7 @@
             aria-describedby="Restore"
             type="file"
             accept=".json"
-            bind:files
+            bind:files={restoreFiles}
         />
         <button
             type="button"
@@ -383,7 +440,7 @@
             class:btn-success={buttons.restore.state === 'success' ? true : false}
             class:btn-warning={buttons.restore.state === 'waiting' ? true : false}
             class:btn-danger={buttons.restore.state === 'failed' ? true : false}
-            disabled={files ? false : true}
+            disabled={restoreFiles ? false : true}
             on:click={() => restoreV2Backup()}
         >
             {#if buttons.restore.state === 'none'}
@@ -408,3 +465,9 @@
         {/if}
     </p>
 </div>
+
+<style lang="scss">
+    .icon-preview {
+        height: 130px;
+    }
+</style>

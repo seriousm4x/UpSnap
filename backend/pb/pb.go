@@ -85,7 +85,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		// add event hook before starting server.
 		// using this outside App.OnBeforeServe() would not work
 		App.OnModelAfterUpdate().Add(func(e *core.ModelEvent) error {
-			if e.Model.TableName() == "settings" {
+			if e.Model.TableName() == "settings_private" {
 				for _, job := range cronjobs.CronPing.Entries() {
 					cronjobs.CronPing.Remove(job.ID)
 				}
@@ -119,18 +119,32 @@ func StartPocketBase(distDirFS fs.FS) {
 }
 
 func importSettings() error {
-	// get first settings record
-	settingsRecords, err := App.Dao().FindRecordsByExpr("settings")
+	// get first settingsPrivate record
+	settingsPrivateRecords, err := App.Dao().FindRecordsByExpr("settings_private")
 	if err != nil {
 		return err
 	}
-	settingsCollection, err := App.Dao().FindCollectionByNameOrId("settings")
+	settingsPrivateCollection, err := App.Dao().FindCollectionByNameOrId("settings_private")
 	if err != nil {
 		return err
 	}
-	settings := models.NewRecord(settingsCollection)
-	if len(settingsRecords) > 0 {
-		settings = settingsRecords[0]
+	settingsPrivate := models.NewRecord(settingsPrivateCollection)
+	if len(settingsPrivateRecords) > 0 {
+		settingsPrivate = settingsPrivateRecords[0]
+	}
+
+	// get first settingsPublic record
+	settingsPublicRecords, err := App.Dao().FindRecordsByExpr("settings_public")
+	if err != nil {
+		return err
+	}
+	settingsPublicCollection, err := App.Dao().FindCollectionByNameOrId("settings_public")
+	if err != nil {
+		return err
+	}
+	settingsPublic := models.NewRecord(settingsPublicCollection)
+	if len(settingsPublicRecords) > 0 {
+		settingsPublic = settingsPublicRecords[0]
 	}
 
 	// set ping interval settings. priority:
@@ -138,22 +152,22 @@ func importSettings() error {
 	// 2nd: database entry
 	// 3rd: default values
 	interval := "@every 3s"
-	if settings.GetString("interval") != "" {
-		interval = settings.GetString("interval")
+	if settingsPrivate.GetString("interval") != "" {
+		interval = settingsPrivate.GetString("interval")
 	}
 	if os.Getenv("UPSNAP_INTERVAL") != "" {
 		interval = os.Getenv("UPSNAP_INTERVAL")
 	}
 
 	// save settings to db
-	settings.Set("interval", interval)
+	settingsPrivate.Set("interval", interval)
 	if scanRange := os.Getenv("UPSNAP_SCAN_RANGE"); scanRange != "" {
-		settings.Set("scan_range", scanRange)
+		settingsPrivate.Set("scan_range", scanRange)
 	}
-	if scanRange := os.Getenv("UPSNAP_WEBSITE_TITLE"); scanRange != "" {
-		settings.Set("website_title", scanRange)
+	if websiteTitle := os.Getenv("UPSNAP_WEBSITE_TITLE"); websiteTitle != "" {
+		settingsPublic.Set("website_title", websiteTitle)
 	}
-	if err := App.Dao().SaveRecord(settings); err != nil {
+	if err := App.Dao().SaveRecord(settingsPublic); err != nil {
 		return err
 	}
 

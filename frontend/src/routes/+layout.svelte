@@ -5,8 +5,15 @@
     import Login from '@components/Login.svelte';
     import Transition from '@components/Transition.svelte';
     import { theme } from '@stores/theme';
-    import { pocketbase, authorizedStore, devices, settings } from '@stores/pocketbase';
+    import {
+        pocketbase,
+        authorizedStore,
+        devices,
+        settings_private,
+        settings_public
+    } from '@stores/pocketbase';
 
+    let favicon;
     let preferesDark;
     let isAuth = false;
 
@@ -38,6 +45,15 @@
             isAuth = state;
         });
 
+        // load public settings and subscribe to changes and change favicon
+        const settingsPublicRes = await $pocketbase.collection('settings_public').getList(1, 1);
+        settings_public.set(settingsPublicRes.items[0]);
+        updateSettingsPublic();
+        $pocketbase.collection('settings_public').subscribe('*', function (e) {
+            settings_public.set(e.record);
+            updateSettingsPublic();
+        });
+
         // load auth from localstorage
         const pbCookie = localStorage.getItem('pocketbase_auth');
         if (pbCookie) {
@@ -55,10 +71,18 @@
         }
     });
 
-    async function getSettingsAndDevices() {
-        let settingsRes = {};
-        settingsRes = await $pocketbase.collection('settings').getList(1, 1);
-        settings.set(settingsRes.items[0]);
+    function updateSettingsPublic() {
+        favicon.href =
+            $settings_public.favicon === ''
+                ? '/gopher.svg'
+                : `${$pocketbase.baseUrl}/api/files/settings_public/${$settings_public.id}/${$settings_public.favicon}`;
+        document.title =
+            $settings_public.website_title === '' ? 'UpSnap' : $settings_public.website_title;
+    }
+
+    async function getSettingsPrivateAndDevices() {
+        const settingsPrivateRes = await $pocketbase.collection('settings_private').getList(1, 1);
+        settings_private.set(settingsPrivateRes.items[0]);
 
         let tempDevices = {};
         const devicesRes = await $pocketbase.collection('devices').getFullList(200, {
@@ -72,11 +96,12 @@
     }
 
     $: if (isAuth) {
-        getSettingsAndDevices();
+        getSettingsPrivateAndDevices();
     }
 </script>
 
 <svelte:head>
+    <link rel="shortcut icon" href="/gopher.svg" bind:this={favicon} />
     <script>
         if (document) {
             preferesDark = window.matchMedia('(prefers-color-scheme: dark)').matches

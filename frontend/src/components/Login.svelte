@@ -1,5 +1,5 @@
 <script>
-    import { pocketbase, authorizedStore } from '@stores/pocketbase';
+    import { pocketbase, authorizedStore, settings_public } from '@stores/pocketbase';
 
     let username;
     let password;
@@ -43,7 +43,13 @@
 <div class="container text-dark-emphasis">
     <div class="row justify-content-center align-items-center">
         <div class="col text-center p-3 p-md-5">
-            <img src="/gopher.svg" alt="Logo" class="logo pe-none user-select-none" />
+            <img
+                src={$settings_public.favicon !== ''
+                    ? `${$pocketbase.baseUrl}/api/files/settings_public/${$settings_public.id}/${$settings_public.favicon}`
+                    : '/gopher.svg'}
+                alt={$settings_public.website_title ? $settings_public.website_title : 'UpSnap'}
+                class="logo pe-none user-select-none"
+            />
             <h2 class="text-dark-emphasis fw-bold text-center mt-3">Login</h2>
         </div>
     </div>
