@@ -81,8 +81,12 @@
     }
 
     async function getSettingsPrivateAndDevices() {
-        const settingsPrivateRes = await $pocketbase.collection('settings_private').getList(1, 1);
-        settings_private.set(settingsPrivateRes.items[0]);
+        if (!$pocketbase.authStore.model?.collectionName === 'users') {
+            const settingsPrivateRes = await $pocketbase
+                .collection('settings_private')
+                .getList(1, 1);
+            settings_private.set(settingsPrivateRes.items[0]);
+        }
 
         let tempDevices = {};
         const devicesRes = await $pocketbase.collection('devices').getFullList(200, {
