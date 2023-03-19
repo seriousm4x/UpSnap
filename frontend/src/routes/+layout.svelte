@@ -81,7 +81,7 @@
     }
 
     async function getSettingsPrivateAndDevices() {
-        if (!$pocketbase.authStore.model?.collectionName === 'users') {
+        if ($pocketbase.authStore.model?.collectionName !== 'users') {
             const settingsPrivateRes = await $pocketbase
                 .collection('settings_private')
                 .getList(1, 1);
