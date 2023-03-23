@@ -113,8 +113,6 @@ go mod tidy
 go run main.go serve
 ```
 
-Log in to [http://localhost:8090/\_/](http://localhost:8090/_/), create an admin user and add some devices.
-
 2. Start frontend
 
 ```sh
@@ -123,4 +121,4 @@ pnpm i
 pnpm run dev
 ```
 
-Open up [http://localhost:5173/](http://localhost:5173/)
+Open up [http://localhost:5173/](http://localhost:5173/), create an admin user and add some devices.
