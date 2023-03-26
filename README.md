@@ -21,7 +21,7 @@
 - Discover devices by scanning network
 - User/Password protected login
 - Dark/light or system prefered color scheme
-- [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7
+- [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7, arm/v6
 
 ## 📸 Screenshots
 
