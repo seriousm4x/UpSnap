@@ -1,4 +1,5 @@
 <script>
+    import { dev } from '$app/environment';
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { theme } from '@stores/theme';
@@ -41,7 +42,9 @@
         <a class="navbar-brand" href="/">
             <img
                 src={$settings_public.favicon !== ''
-                    ? `${$pocketbase.baseUrl}/api/files/settings_public/${$settings_public.id}/${$settings_public.favicon}`
+                    ? `${dev ? $pocketbase.baseUrl : ''}/api/files/settings_public/${
+                          $settings_public.id
+                      }/${$settings_public.favicon}`
                     : '/gopher.svg'}
                 alt={$settings_public.website_title ? $settings_public.website_title : 'UpSnap'}
                 width="45"

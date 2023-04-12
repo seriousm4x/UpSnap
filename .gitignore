@@ -199,3 +199,4 @@ backend/pb_public/*
 !backend/pb_public/.gitkeep
 
 dist/
+vite.config.js.timestamp*

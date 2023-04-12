@@ -48,7 +48,9 @@
     $: if (iconPreview && iconFiles.length > 0) {
         iconPreview.src = URL.createObjectURL(iconFiles[0]);
     } else if (iconPreview && $settings_public.favicon !== '') {
-        iconPreview.src = `${$pocketbase.baseUrl}/api/files/settings_public/${$settings_public.id}/${$settings_public.favicon}`;
+        iconPreview.src = `${dev ? $pocketbase.baseUrl : ''}/api/files/settings_public/${
+            $settings_public.id
+        }/${$settings_public.favicon}`;
     } else if (iconPreview) {
         iconPreview.src = '/gopher.svg';
     }

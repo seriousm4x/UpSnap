@@ -1,4 +1,5 @@
 <script>
+    import { dev } from '$app/environment';
     import { pocketbase, authorizedStore, settings_public } from '@stores/pocketbase';
 
     let username;
@@ -91,7 +92,9 @@
         <div class="col text-center p-3 p-md-5">
             <img
                 src={$settings_public.favicon !== ''
-                    ? `${$pocketbase.baseUrl}/api/files/settings_public/${$settings_public.id}/${$settings_public.favicon}`
+                    ? `${dev ? $pocketbase.baseUrl : ''}/api/files/settings_public/${
+                          $settings_public.id
+                      }/${$settings_public.favicon}`
                     : '/gopher.svg'}
                 alt={$settings_public.website_title ? $settings_public.website_title : 'UpSnap'}
                 class="logo pe-none user-select-none"

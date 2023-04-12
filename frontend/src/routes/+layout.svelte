@@ -1,4 +1,5 @@
 <script>
+    import { dev } from '$app/environment';
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import Navbar from '@components/Navbar.svelte';
@@ -75,7 +76,9 @@
         favicon.href =
             $settings_public.favicon === ''
                 ? '/gopher.svg'
-                : `${$pocketbase.baseUrl}/api/files/settings_public/${$settings_public.id}/${$settings_public.favicon}`;
+                : `${dev ? $pocketbase.baseUrl : ''}/api/files/settings_public/${
+                      $settings_public.id
+                  }/${$settings_public.favicon}`;
         document.title =
             $settings_public.website_title === '' ? 'UpSnap' : $settings_public.website_title;
     }
