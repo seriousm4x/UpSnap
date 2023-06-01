@@ -87,13 +87,13 @@
                 </div>
             </div>
             {#if device.link}
-                <p class="m-0 fw-bold fs-5">
+                <p class="m-0 fw-bold fs-5 text-body-emphasis">
                     <a class="text-reset" target="_blank" rel="noreferrer" href={device.link}
                         >{device.name}</a
                     >
                 </p>
             {:else}
-                <p class="m-0 fw-bold fs-5">{device.name}</p>
+                <p class="m-0 fw-bold fs-5 text-body-emphasis">{device.name}</p>
             {/if}
             <p class="text-muted mb-2">{device.ip}</p>
             {#if device?.expand?.ports}

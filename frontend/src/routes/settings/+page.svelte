@@ -152,7 +152,7 @@
         <form on:submit|preventDefault={saveSettings}>
             <div class="row">
                 <div class="col-md-6">
-                    <h3 class="mb-3">Ping interval</h3>
+                    <h3 class="mb-3 text-body-emphasis">Ping interval</h3>
                     <p>Sets the interval in which the devices are pinged.</p>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Cron</span>
@@ -165,7 +165,7 @@
                             bind:value={$settings_private.interval}
                         />
                     </div>
-                    <h3 class="my-3">Title</h3>
+                    <h3 class="my-3 text-body-emphasis">Title</h3>
                     <p>Sets the title of the website and in the browser tab.</p>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="website-title">Title</span>
@@ -178,7 +178,7 @@
                             bind:value={$settings_public.website_title}
                         />
                     </div>
-                    <h3 class="my-3">Icon</h3>
+                    <h3 class="my-3 text-body-emphasis">Icon</h3>
                     <img
                         src=""
                         alt=""
@@ -262,7 +262,7 @@
     <section class="m-0 my-4 p-4 shadow-sm">
         <div class="row">
             <div class="col-md-6">
-                <h3 class="mb-3">Network scan</h3>
+                <h3 class="mb-3 text-body-emphasis">Network scan</h3>
                 <p>Set the network address to scan.</p>
                 <form on:submit|preventDefault={scanDevices}>
                     <div class="input-group mb-3">

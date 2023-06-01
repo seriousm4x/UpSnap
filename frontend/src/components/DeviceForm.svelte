@@ -118,7 +118,7 @@
 </script>
 
 <section class="m-0 mt-4 p-4 shadow-sm">
-    <h3 class="mb-3">{mode === 'add' ? 'Add new device' : device.name}</h3>
+    <h3 class="mb-3 text-body-emphasis">{mode === 'add' ? 'Add new device' : device.name}</h3>
     <div class="row">
         <div class="col-md-6">
             <form on:submit|preventDefault={addOrUpdateDevice}>
