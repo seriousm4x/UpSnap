@@ -10,14 +10,9 @@
 
     let iconFiles = [];
     let iconPreview;
-    let restoreFiles = [];
     let timeout;
     let buttons = {
         settings: {
-            state: 'none',
-            error: ''
-        },
-        restore: {
             state: 'none',
             error: ''
         },
@@ -148,75 +143,6 @@
     async function addDevice(device) {
         await $pocketbase.collection('devices').create(device);
         $devices[device.id] = device;
-    }
-
-    async function restoreV2Backup() {
-        buttons.restore.state = 'waiting';
-
-        try {
-            // delete all devices in pocketbase
-            let result = await $pocketbase.collection('devices').getFullList();
-            for (let index = 0; index < result.length; index++) {
-                $pocketbase.collection('devices').delete(result[index].id);
-            }
-            // delete all ports in pocketbase
-            result = await $pocketbase.collection('ports').getFullList();
-            for (let index = 0; index < result.length; index++) {
-                await $pocketbase.collection('ports').delete(result[index].id);
-            }
-
-            let reader = new FileReader();
-            reader.readAsText(restoreFiles[0]);
-            reader.onload = async (e) => {
-                // parse uploaded file
-                let data = JSON.parse(e.target.result);
-                if (!Array.isArray(data)) {
-                    return;
-                }
-
-                // loop devices
-                for (let index = 0; index < data.length; index++) {
-                    const device = data[index];
-
-                    // create ports
-                    let thisDevicePorts = [];
-                    for (let index = 0; index < device.ports.length; index++) {
-                        const port = device.ports[index];
-                        const record = await $pocketbase.collection('ports').create({
-                            name: port.name,
-                            number: port.number
-                        });
-                        thisDevicePorts.push(record.id);
-                    }
-
-                    // create device
-                    await $pocketbase.collection('devices').create({
-                        name: device.name,
-                        ip: device.ip,
-                        mac: device.mac,
-                        netmask: device.netmask,
-                        ports: thisDevicePorts,
-                        link: device.link,
-                        wake_cron: device.wake.cron,
-                        wake_cron_enabled: device.wake.enabled,
-                        shutdown_cron: device.shutdown.cron,
-                        shutdown_cron_enabled: device.shutdown.cron.enabled,
-                        shutdown_cmd: device.shutdown.command
-                    });
-                }
-            };
-            setTimeout(() => {
-                buttons.restore.state = 'none';
-            }, 3000);
-            buttons.restore.state = 'success';
-        } catch (error) {
-            setTimeout(() => {
-                buttons.restore.error = '';
-                buttons.restore.state = 'none';
-            }, 3000);
-            buttons.restore.error = error;
-            buttons.restore.state = 'failed';
-        }
     }
 </script>
 
@@ -428,41 +354,6 @@
                 {/each}
             </div>
         {/if}
-    </section>
-    <section class="m-0 my-4 p-4 shadow-sm">
-        <h3 class="mb-3">Restore</h3>
-        <p>
-            If you had UpSnap &gt;=2.3.2 and &lt;3.0.0 running before, you can restore your devices
-            here.
-        </p>
-        <div class="callout callout-danger fw-bold">This will wipe the existing database!</div>
-        <input
-            class="form-control mb-3"
-            aria-label="Restore"
-            aria-describedby="Restore"
-            type="file"
-            accept=".json"
-            bind:files={restoreFiles}
-        />
-        <button
-            type="button"
-            class="btn btn-secondary"
-            class:btn-success={buttons.restore.state === 'success' ? true : false}
-            class:btn-warning={buttons.restore.state === 'waiting' ? true : false}
-            class:btn-danger={buttons.restore.state === 'failed' ? true : false}
-            disabled={restoreFiles ? false : true}
-            on:click={() => restoreV2Backup()}
-        >
-            {#if buttons.restore.state === 'none'}
-                Restore
-            {:else if buttons.restore.state === 'success'}
-                Restored
-            {:else if buttons.restore.state === 'waiting'}
-                Waiting
-            {:else if buttons.restore.state === 'failed'}
-                Failed: {buttons.restore.error}
-            {/if}
-        </button>
     </section>
     <p class="m-0 my-4 p-4 text-center text-muted">
         {#if version !== undefined}
