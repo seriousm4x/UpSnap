@@ -11,20 +11,20 @@
         "format": "prettier --ignore-path ../.gitignore --write --plugin-search-dir=. ."
     },
     "devDependencies": {
-        "@sveltejs/adapter-static": "^1.0.6",
+        "@sveltejs/adapter-static": "^2.0.2",
         "@sveltejs/kit": "^1.20.5",
         "@typescript-eslint/eslint-plugin": "^5.60.1",
         "@typescript-eslint/parser": "^5.60.1",
         "eslint": "^8.43.0",
         "eslint-config-prettier": "^8.8.0",
-        "eslint-plugin-svelte3": "^4.0.0",
+        "eslint-plugin-svelte": "^2.31.1",
         "husky": "^8.0.3",
         "lint-staged": "^13.2.3",
         "prettier": "^2.8.8",
         "prettier-plugin-svelte": "^2.10.1",
-        "svelte": "^3.59.2",
+        "svelte": "^4.0.0",
         "svelte-preprocess": "^5.0.4",
-        "typescript": "^4.9.5",
+        "typescript": "^5.1.5",
         "vite": "^4.3.9"
     },
     "type": "module",
@@ -33,7 +33,7 @@
         "@popperjs/core": "^2.11.8",
         "bootstrap": "5.3.0",
         "date-fns": "^2.30.0",
-        "pocketbase": "^0.10.2",
+        "pocketbase": "^0.15.2",
         "sass": "^1.63.6",
         "svelte-fa": "^3.0.4"
     },
