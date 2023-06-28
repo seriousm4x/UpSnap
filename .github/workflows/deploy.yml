@@ -87,7 +87,7 @@ jobs:
       # build and push
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
