@@ -34,7 +34,7 @@
         "bootstrap": "5.3.0",
         "date-fns": "^2.30.0",
         "pocketbase": "^0.10.2",
-        "sass": "^1.62.1",
+        "sass": "^1.63.6",
         "svelte-fa": "^3.0.4"
     },
     "lint-staged": {
