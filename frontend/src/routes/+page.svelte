@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import DeviceCard from '@components/DeviceCard.svelte';
     import { pocketbase, devices } from '@stores/pocketbase';
-    import { sortDevices } from '../sorts';
+    import { sortDevices, sortGroups } from '../sorts';
 
     onMount(async () => {
         // subscribe to database events
@@ -11,7 +11,7 @@
                 $devices[e.record.id] = e.record;
             } else if (e.action === 'update') {
                 const device = await $pocketbase.collection('devices').getOne(e.record.id, {
-                    expand: 'ports'
+                    expand: 'ports,groups'
                 });
                 $devices[device.id] = device;
             } else if (e.action === 'delete') {
@@ -34,6 +34,25 @@
         });
     });
 
+    let devicesWithoutGroups = [];
+    let devicesWithGroup = {};
+
+    devices.subscribe((d) => {
+        // sort devices into their groups
+        Object.values(d).forEach((device) => {
+            if (device.groups.length === 0) {
+                devicesWithoutGroups = [...devicesWithoutGroups, device];
+                return;
+            }
+            device.expand.groups.forEach((grp) => {
+                if (!devicesWithGroup.hasOwnProperty(grp.name)) {
+                    devicesWithGroup[grp.name] = [];
+                }
+                devicesWithGroup[grp.name] = [...devicesWithGroup[grp.name], device];
+            });
+        });
+    });
+
     // update device date
     let now = Date.now();
     let interval;
@@ -47,11 +66,22 @@
 
 <div class="container text-body-emphasis mb-4">
     {#if Object.keys($devices).length > 0}
-        <div class="row">
-            {#each Object.values($devices).sort(sortDevices) as device}
-                <DeviceCard {device} {now} />
-            {/each}
-        </div>
+        {#if devicesWithoutGroups.length > 0}
+            <div class="row">
+                {#each devicesWithoutGroups.sort(sortDevices) as device}
+                    <DeviceCard {device} {now} />
+                {/each}
+            </div>
+        {/if}
+
+        {#each Object.keys(devicesWithGroup).sort(sortGroups) as grp}
+            <h2 class="mt-4 mb-0">{grp}</h2>
+            <div class="row">
+                {#each devicesWithGroup[grp] as device}
+                    <DeviceCard {device} {now} />
+                {/each}
+            </div>
+        {/each}
     {:else}
         <div class="text-center">
             <h4 class="text-muted">No devices</h4>

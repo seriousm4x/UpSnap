@@ -5,6 +5,13 @@ export function sortDevices(a, b) {
     });
 }
 
+export function sortGroups(a, b) {
+    return a.localeCompare(b, undefined, {
+        numeric: true,
+        sensitivity: 'base'
+    });
+}
+
 export function sortPorts(a, b) {
     return a.number - b.number;
 }

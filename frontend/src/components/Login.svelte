@@ -208,8 +208,4 @@
         min-width: 50px;
         max-width: 200px;
     }
-
-    .cursor-pointer {
-        cursor: pointer;
-    }
 </style>

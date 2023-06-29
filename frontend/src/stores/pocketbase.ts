@@ -19,4 +19,5 @@ export const settings_public = writable({
     favicon: ''
 });
 export const devices = writable({});
+export const groups = writable([]);
 export const authorizedStore = writable(false);

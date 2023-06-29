@@ -10,6 +10,7 @@
         pocketbase,
         authorizedStore,
         devices,
+        groups,
         settings_private,
         settings_public
     } from '@stores/pocketbase';
@@ -91,15 +92,22 @@
             settings_private.set(settingsPrivateRes.items[0]);
         }
 
+        // get all devices from pb and save in svelte store
         let tempDevices = {};
-        const devicesRes = await $pocketbase.collection('devices').getFullList(200, {
+        const devicesRes = await $pocketbase.collection('devices').getFullList(-1, {
             sort: 'name',
-            expand: 'ports'
+            expand: 'ports,groups'
         });
         devicesRes.forEach((device) => {
             tempDevices[device.id] = device;
         });
         devices.set(tempDevices);
+
+        // get all groups from pb and save in svelte store
+        const groupsRes = await $pocketbase.collection('groups').getFullList(-1, {
+            sort: 'name'
+        });
+        groups.set(groupsRes);
     }
 
     $: if (isAuth) {

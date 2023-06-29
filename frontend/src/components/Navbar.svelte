@@ -96,6 +96,7 @@
                             <div
                                 class="dropdown-item"
                                 class:active={$theme === 'light'}
+                                role="none"
                                 on:click={() => ($theme = 'light')}
                                 on:keydown={() => ($theme = 'light')}
                             >
@@ -107,6 +108,7 @@
                             <div
                                 class="dropdown-item"
                                 class:active={$theme === 'dark'}
+                                role="none"
                                 on:click={() => ($theme = 'dark')}
                                 on:keydown={() => ($theme = 'dark')}
                             >
@@ -118,6 +120,7 @@
                             <div
                                 class="dropdown-item"
                                 class:active={$theme === 'auto'}
+                                role="none"
                                 on:click={() => ($theme = 'auto')}
                                 on:keydown={() => ($theme = 'auto')}
                             >

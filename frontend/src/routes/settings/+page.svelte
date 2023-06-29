@@ -1,10 +1,16 @@
 <script>
     import { dev } from '$app/environment';
-    import { pocketbase, settings_private, settings_public, devices } from '@stores/pocketbase';
+    import {
+        pocketbase,
+        settings_private,
+        settings_public,
+        devices,
+        groups
+    } from '@stores/pocketbase';
     import UnauthorizedMsg from '@components/UnauthorizedMsg.svelte';
     import DeviceForm from '@components/DeviceForm.svelte';
     import Fa from 'svelte-fa/src/fa.svelte';
-    import { faPlus } from '@fortawesome/free-solid-svg-icons';
+    import { faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 
     let version = import.meta.env.UPSNAP_VERSION;
 
@@ -36,8 +42,10 @@
         shutdown_cron: '',
         shutdown_cron_enabled: false,
         shutdown_cmd: '',
-        password: ''
+        password: '',
+        groups: []
     };
+    let newGroup = '';
     let scannedDevices = {};
 
     $: if (iconPreview && iconFiles.length > 0) {
@@ -143,6 +151,24 @@
     async function addDevice(device) {
         await $pocketbase.collection('devices').create(device);
         $devices[device.id] = device;
+    }
+
+    async function addGroup() {
+        const res = await $pocketbase.collection('groups').create({
+            name: newGroup
+        });
+        $groups = [...$groups, res];
+        newGroup = '';
+    }
+
+    async function deleteGroup(id) {
+        await $pocketbase.collection('groups').delete(id);
+        const ids = $groups.map((grp) => grp.id);
+        const i = ids.indexOf(id);
+        if (i > -1) {
+            $groups.splice(i, 1);
+            $groups = $groups;
+        }
     }
 </script>
 
@@ -259,6 +285,47 @@
         </form>
     </section>
     <DeviceForm bind:device={newDevice} mode="add" />
+    <section class="m-0 my-4 p-4 shadow-sm">
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="mb-3 text-body-emphasis">Manage Groups</h3>
+                <p>
+                    {#each $groups as grp}
+                        <div class="badge rounded-pill fs-6 text-bg-secondary me-2">
+                            {grp.name}
+                            <span
+                                class="px-1"
+                                on:click={() => deleteGroup(grp.id)}
+                                on:keydown={() => deleteGroup(grp.id)}
+                                role="button"
+                                tabindex="0"
+                            >
+                                <Fa icon={faXmark} />
+                            </span>
+                        </div>
+                    {/each}
+                </p>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Add new group</span>
+                    <input
+                        class="form-control"
+                        placeholder="Name for your new group"
+                        aria-label="New Group"
+                        type="text"
+                        bind:value={newGroup}
+                    />
+                    <button
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        on:click={() => addGroup()}
+                        on:keydown={() => addGroup()}
+                    >
+                        <Fa icon={faPlus} />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="m-0 my-4 p-4 shadow-sm">
         <div class="row">
             <div class="col-md-6">

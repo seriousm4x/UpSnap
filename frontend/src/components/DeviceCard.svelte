@@ -44,8 +44,13 @@
             <div class="row">
                 <div class="col-auto me-auto">
                     {#if device.status === 'offline'}
-                        <span class="text-danger" on:click={() => wake()} on:keydown={() => wake()}>
-                            <div role="button">
+                        <span
+                            class="text-danger"
+                            role="none"
+                            on:click={() => wake()}
+                            on:keydown={() => wake()}
+                        >
+                            <div>
                                 <Fa icon={faPowerOff} class="fs-4 power-hover" />
                             </div>
                         </span>
@@ -53,10 +58,11 @@
                         {#if device.shutdown_cmd !== ''}
                             <span
                                 class="text-success"
+                                role="none"
                                 on:click={() => shutdown()}
                                 on:keydown={() => shutdown()}
                             >
-                                <div role="button">
+                                <div>
                                     <Fa icon={faPowerOff} class="fs-4 power-hover" />
                                 </div>
                             </span>

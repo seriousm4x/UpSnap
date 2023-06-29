@@ -1,6 +1,6 @@
 <script>
     import { goto } from '$app/navigation';
-    import { pocketbase, devices } from '@stores/pocketbase';
+    import { pocketbase, devices, groups } from '@stores/pocketbase';
     import Fa from 'svelte-fa/src/fa.svelte';
     import { faEye, faEyeSlash, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
@@ -115,6 +115,16 @@
     function onPasswordInput(event) {
         device.password = event.target.value;
     }
+
+    function toggleGroup(grpId) {
+        const i = device.groups.indexOf(grpId);
+        if (i !== -1) {
+            device.groups.splice(i, 1);
+            device.groups = device.groups;
+        } else {
+            device.groups = [...device.groups, grpId];
+        }
+    }
 </script>
 
 <section class="m-0 mt-4 p-4 shadow-sm">
@@ -202,7 +212,7 @@
                         </div>
                     {/each}
                 {/if}
-                <div class="input-group mb-3">
+                <div class="input-group mb-1">
                     <span class="input-group-text">Port</span>
                     <input
                         type="text"
@@ -228,7 +238,7 @@
                         <Fa icon={faPlus} />
                     </button>
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-1">
                     <span class="input-group-text">Link</span>
                     <input
                         class="form-control"
@@ -283,7 +293,7 @@
                         />
                     </div>
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-1">
                     <span class="input-group-text">Shutdown Cmd<sup>(2)</sup></span>
                     <input
                         class="form-control"
@@ -314,6 +324,23 @@
                         <Fa icon={passwordShow ? faEyeSlash : faEye} />
                     </button>
                 </div>
+                {#if groups}
+                    <h5 class="mt-4">Groups:</h5>
+                    <div class="input-group mb-3">
+                        {#each $groups as grp}
+                            <span
+                                class="badge rounded-pill fs-6 cursor-pointer me-2 {device?.groups?.includes(
+                                    grp.id
+                                )
+                                    ? 'text-bg-success'
+                                    : 'text-bg-secondary text-white-50'} "
+                                role="none"
+                                on:click={() => toggleGroup(grp.id)}
+                                on:keydown={() => toggleGroup(grp.id)}>{grp.name}</span
+                            >
+                        {/each}
+                    </div>
+                {/if}
                 <button
                     type="submit"
                     class="btn btn-secondary"
