@@ -123,6 +123,6 @@ pnpm run dev
 
 Open up [http://localhost:5173/](http://localhost:5173/), create an admin user and add some devices.
 
-## ✨ Star History
+## 🌟 Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=seriousm4x/UpSnap&type=Date)](https://star-history.com/#seriousm4x/UpSnap&Date)
