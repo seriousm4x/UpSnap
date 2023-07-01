@@ -39,6 +39,8 @@
 
     devices.subscribe((d) => {
         // sort devices into their groups
+        devicesWithoutGroups = [];
+        devicesWithGroup = {};
         Object.values(d).forEach((device) => {
             if (device.groups.length === 0) {
                 devicesWithoutGroups = [...devicesWithoutGroups, device];
