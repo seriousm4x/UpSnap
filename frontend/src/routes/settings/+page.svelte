@@ -25,6 +25,10 @@
         scan: {
             state: 'none',
             error: ''
+        },
+        addAllDevices: {
+            state: 'none',
+            error: ''
         }
     };
     let newDevice = {
@@ -148,9 +152,17 @@
             });
     }
 
+    async function addAllDevices() {
+        buttons.addAllDevices.state = 'waiting';
+        scannedDevices.devices.forEach(async (device) => {
+            device.netmask = scannedDevices.netmask;
+            await addDevice(device);
+        });
+        buttons.addAllDevices.state = 'success';
+    }
+
     async function addDevice(device) {
         await $pocketbase.collection('devices').create(device);
-        $devices[device.id] = device;
     }
 
     async function addGroup() {
@@ -420,6 +432,27 @@
                     </div>
                 {/each}
             </div>
+            <button
+                class="btn btn-secondary mt-3"
+                class:btn-success={buttons.addAllDevices.state === 'success' ? true : false}
+                class:btn-warning={buttons.addAllDevices.state === 'waiting' ? true : false}
+                on:click={async (e) => {
+                    e.target.disabled = true;
+                    await addAllDevices();
+                }}
+                on:keydown={async (e) => {
+                    e.target.disabled = true;
+                    await addAllDevices();
+                }}
+            >
+                {#if buttons.addAllDevices.state === 'success'}
+                    Added
+                {:else if buttons.addAllDevices.state === 'waiting'}
+                    Adding all...
+                {:else}
+                    Add all <Fa icon={faPlus} />
+                {/if}
+            </button>
         {/if}
     </section>
     <p class="m-0 my-4 p-4 text-center text-muted">
