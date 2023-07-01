@@ -128,7 +128,16 @@ func HandlerScan(c echo.Context) error {
 			continue
 		}
 		if dev.Name == "" {
-			dev.Name = "Unknown"
+			names, err := net.LookupAddr(dev.IP)
+			if err != nil {
+				dev.Name = "Unknown"
+			} else {
+				if len(names) > 0 {
+					dev.Name = names[0]
+				} else {
+					dev.Name = "Unknown"
+				}
+			}
 		}
 		res.Devices = append(res.Devices, dev)
 	}
