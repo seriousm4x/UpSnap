@@ -1,5 +1,6 @@
 <script>
     import { dev } from '$app/environment';
+    import { page } from '$app/stores';
     import { pocketbase, authorizedStore, settings_public } from '@stores/pocketbase';
 
     let username;
@@ -20,7 +21,7 @@
         callout.hidden = false;
     }
 
-    async function login() {
+    async function loginUserPass() {
         if (isAdmin) {
             $pocketbase.admins
                 .authWithPassword(username, password)
@@ -49,6 +50,23 @@
                     callout.hidden = false;
                 });
         }
+    }
+
+    async function loginOIDC() {
+        $pocketbase
+            .collection('users')
+            .authWithOAuth2({ provider: 'oidc' })
+            .then(() => {
+                authorizedStore.set(true);
+            })
+            .catch((err) => {
+                console.log(err);
+                authorizedStore.set(false);
+                callout.level = 'danger';
+                callout.title = err.status;
+                callout.msg = err.message;
+                callout.hidden = false;
+            });
     }
 
     async function register() {
@@ -115,7 +133,7 @@
                 {/if}
             </div>
             {#if $settings_public.setup_completed === true}
-                <form class="w-100" on:submit|preventDefault={login}>
+                <form class="w-100" on:submit|preventDefault={loginUserPass}>
                     <div class="mb-3">
                         <label for="username" class="form-label">Username or email</label>
                         <input
@@ -154,7 +172,16 @@
                 </form>
                 <p class="text-center m-0 mt-3">
                     <!-- hacky way of linking a non existing route in svelte -->
-                    <a href="/_/" rel="external" class="text-muted cursor-pointer">Manage users</a>
+                    <a href="/_/" rel="external" class="btn btn-outline-secondary btn-sm"
+                        >Manage users</a
+                    >
+                    <button
+                        class="btn btn-outline-secondary btn-sm"
+                        data-toggle="tooltip"
+                        title="You can setup OIDC at {$page.url.host}/_/#/settings/auth-providers"
+                        on:click={() => loginOIDC()}
+                        on:keydown={() => loginOIDC()}>Login with OIDC</button
+                    >
                 </p>
             {:else}
                 <form class="w-100" on:submit|preventDefault={register}>
