@@ -4,7 +4,7 @@
 
 <div align="center" width="100%">
     <h2>UpSnap</h2>
-    <p>A simple wake on lan app written with SvelteKit, Go, PocketBase and nmap.</p>
+    <p>A simple wake on lan web app written with SvelteKit, Go, PocketBase and nmap.</p>
     <a target="_blank" href="https://github.com/seriousm4x/upsnap"><img src="https://img.shields.io/github/stars/seriousm4x/upsnap" /></a>
     <a target="_blank" href="https://github.com/seriousm4x/UpSnap/releases"><img src="https://img.shields.io/github/downloads/seriousm4x/upsnap/total" /></a>
     <a target="_blank" href="https://github.com/seriousm4x/UpSnap/releases"><img src="https://img.shields.io/github/go-mod/go-version/seriousm4x/UpSnap?filename=backend/go.mod" /></a>
@@ -15,13 +15,13 @@
 
 ## ✨ Features
 
-- Dashboard to wake up devices with one click
-- Set timed wake and shutdown events via cron
-- Add custom ports to devices which will be pinged
-- Discover devices by scanning network
-- User/Password protected login
-- Dark/light or system prefered color scheme
-- [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7, arm/v6
+-   Dashboard to wake up devices with one click
+-   Set timed wake and shutdown events via cron
+-   Add custom ports to devices which will be pinged
+-   Discover devices by scanning network
+-   User/Password or OIDC protected login
+-   Dark/light or system prefered color scheme
+-   [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7, arm/v6
 
 ## 📸 Screenshots
 
@@ -49,8 +49,8 @@ If you want to change the port, change the following (5000 in this case):
 ```yml
 entrypoint: /bin/sh -c "./upsnap serve --http 0.0.0.0:5000"
 healthcheck:
-  test: curl -fs "http://localhost:5000/api/health" || exit 1
-  interval: 10s
+    test: curl -fs "http://localhost:5000/api/health" || exit 1
+    interval: 10s
 ```
 
 And if you need additional packages inside the container, do this:
@@ -77,8 +77,8 @@ upsnap.example.com {
 
 User management is done through the PocketBase webinterface at [http://localhost:8090/\_/](http://localhost:8090/_/). This is mainly for internal use, such as within a home or corporate network. For external use please see below.
 
-- To manage users, click the "Collections" icon on the left and select "users".
-- To manage admins, click the "Settings" icon on the left and select "Admin".
+-   To manage users, click the "Collections" icon on the left and select "users".
+-   To manage admins, click the "Settings" icon on the left and select "Admin".
 
 Api permissions listed by user role:
 
@@ -122,3 +122,7 @@ pnpm run dev
 ```
 
 Open up [http://localhost:5173/](http://localhost:5173/), create an admin user and add some devices.
+
+## ✨ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=seriousm4x/UpSnap&type=Date)](https://star-history.com/#seriousm4x/UpSnap&Date)
