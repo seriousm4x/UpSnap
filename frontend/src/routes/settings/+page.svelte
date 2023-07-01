@@ -392,11 +392,11 @@
             <div class="mt-3">
                 <div class="row align-items-center my-1">
                     <div class="col-lg-3 fw-bold">Name</div>
-                    <div class="col-lg-1 fw-bold">IP</div>
+                    <div class="col-lg-2 fw-bold">IP</div>
                     <div class="col-lg-2 fw-bold">MAC</div>
                     <div class="col-lg-2 fw-bold">MAC Vendor</div>
                     <div class="col-lg-2 fw-bold">Netmask</div>
-                    <div class="col-lg-2 fw-bold">Add</div>
+                    <div class="col-lg-1 fw-bold">Add</div>
                 </div>
                 {#each scannedDevices?.devices as device}
                     <hr class="my-1" />
@@ -404,7 +404,7 @@
                         <div class="col-lg-3">
                             {device.name}
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-2">
                             {device.ip}
                         </div>
                         <div class="col-lg-2">
@@ -416,7 +416,7 @@
                         <div class="col-lg-2">
                             {scannedDevices.netmask}
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-1">
                             <button
                                 class="btn btn-sm btn-secondary py-0"
                                 on:click={async (e) => {
