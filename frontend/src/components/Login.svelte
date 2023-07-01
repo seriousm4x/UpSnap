@@ -60,7 +60,6 @@
                 authorizedStore.set(true);
             })
             .catch((err) => {
-                console.log(err);
                 authorizedStore.set(false);
                 callout.level = 'danger';
                 callout.title = err.status;

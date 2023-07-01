@@ -95,9 +95,10 @@ func HandlerScan(c echo.Context) error {
 	}
 
 	type Device struct {
-		Name string `json:"name"`
-		IP   string `json:"ip"`
-		MAC  string `json:"mac"`
+		Name      string `json:"name"`
+		IP        string `json:"ip"`
+		MAC       string `json:"mac"`
+		MACVendor string `json:"mac_vendor"`
 	}
 
 	// extract info from struct into data
@@ -121,24 +122,27 @@ func HandlerScan(c echo.Context) error {
 				dev.MAC = addr.Addr
 			}
 			if addr.Vendor != "" {
-				dev.Name = addr.Vendor
+				dev.MACVendor = addr.Vendor
+			} else {
+				dev.MACVendor = "Unknown"
 			}
 		}
+
 		if dev.IP == "" || dev.MAC == "" {
 			continue
 		}
-		if dev.Name == "" {
-			names, err := net.LookupAddr(dev.IP)
-			if err != nil {
-				dev.Name = "Unknown"
-			} else {
-				if len(names) > 0 {
-					dev.Name = names[0]
-				} else {
-					dev.Name = "Unknown"
-				}
-			}
+
+		names, err := net.LookupAddr(dev.IP)
+		if err != nil || len(names) == 0 {
+			dev.Name = dev.MACVendor
+		} else {
+			dev.Name = strings.TrimSuffix(names[0], ".")
 		}
+
+		if dev.Name == "" && dev.MACVendor == "" {
+			continue
+		}
+
 		res.Devices = append(res.Devices, dev)
 	}
 
