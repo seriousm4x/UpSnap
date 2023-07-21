@@ -43,12 +43,16 @@ func RunPing(app *pocketbase.PocketBase) {
 				if newStatus {
 					if oldStatus == "offline" || oldStatus == "" {
 						device.Set("status", "online")
-						app.Dao().SaveRecord(device)
+						if err := app.Dao().SaveRecord(device); err != nil {
+							logger.Error.Println("Failed to save record:", err)
+						}
 					}
 				} else {
 					if oldStatus == "online" || oldStatus == "" {
 						device.Set("status", "offline")
-						app.Dao().SaveRecord(device)
+						if err := app.Dao().SaveRecord(device); err != nil {
+							logger.Error.Println("Failed to save record:", err)
+						}
 					}
 				}
 			}(device)
@@ -63,9 +67,13 @@ func RunPing(app *pocketbase.PocketBase) {
 					isUp := networking.CheckPort(device.GetString("ip"), port.GetString("number"))
 					if isUp != port.GetBool("status") {
 						port.Set("status", isUp)
-						app.Dao().SaveRecord(port)
+						if err := app.Dao().SaveRecord(port); err != nil {
+							logger.Error.Println("Failed to save record:", err)
+						}
 						device.RefreshUpdated()
-						app.Dao().SaveRecord(device)
+						if err := app.Dao().SaveRecord(device); err != nil {
+							logger.Error.Println("Failed to save record:", err)
+						}
 					}
 				}
 			}(device)
@@ -88,14 +96,20 @@ func RunWakeShutdown(app *pocketbase.PocketBase) {
 			go func(d *models.Record) {
 				_, err := CronWakeShutdown.AddFunc(wake_cron, func() {
 					d.Set("status", "pending")
-					app.Dao().SaveRecord(d)
+					if err := app.Dao().SaveRecord(d); err != nil {
+						logger.Error.Println("Failed to save record:", err)
+					}
 					if err := networking.WakeDevice(d); err != nil {
 						logger.Error.Println(err)
 						d.Set("status", "offline")
-						app.Dao().SaveRecord(d)
+						if err := app.Dao().SaveRecord(d); err != nil {
+							logger.Error.Println("Failed to save record:", err)
+						}
 					} else {
 						d.Set("status", "online")
-						app.Dao().SaveRecord(d)
+						if err := app.Dao().SaveRecord(d); err != nil {
+							logger.Error.Println("Failed to save record:", err)
+						}
 					}
 				})
 				if err != nil {
@@ -110,14 +124,20 @@ func RunWakeShutdown(app *pocketbase.PocketBase) {
 			go func(d *models.Record) {
 				_, err := CronWakeShutdown.AddFunc(shutdown_cron, func() {
 					d.Set("status", "pending")
-					app.Dao().SaveRecord(d)
+					if err := app.Dao().SaveRecord(d); err != nil {
+						logger.Error.Println("Failed to save record:", err)
+					}
 					if err := networking.ShutdownDevice(d); err != nil {
 						logger.Error.Println(err)
 						d.Set("status", "online")
-						app.Dao().SaveRecord(d)
+						if err := app.Dao().SaveRecord(d); err != nil {
+							logger.Error.Println("Failed to save record:", err)
+						}
 					} else {
 						d.Set("status", "offline")
-						app.Dao().SaveRecord(d)
+						if err := app.Dao().SaveRecord(d); err != nil {
+							logger.Error.Println("Failed to save record:", err)
+						}
 					}
 				})
 				if err != nil {
