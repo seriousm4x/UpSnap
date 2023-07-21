@@ -51,3 +51,5 @@ changelog:
     - title: "Github Actions"
       regexp: '^.*?gh-action(\([[:word:]]+\))??!?:.+$'
       order: 4
+    - title: Others
+      order: 999
