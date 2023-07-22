@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { pocketbase } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, devices } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Navbar from '$lib/components/Navbar.svelte';
 
@@ -37,17 +37,18 @@
 		}
 
 		if ($pocketbase.authStore.model?.collectionName === 'users') {
-			$pocketbase
-				.collection('users')
-				.authRefresh()
-				.catch(() => {
-					$pocketbase.authStore.clear();
-				});
+			$pocketbase.collection('users').authRefresh();
 		} else {
-			$pocketbase.admins.authRefresh().catch(() => {
-				$pocketbase.authStore.clear();
-			});
+			$pocketbase.admins.authRefresh();
 		}
+
+		// fill devices store
+		$pocketbase
+			.collection('devices')
+			.getFullList({ perPage: 1000 })
+			.then((data) => {
+				devices.set(data);
+			});
 	});
 </script>
 
@@ -55,7 +56,7 @@
 	<link
 		rel="shortcut icon"
 		href={$settingsPub?.collectionId && $settingsPub?.favicon
-			? `/api/files/settings_public/${$settingsPub?.collectionId}/${$settingsPub?.favicon}`
+			? `${backendUrl}/api/files/settings_public/${$settingsPub?.collectionId}/${$settingsPub?.favicon}`
 			: '/gopher.svg'}
 	/>
 </svelte:head>
@@ -64,4 +65,6 @@
 	<Navbar />
 {/if}
 
-<slot />
+<div class="container mx-auto">
+	<slot />
+</div>
