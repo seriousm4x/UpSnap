@@ -84,6 +84,7 @@
 	},
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.4.0",
+		"date-fns": "^2.30.0",
 		"pocketbase": "^0.15.3",
 		"svelte-fa": "^3.0.4"
 	}
