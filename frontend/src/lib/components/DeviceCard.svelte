@@ -1,16 +1,26 @@
 <script lang="ts">
-	import type { Record } from 'pocketbase';
+	import type { Device } from '$lib/types/device';
+	import { formatDistanceToNow, parseISO } from 'date-fns';
+	import DeviceCardNic from './DeviceCardNic.svelte';
 
-	export let device: Record;
+	export let device: Device;
 </script>
 
-<div class="card bg-base-300 shadow-md">
-	<div class="card-body">
-		<h2 class="card-title">{device.name}</h2>
-		<p>{device.ip}</p>
+<div class="card bg-base-300 shadow-md rounded-3xl">
+	<div class="card-body p-6">
+		<h1 class="card-title">{device.name}</h1>
+		<ul class="menu bg-base-200 rounded-box">
+			<li class="menu-title">Interfaces</li>
+			<!-- TODO: change to nic array once backend supports it -->
+			<DeviceCardNic {device} />
+		</ul>
 		<div class="card-actions">
-			<button class="btn btn-sm btn-success">Wake</button>
-			<button class="btn btn-sm btn-error">Shutdown</button>
+			<span class="tooltip" data-tip="Last status change">
+				{formatDistanceToNow(parseISO(device.updated), {
+					includeSeconds: true,
+					addSuffix: true
+				})}
+			</span>
 		</div>
 	</div>
 </div>

@@ -45,7 +45,7 @@
 		// fill devices store
 		$pocketbase
 			.collection('devices')
-			.getFullList({ perPage: 1000 })
+			.getFullList(1000, { sort: 'name', expand: 'ports,groups' })
 			.then((data) => {
 				devices.set(data);
 			});
