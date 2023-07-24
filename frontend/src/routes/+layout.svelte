@@ -6,6 +6,7 @@
 	import { pocketbase, backendUrl, devices } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Navbar from '$lib/components/Navbar.svelte';
+	import type { Device } from '$lib/types/device';
 
 	onMount(async () => {
 		// set settingsPub store on load
@@ -47,7 +48,7 @@
 			.collection('devices')
 			.getFullList(1000, { sort: 'name', expand: 'ports,groups' })
 			.then((data) => {
-				devices.set(data);
+				devices.set(data as Device[]);
 			});
 	});
 </script>
@@ -65,6 +66,6 @@
 	<Navbar />
 {/if}
 
-<div class="container mx-auto">
+<div class="container mx-auto p-2">
 	<slot />
 </div>

@@ -54,7 +54,7 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "eslint --fix --cache --ignore-path ../.gitignore .",
 		"format": "prettier --write --cache --cache-strategy content --ignore-path ../.gitignore --plugin-search-dir=. .",
-		"prepare": "husky install"
+		"prepare": "cd .. && husky install frontend/.husky"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^2.0.0",

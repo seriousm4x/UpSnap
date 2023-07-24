@@ -25,17 +25,15 @@
 </script>
 
 <li>
-	<div class="flex items-start gap-4">
+	<div class="flex items-start p-2 gap-4">
 		<div>
 			{#if device.status === 'offline'}
-				<button
-					class="btn btn-success flex-shrink"
-					on:click={() => wake()}
-					on:keydown={() => wake()}><Fa icon={faPowerOff} /></button
+				<button class="btn btn-error flex-shrink" on:click={() => wake()} on:keydown={() => wake()}
+					><Fa icon={faPowerOff} /></button
 				>
 			{:else if device.status === 'online'}
 				<button
-					class="btn btn-error flex-shrink"
+					class="btn btn-success flex-shrink"
 					on:click={() => shutdown()}
 					on:keydown={() => shutdown()}><Fa icon={faPowerOff} /></button
 				>
@@ -49,17 +47,19 @@
 			<div class="text-lg font-bold leading-4">{device.ip}</div>
 			<div class="">{device.mac}</div>
 			<div class="flex flex-wrap gap-4">
-				{#each device.expand.ports as port}
-					<span class="flex items-center gap-1">
-						{#if port.status}
-							<Fa icon={faCircle} class="bg-error" />
-							{port.name} ({port.number})
-						{:else}
-							<Fa icon={faCircle} class="text-error" />
-							{port.name} ({port.number})
-						{/if}
-					</span>
-				{/each}
+				{#if device?.expand?.ports}
+					{#each device?.expand?.ports as port}
+						<span class="flex items-center gap-1 break-all">
+							{#if port.status}
+								<Fa icon={faCircle} class="bg-error" />
+								{port.name} ({port.number})
+							{:else}
+								<Fa icon={faCircle} class="text-error" />
+								{port.name} ({port.number})
+							{/if}
+						</span>
+					{/each}
+				{/if}
 			</div>
 		</div>
 	</div>
