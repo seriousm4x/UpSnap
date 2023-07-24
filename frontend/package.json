@@ -1,5 +1,8 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     "name": "frontend",
     "version": "0.0.1",
     "private": true,
@@ -12,8 +15,13 @@
         "format": "prettier --ignore-path ../.gitignore --write --plugin-search-dir=. ."
     },
     "devDependencies": {
+<<<<<<< HEAD
         "@sveltejs/adapter-static": "^2.0.3",
         "@sveltejs/kit": "^1.22.5",
+=======
+        "@sveltejs/adapter-static": "^2.0.2",
+        "@sveltejs/kit": "^1.22.3",
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
         "@typescript-eslint/eslint-plugin": "^5.62.0",
         "@typescript-eslint/parser": "^5.62.0",
         "eslint": "^8.45.0",
@@ -23,6 +31,7 @@
         "lint-staged": "^13.2.3",
         "prettier": "^2.8.8",
         "prettier-plugin-svelte": "^2.10.1",
+<<<<<<< HEAD
         "svelte": "^4.1.2",
         "svelte-preprocess": "^5.0.4",
         "typescript": "^5.1.6",
@@ -36,12 +45,28 @@
         "date-fns": "^2.30.0",
         "pocketbase": "^0.15.3",
         "sass": "^1.64.2",
+=======
+        "svelte": "^4.1.1",
+        "svelte-preprocess": "^5.0.4",
+        "typescript": "^5.1.6",
+        "vite": "^4.4.6"
+    },
+    "type": "module",
+    "dependencies": {
+        "@fortawesome/free-solid-svg-icons": "^6.4.0",
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "5.3.0",
+        "date-fns": "^2.30.0",
+        "pocketbase": "^0.15.3",
+        "sass": "^1.64.1",
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
         "svelte-fa": "^3.0.4"
     },
     "lint-staged": {
         "*.{js,svelte}": "eslint --fix --ignore-path ../.gitignore .",
         "*.{js,css,md,svelte,scss}": "prettier --write --ignore-path ../.gitignore --plugin-search-dir=. ."
     }
+<<<<<<< HEAD
 =======
 	"name": "upsnap-frontend",
 	"version": "0.0.1",
@@ -91,4 +116,6 @@
 		"theme-change": "^2.5.0"
 	}
 >>>>>>> 5340d83 (first commit for tailwind rewrite)
+=======
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
 }

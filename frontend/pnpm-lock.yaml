@@ -23,6 +23,7 @@ dependencies:
     specifier: ^0.15.3
     version: 0.15.3
   sass:
+<<<<<<< HEAD
     specifier: ^1.64.2
     version: 1.64.2
 =======
@@ -39,6 +40,10 @@ dependencies:
     specifier: ^0.15.3
     version: 0.15.3
 >>>>>>> 5340d83 (first commit for tailwind rewrite)
+=======
+    specifier: ^1.64.1
+    version: 1.64.1
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
   svelte-fa:
     specifier: ^3.0.4
     version: 3.0.4
@@ -140,6 +145,7 @@ devDependencies:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     specifier: ^4.1.2
     version: 4.1.2
   svelte-preprocess:
@@ -174,10 +180,18 @@ devDependencies:
     specifier: ^2.6.1
     version: 2.6.1
 >>>>>>> fae38a0 (cleanup)
+=======
+    specifier: ^4.1.1
+    version: 4.1.1
+  svelte-preprocess:
+    specifier: ^5.0.4
+    version: 5.0.4(postcss@8.4.27)(sass@1.64.1)(svelte@4.1.1)(typescript@5.1.6)
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
   vite:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -195,6 +209,10 @@ devDependencies:
     specifier: ^4.4.9
     version: 4.4.9
 >>>>>>> c615d87 (npm-dep: update all)
+=======
+    specifier: ^4.4.6
+    version: 4.4.6(sass@1.64.1)
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
 
 packages:
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -811,6 +829,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       svelte: 4.1.2
       undici: 5.23.0
       vite: 4.4.9(sass@1.64.2)
@@ -831,6 +850,11 @@ packages:
       undici: 5.23.0
       vite: 4.4.9
 >>>>>>> c615d87 (npm-dep: update all)
+=======
+      svelte: 4.1.1
+      undici: 5.22.1
+      vite: 4.4.6(sass@1.64.1)
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -901,9 +925,14 @@ packages:
 =======
       '@sveltejs/vite-plugin-svelte': 2.4.5(svelte@4.2.0)(vite@4.4.9)
       debug: 4.3.4
+<<<<<<< HEAD
       svelte: 4.2.0
       vite: 4.4.9
 >>>>>>> c615d87 (npm-dep: update all)
+=======
+      svelte: 4.1.1
+      vite: 4.4.6(sass@1.64.1)
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -978,6 +1007,7 @@ packages:
       debug: 4.3.4
       deepmerge: 4.3.1
       kleur: 4.1.5
+<<<<<<< HEAD
       magic-string: 0.30.2
 <<<<<<< HEAD
       svelte: 4.1.2
@@ -992,6 +1022,13 @@ packages:
       vite: 4.4.9
       vitefu: 0.2.4(vite@4.4.9)
 >>>>>>> c615d87 (npm-dep: update all)
+=======
+      magic-string: 0.30.1
+      svelte: 4.1.1
+      svelte-hmr: 0.15.2(svelte@4.1.1)
+      vite: 4.4.6(sass@1.64.1)
+      vitefu: 0.2.4(vite@4.4.6)
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3074,8 +3111,13 @@ packages:
     dev: true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /sass@1.64.2:
     resolution: {integrity: sha512-TnDlfc+CRnUAgLO9D8cQLFu/GIjJIzJCGkE7o4ekIGQOH7T3GetiRR/PsTWJUHhkzcSPrARkPI+gNWn5alCzDg==}
+=======
+  /sass@1.64.1:
+    resolution: {integrity: sha512-16rRACSOFEE8VN7SCgBu1MpYCyN7urj9At898tyzdXFhC+a+yOX5dXwAR7L8/IdPJ1NB8OYoXmD55DM30B2kEQ==}
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -3083,8 +3125,11 @@ packages:
       immutable: 4.3.1
       source-map-js: 1.0.2
 
+<<<<<<< HEAD
 =======
 >>>>>>> 5340d83 (first commit for tailwind rewrite)
+=======
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
   /semver@7.5.4:
     resolution:
       {
@@ -3372,6 +3417,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /svelte-preprocess@5.0.4(postcss@8.4.27)(sass@1.64.2)(svelte@4.1.2)(typescript@5.1.6):
 =======
   /svelte-preprocess@5.0.4(postcss@8.4.27)(svelte@4.1.1)(typescript@5.1.6):
@@ -3402,6 +3448,11 @@ packages:
       }
     engines: { node: '>= 14.10.0' }
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
+=======
+  /svelte-preprocess@5.0.4(postcss@8.4.27)(sass@1.64.1)(svelte@4.1.1)(typescript@5.1.6):
+    resolution: {integrity: sha512-ABia2QegosxOGsVlsSBJvoWeXy1wUKSfF7SWJdTjLAbx/Y3SrVevvvbFNQqrSJw89+lNSsM58SipmZJ5SRi5iw==}
+    engines: {node: '>= 14.10.0'}
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     requiresBuild: true
     peerDependencies:
       '@babel/core': ^7.10.2
@@ -3442,9 +3493,13 @@ packages:
       magic-string: 0.27.0
       postcss: 8.4.27
 <<<<<<< HEAD
+<<<<<<< HEAD
       sass: 1.64.2
 =======
 >>>>>>> 5340d83 (first commit for tailwind rewrite)
+=======
+      sass: 1.64.1
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
       sorcery: 0.11.0
       strip-indent: 3.0.0
       svelte: 4.2.0
@@ -3724,6 +3779,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vite@4.4.9(sass@1.64.2):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
 =======
@@ -3756,6 +3812,11 @@ packages:
 >>>>>>> e50b84b (npm-dep: update all)
 =======
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
+=======
+  /vite@4.4.6(sass@1.64.1):
+    resolution: {integrity: sha512-EY6Mm8vJ++S3D4tNAckaZfw3JwG3wa794Vt70M6cNJ6NxT87yhq7EC8Rcap3ahyHdo8AhCmV9PTk+vG1HiYn1A==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     hasBin: true
     peerDependencies:
       '@types/node': '>= 14'
@@ -3786,6 +3847,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       rollup: 3.27.2
       sass: 1.64.2
 =======
@@ -3797,6 +3859,10 @@ packages:
 =======
       rollup: 3.28.0
 >>>>>>> c615d87 (npm-dep: update all)
+=======
+      rollup: 3.26.3
+      sass: 1.64.1
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -3839,6 +3905,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       vite: 4.4.9(sass@1.64.2)
 =======
       vite: 4.4.6
@@ -3849,6 +3916,9 @@ packages:
 =======
       vite: 4.4.9
 >>>>>>> c615d87 (npm-dep: update all)
+=======
+      vite: 4.4.6(sass@1.64.1)
+>>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     dev: true
 
   /which@2.0.2:
