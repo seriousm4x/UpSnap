@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Fa from 'svelte-fa';
 	import { faCog, faHome, faCircleQuestion, faKey } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,7 @@
 
 <div class="navbar bg-base-100">
 	<div class="navbar-start">
-		<div class="dropdown">
+		<a class="btn btn-ghost normal-case text-xl" href="/">
 			<img
 				src={$settingsPub?.collectionId && $settingsPub?.favicon
 					? `/api/files/settings_public/${$settingsPub?.collectionId}/${$settingsPub?.favicon}`
@@ -26,7 +26,7 @@
 				width="45"
 				height="45"
 			/>{$settingsPub?.website_title ? $settingsPub?.website_title : ''}
-		</div>
+		</a>
 	</div>
 	<div class="navbar-center hidden md:flex">
 		<ul class="menu menu-horizontal px-1">
@@ -51,10 +51,7 @@
 			<div class="dropdown dropdown-end">
 				<label tabindex="-1" class="btn btn-ghost btn-circle avatar" for="avatar">
 					<div class="w-10 rounded-full" id="avatar">
-						<img
-							src="{$pocketbase.baseUrl}/_/images/avatars/avatar{avatar}.svg"
-							alt="Profile pic"
-						/>
+						<img src="{backendUrl}_/images/avatars/avatar{avatar}.svg" alt="Profile pic" />
 					</div>
 				</label>
 				<ul

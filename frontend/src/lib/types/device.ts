@@ -5,3 +5,8 @@ export type Device = Record & {
 		ports: Record[];
 	};
 };
+
+export type Port = Record & {
+	name: string;
+	number: number;
+};

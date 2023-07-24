@@ -10,7 +10,6 @@
 	<div class="card-body p-6">
 		<h1 class="card-title">{device.name}</h1>
 		<ul class="menu bg-base-200 rounded-box">
-			<li class="menu-title">Interfaces</li>
 			<!-- TODO: change to nic array once backend supports it -->
 			<DeviceCardNic {device} />
 		</ul>
@@ -21,6 +20,7 @@
 					addSuffix: true
 				})}
 			</span>
+			<a class="btn btn-sm btn-neutral ms-auto" href="/device/{device.id}">Edit</a>
 		</div>
 	</div>
 </div>

@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase } from '$lib/stores/pocketbase';
+	import { pocketbase, devices } from '$lib/stores/pocketbase';
 	import Fa from 'svelte-fa';
 	import { faLockOpen, faEye } from '@fortawesome/free-solid-svg-icons';
 	import { toggleVisibility } from '$lib/helpers/forms';
+	import type { Device } from '$lib/types/device';
 
 	let inputPassword: HTMLInputElement;
 	let form = {
@@ -17,6 +18,7 @@
 		$pocketbase.admins
 			.authWithPassword(form.email, form.password)
 			.then(() => {
+				getDevices();
 				goto('/');
 			})
 			.catch(() => {
@@ -24,11 +26,21 @@
 					.collection('users')
 					.authWithPassword(form.email, form.password)
 					.then(() => {
+						getDevices();
 						goto('/');
 					})
 					.catch((err) => {
 						errorMsg = err;
 					});
+			});
+	}
+
+	function getDevices() {
+		$pocketbase
+			.collection('devices')
+			.getFullList(1000, { sort: 'name', expand: 'ports,groups' })
+			.then((data) => {
+				devices.set(data as Device[]);
 			});
 	}
 </script>
