@@ -6,7 +6,7 @@
 	import type { Device, Port } from '$lib/types/device';
 	import type { Record } from 'pocketbase';
 
-	export let changes: Device;
+	export let deviceClone: Device;
 	export let index: number;
 	export let portErrMsg: string;
 	export let portErrTimeout: number;
@@ -17,7 +17,9 @@
 				.collection('ports')
 				.delete(port.id)
 				.then(() => {
-					changes.ports = changes.ports.filter((id: number) => id !== changes.ports[index]);
+					deviceClone.ports = deviceClone.ports.filter(
+						(id: number) => id !== deviceClone.ports[index]
+					);
 				})
 				.catch((err) => {
 					clearTimeout(portErrTimeout);
@@ -27,13 +29,13 @@
 					portErrMsg = err;
 				});
 		}
-		changes.expand.ports = changes.expand.ports.filter(
-			(p) => p.id !== changes.expand.ports[index].id
+		deviceClone.expand.ports = deviceClone.expand.ports.filter(
+			(p) => p !== deviceClone.expand.ports[index]
 		);
 	}
 </script>
 
-{#if changes.expand.ports[index]}
+{#if deviceClone.expand.ports[index]}
 	<div class="card bg-base-100 shadow-xl" transition:scale={{ delay: 0, duration: 200 }}>
 		<div class="card-body p-3">
 			<div class="flex flex-row gap-2">
@@ -46,7 +48,7 @@
 						type="text"
 						placeholder="ssh"
 						class="input input-sm input-bordered w-full max-w-xs"
-						bind:value={changes.expand.ports[index].name}
+						bind:value={deviceClone.expand.ports[index].name}
 					/>
 				</div>
 				<div>
@@ -60,14 +62,14 @@
 						min="1"
 						max="65535"
 						class="input input-sm input-bordered w-24"
-						bind:value={changes.expand.ports[index].number}
+						bind:value={deviceClone.expand.ports[index].number}
 					/>
 				</div>
 			</div>
 			<div class="card-actions justify-end">
 				<button
 					class="btn btn-xs btn-error"
-					on:click={() => deletePort(changes.expand.ports[index])}
+					on:click={() => deletePort(deviceClone.expand.ports[index])}
 					type="button"><Fa icon={faTrash} />Delete</button
 				>
 			</div>
