@@ -20,7 +20,7 @@
 						$devices[index] = data as Device;
 					});
 			} else if (e.action === 'delete') {
-				delete $devices[index];
+				$devices = $devices.filter((d) => d !== $devices[index]);
 			}
 		});
 
@@ -43,12 +43,14 @@
 	});
 </script>
 
-{#each $devices as device}
+{#if $devices.length > 0}
 	<div
 		class="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
 	>
-		<DeviceCard {device} />
+		{#each $devices as device}
+			<DeviceCard {device} />
+		{/each}
 	</div>
 {:else}
 	<div class="container mx-auto text-center">No devices</div>
-{/each}
+{/if}

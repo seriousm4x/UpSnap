@@ -8,7 +8,7 @@
 
 	// TODO: change wake and shutdown to nic based routes, not device based
 	function wake() {
-		fetch(`${backendUrl}/api/upsnap/wake/${device.id}`, {
+		fetch(`${backendUrl}api/upsnap/wake/${device.id}`, {
 			headers: {
 				Authorization: $pocketbase.authStore.token
 			}
@@ -16,27 +16,34 @@
 	}
 
 	function shutdown() {
-		fetch(`${backendUrl}/api/upsnap/shutdown/${device.id}`, {
+		fetch(`${backendUrl}api/upsnap/shutdown/${device.id}`, {
 			headers: {
 				Authorization: $pocketbase.authStore.token
 			}
 		});
 	}
+
+	function handleClick() {
+		if (device.status === 'offline') {
+			wake();
+		} else if (device.statis === 'online') {
+			shutdown();
+		}
+	}
 </script>
 
 <li>
-	<div class="flex items-start p-2 gap-4">
+	<div
+		class="flex items-start p-2 gap-4"
+		on:click={handleClick}
+		on:keydown={handleClick}
+		role="none"
+	>
 		<div>
 			{#if device.status === 'offline'}
-				<button class="btn btn-error flex-shrink" on:click={() => wake()} on:keydown={() => wake()}
-					><Fa icon={faPowerOff} /></button
-				>
+				<button class="btn btn-error flex-shrink"><Fa icon={faPowerOff} /></button>
 			{:else if device.status === 'online'}
-				<button
-					class="btn btn-success flex-shrink"
-					on:click={() => shutdown()}
-					on:keydown={() => shutdown()}><Fa icon={faPowerOff} /></button
-				>
+				<button class="btn btn-success flex-shrink"><Fa icon={faPowerOff} /></button>
 			{:else}
 				<button class="btn btn-warning flex-shrink"
 					><span class="loading loading-ring loading-md" /></button

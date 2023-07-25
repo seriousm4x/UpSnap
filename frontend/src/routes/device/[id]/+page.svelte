@@ -9,7 +9,7 @@
 
 	let waitingForDevices = true;
 	let device: Device | undefined;
-	let changes: Device | undefined;
+	let deviceClone: Device | undefined;
 
 	let portErrMsg = '';
 	let portErrTimeout: number;
@@ -23,21 +23,21 @@
 
 		device = data.find((dev) => dev.id === $page.params.id);
 		if (device !== undefined) {
-			changes = device;
-			if (changes.expand.ports === undefined) {
-				changes.expand.ports = [];
+			deviceClone = device;
+			if (deviceClone.expand.ports === undefined) {
+				deviceClone.expand.ports = [];
 			}
 		}
 		waitingForDevices = false;
 	});
 
 	async function saveDevice() {
-		if (device === undefined || changes === undefined) return;
+		if (deviceClone === undefined) return;
 
 		// create/update all ports
 		let portIds: string[] = [];
 		await Promise.all(
-			changes.expand.ports.map(async (port) => {
+			deviceClone.expand.ports.map(async (port) => {
 				if (port.id === undefined) {
 					const data = await createPort(port as Port);
 					if (data === undefined) return;
@@ -50,10 +50,10 @@
 			})
 		);
 
-		changes.ports = portIds;
+		deviceClone.ports = portIds;
 		$pocketbase
 			.collection('devices')
-			.update(device.id, changes)
+			.update(deviceClone.id, deviceClone)
 			.then(() => {
 				goto('/');
 			})
@@ -105,8 +105,8 @@
 	}
 
 	function createEmptyPort() {
-		if (changes === undefined) return;
-		changes.expand.ports = [...changes.expand.ports, { name: '', number: 1 } as Port];
+		if (deviceClone === undefined) return;
+		deviceClone.expand.ports = [...deviceClone.expand.ports, { name: '', number: 1 } as Port];
 	}
 </script>
 
@@ -114,26 +114,13 @@
 	<div class="container max-w-lg mx-auto text-center">
 		<span class="loading loading-dots loading-lg" />
 	</div>
-{:else if device === undefined || changes === undefined}
+{:else if device === undefined || deviceClone === undefined}
 	<div class="container max-w-lg mx-auto">
-		<div class="alert alert-error">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="stroke-current shrink-0 h-6 w-6"
-				fill="none"
-				viewBox="0 0 24 24"
-				><path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-				/></svg
-			>
-			<span><strong>No device with id:</strong> {$page.params.id}</span>
-			<div>
-				<a class="btn btn-sm" href="/">Ok</a>
-			</div>
-		</div>
+		<Alert
+			color="error"
+			message="No device with id: {$page.params.id}"
+			icon={faTriangleExclamation}
+		/>
 	</div>
 {:else}
 	<h1 class="text-3xl font-bold mb-8">{device.name}</h1>
@@ -154,7 +141,7 @@
 							type="text"
 							placeholder="Device name"
 							class="input w-full max-w-xs"
-							bind:value={changes.name}
+							bind:value={deviceClone.name}
 							required
 						/>
 					</div>
@@ -170,7 +157,7 @@
 							type="text"
 							placeholder="192.168.0.5"
 							class="input w-full max-w-xs"
-							bind:value={changes.ip}
+							bind:value={deviceClone.ip}
 							required
 						/>
 					</div>
@@ -186,7 +173,7 @@
 							type="text"
 							placeholder="aa:bb:cc:dd:ee:ff"
 							class="input w-full max-w-xs"
-							bind:value={changes.mac}
+							bind:value={deviceClone.mac}
 							required
 						/>
 					</div>
@@ -202,7 +189,7 @@
 							type="text"
 							placeholder="255.255.255.0"
 							class="input w-full max-w-xs"
-							bind:value={changes.netmask}
+							bind:value={deviceClone.netmask}
 							required
 						/>
 					</div>
@@ -213,8 +200,8 @@
 						UpSnap can also check if given ports are open. You can define them below.
 					</p>
 					<div class="flex flex-wrap gap-4">
-						{#each changes.expand.ports as _, index}
-							<DeviceFormPort bind:changes {index} bind:portErrMsg bind:portErrTimeout />
+						{#each deviceClone.expand.ports as _, index}
+							<DeviceFormPort bind:deviceClone {index} bind:portErrMsg bind:portErrTimeout />
 						{/each}
 					</div>
 					{#if portErrMsg !== ''}
@@ -223,7 +210,6 @@
 							icon={faTriangleExclamation}
 							message={portErrMsg}
 							customClasses="mt-4 max-w-fit"
-							duration={10000}
 						/>
 					{/if}
 					<button
@@ -241,9 +227,17 @@
 						type="url"
 						placeholder="https:// ..."
 						class="input w-full max-w-xs"
-						bind:value={changes.link}
+						bind:value={deviceClone.link}
 					/>
 				</div>
+				{#if saveErrMsg !== ''}
+					<Alert
+						color="error"
+						message={saveErrMsg}
+						icon={faTriangleExclamation}
+						customClasses="mt-4 max-w-fit"
+					/>
+				{/if}
 				<div class="card-actions justify-end mt-4">
 					<span class="text-error me-4 self-center">* required field</span>
 					<button class="btn btn-primary" type="submit">Save</button>

@@ -8,7 +8,13 @@
 
 <div class="card bg-base-300 shadow-md rounded-3xl">
 	<div class="card-body p-6">
-		<h1 class="card-title">{device.name}</h1>
+		{#if device.link !== ''}
+			<a href={device.link} target="_blank">
+				<h1 class="card-title link">{device.name}</h1>
+			</a>
+		{:else}
+			<h1 class="card-title">{device.name}</h1>
+		{/if}
 		<ul class="menu bg-base-200 rounded-box">
 			<!-- TODO: change to nic array once backend supports it -->
 			<DeviceCardNic {device} />

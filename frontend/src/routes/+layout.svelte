@@ -23,6 +23,7 @@
 		// redirect to welcome page if setup is not completed
 		if (!$settingsPub?.setup_completed && $page.url.pathname !== '/welcome') {
 			goto('/welcome');
+			return;
 		}
 
 		// load auth from localstorage
@@ -35,6 +36,7 @@
 		$pocketbase.authStore.loadFromCookie('pb_auth=' + pbCookie);
 		if (!$pocketbase.authStore.isValid) {
 			goto('/login');
+			return;
 		}
 
 		if ($pocketbase.authStore.model?.collectionName === 'users') {
