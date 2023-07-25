@@ -62,6 +62,7 @@ devDependencies:
     specifier: ^2.0.3
     version: 2.0.3(@sveltejs/kit@1.22.5)
   '@sveltejs/kit':
+<<<<<<< HEAD
     specifier: ^1.22.5
     version: 1.22.5(svelte@4.1.2)(vite@4.4.9)
 =======
@@ -90,6 +91,10 @@ devDependencies:
     specifier: ^1.22.5
     version: 1.22.5(svelte@4.2.0)(vite@4.4.9)
 >>>>>>> c615d87 (npm-dep: update all)
+=======
+    specifier: ^1.22.3
+    version: 1.22.3(svelte@4.1.1)(vite@4.4.7)
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.62.0
     version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.46.0)(typescript@5.1.6)
@@ -195,6 +200,7 @@ devDependencies:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     specifier: ^4.4.9
     version: 4.4.9(sass@1.64.2)
 =======
@@ -213,6 +219,10 @@ devDependencies:
     specifier: ^4.4.6
     version: 4.4.6(sass@1.64.1)
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+    specifier: ^4.4.7
+    version: 4.4.7(sass@1.64.1)
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
 
 packages:
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -778,9 +788,10 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^1.5.0
     dependencies:
-      '@sveltejs/kit': 1.22.5(svelte@4.2.0)(vite@4.4.9)
+      '@sveltejs/kit': 1.22.3(svelte@4.1.1)(vite@4.4.7)
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   /@sveltejs/kit@1.22.4(svelte@4.1.2)(vite@4.4.7):
 <<<<<<< HEAD
@@ -797,12 +808,18 @@ packages:
       }
     engines: { node: ^16.14 || >=18 }
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
+=======
+  /@sveltejs/kit@1.22.3(svelte@4.1.1)(vite@4.4.7):
+    resolution: {integrity: sha512-IpHD5wvuoOIHYaHQUBJ1zERD2Iz+fB/rBXhXjl8InKw6X4VKE9BSus+ttHhE7Ke+Ie9ecfilzX8BnWE3FeQyng==}
+    engines: {node: ^16.14 || >=18}
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     hasBin: true
     requiresBuild: true
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0-next.0
       vite: ^4.0.0
     dependencies:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -816,6 +833,9 @@ packages:
 =======
       '@sveltejs/vite-plugin-svelte': 2.4.5(svelte@4.2.0)(vite@4.4.9)
 >>>>>>> c615d87 (npm-dep: update all)
+=======
+      '@sveltejs/vite-plugin-svelte': 2.4.2(svelte@4.1.1)(vite@4.4.7)
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
       '@types/cookie': 0.5.1
       cookie: 0.5.0
       devalue: 4.3.2
@@ -853,12 +873,17 @@ packages:
 =======
       svelte: 4.1.1
       undici: 5.22.1
+<<<<<<< HEAD
       vite: 4.4.6(sass@1.64.1)
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+      vite: 4.4.7(sass@1.64.1)
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -893,11 +918,17 @@ packages:
       }
     engines: { node: ^14.18.0 || >= 16 }
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
+=======
+  /@sveltejs/vite-plugin-svelte-inspector@1.0.3(@sveltejs/vite-plugin-svelte@2.4.2)(svelte@4.1.1)(vite@4.4.7):
+    resolution: {integrity: sha512-Khdl5jmmPN6SUsVuqSXatKpQTMIifoQPDanaxC84m9JxIibWvSABJyHpyys0Z+1yYrxY5TTEQm+6elh0XCMaOA==}
+    engines: {node: ^14.18.0 || >= 16}
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     peerDependencies:
       '@sveltejs/vite-plugin-svelte': ^2.2.0
       svelte: ^3.54.0 || ^4.0.0
       vite: ^4.0.0
     dependencies:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -924,6 +955,9 @@ packages:
 >>>>>>> fae38a0 (cleanup)
 =======
       '@sveltejs/vite-plugin-svelte': 2.4.5(svelte@4.2.0)(vite@4.4.9)
+=======
+      '@sveltejs/vite-plugin-svelte': 2.4.2(svelte@4.1.1)(vite@4.4.7)
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
       debug: 4.3.4
 <<<<<<< HEAD
       svelte: 4.2.0
@@ -931,12 +965,17 @@ packages:
 >>>>>>> c615d87 (npm-dep: update all)
 =======
       svelte: 4.1.1
+<<<<<<< HEAD
       vite: 4.4.6(sass@1.64.1)
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+      vite: 4.4.7(sass@1.64.1)
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -971,6 +1010,11 @@ packages:
       }
     engines: { node: ^14.18.0 || >= 16 }
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
+=======
+  /@sveltejs/vite-plugin-svelte@2.4.2(svelte@4.1.1)(vite@4.4.7):
+    resolution: {integrity: sha512-ePfcC48ftMKhkT0OFGdOyycYKnnkT6i/buzey+vHRTR/JpQvuPzzhf1PtKqCDQfJRgoPSN2vscXs6gLigx/zGw==}
+    engines: {node: ^14.18.0 || >= 16}
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0
       vite: ^4.0.0
@@ -978,10 +1022,14 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       '@sveltejs/vite-plugin-svelte-inspector': 1.0.3(@sveltejs/vite-plugin-svelte@2.4.2)(svelte@4.1.2)(vite@4.4.9)
 =======
       '@sveltejs/vite-plugin-svelte-inspector': 1.0.3(@sveltejs/vite-plugin-svelte@2.4.3)(svelte@4.1.1)(vite@4.4.7)
 >>>>>>> fae38a0 (cleanup)
+=======
+      '@sveltejs/vite-plugin-svelte-inspector': 1.0.3(@sveltejs/vite-plugin-svelte@2.4.2)(svelte@4.1.1)(vite@4.4.7)
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
       debug: 4.3.4
       deepmerge: 4.3.1
       kleur: 4.1.5
@@ -1026,9 +1074,14 @@ packages:
       magic-string: 0.30.1
       svelte: 4.1.1
       svelte-hmr: 0.15.2(svelte@4.1.1)
+<<<<<<< HEAD
       vite: 4.4.6(sass@1.64.1)
       vitefu: 0.2.4(vite@4.4.6)
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+      vite: 4.4.7(sass@1.64.1)
+      vitefu: 0.2.4(vite@4.4.7)
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3780,6 +3833,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vite@4.4.9(sass@1.64.2):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
 =======
@@ -3815,6 +3869,10 @@ packages:
 =======
   /vite@4.4.6(sass@1.64.1):
     resolution: {integrity: sha512-EY6Mm8vJ++S3D4tNAckaZfw3JwG3wa794Vt70M6cNJ6NxT87yhq7EC8Rcap3ahyHdo8AhCmV9PTk+vG1HiYn1A==}
+=======
+  /vite@4.4.7(sass@1.64.1):
+    resolution: {integrity: sha512-6pYf9QJ1mHylfVh39HpuSfMPojPSKVxZvnclX1K1FyZ1PXDOcLBibdq5t1qxJSnL63ca8Wf4zts6mD8u8oc9Fw==}
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     engines: {node: ^14.18.0 || >=16.0.0}
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
     hasBin: true
@@ -3871,6 +3929,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vitefu@0.2.4(vite@4.4.9):
     resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==}
 =======
@@ -3896,12 +3955,17 @@ packages:
 >>>>>>> e50b84b (npm-dep: update all)
 =======
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
+=======
+  /vitefu@0.2.4(vite@4.4.7):
+    resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==}
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     peerDependencies:
       vite: ^3.0.0 || ^4.0.0
     peerDependenciesMeta:
       vite:
         optional: true
     dependencies:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3919,6 +3983,9 @@ packages:
 =======
       vite: 4.4.6(sass@1.64.1)
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+      vite: 4.4.7(sass@1.64.1)
+>>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     dev: true
 
   /which@2.0.2:
