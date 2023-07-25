@@ -280,15 +280,15 @@
 					linux or
 					<span class="badge">curl</span> in general to make web requests.
 				</p>
-				<p class="my-2 font-bold">Example:</p>
-				<div class="alert text-sm bg-base-100 text-start">
+				<p class="my-2 font-bold">Examples:</p>
+				<div class="alert text-sm bg-base-100 text-start w-fit">
 					<div>
 						<span class="font-bold">Shutdown remote windows machine:</span>
 						<pre
 							class="break-words whitespace-pre-wrap">net rpc shutdown -I 192.168.1.13 -U "user%password"</pre>
 					</div>
 				</div>
-				<div class="alert text-sm my-2 bg-base-100 text-start">
+				<div class="alert text-sm my-2 bg-base-100 text-start w-fit">
 					<div>
 						<span class="font-bold">Shutdown remote linux machine:</span>
 						<pre
