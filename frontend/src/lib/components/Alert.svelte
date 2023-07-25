@@ -4,13 +4,16 @@
 	import Fa from 'svelte-fa';
 	import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-	export let color: string;
+	export let color = '';
 	export let message: string;
 	export let icon: IconDefinition;
 	export let customClasses = '';
 </script>
 
-<div class="alert alert-{color} {customClasses}" transition:scale={{ delay: 0, duration: 200 }}>
+<div
+	class="alert {color ? `alert-${color}` : ''} {customClasses}"
+	transition:scale={{ delay: 0, duration: 200 }}
+>
 	{#if icon}
 		<Fa {icon} />
 	{/if}

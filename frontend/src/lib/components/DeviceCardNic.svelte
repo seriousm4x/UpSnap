@@ -58,7 +58,7 @@
 					{#each device?.expand?.ports as port}
 						<span class="flex items-center gap-1 break-all">
 							{#if port.status}
-								<Fa icon={faCircle} class="bg-error" />
+								<Fa icon={faCircle} class="text-success" />
 								{port.name} ({port.number})
 							{:else}
 								<Fa icon={faCircle} class="text-error" />

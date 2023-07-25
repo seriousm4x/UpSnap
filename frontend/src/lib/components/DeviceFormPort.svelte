@@ -47,7 +47,7 @@
 						id="port-name-{index}"
 						type="text"
 						placeholder="ssh"
-						class="input input-sm input-bordered w-full max-w-xs"
+						class="input input-sm input-bordered w-full"
 						bind:value={deviceClone.expand.ports[index].name}
 					/>
 				</div>
@@ -61,7 +61,7 @@
 						placeholder="22"
 						min="1"
 						max="65535"
-						class="input input-sm input-bordered w-24"
+						class="input input-sm input-bordered w-full"
 						bind:value={deviceClone.expand.ports[index].number}
 					/>
 				</div>

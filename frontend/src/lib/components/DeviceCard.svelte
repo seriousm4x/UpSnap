@@ -1,12 +1,13 @@
 <script lang="ts">
-	import type { Device } from '$lib/types/device';
 	import { formatDistanceToNow, parseISO } from 'date-fns';
 	import DeviceCardNic from './DeviceCardNic.svelte';
+	import { scale } from 'svelte/transition';
+	import type { Device } from '$lib/types/device';
 
 	export let device: Device;
 </script>
 
-<div class="card bg-base-300 shadow-md rounded-3xl">
+<div class="card bg-base-300 shadow-md rounded-3xl" transition:scale={{ delay: 0, duration: 200 }}>
 	<div class="card-body p-6">
 		{#if device.link !== ''}
 			<a href={device.link} target="_blank">
