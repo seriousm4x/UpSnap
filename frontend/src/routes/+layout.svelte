@@ -6,6 +6,7 @@
 	import { pocketbase, backendUrl, devices } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Navbar from '$lib/components/Navbar.svelte';
+	import Transition from '$lib/components/Transition.svelte';
 	import type { Device } from '$lib/types/device';
 
 	onMount(async () => {
@@ -68,6 +69,8 @@
 	<Navbar />
 {/if}
 
-<div class="container mx-auto p-2">
-	<slot />
-</div>
+<Transition url={$page.url}>
+	<div class="container mx-auto p-2 mb-4">
+		<slot />
+	</div>
+</Transition>
