@@ -8,8 +8,13 @@ dependencies:
   '@fortawesome/free-solid-svg-icons':
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     specifier: ^6.4.2
     version: 6.4.2
+=======
+    specifier: ^6.4.0
+    version: 6.4.0
+>>>>>>> 5e3023e (npm-dep: bump bootstrap from 5.3.0 to 5.3.1 in /frontend)
   '@popperjs/core':
     specifier: ^2.11.8
     version: 2.11.8
@@ -1409,9 +1414,14 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
 <<<<<<< HEAD
+=======
+    resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
+    engines: {node: '>=8'}
+>>>>>>> 5e3023e (npm-dep: bump bootstrap from 5.3.0 to 5.3.1 in /frontend)
 
   /bootstrap@5.3.1(@popperjs/core@2.11.8):
     resolution: {integrity: sha512-jzwza3Yagduci2x0rr9MeFSORjcHpt0lRZukZPZQJT1Dth5qzV7XcgGqYzi39KGAVYR8QEDVoO0ubFKOxzMG+g==}
@@ -1420,6 +1430,7 @@ packages:
     dependencies:
       '@popperjs/core': 2.11.8
     dev: false
+<<<<<<< HEAD
 =======
 =======
 =======
@@ -1439,6 +1450,8 @@ packages:
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
     dev: true
 >>>>>>> 5340d83 (first commit for tailwind rewrite)
+=======
+>>>>>>> 5e3023e (npm-dep: bump bootstrap from 5.3.0 to 5.3.1 in /frontend)
 
   /brace-expansion@1.1.11:
     resolution:
