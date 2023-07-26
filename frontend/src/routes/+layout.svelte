@@ -8,21 +8,17 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
 	import type { Device } from '$lib/types/device';
+	import type { SettingsPublic } from '$lib/types/settings';
 
 	onMount(async () => {
 		// set settingsPub store on load
 		if (!$settingsPub) {
 			const res = await $pocketbase.collection('settings_public').getList(1, 1);
-			settingsPub.set({
-				collectionId: res.items[0].collectionId,
-				favicon: res.items[0].favicon,
-				setup_completed: res.items[0].setup_completed,
-				website_title: res.items[0].website_title
-			});
+			settingsPub.set(res.items[0] as SettingsPublic);
 		}
 
 		// redirect to welcome page if setup is not completed
-		if (!$settingsPub?.setup_completed && $page.url.pathname !== '/welcome') {
+		if (!$settingsPub.setup_completed && $page.url.pathname !== '/welcome') {
 			goto('/welcome');
 			return;
 		}
