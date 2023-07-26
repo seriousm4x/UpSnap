@@ -1,8 +1,8 @@
 <script lang="ts">
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import { pocketbase, devices } from '$lib/stores/pocketbase';
-	import type { Device } from '$lib/types/device';
 	import { onMount } from 'svelte';
+	import type { Device, Port } from '$lib/types/device';
 
 	onMount(() => {
 		$pocketbase.collection('devices').subscribe('*', (e) => {
@@ -36,7 +36,7 @@
 					})
 				);
 				if (deviceIndex !== -1 && portIndex !== -1) {
-					$devices[deviceIndex].expand.ports[portIndex] = e.record;
+					$devices[deviceIndex].expand.ports[portIndex] = e.record as Port;
 				}
 			}
 		});
