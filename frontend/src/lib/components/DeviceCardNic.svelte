@@ -35,6 +35,8 @@
 <li>
 	<div
 		class="flex items-start p-2 gap-4"
+		class:hover:bg-inherit={device.status === 'online' && device.shutdown_cmd === ''}
+		class:hover:cursor-default={device.status === 'online' && device.shutdown_cmd === ''}
 		on:click={handleClick}
 		on:keydown={handleClick}
 		role="none"
