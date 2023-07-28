@@ -16,10 +16,14 @@
     },
     "devDependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "@sveltejs/adapter-static": "^2.0.3",
         "@sveltejs/kit": "^1.22.5",
 =======
         "@sveltejs/adapter-static": "^2.0.2",
+=======
+        "@sveltejs/adapter-static": "^2.0.3",
+>>>>>>> dceee3f (npm-dep: bump @sveltejs/adapter-static from 2.0.2 to 2.0.3 in /frontend)
         "@sveltejs/kit": "^1.22.3",
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
         "@typescript-eslint/eslint-plugin": "^5.62.0",

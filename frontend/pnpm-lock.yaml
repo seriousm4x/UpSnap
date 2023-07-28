@@ -65,7 +65,7 @@ devDependencies:
 <<<<<<< HEAD
 <<<<<<< HEAD
     specifier: ^2.0.3
-    version: 2.0.3(@sveltejs/kit@1.22.5)
+    version: 2.0.3(@sveltejs/kit@1.22.3)
   '@sveltejs/kit':
 <<<<<<< HEAD
     specifier: ^1.22.5
@@ -739,10 +739,14 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> dceee3f (npm-dep: bump @sveltejs/adapter-static from 2.0.2 to 2.0.3 in /frontend)
   /@popperjs/core@2.11.8:
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
     dev: false
 
+<<<<<<< HEAD
   /@sveltejs/adapter-static@2.0.3(@sveltejs/kit@1.22.5):
     resolution: {integrity: sha512-VUqTfXsxYGugCpMqQv1U0LIdbR3S5nBkMMDmpjGVJyM6Q2jHVMFtdWJCkeHMySc6mZxJ+0eZK3T7IgmUCDrcUQ==}
 =======
@@ -790,6 +794,10 @@ packages:
       {
         integrity: sha512-VUqTfXsxYGugCpMqQv1U0LIdbR3S5nBkMMDmpjGVJyM6Q2jHVMFtdWJCkeHMySc6mZxJ+0eZK3T7IgmUCDrcUQ==
       }
+=======
+  /@sveltejs/adapter-static@2.0.3(@sveltejs/kit@1.22.3):
+    resolution: {integrity: sha512-VUqTfXsxYGugCpMqQv1U0LIdbR3S5nBkMMDmpjGVJyM6Q2jHVMFtdWJCkeHMySc6mZxJ+0eZK3T7IgmUCDrcUQ==}
+>>>>>>> dceee3f (npm-dep: bump @sveltejs/adapter-static from 2.0.2 to 2.0.3 in /frontend)
     peerDependencies:
       '@sveltejs/kit': ^1.5.0
     dependencies:
