@@ -124,9 +124,9 @@
 	</div>
 {:else}
 	<h1 class="text-3xl font-bold mb-8">{device.name}</h1>
-	<div class="card w-full bg-base-300 shadow-xl">
-		<div class="card-body">
-			<form on:submit|preventDefault={saveDevice}>
+	<form on:submit|preventDefault={saveDevice}>
+		<div class="card w-full bg-base-300 shadow-xl">
+			<div class="card-body">
 				<h2 class="card-title">General</h2>
 				<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
 					<div class="form-control w-full max-w-xs">
@@ -194,7 +194,11 @@
 						/>
 					</div>
 				</div>
-				<h2 class="card-title mt-8">Ports</h2>
+			</div>
+		</div>
+		<div class="card w-full bg-base-300 shadow-xl mt-6">
+			<div class="card-body">
+				<h2 class="card-title">Ports</h2>
 				<p class="my-2">
 					UpSnap can also check if given ports are open. You can define them below.
 				</p>
@@ -218,7 +222,11 @@
 						type="button">Add new port</button
 					>
 				</div>
-				<h2 class="card-title mt-8">Link</h2>
+			</div>
+		</div>
+		<div class="card w-full bg-base-300 shadow-xl mt-6">
+			<div class="card-body">
+				<h2 class="card-title">Link</h2>
 				<p class="my-2">
 					Makes your device name a clickable link, perfect for linking a dashboard for example.
 				</p>
@@ -230,7 +238,11 @@
 						bind:value={deviceClone.link}
 					/>
 				</div>
-				<h2 class="card-title mt-8">Wake</h2>
+			</div>
+		</div>
+		<div class="card w-full bg-base-300 shadow-xl mt-6">
+			<div class="card-body">
+				<h2 class="card-title">Wake</h2>
 				<p class="my-2">
 					You can power this device using a scheduled cron job. If you are not familiar with cron,
 					you can read about it <a
@@ -253,7 +265,7 @@
 						<input
 							id="wake-cron"
 							type="text"
-							placeholder="0 9 * * 1-5"
+							placeholder="M H DoM M DoW"
 							class="input w-80"
 							bind:value={deviceClone.wake_cron}
 							disabled={!deviceClone.wake_cron_enabled}
@@ -271,7 +283,11 @@
 						/>
 					</div>
 				</div>
-				<h2 class="card-title mt-8">Shutdown</h2>
+			</div>
+		</div>
+		<div class="card w-full bg-base-300 shadow-xl mt-6">
+			<div class="card-body">
+				<h2 class="card-title">Shutdown</h2>
 				<p class="my-2">
 					This <strong>shell command</strong> will run inside your container (if you use docker) or
 					on your host (if you use the binary). To verify that works you can run the command inside
@@ -319,7 +335,7 @@
 						<input
 							id="shutdown-cron"
 							type="text"
-							placeholder="0 22 * * 1-5"
+							placeholder="M H DoM M DoW"
 							class="input w-80"
 							bind:value={deviceClone.shutdown_cron}
 							disabled={!deviceClone.shutdown_cron_enabled}
@@ -337,7 +353,11 @@
 						/>
 					</div>
 				</div>
-				<h2 class="card-title mt-8">Password</h2>
+			</div>
+		</div>
+		<div class="card w-full bg-base-300 shadow-xl mt-6">
+			<div class="card-body">
+				<h2 class="card-title">Password</h2>
 				<p class="my-2">
 					Some network cards have the option to set a password for magic packets, also called <span
 						class="badge">SecureON</span
@@ -360,11 +380,11 @@
 						customClasses="mt-4 max-w-fit"
 					/>
 				{/if}
-				<div class="card-actions justify-end mt-4">
-					<span class="text-error me-4 self-center">* required field</span>
-					<button class="btn btn-primary" type="submit">Save</button>
-				</div>
-			</form>
+			</div>
 		</div>
-	</div>
+		<div class="card-actions justify-end mt-4">
+			<span class="text-error me-4 self-center">* required field</span>
+			<button class="btn btn-primary" type="submit">Save</button>
+		</div>
+	</form>
 {/if}
