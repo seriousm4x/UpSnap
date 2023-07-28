@@ -193,6 +193,7 @@
 							required
 						/>
 					</div>
+					<span class="text-error me-4 self-center">* required field</span>
 				</div>
 			</div>
 		</div>
@@ -383,7 +384,6 @@
 			</div>
 		</div>
 		<div class="card-actions justify-end mt-4">
-			<span class="text-error me-4 self-center">* required field</span>
 			<button class="btn btn-primary" type="submit">Save</button>
 		</div>
 	</form>
