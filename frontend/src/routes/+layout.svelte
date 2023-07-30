@@ -55,10 +55,15 @@
 <svelte:head>
 	<link
 		rel="shortcut icon"
-		href={$settingsPub?.collectionId && $settingsPub?.favicon
-			? `${backendUrl}/api/files/settings_public/${$settingsPub?.collectionId}/${$settingsPub?.favicon}`
+		href={$settingsPub?.id && $settingsPub?.favicon
+			? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
 			: '/gopher.svg'}
 	/>
+	{#if $settingsPub === undefined}
+		<title>UpSnap</title>
+	{:else}
+		<title>{$settingsPub.website_title === '' ? 'UpSnap' : $settingsPub.website_title}</title>
+	{/if}
 </svelte:head>
 
 {#if $pocketbase.authStore.isValid}

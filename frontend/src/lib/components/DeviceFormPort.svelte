@@ -17,9 +17,7 @@
 				.collection('ports')
 				.delete(port.id)
 				.then(() => {
-					deviceClone.ports = deviceClone.ports.filter(
-						(id: number) => id !== deviceClone.ports[index]
-					);
+					deviceClone.ports = deviceClone.ports.filter((id) => id !== deviceClone.ports[index]);
 				})
 				.catch((err) => {
 					clearTimeout(portErrTimeout);
@@ -68,7 +66,7 @@
 			</div>
 			<div class="card-actions justify-end">
 				<button
-					class="btn btn-xs btn-error"
+					class="btn btn-xs btn-outline btn-error"
 					on:click={() => deletePort(deviceClone.expand.ports[index])}
 					type="button"><Fa icon={faTrash} />Delete</button
 				>

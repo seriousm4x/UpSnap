@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Fa from 'svelte-fa';
@@ -38,17 +39,25 @@
 				tabindex="-1"
 				class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52"
 			>
-				<li><a href="/"><Fa icon={faHome} />Home</a></li>
+				<li><a href="/" class:active={$page.url.pathname === '/'}><Fa icon={faHome} />Home</a></li>
 				{#if $pocketbase.authStore.model?.collectionName !== 'users'}
-					<li><a href="/"><Fa icon={faKey} />Permissions</a></li>
-					<li><a href="/"><Fa icon={faCog} />Settings</a></li>
+					<li>
+						<a href="/" class:active={$page.url.pathname.startsWith('/permissions')}
+							><Fa icon={faKey} />Permissions</a
+						>
+					</li>
+					<li>
+						<a href="/settings/" class:active={$page.url.pathname.startsWith('/settings')}
+							><Fa icon={faCog} />Settings</a
+						>
+					</li>
 				{/if}
 			</ul>
 		</div>
 		<a class="btn btn-ghost normal-case text-xl" href="/">
 			<img
-				src={$settingsPub?.collectionId && $settingsPub?.favicon
-					? `/api/files/settings_public/${$settingsPub?.collectionId}/${$settingsPub?.favicon}`
+				src={$settingsPub?.id && $settingsPub?.favicon
+					? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
 					: '/gopher.svg'}
 				alt={$settingsPub?.website_title ? $settingsPub?.website_title : 'UpSnap'}
 				width="45"
@@ -58,10 +67,18 @@
 	</div>
 	<div class="navbar-center hidden md:flex">
 		<ul class="menu menu-horizontal px-1">
-			<li><a href="/"><Fa icon={faHome} />Home</a></li>
+			<li><a href="/" class:active={$page.url.pathname === '/'}><Fa icon={faHome} />Home</a></li>
 			{#if $pocketbase.authStore.model?.collectionName !== 'users'}
-				<li><a href="/"><Fa icon={faKey} />Permissions</a></li>
-				<li><a href="/"><Fa icon={faCog} />Settings</a></li>
+				<li>
+					<a href="/" class:active={$page.url.pathname.startsWith('/permissions')}
+						><Fa icon={faKey} />Permissions</a
+					>
+				</li>
+				<li>
+					<a href="/settings/" class:active={$page.url.pathname.startsWith('/settings')}
+						><Fa icon={faCog} />Settings</a
+					>
+				</li>
 			{/if}
 		</ul>
 	</div>
