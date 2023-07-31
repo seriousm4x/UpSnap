@@ -25,7 +25,7 @@ func StartPocketBase(distDirFS fs.FS) {
 	App.RootCmd.Version = Version
 
 	// auto migrate db
-	migratecmd.MustRegister(App, App.RootCmd, &migratecmd.Options{
+	migratecmd.MustRegister(App, App.RootCmd, migratecmd.Config{
 		Automigrate: true,
 	})
 
