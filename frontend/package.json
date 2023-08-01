@@ -36,6 +36,7 @@
         "prettier": "^2.8.8",
         "prettier-plugin-svelte": "^2.10.1",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "svelte": "^4.1.2",
         "svelte-preprocess": "^5.0.4",
         "typescript": "^5.1.6",
@@ -51,6 +52,9 @@
         "sass": "^1.64.2",
 =======
         "svelte": "^4.1.1",
+=======
+        "svelte": "^4.1.2",
+>>>>>>> 4695c65 (npm-dep: bump svelte from 4.1.1 to 4.1.2 in /frontend)
         "svelte-preprocess": "^5.0.4",
         "typescript": "^5.1.6",
         "vite": "^4.4.7"
