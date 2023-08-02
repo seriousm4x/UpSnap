@@ -65,8 +65,9 @@ devDependencies:
 <<<<<<< HEAD
 <<<<<<< HEAD
     specifier: ^2.0.3
-    version: 2.0.3(@sveltejs/kit@1.22.3)
+    version: 2.0.3(@sveltejs/kit@1.22.4)
   '@sveltejs/kit':
+<<<<<<< HEAD
 <<<<<<< HEAD
     specifier: ^1.22.5
     version: 1.22.5(svelte@4.1.2)(vite@4.4.9)
@@ -108,6 +109,10 @@ devDependencies:
 =======
     version: 1.22.3(svelte@4.1.2)(vite@4.4.8)
 >>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
+=======
+    specifier: ^1.22.4
+    version: 1.22.4(svelte@4.1.2)(vite@4.4.8)
+>>>>>>> 6fad133 (npm-dep: bump @sveltejs/kit from 1.22.3 to 1.22.4 in /frontend)
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.62.0
     version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.46.0)(typescript@5.1.6)
@@ -772,6 +777,7 @@ packages:
     dev: false
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@sveltejs/adapter-static@2.0.3(@sveltejs/kit@1.22.5):
     resolution: {integrity: sha512-VUqTfXsxYGugCpMqQv1U0LIdbR3S5nBkMMDmpjGVJyM6Q2jHVMFtdWJCkeHMySc6mZxJ+0eZK3T7IgmUCDrcUQ==}
 =======
@@ -821,14 +827,18 @@ packages:
       }
 =======
   /@sveltejs/adapter-static@2.0.3(@sveltejs/kit@1.22.3):
+=======
+  /@sveltejs/adapter-static@2.0.3(@sveltejs/kit@1.22.4):
+>>>>>>> 6fad133 (npm-dep: bump @sveltejs/kit from 1.22.3 to 1.22.4 in /frontend)
     resolution: {integrity: sha512-VUqTfXsxYGugCpMqQv1U0LIdbR3S5nBkMMDmpjGVJyM6Q2jHVMFtdWJCkeHMySc6mZxJ+0eZK3T7IgmUCDrcUQ==}
 >>>>>>> dceee3f (npm-dep: bump @sveltejs/adapter-static from 2.0.2 to 2.0.3 in /frontend)
     peerDependencies:
       '@sveltejs/kit': ^1.5.0
     dependencies:
-      '@sveltejs/kit': 1.22.3(svelte@4.1.2)(vite@4.4.8)
+      '@sveltejs/kit': 1.22.4(svelte@4.1.2)(vite@4.4.8)
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -857,6 +867,10 @@ packages:
   /@sveltejs/kit@1.22.3(svelte@4.1.2)(vite@4.4.8):
 >>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     resolution: {integrity: sha512-IpHD5wvuoOIHYaHQUBJ1zERD2Iz+fB/rBXhXjl8InKw6X4VKE9BSus+ttHhE7Ke+Ie9ecfilzX8BnWE3FeQyng==}
+=======
+  /@sveltejs/kit@1.22.4(svelte@4.1.2)(vite@4.4.8):
+    resolution: {integrity: sha512-Opkqw1QXk4Cc25b/heJP2D7mX+OUBFAq4MXKfET58svTTxdeiHFKzmnuRsSF3nmxESqrLjqPAgHpib+knNGzRw==}
+>>>>>>> 6fad133 (npm-dep: bump @sveltejs/kit from 1.22.3 to 1.22.4 in /frontend)
     engines: {node: ^16.14 || >=18}
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     hasBin: true

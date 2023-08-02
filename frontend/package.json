@@ -18,6 +18,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
         "@sveltejs/adapter-static": "^2.0.3",
+<<<<<<< HEAD
         "@sveltejs/kit": "^1.22.5",
 =======
         "@sveltejs/adapter-static": "^2.0.2",
@@ -26,6 +27,9 @@
 >>>>>>> dceee3f (npm-dep: bump @sveltejs/adapter-static from 2.0.2 to 2.0.3 in /frontend)
         "@sveltejs/kit": "^1.22.3",
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+        "@sveltejs/kit": "^1.22.4",
+>>>>>>> 6fad133 (npm-dep: bump @sveltejs/kit from 1.22.3 to 1.22.4 in /frontend)
         "@typescript-eslint/eslint-plugin": "^5.62.0",
         "@typescript-eslint/parser": "^5.62.0",
         "eslint": "^8.45.0",
