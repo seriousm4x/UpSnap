@@ -18,8 +18,8 @@ dependencies:
     specifier: ^2.30.0
     version: 2.30.0
   pocketbase:
-    specifier: ^0.15.3
-    version: 0.15.3
+    specifier: ^0.16.0
+    version: 0.16.0
   sass:
     specifier: ^1.64.2
     version: 1.64.2
@@ -1744,8 +1744,8 @@ packages:
     hasBin: true
     dev: true
 
-  /pocketbase@0.15.3:
-    resolution: {integrity: sha512-sjM0XO4wHUlVZs94VhRJi4FeYtbLqvxFbRDJlfjFb/4FkxypbGwxLM4HDAEr8q6jdreuxAM1/n/b5HB1GjQ1Vg==}
+  /pocketbase@0.16.0:
+    resolution: {integrity: sha512-sndPu4Mbu1Y2VefvO2gIa/No5aIdP6E5br9HUGomvDYSfkmGfBxJNkivJSSKlr9KwWnaF8otf14304UUeFGOrA==}
     dev: false
 
   /postcss-load-config@3.1.4(postcss@8.4.27):

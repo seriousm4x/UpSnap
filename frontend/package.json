@@ -33,7 +33,7 @@
         "@popperjs/core": "^2.11.8",
         "bootstrap": "5.3.1",
         "date-fns": "^2.30.0",
-        "pocketbase": "^0.15.3",
+        "pocketbase": "^0.16.0",
         "sass": "^1.64.2",
         "svelte-fa": "^3.0.4"
     },
