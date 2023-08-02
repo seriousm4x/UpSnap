@@ -29,6 +29,7 @@ dependencies:
     version: 0.15.3
   sass:
 <<<<<<< HEAD
+<<<<<<< HEAD
     specifier: ^1.64.2
     version: 1.64.2
 =======
@@ -49,6 +50,10 @@ dependencies:
     specifier: ^1.64.1
     version: 1.64.1
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+    specifier: ^1.64.2
+    version: 1.64.2
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
   svelte-fa:
     specifier: ^3.0.4
     version: 3.0.4
@@ -220,8 +225,12 @@ devDependencies:
     version: 4.1.2
   svelte-preprocess:
     specifier: ^5.0.4
+<<<<<<< HEAD
     version: 5.0.4(postcss@8.4.27)(sass@1.64.1)(svelte@4.1.2)(typescript@5.1.6)
 >>>>>>> 4695c65 (npm-dep: bump svelte from 4.1.1 to 4.1.2 in /frontend)
+=======
+    version: 5.0.4(postcss@8.4.27)(sass@1.64.2)(svelte@4.1.2)(typescript@5.1.6)
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
   typescript:
     specifier: ^5.1.6
     version: 5.1.6
@@ -256,8 +265,12 @@ devDependencies:
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
 =======
     specifier: ^4.4.8
+<<<<<<< HEAD
     version: 4.4.8(sass@1.64.1)
 >>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
+=======
+    version: 4.4.8(sass@1.64.2)
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
 
 packages:
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -930,6 +943,7 @@ packages:
       undici: 5.22.1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       vite: 4.4.6
 >>>>>>> 5340d83 (first commit for tailwind rewrite)
 =======
@@ -955,6 +969,9 @@ packages:
 =======
       vite: 4.4.8(sass@1.64.1)
 >>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
+=======
+      vite: 4.4.8(sass@1.64.2)
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1066,8 +1083,12 @@ packages:
       '@sveltejs/vite-plugin-svelte': 2.4.2(svelte@4.1.2)(vite@4.4.8)
       debug: 4.3.4
       svelte: 4.1.2
+<<<<<<< HEAD
       vite: 4.4.8(sass@1.64.1)
 >>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
+=======
+      vite: 4.4.8(sass@1.64.2)
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1152,6 +1173,7 @@ packages:
       svelte: 4.1.2
       svelte-hmr: 0.15.2(svelte@4.1.2)
 <<<<<<< HEAD
+<<<<<<< HEAD
       vite: 4.4.9(sass@1.64.2)
       vitefu: 0.2.4(vite@4.4.9)
 =======
@@ -1203,6 +1225,9 @@ packages:
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
 =======
       vite: 4.4.8(sass@1.64.1)
+=======
+      vite: 4.4.8(sass@1.64.2)
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
       vitefu: 0.2.4(vite@4.4.8)
 >>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     transitivePeerDependencies:
@@ -3307,12 +3332,17 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /sass@1.64.2:
     resolution: {integrity: sha512-TnDlfc+CRnUAgLO9D8cQLFu/GIjJIzJCGkE7o4ekIGQOH7T3GetiRR/PsTWJUHhkzcSPrARkPI+gNWn5alCzDg==}
 =======
   /sass@1.64.1:
     resolution: {integrity: sha512-16rRACSOFEE8VN7SCgBu1MpYCyN7urj9At898tyzdXFhC+a+yOX5dXwAR7L8/IdPJ1NB8OYoXmD55DM30B2kEQ==}
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+  /sass@1.64.2:
+    resolution: {integrity: sha512-TnDlfc+CRnUAgLO9D8cQLFu/GIjJIzJCGkE7o4ekIGQOH7T3GetiRR/PsTWJUHhkzcSPrARkPI+gNWn5alCzDg==}
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -3662,8 +3692,12 @@ packages:
       svelte: 4.1.2
     dev: true
 
+<<<<<<< HEAD
   /svelte-preprocess@5.0.4(postcss@8.4.27)(sass@1.64.1)(svelte@4.1.2)(typescript@5.1.6):
 >>>>>>> 4695c65 (npm-dep: bump svelte from 4.1.1 to 4.1.2 in /frontend)
+=======
+  /svelte-preprocess@5.0.4(postcss@8.4.27)(sass@1.64.2)(svelte@4.1.2)(typescript@5.1.6):
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
     resolution: {integrity: sha512-ABia2QegosxOGsVlsSBJvoWeXy1wUKSfF7SWJdTjLAbx/Y3SrVevvvbFNQqrSJw89+lNSsM58SipmZJ5SRi5iw==}
     engines: {node: '>= 14.10.0'}
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
@@ -3708,12 +3742,16 @@ packages:
       postcss: 8.4.27
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       sass: 1.64.2
 =======
 >>>>>>> 5340d83 (first commit for tailwind rewrite)
 =======
       sass: 1.64.1
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+      sass: 1.64.2
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
       sorcery: 0.11.0
       strip-indent: 3.0.0
       svelte: 4.1.2
@@ -4002,6 +4040,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vite@4.4.9(sass@1.64.2):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
 =======
@@ -4032,6 +4071,9 @@ packages:
     resolution: {integrity: sha512-6pYf9QJ1mHylfVh39HpuSfMPojPSKVxZvnclX1K1FyZ1PXDOcLBibdq5t1qxJSnL63ca8Wf4zts6mD8u8oc9Fw==}
 =======
   /vite@4.4.8(sass@1.64.1):
+=======
+  /vite@4.4.8(sass@1.64.2):
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
     resolution: {integrity: sha512-LONawOUUjxQridNWGQlNizfKH89qPigK36XhMI7COMGztz8KNY0JHim7/xDd71CZwGT4HtSRgI7Hy+RlhG0Gvg==}
 >>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -4091,8 +4133,12 @@ packages:
 >>>>>>> c615d87 (npm-dep: update all)
 =======
       rollup: 3.26.3
+<<<<<<< HEAD
       sass: 1.64.1
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+      sass: 1.64.2
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -4147,6 +4193,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       vite: 4.4.9(sass@1.64.2)
 =======
       vite: 4.4.6
@@ -4166,6 +4213,9 @@ packages:
 =======
       vite: 4.4.8(sass@1.64.1)
 >>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
+=======
+      vite: 4.4.8(sass@1.64.2)
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
     dev: true
 
   /which@2.0.2:

@@ -74,8 +74,12 @@
         "bootstrap": "5.3.1",
         "date-fns": "^2.30.0",
         "pocketbase": "^0.15.3",
+<<<<<<< HEAD
         "sass": "^1.64.1",
 >>>>>>> f50e272 (npm-dep: bump sass from 1.64.0 to 1.64.1 in /frontend)
+=======
+        "sass": "^1.64.2",
+>>>>>>> fef1a91 (npm-dep: bump sass from 1.64.1 to 1.64.2 in /frontend)
         "svelte-fa": "^3.0.4"
     },
     "lint-staged": {
