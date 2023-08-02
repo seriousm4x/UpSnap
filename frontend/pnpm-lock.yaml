@@ -83,6 +83,7 @@ devDependencies:
   '@sveltejs/kit':
     specifier: ^1.22.3
 <<<<<<< HEAD
+<<<<<<< HEAD
     version: 1.22.3(svelte@4.1.1)(vite@4.4.7)
 >>>>>>> fae38a0 (cleanup)
 =======
@@ -104,6 +105,9 @@ devDependencies:
 =======
     version: 1.22.3(svelte@4.1.2)(vite@4.4.7)
 >>>>>>> 4695c65 (npm-dep: bump svelte from 4.1.1 to 4.1.2 in /frontend)
+=======
+    version: 1.22.3(svelte@4.1.2)(vite@4.4.8)
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.62.0
     version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.46.0)(typescript@5.1.6)
@@ -222,6 +226,7 @@ devDependencies:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     specifier: ^4.4.9
     version: 4.4.9(sass@1.64.2)
 =======
@@ -244,6 +249,10 @@ devDependencies:
     specifier: ^4.4.7
     version: 4.4.7(sass@1.64.1)
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
+=======
+    specifier: ^4.4.8
+    version: 4.4.8(sass@1.64.1)
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
 
 packages:
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -817,9 +826,10 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^1.5.0
     dependencies:
-      '@sveltejs/kit': 1.22.3(svelte@4.1.2)(vite@4.4.7)
+      '@sveltejs/kit': 1.22.3(svelte@4.1.2)(vite@4.4.8)
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -843,6 +853,9 @@ packages:
 =======
   /@sveltejs/kit@1.22.3(svelte@4.1.2)(vite@4.4.7):
 >>>>>>> 4695c65 (npm-dep: bump svelte from 4.1.1 to 4.1.2 in /frontend)
+=======
+  /@sveltejs/kit@1.22.3(svelte@4.1.2)(vite@4.4.8):
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     resolution: {integrity: sha512-IpHD5wvuoOIHYaHQUBJ1zERD2Iz+fB/rBXhXjl8InKw6X4VKE9BSus+ttHhE7Ke+Ie9ecfilzX8BnWE3FeQyng==}
     engines: {node: ^16.14 || >=18}
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
@@ -852,6 +865,7 @@ packages:
       svelte: ^3.54.0 || ^4.0.0-next.0
       vite: ^4.0.0
     dependencies:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -873,6 +887,9 @@ packages:
 =======
       '@sveltejs/vite-plugin-svelte': 2.4.2(svelte@4.1.2)(vite@4.4.7)
 >>>>>>> 4695c65 (npm-dep: bump svelte from 4.1.1 to 4.1.2 in /frontend)
+=======
+      '@sveltejs/vite-plugin-svelte': 2.4.2(svelte@4.1.2)(vite@4.4.8)
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
       '@types/cookie': 0.5.1
       cookie: 0.5.0
       devalue: 4.3.2
@@ -898,6 +915,7 @@ packages:
 >>>>>>> e50b84b (npm-dep: update all)
       undici: 5.22.1
 <<<<<<< HEAD
+<<<<<<< HEAD
       vite: 4.4.6
 >>>>>>> 5340d83 (first commit for tailwind rewrite)
 =======
@@ -920,6 +938,9 @@ packages:
 =======
       vite: 4.4.7(sass@1.64.1)
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
+=======
+      vite: 4.4.8(sass@1.64.1)
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -930,7 +951,11 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@sveltejs/vite-plugin-svelte-inspector@1.0.3(@sveltejs/vite-plugin-svelte@2.4.2)(svelte@4.1.2)(vite@4.4.9):
+=======
+  /@sveltejs/vite-plugin-svelte-inspector@1.0.3(@sveltejs/vite-plugin-svelte@2.4.2)(svelte@4.1.2)(vite@4.4.8):
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     resolution: {integrity: sha512-Khdl5jmmPN6SUsVuqSXatKpQTMIifoQPDanaxC84m9JxIibWvSABJyHpyys0Z+1yYrxY5TTEQm+6elh0XCMaOA==}
     engines: {node: ^14.18.0 || >= 16}
 =======
@@ -978,6 +1003,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       '@sveltejs/vite-plugin-svelte': 2.4.2(svelte@4.1.2)(vite@4.4.9)
 =======
       '@sveltejs/vite-plugin-svelte': 2.4.3(svelte@4.1.1)(vite@4.4.7)
@@ -1022,6 +1048,12 @@ packages:
 >>>>>>> 4695c65 (npm-dep: bump svelte from 4.1.1 to 4.1.2 in /frontend)
       vite: 4.4.7(sass@1.64.1)
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
+=======
+      '@sveltejs/vite-plugin-svelte': 2.4.2(svelte@4.1.2)(vite@4.4.8)
+      debug: 4.3.4
+      svelte: 4.1.2
+      vite: 4.4.8(sass@1.64.1)
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1032,7 +1064,11 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@sveltejs/vite-plugin-svelte@2.4.2(svelte@4.1.2)(vite@4.4.9):
+=======
+  /@sveltejs/vite-plugin-svelte@2.4.2(svelte@4.1.2)(vite@4.4.8):
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     resolution: {integrity: sha512-ePfcC48ftMKhkT0OFGdOyycYKnnkT6i/buzey+vHRTR/JpQvuPzzhf1PtKqCDQfJRgoPSN2vscXs6gLigx/zGw==}
     engines: {node: ^14.18.0 || >= 16}
 =======
@@ -1079,6 +1115,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       '@sveltejs/vite-plugin-svelte-inspector': 1.0.3(@sveltejs/vite-plugin-svelte@2.4.2)(svelte@4.1.2)(vite@4.4.9)
 =======
       '@sveltejs/vite-plugin-svelte-inspector': 1.0.3(@sveltejs/vite-plugin-svelte@2.4.3)(svelte@4.1.1)(vite@4.4.7)
@@ -1089,6 +1126,9 @@ packages:
 =======
       '@sveltejs/vite-plugin-svelte-inspector': 1.0.3(@sveltejs/vite-plugin-svelte@2.4.2)(svelte@4.1.2)(vite@4.4.7)
 >>>>>>> 4695c65 (npm-dep: bump svelte from 4.1.1 to 4.1.2 in /frontend)
+=======
+      '@sveltejs/vite-plugin-svelte-inspector': 1.0.3(@sveltejs/vite-plugin-svelte@2.4.2)(svelte@4.1.2)(vite@4.4.8)
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
       debug: 4.3.4
       deepmerge: 4.3.1
       kleur: 4.1.5
@@ -1097,6 +1137,7 @@ packages:
 <<<<<<< HEAD
       svelte: 4.1.2
       svelte-hmr: 0.15.2(svelte@4.1.2)
+<<<<<<< HEAD
       vite: 4.4.9(sass@1.64.2)
       vitefu: 0.2.4(vite@4.4.9)
 =======
@@ -1146,6 +1187,10 @@ packages:
       vite: 4.4.7(sass@1.64.1)
       vitefu: 0.2.4(vite@4.4.7)
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
+=======
+      vite: 4.4.8(sass@1.64.1)
+      vitefu: 0.2.4(vite@4.4.8)
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3942,6 +3987,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vite@4.4.9(sass@1.64.2):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
 =======
@@ -3970,6 +4016,10 @@ packages:
 >>>>>>> ea070a3 (more changes to device settings)
 =======
     resolution: {integrity: sha512-6pYf9QJ1mHylfVh39HpuSfMPojPSKVxZvnclX1K1FyZ1PXDOcLBibdq5t1qxJSnL63ca8Wf4zts6mD8u8oc9Fw==}
+=======
+  /vite@4.4.8(sass@1.64.1):
+    resolution: {integrity: sha512-LONawOUUjxQridNWGQlNizfKH89qPigK36XhMI7COMGztz8KNY0JHim7/xDd71CZwGT4HtSRgI7Hy+RlhG0Gvg==}
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     engines: {node: ^14.18.0 || >=16.0.0}
 >>>>>>> e50b84b (npm-dep: update all)
 =======
@@ -4038,6 +4088,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /vitefu@0.2.4(vite@4.4.9):
     resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==}
 =======
@@ -4065,6 +4116,9 @@ packages:
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
 =======
   /vitefu@0.2.4(vite@4.4.7):
+=======
+  /vitefu@0.2.4(vite@4.4.8):
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==}
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
     peerDependencies:
@@ -4073,6 +4127,7 @@ packages:
       vite:
         optional: true
     dependencies:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4094,6 +4149,9 @@ packages:
 =======
       vite: 4.4.7(sass@1.64.1)
 >>>>>>> 1f60714 (npm-dep: bump vite from 4.4.6 to 4.4.7 in /frontend)
+=======
+      vite: 4.4.8(sass@1.64.1)
+>>>>>>> 6570770 (npm-dep: bump vite from 4.4.7 to 4.4.8 in /frontend)
     dev: true
 
   /which@2.0.2:
