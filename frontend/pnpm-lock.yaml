@@ -9,12 +9,17 @@ dependencies:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     specifier: ^6.4.2
     version: 6.4.2
 =======
     specifier: ^6.4.0
     version: 6.4.0
 >>>>>>> 5e3023e (npm-dep: bump bootstrap from 5.3.0 to 5.3.1 in /frontend)
+=======
+    specifier: ^6.4.2
+    version: 6.4.2
+>>>>>>> 07127ee (npm-dep: bump @fortawesome/free-solid-svg-icons in /frontend)
   '@popperjs/core':
     specifier: ^2.11.8
     version: 2.11.8
@@ -627,6 +632,7 @@ packages:
   /@fortawesome/fontawesome-common-types@6.4.2:
     resolution: {integrity: sha512-1DgP7f+XQIJbLFCTX1V2QnxVmpLdKdzzo2k8EmvDOePfchaIGQ9eCHj2up3/jNEbZuBqel5OxiaOJf37TWauRA==}
     engines: {node: '>=6'}
+<<<<<<< HEAD
     requiresBuild: true
     dev: false
 
@@ -643,6 +649,8 @@ packages:
         integrity: sha512-1DgP7f+XQIJbLFCTX1V2QnxVmpLdKdzzo2k8EmvDOePfchaIGQ9eCHj2up3/jNEbZuBqel5OxiaOJf37TWauRA==
       }
     engines: { node: '>=6' }
+=======
+>>>>>>> 07127ee (npm-dep: bump @fortawesome/free-solid-svg-icons in /frontend)
     requiresBuild: true
     dev: false
 
@@ -654,6 +662,7 @@ packages:
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
 =======
   /@fortawesome/free-solid-svg-icons@6.4.2:
+<<<<<<< HEAD
 >>>>>>> c615d87 (npm-dep: update all)
     resolution:
       {
@@ -668,6 +677,10 @@ packages:
 >>>>>>> e50b84b (npm-dep: update all)
 =======
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
+=======
+    resolution: {integrity: sha512-sYwXurXUEQS32fZz9hVCUUv/xu49PEJEyUOsA51l6PU/qVgfbTb2glsTEaJngVVT8VqBATRIdh7XVgV1JF1LkA==}
+    engines: {node: '>=6'}
+>>>>>>> 07127ee (npm-dep: bump @fortawesome/free-solid-svg-icons in /frontend)
     requiresBuild: true
     dependencies:
       '@fortawesome/fontawesome-common-types': 6.4.2
