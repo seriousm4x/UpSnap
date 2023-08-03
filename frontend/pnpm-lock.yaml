@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fortawesome/free-solid-svg-icons':
-    specifier: ^6.4.0
-    version: 6.4.0
+    specifier: ^6.4.2
+    version: 6.4.2
   '@popperjs/core':
     specifier: ^2.11.8
     version: 2.11.8
@@ -331,18 +331,18 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@fortawesome/fontawesome-common-types@6.4.0:
-    resolution: {integrity: sha512-HNii132xfomg5QVZw0HwXXpN22s7VBHQBv9CeOu9tfJnhsWQNd2lmTNi8CSrnw5B+5YOmzu1UoPAyxaXsJ6RgQ==}
+  /@fortawesome/fontawesome-common-types@6.4.2:
+    resolution: {integrity: sha512-1DgP7f+XQIJbLFCTX1V2QnxVmpLdKdzzo2k8EmvDOePfchaIGQ9eCHj2up3/jNEbZuBqel5OxiaOJf37TWauRA==}
     engines: {node: '>=6'}
     requiresBuild: true
     dev: false
 
-  /@fortawesome/free-solid-svg-icons@6.4.0:
-    resolution: {integrity: sha512-kutPeRGWm8V5dltFP1zGjQOEAzaLZj4StdQhWVZnfGFCvAPVvHh8qk5bRrU4KXnRRRNni5tKQI9PBAdI6MP8nQ==}
+  /@fortawesome/free-solid-svg-icons@6.4.2:
+    resolution: {integrity: sha512-sYwXurXUEQS32fZz9hVCUUv/xu49PEJEyUOsA51l6PU/qVgfbTb2glsTEaJngVVT8VqBATRIdh7XVgV1JF1LkA==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.4.0
+      '@fortawesome/fontawesome-common-types': 6.4.2
     dev: false
 
   /@humanwhocodes/config-array@0.11.10:
