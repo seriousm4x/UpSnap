@@ -1,10 +1,19 @@
 <script lang="ts">
 	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
-	import type { Device } from '$lib/types/device';
 	import Fa from 'svelte-fa';
 	import { faCircle, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+	import type { Device } from '$lib/types/device';
 
 	export let device: Device;
+
+	let timeout: number;
+	$: minutes = Math.floor(timeout / 60);
+	$: seconds = timeout % 60;
+	let interval: number;
+
+	$: if (device.status === 'pending') {
+		countdown();
+	}
 
 	// TODO: change wake and shutdown to nic based routes, not device based
 	function wake() {
@@ -23,10 +32,23 @@
 		});
 	}
 
+	function countdown() {
+		clearInterval(interval);
+		const end = Date.parse(device.updated) + 2 * 60 * 1000;
+		interval = setInterval(() => {
+			const left = Math.round((end - Date.now()) / 1000);
+			if (left >= 0) {
+				timeout = left;
+			} else {
+				clearInterval(interval);
+			}
+		}, 1000);
+	}
+
 	function handleClick() {
 		if (device.status === 'offline') {
 			wake();
-		} else if (device.statis === 'online') {
+		} else if (device.status === 'online') {
 			shutdown();
 		}
 	}
@@ -47,9 +69,12 @@
 			{:else if device.status === 'online'}
 				<button class="btn btn-success flex-shrink"><Fa icon={faPowerOff} /></button>
 			{:else}
-				<button class="btn btn-warning flex-shrink"
-					><span class="loading loading-ring loading-md" /></button
-				>
+				<button class="btn btn-warning flex-shrink">
+					<span class="countdown font-mono">
+						<span style="--value:{minutes};" />:
+						<span style="--value:{seconds};" />
+					</span>
+				</button>
 			{/if}
 		</div>
 		<div class="grow">
