@@ -3,9 +3,9 @@
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
 	import Alert from '$lib/components/Alert.svelte';
+	import Fa from 'svelte-fa';
 	import { faSave, faTrash, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 	import type { Device, Port } from '$lib/types/device';
-	import Fa from 'svelte-fa';
 
 	export let device: Device;
 
@@ -296,19 +296,17 @@
 				<span class="badge">curl</span> in general to make web requests.
 			</p>
 			<p class="my-2 font-bold">Examples:</p>
-			<div class="alert text-sm bg-base-100 text-start w-fit">
-				<div>
-					<span class="font-bold">Shutdown remote windows machine:</span>
-					<pre
-						class="break-words whitespace-pre-wrap">net rpc shutdown -I 192.168.1.13 -U "user%password"</pre>
-				</div>
+			<div class="mockup-code text-sm max-w-fit">
+				<pre data-prefix="#"><code>Shutdown remote windows machine:</code></pre>
+				<pre data-prefix="$" class="text-warning"><code
+						>net rpc shutdown -I 192.168.1.13 -U "user%password"</code
+					></pre>
 			</div>
-			<div class="alert text-sm my-2 bg-base-100 text-start w-fit">
-				<div>
-					<span class="font-bold">Shutdown remote linux machine:</span>
-					<pre
-						class="break-words whitespace-pre-wrap">sshpass -p your_password ssh -o "StrictHostKeyChecking=no" user@hostname "sudo poweroff"</pre>
-				</div>
+			<div class="mockup-code text-sm max-w-fit">
+				<pre data-prefix="#"><code>Shutdown remote linux machine:</code></pre>
+				<pre data-prefix="$" class="text-warning"><code
+						>sshpass -p your_password ssh -o "StrictHostKeyChecking=no" user@hostname "sudo poweroff"</code
+					></pre>
 			</div>
 			<div class="form-control w-full">
 				<label class="label cursor-pointer" for="shutdown-cmd">
