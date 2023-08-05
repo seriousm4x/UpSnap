@@ -4,7 +4,7 @@
 	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Fa from 'svelte-fa';
-	import { faCog, faHome, faCircleQuestion, faKey } from '@fortawesome/free-solid-svg-icons';
+	import { faCog, faHome, faPlus, faKey } from '@fortawesome/free-solid-svg-icons';
 
 	$: avatar = $pocketbase.authStore?.model?.avatar
 		? $pocketbase.authStore?.model.avatar
@@ -65,7 +65,7 @@
 			/>{$settingsPub?.website_title ? $settingsPub?.website_title : ''}
 		</a>
 	</div>
-	<div class="navbar-center hidden md:flex">
+	<div class="hidden md:flex">
 		<ul class="menu menu-horizontal px-1">
 			<li><a href="/" class:active={$page.url.pathname === '/'}><Fa icon={faHome} />Home</a></li>
 			{#if $pocketbase.authStore.model?.collectionName !== 'users'}
@@ -84,6 +84,10 @@
 	</div>
 	<div class="justify-end ms-auto">
 		{#if $pocketbase.authStore?.model !== null}
+			<a class="btn btn-sm btn-success me-4" href="/device/new">
+				<Fa icon={faPlus} />
+				New
+			</a>
 			<div class="dropdown dropdown-end">
 				<label tabindex="-1" class="btn btn-ghost btn-circle avatar" for="avatar">
 					<div class="w-10 rounded-full" id="avatar">
