@@ -7,7 +7,6 @@
 	import { settingsPub } from '$lib/stores/settings';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
-	import type { Device } from '$lib/types/device';
 	import type { SettingsPublic } from '$lib/types/settings';
 
 	onMount(async () => {
@@ -41,14 +40,6 @@
 		} else {
 			$pocketbase.admins.authRefresh();
 		}
-
-		// fill devices store
-		$pocketbase
-			.collection('devices')
-			.getFullList(1000, { sort: 'name', expand: 'ports,groups' })
-			.then((data) => {
-				devices.set(data as Device[]);
-			});
 	});
 </script>
 

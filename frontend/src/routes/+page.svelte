@@ -2,45 +2,28 @@
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import { pocketbase, devices } from '$lib/stores/pocketbase';
 	import { onMount } from 'svelte';
-	import type { Device, Port } from '$lib/types/device';
+	import Fa from 'svelte-fa';
+	import { faPlus } from '@fortawesome/free-solid-svg-icons';
+	import type { Device } from '$lib/types/device';
 
-	onMount(() => {
-		$pocketbase.collection('devices').subscribe('*', (e) => {
-			const index = $devices.findIndex((device) => device.id === e.record.id);
-			if (e.action === 'create') {
-				$devices = [...$devices, e.record as Device];
-			} else if (e.action === 'update') {
-				// get expanded values before updating the store
-				$pocketbase
-					.collection('devices')
-					.getOne(e.record.id, {
-						expand: 'ports,groups'
-					})
-					.then((data) => {
-						$devices[index] = data as Device;
-					});
-			} else if (e.action === 'delete') {
-				$devices = $devices.filter((d) => d !== $devices[index]);
-			}
+	onMount(async () => {
+		await getAllDevices();
+
+		$pocketbase.collection('devices').subscribe('*', async () => {
+			await getAllDevices();
 		});
 
-		$pocketbase.collection('ports').subscribe('*', (e) => {
-			if (e.action === 'update') {
-				// replace port in device store by finding both indexes
-				let portIndex = -1;
-				const deviceIndex = $devices.findIndex((device) =>
-					device.expand.ports.map((port) => {
-						if (port.id === e.record.id) {
-							portIndex = device.expand.ports.indexOf(port);
-						}
-					})
-				);
-				if (deviceIndex !== -1 && portIndex !== -1) {
-					$devices[deviceIndex].expand.ports[portIndex] = e.record as Port;
-				}
-			}
+		$pocketbase.collection('ports').subscribe('*', async () => {
+			await getAllDevices();
 		});
 	});
+
+	async function getAllDevices() {
+		const resp = await $pocketbase
+			.collection('devices')
+			.getFullList(1000, { sort: 'name', expand: 'ports,groups' });
+		devices.set(resp as Device[]);
+	}
 </script>
 
 {#if $devices.length > 0}
@@ -52,5 +35,12 @@
 		{/each}
 	</div>
 {:else}
-	<div class="container mx-auto text-center">No devices</div>
+	<div class="container text-center">
+		<p>You have not created any devices.</p>
+		<p>
+			<a href="/device/new" class="btn btn-ghost"
+				><Fa icon={faPlus} class="ms-2" />Add your first device
+			</a>
+		</p>
+	</div>
 {/if}

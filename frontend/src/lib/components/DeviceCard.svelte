@@ -9,8 +9,8 @@
 
 <div class="card bg-base-300 shadow-md rounded-3xl" transition:scale={{ delay: 0, duration: 200 }}>
 	<div class="card-body p-6">
-		{#if device.link !== ''}
-			<a href={device.link} target="_blank">
+		{#if device.link.toString() !== ''}
+			<a href={device.link.toString()} target="_blank">
 				<h1 class="card-title link">{device.name}</h1>
 			</a>
 		{:else}
@@ -21,7 +21,7 @@
 			<DeviceCardNic {device} />
 		</ul>
 		<div class="card-actions">
-			<span class="tooltip" data-tip="Last status change">
+			<span class="tooltip" data-tip="Last status change: {device.updated}">
 				{formatDistanceToNow(parseISO(device.updated), {
 					includeSeconds: true,
 					addSuffix: true
