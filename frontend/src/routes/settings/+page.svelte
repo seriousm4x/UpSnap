@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { settingsPub, settingsPriv } from '$lib/stores/settings';
 	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
+	import Fa from 'svelte-fa';
+	import { faSave } from '@fortawesome/free-solid-svg-icons';
 	import type { SettingsPublic, SettingsPrivate } from '$lib/types/settings';
 
 	let settingsPubClone: SettingsPublic | undefined;
@@ -140,7 +142,9 @@
 			</div>
 		</div>
 		<div class="card-actions justify-end mt-4">
-			<button class="btn btn-primary" type="submit" bind:this={saveBtn}>Save</button>
+			<button class="btn btn-success" type="submit" bind:this={saveBtn}
+				><Fa icon={faSave} />Save</button
+			>
 		</div>
 	</form>
 
