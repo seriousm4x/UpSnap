@@ -1,36 +1,57 @@
 <script lang="ts">
-	import DeviceCard from '$lib/components/DeviceCard.svelte';
-	import { pocketbase, devices } from '$lib/stores/pocketbase';
 	import { onMount } from 'svelte';
+	import { pocketbase } from '$lib/stores/pocketbase';
+	import DeviceCard from '$lib/components/DeviceCard.svelte';
+	import Alert from '$lib/components/Alert.svelte';
 	import Fa from 'svelte-fa';
-	import { faPlus } from '@fortawesome/free-solid-svg-icons';
+	import { faPlus, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 	import type { Device } from '$lib/types/device';
 
-	onMount(async () => {
-		await getAllDevices();
+	let devices = [] as Device[];
+	let loading = true;
+	let err = false;
 
-		$pocketbase.collection('devices').subscribe('*', async () => {
-			await getAllDevices();
+	function getAllDevices() {
+		$pocketbase
+			.collection('devices')
+			.getFullList(1000, { sort: 'name', expand: 'ports,groups' })
+			.then((resp) => {
+				devices = resp as Device[];
+			})
+			.catch(() => {
+				err = true;
+			})
+			.finally(() => {
+				loading = false;
+			});
+	}
+
+	onMount(() => {
+		getAllDevices();
+
+		$pocketbase.collection('devices').subscribe('*', () => {
+			getAllDevices();
 		});
 
-		$pocketbase.collection('ports').subscribe('*', async () => {
-			await getAllDevices();
+		$pocketbase.collection('ports').subscribe('*', () => {
+			getAllDevices();
 		});
 	});
-
-	async function getAllDevices() {
-		const resp = await $pocketbase
-			.collection('devices')
-			.getFullList(1000, { sort: 'name', expand: 'ports,groups' });
-		devices.set(resp as Device[]);
-	}
 </script>
 
-{#if $devices.length > 0}
+{#if loading}
+	<div class="container max-w-lg mx-auto text-center">
+		<span class="loading loading-dots loading-lg" />
+	</div>
+{:else if err}
+	<div class="container max-w-lg mx-auto">
+		<Alert color="error" message="Failed to get devices from api." icon={faTriangleExclamation} />
+	</div>
+{:else if devices.length > 0}
 	<div
 		class="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
 	>
-		{#each $devices as device}
+		{#each devices as device}
 			<DeviceCard {device} />
 		{/each}
 	</div>

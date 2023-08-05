@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { pocketbase, backendUrl, devices } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
