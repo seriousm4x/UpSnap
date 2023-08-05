@@ -207,7 +207,7 @@
 			<div class="form-control w-full">
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 					{#each device.expand.ports as _, index}
-						<DeviceFormPort bind:deviceClone={device} {index} bind:portErrMsg bind:portErrTimeout />
+						<DeviceFormPort bind:device {index} bind:portErrMsg bind:portErrTimeout />
 					{/each}
 				</div>
 				{#if portErrMsg !== ''}
