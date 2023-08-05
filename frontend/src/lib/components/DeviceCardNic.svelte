@@ -6,11 +6,10 @@
 
 	export let device: Device;
 
-	let timeout: number;
+	let interval: number;
+	let timeout = 120;
 	$: minutes = Math.floor(timeout / 60);
 	$: seconds = timeout % 60;
-	let interval: number;
-
 	$: if (device.status === 'pending') {
 		countdown();
 	}
@@ -68,12 +67,16 @@
 				<button class="btn btn-error flex-shrink"><Fa icon={faPowerOff} /></button>
 			{:else if device.status === 'online'}
 				<button class="btn btn-success flex-shrink"><Fa icon={faPowerOff} /></button>
-			{:else}
+			{:else if device.status === 'pending'}
 				<button class="btn btn-warning flex-shrink">
 					<span class="countdown font-mono">
 						<span style="--value:{minutes};" />:
 						<span style="--value:{seconds};" />
 					</span>
+				</button>
+			{:else}
+				<button class="btn btn-warning flex-shrink">
+					<span class="loading loading-ring loading-sm" />
 				</button>
 			{/if}
 		</div>
