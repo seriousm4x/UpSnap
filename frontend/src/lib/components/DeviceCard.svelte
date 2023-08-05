@@ -1,10 +1,20 @@
 <script lang="ts">
-	import { formatDistanceToNow, parseISO } from 'date-fns';
+	import { formatDistance, parseISO } from 'date-fns';
 	import DeviceCardNic from './DeviceCardNic.svelte';
 	import { scale } from 'svelte/transition';
 	import type { Device } from '$lib/types/device';
 
 	export let device: Device;
+
+	// update device status change
+	let now = Date.now();
+	let interval: number;
+	$: {
+		clearInterval(interval);
+		interval = setInterval(() => {
+			now = Date.now();
+		}, 1000);
+	}
 </script>
 
 <div class="card bg-base-300 shadow-md rounded-3xl" transition:scale={{ delay: 0, duration: 200 }}>
@@ -22,7 +32,7 @@
 		</ul>
 		<div class="card-actions">
 			<span class="tooltip" data-tip="Last status change: {device.updated}">
-				{formatDistanceToNow(parseISO(device.updated), {
+				{formatDistance(parseISO(device.updated), now, {
 					includeSeconds: true,
 					addSuffix: true
 				})}

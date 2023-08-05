@@ -6,7 +6,7 @@
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
 	import type { Device, Port } from '$lib/types/device';
 
-	async function getDevice() {
+	async function getDevice(): Promise<Device> {
 		const resp = await $pocketbase
 			.collection('devices')
 			.getOne($page.params.id, { expand: 'ports,groups' });
