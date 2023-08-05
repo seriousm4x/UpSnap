@@ -55,17 +55,22 @@
 				Authorization: $pocketbase.authStore.token
 			}
 		})
-			.then((resp) => resp.json())
+			.then(async (resp) => {
+				if (resp.ok) {
+					return resp.json();
+				} else {
+					return Promise.reject(await resp.json());
+				}
+			})
 			.then((data) => {
 				scanResponse = data as ScanResponse;
 			})
 			.catch((err) => {
-				scanErrMsg = err;
 				clearTimeout(scanErrTimeout);
 				scanErrTimeout = setTimeout(() => {
 					scanErrMsg = '';
 				}, 10000);
-				scanErrMsg = err;
+				scanErrMsg = err.message;
 			})
 			.finally(() => (scanRunning = false));
 	}
@@ -110,30 +115,36 @@
 					customClasses="mt-4 max-w-fit"
 				/>
 			{/if}
-			<label class="label" for="scan-range">
-				<span class="label-text">Scan range</span>
-			</label>
-			<div class="join">
-				<input
-					id="scan-range"
-					class="input input-bordered join-item"
-					type="text"
-					placeholder="192.168.1.0/24"
-					bind:value={$settingsPriv.scan_range}
-				/>
-				<button class="btn join-item" on:click={() => saveSettings()}>Save</button>
-			</div>
-			<div>
-				{#if scanRunning}
-					<button class="btn no-animation">
-						<span class="loading loading-spinner" />
-						Scan running
-					</button>
-				{:else}
-					<button class="btn" on:click={() => scan()}>
-						<Fa icon={faMagnifyingGlass} /> Scan
-					</button>
-				{/if}
+			<div class="flex flex-row flex-wrap gap-4 items-end">
+				<div>
+					<label class="label" for="scan-range">
+						<span class="label-text">IP range</span>
+					</label>
+					<div class="join">
+						<input
+							id="scan-range"
+							class="input input-bordered join-item"
+							type="text"
+							placeholder="192.168.1.0/24"
+							bind:value={$settingsPriv.scan_range}
+						/>
+						<button class="btn join-item" on:click={() => saveSettings()}>Save</button>
+					</div>
+				</div>
+				<div>
+					<div>
+						{#if scanRunning}
+							<button class="btn no-animation">
+								<span class="loading loading-spinner" />
+								Scan running
+							</button>
+						{:else}
+							<button class="btn btn-success" on:click={() => scan()}>
+								<Fa icon={faMagnifyingGlass} /> Scan
+							</button>
+						{/if}
+					</div>
+				</div>
 			</div>
 			{#if scanErrMsg !== ''}
 				<Alert
@@ -143,11 +154,11 @@
 					customClasses="mt-4 max-w-fit"
 				/>
 			{/if}
-			{#if scanResponse.devices.length > 0}
+			{#if scanResponse.devices?.length > 0}
 				{#each scanResponse.devices.sort( (a, b) => a.ip.localeCompare( b.ip, undefined, { numeric: true } ) ) as device, index}
 					<div class="collapse collapse-arrow bg-base-200">
 						<input type="radio" name="scanned-devices" checked={index === 0} />
-						<div class="collapse-title text-xl font-medium">
+						<div class="collapse-title font-bold">
 							{device.name} <span class="badge">{device.ip}</span>
 						</div>
 						<div class="collapse-content">
@@ -182,7 +193,11 @@
 						</div>
 					</div>
 				{/each}
-				<div class="form-control max-w-fit flex flex-row flex-wrap gap-4 mt-4">
+				<div class="form-control max-w-fit flex flex-row flex-wrap gap-4 mt-4 ms-auto">
+					<label class="label cursor-pointer">
+						<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
+						<span class="label-text ms-2">Include devices where name is "Unknown"</span>
+					</label>
 					<button
 						class="btn btn-success"
 						on:click={() => addAll()}
@@ -197,10 +212,6 @@
 									device.name !== 'Unknown';
 							  }).length})
 					</button>
-					<label class="label cursor-pointer">
-						<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
-						<span class="label-text ms-2">Include devices where name is "Unknown"</span>
-					</label>
 				</div>
 			{/if}
 		</div>
