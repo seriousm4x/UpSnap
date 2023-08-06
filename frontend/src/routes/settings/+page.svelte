@@ -63,7 +63,7 @@
 </script>
 
 {#if settingsPubClone === undefined || settingsPrivClone === undefined}
-	<div class="container mx-auto text-center"><span class="loading loading-ring loading-md" /></div>
+	<div class="container mx-auto text-center"><span class="loading loading-dots loading-lg" /></div>
 {:else}
 	<h1 class="text-3xl font-bold mb-8">Settings</h1>
 	<form on:submit|preventDefault={save}>
@@ -148,7 +148,7 @@
 		</div>
 	</form>
 
-	<div class="container mx-auto text-center">
+	<div class="container mx-auto text-center mt-6">
 		{#if version === undefined}
 			UpSnap version: (untracked)
 		{:else}

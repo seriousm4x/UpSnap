@@ -4,7 +4,7 @@
 	import Fa from 'svelte-fa';
 	import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-	export let color = '';
+	export let color: '' | 'info' | 'success' | 'warning' | 'error' = '';
 	export let message: string;
 	export let icon: IconDefinition;
 	export let customClasses = '';
@@ -19,3 +19,15 @@
 	{/if}
 	<span>{message}</span>
 </div>
+
+<style global>
+	/* needed, so that svelte includes these classes on build */
+	.alert-info {
+	}
+	.alert-success {
+	}
+	.alert-warning {
+	}
+	.alert-error {
+	}
+</style>

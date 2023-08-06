@@ -4,7 +4,55 @@
 	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Fa from 'svelte-fa';
-	import { faCog, faHome, faPlus, faKey } from '@fortawesome/free-solid-svg-icons';
+	import {
+		faCog,
+		faHome,
+		faPlus,
+		faKey,
+		faSwatchbook,
+		faChevronDown,
+		faCheck
+	} from '@fortawesome/free-solid-svg-icons';
+	import { themeChange } from 'theme-change';
+	import { onMount } from 'svelte';
+
+	let availableThemes = [
+		'light',
+		'dark',
+		'cupcake',
+		'bumblebee',
+		'emerald',
+		'corporate',
+		'synthwave',
+		'retro',
+		'cyberpunk',
+		'valentine',
+		'halloween',
+		'garden',
+		'forest',
+		'aqua',
+		'lofi',
+		'pastel',
+		'fantasy',
+		'wireframe',
+		'black',
+		'luxury',
+		'dracula',
+		'cmyk',
+		'autumn',
+		'business',
+		'acid',
+		'lemonade',
+		'night',
+		'coffee',
+		'winter'
+	];
+	let activeTheme: string | null = '';
+
+	onMount(() => {
+		themeChange(false);
+		activeTheme = document.documentElement.getAttribute('data-theme');
+	});
 
 	$: avatar = $pocketbase.authStore?.model?.avatar
 		? $pocketbase.authStore?.model.avatar
@@ -37,17 +85,27 @@
 			<ul
 				id="mobile-menu"
 				tabindex="-1"
-				class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52"
+				class="menu dropdown-content mt-3 z-[1] p-2 gap-1 shadow bg-base-300 rounded-box w-52"
 			>
-				<li><a href="/" class:active={$page.url.pathname === '/'}><Fa icon={faHome} />Home</a></li>
+				<li>
+					<a href="/" class="rounded-lg px-4 py-2" class:active={$page.url.pathname === '/'}
+						><Fa icon={faHome} />Home</a
+					>
+				</li>
 				{#if $pocketbase.authStore.model?.collectionName !== 'users'}
 					<li>
-						<a href="/" class:active={$page.url.pathname.startsWith('/permissions')}
+						<a
+							href="/"
+							class="rounded-lg px-4 py-2"
+							class:active={$page.url.pathname.startsWith('/permissions')}
 							><Fa icon={faKey} />Permissions</a
 						>
 					</li>
 					<li>
-						<a href="/settings/" class:active={$page.url.pathname.startsWith('/settings')}
+						<a
+							href="/settings/"
+							class="rounded-lg px-4 py-2"
+							class:active={$page.url.pathname.startsWith('/settings')}
 							><Fa icon={faCog} />Settings</a
 						>
 					</li>
@@ -81,6 +139,45 @@
 				</li>
 			{/if}
 		</ul>
+	</div>
+	<div class="dropdown md:dropdown-end">
+		<div tabindex="-1" class="btn normal-case btn-ghost">
+			<Fa icon={faSwatchbook} />
+			<span class="hidden font-normal md:inline">Theme</span>
+			<Fa icon={faChevronDown} />
+		</div>
+		<div
+			class="dropdown-content bg-base-200 text-base-content rounded-box h-fit max-h-96 w-56 overflow-y-auto shadow mt-3 z-[1]"
+		>
+			<div class="grid grid-cols-1 gap-3 p-3" tabindex="-1">
+				{#each availableThemes as theme}
+					<button
+						class="outline-base-content overflow-hidden rounded-lg text-left"
+						data-set-theme={theme}
+						on:click={() => (activeTheme = theme)}
+						on:keydown={() => (activeTheme = theme)}
+					>
+						<div
+							data-theme={theme}
+							class="bg-base-100 text-base-content w-full cursor-pointer font-sans"
+						>
+							<div class="grid grid-cols-5 grid-rows-3">
+								<div class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3">
+									<Fa icon={faCheck} class={activeTheme === theme ? 'visible' : 'invisible'} />
+									<div class="flex-grow text-sm">{theme}</div>
+									<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
+										<div class="bg-primary w-2 rounded" />
+										<div class="bg-secondary w-2 rounded" />
+										<div class="bg-accent w-2 rounded" />
+										<div class="bg-neutral w-2 rounded" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</button>
+				{/each}
+			</div>
+		</div>
 	</div>
 	<div class="justify-end ms-auto">
 		{#if $pocketbase.authStore?.model !== null}

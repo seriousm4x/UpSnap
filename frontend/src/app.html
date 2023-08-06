@@ -4,6 +4,25 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
+		<script>
+			const darkTheme = 'dracula';
+			const lightTheme = 'cupcake';
+			const preferesDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			const theme = localStorage.getItem('theme')
+				? localStorage.getItem('theme')
+				: preferesDark
+				? darkTheme
+				: lightTheme;
+			document.documentElement.setAttribute('data-theme', theme);
+
+			window
+				.matchMedia('(prefers-color-scheme: dark)')
+				.addEventListener('change', ({ matches }) => {
+					matches
+						? document.documentElement.setAttribute('data-theme', darkTheme)
+						: document.documentElement.setAttribute('data-theme', lightTheme);
+				});
+		</script>
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
