@@ -53,37 +53,42 @@
 	}
 </script>
 
-<li>
+<li
+	class:disabled={device.status === 'online' && device.shutdown_cmd === ''}
+	class:tooltip={device.status === 'online' && device.shutdown_cmd === ''}
+	data-tip={device.status === 'online' && device.shutdown_cmd === ''
+		? 'No shutdown command set'
+		: null}
+>
 	<div
 		class="flex items-start p-2 gap-4"
-		class:hover:bg-inherit={device.status === 'online' && device.shutdown_cmd === ''}
-		class:hover:cursor-default={device.status === 'online' && device.shutdown_cmd === ''}
-		on:click={handleClick}
-		on:keydown={handleClick}
+		on:click={device.status === 'online' && device.shutdown_cmd === '' ? null : handleClick}
+		on:keydown={device.status === 'online' && device.shutdown_cmd === '' ? null : handleClick}
 		role="none"
 	>
-		<div>
-			{#if device.status === 'offline'}
-				<button class="btn btn-error flex-shrink"><Fa icon={faPowerOff} /></button>
-			{:else if device.status === 'online'}
-				<button class="btn btn-success flex-shrink"><Fa icon={faPowerOff} /></button>
-			{:else if device.status === 'pending'}
-				<button class="btn btn-warning flex-shrink">
-					<span class="countdown font-mono">
-						<span style="--value:{minutes};" />:
-						<span style="--value:{seconds};" />
-					</span>
-				</button>
-			{:else}
-				<button class="btn btn-warning flex-shrink">
-					<span class="loading loading-ring loading-sm" />
-				</button>
-			{/if}
-		</div>
+		{#if device.status === 'offline'}
+			<button class="btn btn-error flex-shrink"><Fa icon={faPowerOff} /></button>
+		{:else if device.status === 'online'}
+			<button
+				class="btn btn-success flex-shrink"
+				class:cursor-not-allowed={device.shutdown_cmd === ''}><Fa icon={faPowerOff} /></button
+			>
+		{:else if device.status === 'pending'}
+			<button class="btn btn-warning flex-shrink">
+				<span class="countdown font-mono">
+					<span style="--value:{minutes};" />:
+					<span style="--value:{seconds};" />
+				</span>
+			</button>
+		{:else}
+			<button class="btn btn-warning flex-shrink">
+				<span class="loading loading-ring loading-sm" />
+			</button>
+		{/if}
 		<div class="grow">
 			<div class="text-lg font-bold leading-4">{device.ip}</div>
-			<div class="">{device.mac}</div>
-			<div class="flex flex-wrap gap-4">
+			<div>{device.mac}</div>
+			<div class="flex flex-wrap gap-x-4 gap-y-0">
 				{#if device?.expand?.ports}
 					{#each device?.expand?.ports as port}
 						<span class="flex items-center gap-1 break-all">
@@ -101,3 +106,9 @@
 		</div>
 	</div>
 </li>
+
+<style>
+	li.disabled {
+		color: inherit;
+	}
+</style>

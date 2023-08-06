@@ -185,7 +185,7 @@
 	</div>
 	<div class="justify-end ms-auto">
 		{#if $pocketbase.authStore?.model !== null}
-			<a class="btn btn-sm btn-success me-4" href="/device/new">
+			<a class="btn btn-success me-4" href="/device/new">
 				<Fa icon={faPlus} />
 				New
 			</a>
