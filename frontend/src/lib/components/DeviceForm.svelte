@@ -259,7 +259,12 @@
 			<div class="form-control flex flex-row flex-wrap gap-4">
 				<div>
 					<label class="label" for="wake-cron">
-						<span class="label-text">Wake cron</span>
+						<span class="label-text"
+							>Wake cron
+							{#if device.wake_cron_enabled}
+								<span class="text-error">*</span>
+							{/if}
+						</span>
 					</label>
 					<input
 						id="wake-cron"
@@ -268,6 +273,7 @@
 						class="input w-80"
 						bind:value={device.wake_cron}
 						disabled={!device.wake_cron_enabled}
+						required={device.wake_cron_enabled}
 					/>
 				</div>
 				<div class="flex flex-col">
@@ -327,7 +333,12 @@
 			<div class="form-control flex flex-row flex-wrap gap-4">
 				<div>
 					<label class="label" for="shutdown-cron">
-						<span class="label-text">Shutdown cron</span>
+						<span class="label-text"
+							>Shutdown cron
+							{#if device.shutdown_cron_enabled}
+								<span class="text-error">*</span>
+							{/if}
+						</span>
 					</label>
 					<input
 						id="shutdown-cron"
@@ -336,6 +347,7 @@
 						class="input w-80"
 						bind:value={device.shutdown_cron}
 						disabled={!device.shutdown_cron_enabled}
+						required={device.shutdown_cron_enabled}
 					/>
 				</div>
 				<div class="flex flex-col">

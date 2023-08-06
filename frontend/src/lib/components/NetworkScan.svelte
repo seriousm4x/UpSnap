@@ -8,7 +8,8 @@
 	import {
 		faMagnifyingGlass,
 		faPlus,
-		faTriangleExclamation
+		faTriangleExclamation,
+		faX
 	} from '@fortawesome/free-solid-svg-icons';
 	import type { SettingsPrivate } from '$lib/types/settings';
 	import type { ScanResponse, ScannedDevice } from '$lib/types/scan';
@@ -17,6 +18,7 @@
 	let saveErrTimeout: number;
 	let scanErrMsg = '';
 	let scanErrTimeout: number;
+	let scanRange = '';
 	let scanRunning = false;
 	let scanResponse: ScanResponse = {
 		netmask: '',
@@ -31,14 +33,22 @@
 				.getList(1, 1)
 				.then((res) => {
 					settingsPriv.set(res.items[0] as SettingsPrivate);
+					scanRange = $settingsPriv.scan_range;
 				});
+		} else {
+			scanRange = $settingsPriv.scan_range;
 		}
 	});
 
 	function saveSettings() {
 		$pocketbase
 			.collection('settings_private')
-			.update($settingsPriv.id, $settingsPriv)
+			.update($settingsPriv.id, {
+				scan_range: scanRange
+			})
+			.then((res) => {
+				settingsPriv.set(res as SettingsPrivate);
+			})
 			.catch((err) => {
 				clearTimeout(saveErrTimeout);
 				saveErrTimeout = setTimeout(() => {
@@ -126,14 +136,22 @@
 							class="input input-bordered join-item"
 							type="text"
 							placeholder="192.168.1.0/24"
-							bind:value={$settingsPriv.scan_range}
+							bind:value={scanRange}
 						/>
 						<button class="btn join-item" on:click={() => saveSettings()}>Save</button>
 					</div>
 				</div>
 				<div>
 					<div>
-						{#if scanRunning}
+						{#if !$settingsPriv.scan_range}
+							<button class="btn btn-error" disabled>
+								<Fa icon={faX} /> No scan range
+							</button>
+						{:else if scanRange !== $settingsPriv.scan_range}
+							<button class="btn btn-error" disabled>
+								<Fa icon={faX} /> Unsaved changes
+							</button>
+						{:else if scanRunning}
 							<button class="btn no-animation">
 								<span class="loading loading-spinner" />
 								Scan running

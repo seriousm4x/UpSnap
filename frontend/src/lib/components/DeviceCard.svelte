@@ -3,6 +3,8 @@
 	import DeviceCardNic from './DeviceCardNic.svelte';
 	import { scale } from 'svelte/transition';
 	import type { Device } from '$lib/types/device';
+	import Fa from 'svelte-fa';
+	import { faCircleArrowDown, faCircleArrowUp, faLock } from '@fortawesome/free-solid-svg-icons';
 
 	export let device: Device;
 
@@ -30,7 +32,28 @@
 			<!-- TODO: change to nic array once backend supports it -->
 			<DeviceCardNic {device} />
 		</ul>
-		<div class="card-actions">
+		<div class="flex flex-row flex-wrap gap-2">
+			{#if device.wake_cron_enabled}
+				<div class="tooltip" data-tip="Wake cron">
+					<span class="badge badge-success gap-1 p-3"
+						><Fa icon={faCircleArrowUp} />{device.wake_cron}</span
+					>
+				</div>
+			{/if}
+			{#if device.shutdown_cron_enabled}
+				<div class="tooltip" data-tip="Shutdown cron">
+					<span class="badge badge-error gap-1 p-3"
+						><Fa icon={faCircleArrowDown} />{device.shutdown_cron}</span
+					>
+				</div>
+			{/if}
+			{#if device.password}
+				<div class="tooltip" data-tip="Wake password">
+					<span class="badge gap-1 p-3"><Fa icon={faLock} />Password</span>
+				</div>
+			{/if}
+		</div>
+		<div class="card-actions mt-auto">
 			<span class="tooltip" data-tip="Last status change: {device.updated}">
 				{formatDistance(parseISO(device.updated), now, {
 					includeSeconds: true,

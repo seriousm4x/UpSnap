@@ -32,7 +32,7 @@
 </script>
 
 {#if device.expand.ports[index]}
-	<div class="card bg-base-100 shadow-xl" transition:scale={{ delay: 0, duration: 200 }}>
+	<div class="card bg-base-100 shadow-sm" transition:scale={{ delay: 0, duration: 200 }}>
 		<div class="card-body p-3">
 			<div class="flex flex-row gap-2">
 				<div>

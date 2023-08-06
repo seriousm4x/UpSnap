@@ -26,7 +26,7 @@
 
 <h1 class="text-3xl font-bold mb-8">New device</h1>
 <div class="flex justify-center mb-6">
-	<ul class="menu menu-horizontal bg-base-300 rounded-box">
+	<ul class="menu menu-horizontal bg-base-300 rounded-box gap-1">
 		{#each tabs as tab}
 			<li>
 				<button
