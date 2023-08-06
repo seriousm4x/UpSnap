@@ -50,7 +50,8 @@
 		if (faviconInputElement.files !== null && faviconInputElement.files?.length > 0) {
 			let form = new FormData();
 			form.append('favicon', faviconInputElement.files[0]);
-			await $pocketbase.collection('settings_public').update(settingsPubClone.id, form);
+			const res = await $pocketbase.collection('settings_public').update(settingsPubClone.id, form);
+			settingsPub.set(res as SettingsPublic);
 		}
 		const res = await $pocketbase
 			.collection('settings_public')
