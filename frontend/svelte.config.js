@@ -15,7 +15,7 @@ const config = {
 			fallback: 'index.html'
 		}),
 		prerender: {
-			entries: ['/', '/login', '/account', '/welcome', '/device/[id]']
+			entries: ['/', '/login', '/account', '/welcome', '/device/[id]', '/device/new', '/settings']
 		}
 	}
 };
