@@ -108,7 +108,7 @@
 </li>
 
 <style>
-	li.disabled {
+	:global(.menu li.disabled) {
 		color: inherit;
 	}
 </style>

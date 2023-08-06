@@ -12,8 +12,8 @@
 	onMount(async () => {
 		// set settingsPub store on load
 		if (!$settingsPub) {
-			const res = await $pocketbase.collection('settings_public').getList(1, 1);
-			settingsPub.set(res.items[0] as SettingsPublic);
+			const res = await $pocketbase.collection('settings_public').getFirstListItem('');
+			settingsPub.set(res as SettingsPublic);
 		}
 
 		// redirect to welcome page if setup is not completed

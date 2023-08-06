@@ -30,9 +30,9 @@
 		if (!$settingsPriv && $pocketbase.authStore.isValid) {
 			$pocketbase
 				.collection('settings_private')
-				.getList(1, 1)
+				.getFirstListItem('')
 				.then((res) => {
-					settingsPriv.set(res.items[0] as SettingsPrivate);
+					settingsPriv.set(res as SettingsPrivate);
 					scanRange = $settingsPriv.scan_range;
 				});
 		} else {

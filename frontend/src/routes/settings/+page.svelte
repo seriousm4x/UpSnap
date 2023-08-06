@@ -22,9 +22,9 @@
 	if (!$settingsPriv && $pocketbase.authStore.isValid) {
 		$pocketbase
 			.collection('settings_private')
-			.getList(1, 1)
+			.getFirstListItem('')
 			.then((res) => {
-				settingsPriv.set(res.items[0] as SettingsPrivate);
+				settingsPriv.set(res as SettingsPrivate);
 			});
 	}
 
@@ -148,7 +148,6 @@
 			>
 		</div>
 	</form>
-
 	<div class="container mx-auto text-center mt-6">
 		{#if version === undefined}
 			UpSnap version: (untracked)
