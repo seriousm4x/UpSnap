@@ -138,6 +138,7 @@
 	}
 
 	function addGroup() {
+		if (!newGroup) return;
 		$pocketbase
 			.collection('device_groups')
 			.create({
@@ -448,12 +449,16 @@
 						<div class="join">
 							<div class=" tooltip" data-tip="Delete">
 								<button
-									class="join-item btn btn-circle btn-error btn-outline"
+									class="join-item btn btn-error"
 									type="button"
 									on:click={() => deleteGroup(group.id)}><Fa icon={faX} /></button
 								>
 							</div>
-							<div class="btn join-item" on:click={() => toggleGroup(group.id)} role="none">
+							<div
+								class="btn bg-base-100 hover:bg-base-200 join-item"
+								on:click={() => toggleGroup(group.id)}
+								role="none"
+							>
 								<input
 									type="checkbox"
 									class="checkbox"
@@ -472,7 +477,7 @@
 					type="text"
 					bind:value={newGroup}
 				/>
-				<button class="btn join-item rounded-r-full" type="button" on:click={() => addGroup()}
+				<button class="btn btn-success join-item" type="button" on:click={() => addGroup()}
 					>Add</button
 				>
 			</div>
