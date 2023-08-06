@@ -124,16 +124,20 @@
 		</a>
 	</div>
 	<div class="hidden md:flex">
-		<ul class="menu menu-horizontal px-1">
-			<li><a href="/" class:active={$page.url.pathname === '/'}><Fa icon={faHome} />Home</a></li>
+		<ul class="menu menu-horizontal px-1 gap-1">
+			<li>
+				<a href="/" class="p-2" class:active={$page.url.pathname === '/'}
+					><Fa icon={faHome} />Home</a
+				>
+			</li>
 			{#if $pocketbase.authStore.model?.collectionName !== 'users'}
 				<li>
-					<a href="/" class:active={$page.url.pathname.startsWith('/permissions')}
+					<a href="/" class="p-2" class:active={$page.url.pathname.startsWith('/permissions')}
 						><Fa icon={faKey} />Permissions</a
 					>
 				</li>
 				<li>
-					<a href="/settings/" class:active={$page.url.pathname.startsWith('/settings')}
+					<a href="/settings/" class="p-2" class:active={$page.url.pathname.startsWith('/settings')}
 						><Fa icon={faCog} />Settings</a
 					>
 				</li>
