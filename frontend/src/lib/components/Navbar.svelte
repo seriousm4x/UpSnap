@@ -95,7 +95,7 @@
 				{#if $pocketbase.authStore.model?.collectionName !== 'users'}
 					<li>
 						<a
-							href="/"
+							href="/permissions"
 							class="rounded-lg px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/permissions')}
 							><Fa icon={faKey} />Permissions</a
@@ -132,7 +132,10 @@
 			</li>
 			{#if $pocketbase.authStore.model?.collectionName !== 'users'}
 				<li>
-					<a href="/" class="p-2" class:active={$page.url.pathname.startsWith('/permissions')}
+					<a
+						href="/permissions"
+						class="p-2"
+						class:active={$page.url.pathname.startsWith('/permissions')}
 						><Fa icon={faKey} />Permissions</a
 					>
 				</li>
