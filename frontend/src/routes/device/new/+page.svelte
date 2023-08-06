@@ -8,7 +8,8 @@
 	let device: Device = {
 		expand: {
 			ports: [] as Port[]
-		}
+		},
+		groups: [] as string[]
 	} as Device;
 
 	let tabs = [

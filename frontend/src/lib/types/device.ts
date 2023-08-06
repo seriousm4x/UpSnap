@@ -14,9 +14,10 @@ export type Device = Record & {
 	shutdown_cron_enabled: boolean;
 	shutdown_cmd: string;
 	password: string;
-	groups: Group[];
+	groups: string[];
 	expand: {
 		ports: Port[];
+		groups: Group[];
 	};
 };
 

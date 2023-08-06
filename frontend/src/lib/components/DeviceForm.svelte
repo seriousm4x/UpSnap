@@ -4,8 +4,8 @@
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
 	import Alert from '$lib/components/Alert.svelte';
 	import Fa from 'svelte-fa';
-	import { faSave, faTrash, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
-	import type { Device, Port } from '$lib/types/device';
+	import { faSave, faTrash, faTriangleExclamation, faX } from '@fortawesome/free-solid-svg-icons';
+	import type { Device, Port, Group } from '$lib/types/device';
 
 	export let device: Device;
 
@@ -14,6 +14,8 @@
 	let saveErrMsg = '';
 	let saveErrTimeout: number;
 	let deleteModal: HTMLDialogElement;
+	let deviceGroups = [] as Group[];
+	let newGroup = '';
 
 	async function save() {
 		// create/update all ports
@@ -124,6 +126,57 @@
 	function createEmptyPort() {
 		if (device === undefined) return;
 		device.expand.ports = [...device.expand.ports, { name: '', number: 1 } as Port];
+	}
+
+	async function getGroups() {
+		$pocketbase
+			.collection('device_groups')
+			.getFullList()
+			.then((res) => {
+				deviceGroups = res as Group[];
+			});
+	}
+
+	function addGroup() {
+		$pocketbase
+			.collection('device_groups')
+			.create({
+				name: newGroup
+			})
+			.then((res) => {
+				deviceGroups = [...deviceGroups, res as Group];
+			});
+	}
+
+	function deleteGroup(id: string) {
+		const i = device.groups.indexOf(id);
+		if (i !== -1) {
+			device.groups.splice(i, 1);
+			device.groups = device.groups;
+		}
+		$pocketbase
+			.collection('device_groups')
+			.delete(id)
+			.then(async () => {
+				await getGroups();
+			})
+			.catch((err) => {
+				clearTimeout(saveErrTimeout);
+				saveErrTimeout = setTimeout(() => {
+					saveErrMsg = '';
+				}, 10000);
+				saveErrMsg = err;
+			});
+	}
+
+	function toggleGroup(id: string) {
+		const i = device.groups.indexOf(id);
+		if (i !== -1) {
+			device.groups.splice(i, 1);
+			device.groups = device.groups;
+		} else {
+			device.groups = [...device.groups, id];
+		}
 	}
 </script>
 
@@ -381,22 +434,64 @@
 					bind:value={device.password}
 				/>
 			</div>
-			{#if saveErrMsg !== ''}
-				<Alert
-					color="error"
-					message={saveErrMsg}
-					icon={faTriangleExclamation}
-					customClasses="mt-4 max-w-fit"
-				/>
-			{/if}
 		</div>
 	</div>
+	<div class="card w-full bg-base-300 shadow-xl mt-6">
+		<div class="card-body">
+			<h2 class="card-title">Groups</h2>
+			<p class="my-2">
+				You can add devices to a group to have them sorted by group on the dashboard.
+			</p>
+			<div class="flex flex-row flex-wrap gap-2">
+				{#await getGroups() then}
+					{#each deviceGroups as group}
+						<div class="join">
+							<div class=" tooltip" data-tip="Delete">
+								<button
+									class="join-item btn btn-circle btn-error btn-outline"
+									type="button"
+									on:click={() => deleteGroup(group.id)}><Fa icon={faX} /></button
+								>
+							</div>
+							<div class="btn join-item" on:click={() => toggleGroup(group.id)} role="none">
+								<input
+									type="checkbox"
+									class="checkbox"
+									checked={device.groups.indexOf(group.id) !== -1}
+								/>
+								{group.name}
+							</div>
+						</div>
+					{/each}
+				{/await}
+			</div>
+			<div class="join">
+				<input
+					class="input input-bordered join-item"
+					placeholder="e.g. 'Basement' or 'Office'"
+					type="text"
+					bind:value={newGroup}
+				/>
+				<button class="btn join-item rounded-r-full" type="button" on:click={() => addGroup()}
+					>Add</button
+				>
+			</div>
+		</div>
+	</div>
+	{#if saveErrMsg !== ''}
+		<Alert
+			color="error"
+			message={saveErrMsg}
+			icon={faTriangleExclamation}
+			customClasses="mt-4 w-full"
+		/>
+	{/if}
 	<div class="card-actions mt-4 justify-end gap-4">
 		{#if device.id}
 			<button class="btn btn-error" type="button" on:click={() => deleteModal.showModal()}
 				><Fa icon={faTrash} />Delete</button
 			>
-			<dialog id="my_modal_1" class="modal" bind:this={deleteModal}>
+			<dialog class="modal" bind:this={deleteModal}>
 				<form method="dialog" class="modal-box">
 					<h3 class="font-bold text-lg">Confirm delete</h3>
 					<p class="py-4">Are you sure you want to delete <strong>{device.name}</strong>?</p>
