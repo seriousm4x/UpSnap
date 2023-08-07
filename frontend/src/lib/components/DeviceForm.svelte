@@ -2,17 +2,13 @@
 	import { goto } from '$app/navigation';
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
-	import Alert from '$lib/components/Alert.svelte';
+	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
-	import { faSave, faTrash, faTriangleExclamation, faX } from '@fortawesome/free-solid-svg-icons';
+	import { faSave, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 	import type { Device, Port, Group } from '$lib/types/device';
 
 	export let device: Device;
 
-	let portErrMsg = '';
-	let portErrTimeout: number;
-	let saveErrMsg = '';
-	let saveErrTimeout: number;
 	let deleteModal: HTMLDialogElement;
 	let deviceGroups = [] as Group[];
 	let newGroup = '';
@@ -42,14 +38,11 @@
 			.collection('devices')
 			.update(device.id, device)
 			.then(() => {
+				toast.success(`Updated ${device.name}`);
 				goto('/');
 			})
 			.catch((err) => {
-				clearTimeout(saveErrTimeout);
-				saveErrTimeout = setTimeout(() => {
-					saveErrMsg = '';
-				}, 10000);
-				saveErrMsg = err;
+				toast.error(err.message);
 			});
 	}
 
@@ -58,14 +51,11 @@
 			.collection('devices')
 			.create(device)
 			.then(() => {
+				toast.success(`Created ${device.name}`);
 				goto('/');
 			})
 			.catch((err) => {
-				clearTimeout(saveErrTimeout);
-				saveErrTimeout = setTimeout(() => {
-					saveErrMsg = '';
-				}, 10000);
-				saveErrMsg = err;
+				toast.error(err.message);
 			});
 	}
 
@@ -78,11 +68,8 @@
 				newport = data as Port;
 			})
 			.catch((err) => {
-				clearTimeout(saveErrTimeout);
-				saveErrTimeout = setTimeout(() => {
-					saveErrMsg = '';
-				}, 10000);
-				saveErrMsg = err;
+				toast.error(err.message);
+
 				newport = undefined;
 			});
 		return newport;
@@ -97,11 +84,8 @@
 				newport = data as Port;
 			})
 			.catch((err) => {
-				clearTimeout(saveErrTimeout);
-				saveErrTimeout = setTimeout(() => {
-					saveErrMsg = '';
-				}, 10000);
-				saveErrMsg = err;
+				toast.error(err.message);
+
 				newport = undefined;
 			});
 		return newport;
@@ -112,14 +96,11 @@
 			.collection('devices')
 			.delete(device.id)
 			.then(() => {
+				toast.success(`Deleted ${device.name}`);
 				goto('/');
 			})
 			.catch((err) => {
-				clearTimeout(saveErrTimeout);
-				saveErrTimeout = setTimeout(() => {
-					saveErrMsg = '';
-				}, 10000);
-				saveErrMsg = err;
+				toast.error(err.message);
 			});
 	}
 
@@ -146,27 +127,28 @@
 			})
 			.then((res) => {
 				deviceGroups = [...deviceGroups, res as Group];
+				toast.success(`Created group ${newGroup}`);
+			})
+			.catch((err) => {
+				toast.error(err.message);
 			});
 	}
 
-	function deleteGroup(id: string) {
-		const i = device.groups.indexOf(id);
+	function deleteGroup(group: Group) {
+		const i = device.groups.indexOf(group.id);
 		if (i !== -1) {
 			device.groups.splice(i, 1);
 			device.groups = device.groups;
 		}
 		$pocketbase
 			.collection('device_groups')
-			.delete(id)
+			.delete(group.id)
 			.then(async () => {
 				await getGroups();
+				toast.success(`Deleted group ${group.name}`);
 			})
 			.catch((err) => {
-				clearTimeout(saveErrTimeout);
-				saveErrTimeout = setTimeout(() => {
-					saveErrMsg = '';
-				}, 10000);
-				saveErrMsg = err;
+				toast.error(err.message);
 			});
 	}
 
@@ -261,17 +243,9 @@
 			<div class="form-control w-full">
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 					{#each device.expand.ports as _, index}
-						<DeviceFormPort bind:device {index} bind:portErrMsg bind:portErrTimeout />
+						<DeviceFormPort bind:device {index} />
 					{/each}
 				</div>
-				{#if portErrMsg !== ''}
-					<Alert
-						color="error"
-						icon={faTriangleExclamation}
-						message={portErrMsg}
-						customClasses="mt-4 max-w-fit"
-					/>
-				{/if}
 				<button
 					class="btn btn-wide btn-neutral mt-4"
 					on:click={() => createEmptyPort()}
@@ -451,7 +425,7 @@
 								<button
 									class="join-item btn btn-error"
 									type="button"
-									on:click={() => deleteGroup(group.id)}><Fa icon={faX} /></button
+									on:click={() => deleteGroup(group)}><Fa icon={faX} /></button
 								>
 							</div>
 							<div
@@ -478,19 +452,11 @@
 					bind:value={newGroup}
 				/>
 				<button class="btn btn-success join-item" type="button" on:click={() => addGroup()}
-					>Add</button
+					>Create</button
 				>
 			</div>
 		</div>
 	</div>
-	{#if saveErrMsg !== ''}
-		<Alert
-			color="error"
-			message={saveErrMsg}
-			icon={faTriangleExclamation}
-			customClasses="mt-4 w-full"
-		/>
-	{/if}
 	<div class="card-actions mt-4 justify-end gap-4">
 		{#if device.id}
 			<button class="btn btn-error" type="button" on:click={() => deleteModal.showModal()}

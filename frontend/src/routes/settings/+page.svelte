@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { settingsPub, settingsPriv } from '$lib/stores/settings';
 	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
+	import PageLoading from '$lib/components/PageLoading.svelte';
+	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
 	import { faSave } from '@fortawesome/free-solid-svg-icons';
 	import type { SettingsPublic, SettingsPrivate } from '$lib/types/settings';
@@ -9,7 +12,6 @@
 	let settingsPrivClone: SettingsPrivate | undefined;
 	let faviconPreview: HTMLImageElement;
 	let faviconInputElement: HTMLInputElement;
-	let saveBtn: HTMLButtonElement;
 	let version = import.meta.env.UPSNAP_VERSION;
 
 	settingsPub.subscribe((settings) => {
@@ -39,13 +41,9 @@
 		if (
 			settingsPubClone === undefined ||
 			settingsPrivClone === undefined ||
-			faviconInputElement === undefined ||
-			saveBtn === undefined
+			faviconInputElement === undefined
 		)
 			return;
-
-		saveBtn.classList.remove('btn-primary');
-		saveBtn.classList.add('btn-warning');
 
 		if (faviconInputElement.files !== null && faviconInputElement.files?.length > 0) {
 			let form = new FormData();
@@ -53,18 +51,22 @@
 			const res = await $pocketbase.collection('settings_public').update(settingsPubClone.id, form);
 			settingsPub.set(res as SettingsPublic);
 		}
-		const res = await $pocketbase
+		await $pocketbase
 			.collection('settings_public')
-			.update(settingsPubClone.id, settingsPubClone);
-		settingsPub.set(res as SettingsPublic);
-
-		saveBtn.classList.remove('btn-warning');
-		saveBtn.classList.add('btn-primary');
+			.update(settingsPubClone.id, settingsPubClone)
+			.then((res) => {
+				toast.success('Saved settings');
+				settingsPub.set(res as SettingsPublic);
+				goto('/');
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	}
 </script>
 
 {#if settingsPubClone === undefined || settingsPrivClone === undefined}
-	<div class="container mx-auto text-center"><span class="loading loading-dots loading-lg" /></div>
+	<PageLoading />
 {:else}
 	<h1 class="text-3xl font-bold mb-8">Settings</h1>
 	<form on:submit|preventDefault={save}>
@@ -143,9 +145,7 @@
 			</div>
 		</div>
 		<div class="card-actions justify-end mt-4">
-			<button class="btn btn-success" type="submit" bind:this={saveBtn}
-				><Fa icon={faSave} />Save</button
-			>
+			<button class="btn btn-success" type="submit"><Fa icon={faSave} />Save</button>
 		</div>
 	</form>
 	<div class="container mx-auto text-center mt-6">

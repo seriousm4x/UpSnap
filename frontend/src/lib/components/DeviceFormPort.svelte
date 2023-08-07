@@ -3,13 +3,12 @@
 	import { scale } from 'svelte/transition';
 	import Fa from 'svelte-fa';
 	import { faTrash } from '@fortawesome/free-solid-svg-icons';
+	import toast from 'svelte-french-toast';
 	import type { Device, Port } from '$lib/types/device';
 	import type { Record } from 'pocketbase';
 
 	export let device: Device;
 	export let index: number;
-	export let portErrMsg: string;
-	export let portErrTimeout: number;
 
 	function deletePort(port: Port | Record) {
 		if (port.id !== undefined) {
@@ -20,11 +19,7 @@
 					device.ports = device.ports.filter((id) => id !== device.ports[index]);
 				})
 				.catch((err) => {
-					clearTimeout(portErrTimeout);
-					portErrTimeout = setTimeout(() => {
-						portErrMsg = '';
-					}, 10000);
-					portErrMsg = err;
+					toast.error(err.message);
 				});
 		}
 		device.expand.ports = device.expand.ports.filter((p) => p !== device.expand.ports[index]);

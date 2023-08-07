@@ -2,15 +2,15 @@
 	import { onMount } from 'svelte';
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
-	import Alert from '$lib/components/Alert.svelte';
+	import PageLoading from '$lib/components/PageLoading.svelte';
+	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
-	import { faPlus, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+	import { faPlus } from '@fortawesome/free-solid-svg-icons';
 	import type { Device } from '$lib/types/device';
 	import { browser } from '$app/environment';
 
 	let devices = [] as Device[];
 	let loading = true;
-	let err = false;
 	let order: string;
 	let devicesWithGroup: {
 		[key: string]: Device[];
@@ -47,8 +47,8 @@
 			.then((resp) => {
 				devices = resp as Device[];
 			})
-			.catch(() => {
-				err = true;
+			.catch((err) => {
+				toast.error(err.message);
 			})
 			.finally(() => {
 				loading = false;
@@ -69,13 +69,7 @@
 </script>
 
 {#if loading}
-	<div class="container max-w-lg mx-auto text-center">
-		<span class="loading loading-dots loading-lg" />
-	</div>
-{:else if err}
-	<div class="container max-w-lg mx-auto">
-		<Alert color="error" message="Failed to get devices from api." icon={faTriangleExclamation} />
-	</div>
+	<PageLoading />
 {:else if devices.length > 0}
 	<div class="flex justify-end">
 		<div class="join mb-4">
