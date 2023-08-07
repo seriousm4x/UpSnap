@@ -3,21 +3,14 @@
 	import { goto } from '$app/navigation';
 	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import { settingsPriv } from '$lib/stores/settings';
-	import Alert from '$lib/components/Alert.svelte';
+	import PageLoading from '$lib/components/PageLoading.svelte';
 	import Fa from 'svelte-fa';
-	import {
-		faMagnifyingGlass,
-		faPlus,
-		faTriangleExclamation,
-		faX
-	} from '@fortawesome/free-solid-svg-icons';
+	import { faMagnifyingGlass, faPlus, faX } from '@fortawesome/free-solid-svg-icons';
+	import toast from 'svelte-french-toast';
 	import type { SettingsPrivate } from '$lib/types/settings';
 	import type { ScanResponse, ScannedDevice } from '$lib/types/scan';
+	import type { Device } from '$lib/types/device';
 
-	let saveErrMsg = '';
-	let saveErrTimeout: number;
-	let scanErrMsg = '';
-	let scanErrTimeout: number;
 	let scanRange = '';
 	let scanRunning = false;
 	let scanResponse: ScanResponse = {
@@ -27,13 +20,16 @@
 	let addAllCheckbox = true;
 
 	onMount(() => {
-		if (!$settingsPriv && $pocketbase.authStore.isValid) {
+		if (!$settingsPriv) {
 			$pocketbase
 				.collection('settings_private')
 				.getFirstListItem('')
 				.then((res) => {
 					settingsPriv.set(res as SettingsPrivate);
 					scanRange = $settingsPriv.scan_range;
+				})
+				.catch((err) => {
+					toast.error(err.message);
 				});
 		} else {
 			scanRange = $settingsPriv.scan_range;
@@ -48,13 +44,10 @@
 			})
 			.then((res) => {
 				settingsPriv.set(res as SettingsPrivate);
+				toast.success('Scan range saved');
 			})
 			.catch((err) => {
-				clearTimeout(saveErrTimeout);
-				saveErrTimeout = setTimeout(() => {
-					saveErrMsg = '';
-				}, 10000);
-				saveErrMsg = err;
+				toast.error(err.message);
 			});
 	}
 
@@ -76,34 +69,41 @@
 				scanResponse = data as ScanResponse;
 			})
 			.catch((err) => {
-				clearTimeout(scanErrTimeout);
-				scanErrTimeout = setTimeout(() => {
-					scanErrMsg = '';
-				}, 10000);
-				scanErrMsg = err.message;
+				toast.error(err);
 			})
 			.finally(() => (scanRunning = false));
 	}
 
-	function createDevice(device: ScannedDevice) {
+	async function createDevice(device: ScannedDevice): Promise<Device> {
 		device.netmask = scanResponse.netmask;
-		$pocketbase
-			.collection('devices')
-			.create(device)
+		return $pocketbase.collection('devices').create(device);
+	}
+
+	async function addSingle(device: ScannedDevice) {
+		await createDevice(device)
+			.then(() => {
+				toast.success(`Added ${device.name}`);
+			})
 			.catch((err) => {
-				clearTimeout(saveErrTimeout);
-				saveErrTimeout = setTimeout(() => {
-					saveErrMsg = '';
-				}, 10000);
-				saveErrMsg = err;
+				toast.error(err.message);
 			});
 	}
 
-	function addAll() {
-		scanResponse.devices.forEach((device) => {
-			if (!addAllCheckbox && device.name === 'Unknown') return;
-			createDevice(device);
-		});
+	async function addAll() {
+		let count = 0;
+		await Promise.all(
+			scanResponse.devices.map(async (device) => {
+				if (!addAllCheckbox && device.name === 'Unknown') return;
+				await createDevice(device)
+					.catch((err) => {
+						toast.error(err.message);
+					})
+					.then(() => {
+						count += 1;
+					});
+			})
+		);
+		toast.success(`Added ${count} devices`);
 		goto('/');
 	}
 </script>
@@ -111,20 +111,12 @@
 {#if $settingsPriv}
 	<div class="card w-full bg-base-300 shadow-xl mt-6">
 		<div class="card-body">
-			<h2 class="card-title">Network Scan</h2>
+			<h2 class="card-title">Network scan</h2>
 			<p class="my-2">
 				Automatically scan your network for devices. For this to work, you need to run UpSnap as
 				root/admin and have nmap installed and available in your $PATH (For docker users, thats
 				already the case and you don't need to do anything). Scanning might take some seconds.
 			</p>
-			{#if saveErrMsg !== ''}
-				<Alert
-					color="error"
-					message={saveErrMsg}
-					icon={faTriangleExclamation}
-					customClasses="mt-4 max-w-fit"
-				/>
-			{/if}
 			<div class="flex flex-row flex-wrap gap-4 items-end">
 				<div>
 					<label class="label" for="scan-range">
@@ -164,14 +156,6 @@
 					</div>
 				</div>
 			</div>
-			{#if scanErrMsg !== ''}
-				<Alert
-					color="error"
-					message={scanErrMsg}
-					icon={faTriangleExclamation}
-					customClasses="mt-4 max-w-fit"
-				/>
-			{/if}
 			{#if scanResponse.devices?.length > 0}
 				{#each scanResponse.devices.sort( (a, b) => a.ip.localeCompare( b.ip, undefined, { numeric: true } ) ) as device, index}
 					<div class="collapse collapse-arrow bg-base-200">
@@ -202,7 +186,7 @@
 									<button
 										class="btn btn-sm btn-success"
 										on:click={(e) => {
-											createDevice(device);
+											addSingle(device);
 											e.currentTarget.disabled = true;
 										}}><Fa icon={faPlus} />Add</button
 									>
@@ -235,7 +219,5 @@
 		</div>
 	</div>
 {:else}
-	<div class="container max-w-lg mx-auto text-center">
-		<span class="loading loading-dots loading-lg" />
-	</div>
+	<PageLoading />
 {/if}

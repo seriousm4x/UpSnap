@@ -3,6 +3,7 @@
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import { toggleVisibility } from '$lib/helpers/forms';
+	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
 	import { faArrowRight, faEye } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,10 +15,8 @@
 		password: '',
 		confirm: ''
 	};
-	let errorMsg = '';
 
 	async function register() {
-		errorMsg = '';
 		$pocketbase.admins
 			.create({
 				email: form.email,
@@ -32,18 +31,18 @@
 					})
 					.catch((err) => {
 						if (err.data?.data?.identity?.message) {
-							errorMsg = err.data.data.identity.message;
+							toast.error(err.data.data.identity.message);
 							return;
 						}
 					});
 			})
 			.catch((err) => {
 				if (err.data?.data?.passwordConfirm?.message) {
-					errorMsg = "Passwords don't match.";
+					toast.error("Passwords don't match.");
 				} else if (err.data?.data?.email?.message) {
-					errorMsg = err.data.data.email.message;
+					toast.error(err.data.data.email.message);
 				} else {
-					errorMsg = err;
+					toast.error(err.message || err);
 				}
 			});
 	}
@@ -134,23 +133,6 @@
 									bind:this={inputConfirm}
 								/>
 							</label>
-							{#if errorMsg !== ''}
-								<div class="alert alert-error mt-4">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="stroke-current shrink-0 h-6 w-6"
-										fill="none"
-										viewBox="0 0 24 24"
-										><path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-										/></svg
-									>
-									<span>{errorMsg}</span>
-								</div>
-							{/if}
 							<div class="card-actions justify-end mt-4">
 								<button class="btn btn-primary" type="submit"
 									>Create <Fa icon={faArrowRight} /></button

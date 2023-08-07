@@ -7,6 +7,7 @@
 	import { settingsPub } from '$lib/stores/settings';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
+	import { Toaster } from 'svelte-french-toast';
 	import type { SettingsPublic } from '$lib/types/settings';
 
 	onMount(async () => {
@@ -60,6 +61,8 @@
 {#if $pocketbase.authStore.isValid}
 	<Navbar />
 {/if}
+
+<Toaster position="bottom-center" />
 
 <Transition url={$page.url}>
 	<div class="container mx-auto p-2 mb-4">

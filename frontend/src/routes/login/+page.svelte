@@ -4,16 +4,15 @@
 	import Fa from 'svelte-fa';
 	import { faLockOpen, faEye } from '@fortawesome/free-solid-svg-icons';
 	import { toggleVisibility } from '$lib/helpers/forms';
+	import toast from 'svelte-french-toast';
 
 	let inputPassword: HTMLInputElement;
 	let form = {
 		email: '',
 		password: ''
 	};
-	let errorMsg = '';
 
 	function tryAdminThenUser() {
-		errorMsg = '';
 		$pocketbase.admins
 			.authWithPassword(form.email, form.password)
 			.then(() => {
@@ -27,7 +26,7 @@
 						goto('/');
 					})
 					.catch((err) => {
-						errorMsg = err;
+						toast.error(err.message);
 					});
 			});
 	}
@@ -73,23 +72,6 @@
 								bind:this={inputPassword}
 							/>
 						</label>
-						{#if errorMsg !== ''}
-							<div class="alert alert-error mt-4">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="stroke-current shrink-0 h-6 w-6"
-									fill="none"
-									viewBox="0 0 24 24"
-									><path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-									/></svg
-								>
-								<span>{errorMsg}</span>
-							</div>
-						{/if}
 						<div class="card-actions justify-end mt-4">
 							<button class="btn btn-primary" type="submit">Login <Fa icon={faLockOpen} /></button>
 						</div>
