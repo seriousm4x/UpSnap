@@ -144,7 +144,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="card-actions justify-end mt-4">
+		<div class="card-actions justify-end mt-6">
 			<button class="btn btn-success" type="submit"><Fa icon={faSave} />Save</button>
 		</div>
 	</form>

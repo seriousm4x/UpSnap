@@ -86,6 +86,7 @@
 								id="email"
 								type="email"
 								class="input input-bordered w-full"
+								required
 								bind:value={form.email}
 							/>
 							<label class="label" for="password">
@@ -107,6 +108,7 @@
 									class="input input-bordered w-full"
 									minlength="10"
 									maxlength="72"
+									required
 									bind:value={form.password}
 									bind:this={inputPassword}
 								/>
@@ -129,6 +131,7 @@
 									class="input input-bordered w-full"
 									minlength="10"
 									maxlength="72"
+									required
 									bind:value={form.confirm}
 									bind:this={inputConfirm}
 								/>
