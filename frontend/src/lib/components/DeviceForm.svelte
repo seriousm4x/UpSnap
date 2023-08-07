@@ -457,7 +457,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="card-actions mt-4 justify-end gap-4">
+	<div class="card-actions mt-6 justify-end gap-4">
 		{#if device.id}
 			<button class="btn btn-error" type="button" on:click={() => deleteModal.showModal()}
 				><Fa icon={faTrash} />Delete</button
