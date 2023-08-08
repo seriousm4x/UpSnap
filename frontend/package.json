@@ -45,6 +45,9 @@
         "svelte-preprocess": "^5.0.4",
         "typescript": "^5.1.6",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e7c5fdb (npm-dep: bump vite from 4.4.8 to 4.4.9 in /frontend)
         "vite": "^4.4.9"
     },
     "type": "module",
