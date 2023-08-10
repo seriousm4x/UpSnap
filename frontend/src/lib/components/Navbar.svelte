@@ -92,7 +92,7 @@
 						><Fa icon={faHome} />Home</a
 					>
 				</li>
-				{#if $pocketbase.authStore.model?.collectionName !== 'users'}
+				{#if !$pocketbase.authStore.model?.collectionName}
 					<li>
 						<a
 							href="/permissions"
@@ -130,7 +130,7 @@
 					><Fa icon={faHome} />Home</a
 				>
 			</li>
-			{#if $pocketbase.authStore.model?.collectionName !== 'users'}
+			{#if !$pocketbase.authStore.model?.collectionName}
 				<li>
 					<a
 						href="/permissions"
