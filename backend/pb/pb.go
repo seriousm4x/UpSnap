@@ -1,6 +1,7 @@
 package pb
 
 import (
+	"fmt"
 	"io/fs"
 	"net/http"
 	"os"
@@ -41,7 +42,7 @@ func StartPocketBase(distDirFS fs.FS) {
 			Handler: HandlerWake,
 			Middlewares: []echo.MiddlewareFunc{
 				apis.ActivityLogger(App),
-				apis.RequireAdminOrRecordAuth("users"),
+				RequireUpSnapPermission(),
 			},
 		})
 
@@ -52,7 +53,7 @@ func StartPocketBase(distDirFS fs.FS) {
 			Handler: HandlerShutdown,
 			Middlewares: []echo.MiddlewareFunc{
 				apis.ActivityLogger(App),
-				apis.RequireAdminOrRecordAuth("users"),
+				RequireUpSnapPermission(),
 			},
 		})
 
@@ -72,7 +73,7 @@ func StartPocketBase(distDirFS fs.FS) {
 			return err
 		}
 
-		// reset device states and run ping cronjob
+		// reset device states
 		if err := resetDeviceStates(); err != nil {
 			return err
 		}
@@ -84,7 +85,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		// restart ping cronjobs or wake/shutdown cronjobs on model update
 		// add event hook before starting server.
 		// using this outside App.OnBeforeServe() would not work
-		App.OnModelAfterUpdate().Add(func(e *core.ModelEvent) error {
+		App.OnModelAfterUpdate("settings_private", "devices").Add(func(e *core.ModelEvent) error {
 			if e.Model.TableName() == "settings_private" {
 				for _, job := range cronjobs.CronPing.Entries() {
 					cronjobs.CronPing.Remove(job.ID)
@@ -105,14 +106,38 @@ func StartPocketBase(distDirFS fs.FS) {
 		return nil
 	})
 
-	// refresh the device list on database events
 	App.OnModelAfterCreate().Add(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_admins" {
 			if err := setSetupCompleted(); err != nil {
 				logger.Error.Println(err)
 				return err
 			}
-		} else {
+			return nil
+		} else if e.Model.TableName() == "devices" {
+			// when a device is created, give the user all rights to the device he just created
+			deviceRec := e.Model.(*models.Record)
+			userId := deviceRec.GetString("created_by")
+
+			var permissionRec *models.Record
+			permissionRec, err := App.Dao().FindFirstRecordByFilter("permissions",
+				fmt.Sprintf("user.id = '%s'", userId))
+			if err != nil {
+				logger.Error.Println(err)
+				return err
+			}
+
+			permissionRec.Set("read", append(permissionRec.GetStringSlice("read"), deviceRec.Id))
+			permissionRec.Set("update", append(permissionRec.GetStringSlice("update"), deviceRec.Id))
+			permissionRec.Set("delete", append(permissionRec.GetStringSlice("delete"), deviceRec.Id))
+			permissionRec.Set("power", append(permissionRec.GetStringSlice("power"), deviceRec.Id))
+
+			if err := App.Dao().SaveRecord(permissionRec); err != nil {
+				logger.Error.Println(err)
+				return err
+			}
+		}
+		if e.Model.TableName() == "devices" || e.Model.TableName() == "ports" {
+			// refresh the device list on database events
 			if err := refreshDeviceList(); err != nil {
 				logger.Error.Println(err)
 				return err
@@ -126,7 +151,7 @@ func StartPocketBase(distDirFS fs.FS) {
 				logger.Error.Println(err)
 				return err
 			}
-		} else {
+		} else if e.Model.TableName() == "devices" || e.Model.TableName() == "ports" {
 			if err := refreshDeviceList(); err != nil {
 				logger.Error.Println(err)
 				return err
