@@ -19,6 +19,7 @@ export type Device = Record & {
 		ports: Port[];
 		groups: Group[];
 	};
+	created_by: string;
 };
 
 export type Port = Record & {

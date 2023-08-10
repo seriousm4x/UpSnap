@@ -6,8 +6,8 @@
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
 	import { faPlus } from '@fortawesome/free-solid-svg-icons';
-	import type { Device } from '$lib/types/device';
 	import { browser } from '$app/environment';
+	import type { Device } from '$lib/types/device';
 
 	let devices = [] as Device[];
 	let loading = true;
@@ -21,6 +21,7 @@
 		devicesWithoutGroups = [];
 		devicesWithoutGroups = devices.filter((dev) => dev.groups.length === 0);
 	}
+
 	$: {
 		devicesWithGroup = {};
 		devices.forEach((dev) => {
