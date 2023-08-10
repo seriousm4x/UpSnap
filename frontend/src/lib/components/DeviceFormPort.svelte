@@ -39,6 +39,7 @@
 						type="text"
 						placeholder="ssh"
 						class="input input-sm input-bordered w-full"
+						required
 						bind:value={device.expand.ports[index].name}
 					/>
 				</div>
@@ -53,6 +54,7 @@
 						min="1"
 						max="65535"
 						class="input input-sm input-bordered w-full"
+						required
 						bind:value={device.expand.ports[index].number}
 					/>
 				</div>
