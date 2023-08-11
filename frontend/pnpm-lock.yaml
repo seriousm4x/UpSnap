@@ -75,8 +75,9 @@ devDependencies:
 <<<<<<< HEAD
 <<<<<<< HEAD
     specifier: ^2.0.3
-    version: 2.0.3(@sveltejs/kit@1.22.4)
+    version: 2.0.3(@sveltejs/kit@1.22.5)
   '@sveltejs/kit':
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     specifier: ^1.22.5
@@ -127,6 +128,10 @@ devDependencies:
 =======
     version: 1.22.4(svelte@4.1.2)(vite@4.4.9)
 >>>>>>> e7c5fdb (npm-dep: bump vite from 4.4.8 to 4.4.9 in /frontend)
+=======
+    specifier: ^1.22.5
+    version: 1.22.5(svelte@4.1.2)(vite@4.4.9)
+>>>>>>> 3332f19 (npm-dep: bump @sveltejs/kit from 1.22.4 to 1.22.5 in /frontend)
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.62.0
     version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.46.0)(typescript@5.1.6)
@@ -813,6 +818,9 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3332f19 (npm-dep: bump @sveltejs/kit from 1.22.4 to 1.22.5 in /frontend)
   /@sveltejs/adapter-static@2.0.3(@sveltejs/kit@1.22.5):
     resolution: {integrity: sha512-VUqTfXsxYGugCpMqQv1U0LIdbR3S5nBkMMDmpjGVJyM6Q2jHVMFtdWJCkeHMySc6mZxJ+0eZK3T7IgmUCDrcUQ==}
 =======
@@ -870,9 +878,10 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^1.5.0
     dependencies:
-      '@sveltejs/kit': 1.22.4(svelte@4.1.2)(vite@4.4.9)
+      '@sveltejs/kit': 1.22.5(svelte@4.1.2)(vite@4.4.9)
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -885,6 +894,10 @@ packages:
   /@sveltejs/kit@1.22.4(svelte@4.1.2)(vite@4.4.9):
 >>>>>>> e7c5fdb (npm-dep: bump vite from 4.4.8 to 4.4.9 in /frontend)
     resolution: {integrity: sha512-Opkqw1QXk4Cc25b/heJP2D7mX+OUBFAq4MXKfET58svTTxdeiHFKzmnuRsSF3nmxESqrLjqPAgHpib+knNGzRw==}
+=======
+  /@sveltejs/kit@1.22.5(svelte@4.1.2)(vite@4.4.9):
+    resolution: {integrity: sha512-LHq+ECucoT6c6/tkrxIQtD8KVNhPFV4QQ+xOKTwBAs/Qdtff8P5gAzsIZiwEaaO6J6sYZoy5RP2VR6m8PSCgLA==}
+>>>>>>> 3332f19 (npm-dep: bump @sveltejs/kit from 1.22.4 to 1.22.5 in /frontend)
     engines: {node: ^16.14 || >=18}
 >>>>>>> e50b84b (npm-dep: update all)
 =======
@@ -4042,6 +4055,7 @@ packages:
   /undici@5.23.0:
     resolution: {integrity: sha512-1D7w+fvRsqlQ9GscLBwcAJinqcZGHUKjbOmXdlE/v8BvEGXjeWAax+341q44EuTcHXXnfyKNbKRq4Lg7OzhMmg==}
     engines: {node: '>=14.0'}
+<<<<<<< HEAD
 =======
   /undici@5.22.1:
 <<<<<<< HEAD
@@ -4064,6 +4078,8 @@ packages:
 >>>>>>> e50b84b (npm-dep: update all)
 =======
 >>>>>>> 6878878 (reuse device form, simplify realtime updates)
+=======
+>>>>>>> 3332f19 (npm-dep: bump @sveltejs/kit from 1.22.4 to 1.22.5 in /frontend)
     dependencies:
       busboy: 1.6.0
     dev: true
