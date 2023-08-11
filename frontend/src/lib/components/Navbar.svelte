@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, permission, isAdmin } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Fa from 'svelte-fa';
 	import {
@@ -92,7 +92,7 @@
 						><Fa icon={faHome} />Home</a
 					>
 				</li>
-				{#if !$pocketbase.authStore.model?.collectionName}
+				{#if $isAdmin}
 					<li>
 						<a
 							href="/permissions"
@@ -130,7 +130,7 @@
 					><Fa icon={faHome} />Home</a
 				>
 			</li>
-			{#if !$pocketbase.authStore.model?.collectionName}
+			{#if $isAdmin}
 				<li>
 					<a
 						href="/permissions"
@@ -188,10 +188,12 @@
 	</div>
 	<div class="justify-end ms-auto">
 		{#if $pocketbase.authStore?.model !== null}
-			<a class="btn btn-success me-4" href="/device/new">
-				<Fa icon={faPlus} />
-				New
-			</a>
+			{#if $isAdmin || $permission.create}
+				<a class="btn btn-success me-4" href="/device/new">
+					<Fa icon={faPlus} />
+					New
+				</a>
+			{/if}
 			<div class="dropdown dropdown-end">
 				<label tabindex="-1" class="btn btn-ghost btn-circle avatar" for="avatar">
 					<div class="w-10 rounded-full" id="avatar">

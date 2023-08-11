@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { pocketbase } from '$lib/stores/pocketbase';
+	import { pocketbase, permission, isAdmin } from '$lib/stores/pocketbase';
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import toast from 'svelte-french-toast';
@@ -64,6 +64,10 @@
 		});
 
 		$pocketbase.collection('ports').subscribe('*', () => {
+			getAllDevices();
+		});
+
+		$pocketbase.collection('permissions').subscribe('*', () => {
 			getAllDevices();
 		});
 	});
@@ -139,11 +143,17 @@
 	{/if}
 {:else}
 	<div class="container text-center">
-		<p>You have not created any devices.</p>
-		<p>
-			<a href="/device/new" class="btn btn-ghost"
-				><Fa icon={faPlus} class="ms-2" />Add your first device
-			</a>
-		</p>
+		<p>No devices here.</p>
+		{#if $isAdmin || $permission.create}
+			<p>
+				<a href="/device/new" class="btn btn-ghost"
+					><Fa icon={faPlus} class="ms-2" />Add your first device
+				</a>
+			</p>
+		{:else}
+			<p>
+				Please ask the admin to grant you permissions to existing devices or to create new ones.
+			</p>
+		{/if}
 	</div>
 {/if}

@@ -3,12 +3,19 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, permission, isAdmin } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
-	import { Toaster } from 'svelte-french-toast';
+	import toast, { Toaster, type ToastOptions } from 'svelte-french-toast';
 	import type { SettingsPublic } from '$lib/types/settings';
+	import type { Permission } from '$lib/types/permission';
+
+	const toastOptions: ToastOptions = {
+		duration: 5000
+	};
+
+	$: isAdmin.set($pocketbase.authStore.isValid && !$pocketbase.authStore.model?.collectionName);
 
 	onMount(async () => {
 		// set settingsPub store on load
@@ -37,9 +44,27 @@
 		}
 
 		if ($pocketbase.authStore.model?.collectionName === 'users') {
-			$pocketbase.collection('users').authRefresh();
+			await $pocketbase.collection('users').authRefresh();
 		} else {
-			$pocketbase.admins.authRefresh();
+			await $pocketbase.admins.authRefresh();
+		}
+
+		// load user permissions
+		if ($pocketbase.authStore.model?.collectionName === 'users') {
+			$pocketbase
+				.collection('permissions')
+				.getFirstListItem(`user.id = '${$pocketbase.authStore.model.id}'`)
+				.then((data) => {
+					permission.set(data as Permission);
+				})
+				.catch(() => {
+					toast.error('No permissons set for user. Ask your admin to grant you permissions.');
+				});
+
+			$pocketbase.collection('permissions').subscribe('*', (event) => {
+				permission.set(event.record as Permission);
+				toast.success('Your permissions have been updated.');
+			});
 		}
 	});
 </script>
@@ -62,7 +87,7 @@
 	<Navbar />
 {/if}
 
-<Toaster position="bottom-center" />
+<Toaster position="bottom-center" {toastOptions} />
 
 <Transition url={$page.url}>
 	<div class="container mx-auto p-2 mb-4">

@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { settingsPub, settingsPriv } from '$lib/stores/settings';
-	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, isAdmin } from '$lib/stores/pocketbase';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
 	import { faSave } from '@fortawesome/free-solid-svg-icons';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import type { SettingsPublic, SettingsPrivate } from '$lib/types/settings';
 
 	let settingsPubClone: SettingsPublic | undefined;
@@ -14,21 +16,31 @@
 	let faviconInputElement: HTMLInputElement;
 	let version = import.meta.env.UPSNAP_VERSION;
 
-	settingsPub.subscribe((settings) => {
-		settingsPubClone = settings;
-	});
-	settingsPriv.subscribe((settings) => {
-		settingsPrivClone = settings;
-	});
-
-	if (!$settingsPriv && $pocketbase.authStore.isValid) {
-		$pocketbase
-			.collection('settings_private')
-			.getFirstListItem('')
-			.then((res) => {
-				settingsPriv.set(res as SettingsPrivate);
+	onMount(() => {
+		if (!$isAdmin) {
+			toast(`You don't have permission to visit ${$page.url.pathname}`, {
+				icon: '⛔'
 			});
-	}
+			goto('/');
+			return;
+		}
+
+		settingsPub.subscribe((settings) => {
+			settingsPubClone = settings;
+		});
+		settingsPriv.subscribe((settings) => {
+			settingsPrivClone = settings;
+		});
+
+		if (!$settingsPriv) {
+			$pocketbase
+				.collection('settings_private')
+				.getFirstListItem('')
+				.then((res) => {
+					settingsPriv.set(res as SettingsPrivate);
+				});
+		}
+	});
 
 	function resetFavicon() {
 		if (settingsPubClone === undefined) return;
