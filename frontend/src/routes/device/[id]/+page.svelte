@@ -1,9 +1,20 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { pocketbase } from '$lib/stores/pocketbase';
+	import { goto } from '$app/navigation';
+	import { pocketbase, permission, isAdmin } from '$lib/stores/pocketbase';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
+	import toast from 'svelte-french-toast';
 	import type { Device, Port } from '$lib/types/device';
+
+	$: if (Object.hasOwn($permission, 'update')) {
+		if (!$isAdmin && !$permission.update.includes($page.params.id)) {
+			toast(`You don't have permission to visit ${$page.url.pathname}`, {
+				icon: '⛔'
+			});
+			goto('/');
+		}
+	}
 
 	async function getDevice(): Promise<Device> {
 		const resp = await $pocketbase

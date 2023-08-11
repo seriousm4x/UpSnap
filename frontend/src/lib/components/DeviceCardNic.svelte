@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
 	import Fa from 'svelte-fa';
 	import { faCircle, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 	import type { Device } from '$lib/types/device';
@@ -54,16 +54,26 @@
 </script>
 
 <li
-	class:disabled={device.status === 'online' && device.shutdown_cmd === ''}
-	class:tooltip={device.status === 'online' && device.shutdown_cmd === ''}
+	class:disabled={(device.status === 'online' && device.shutdown_cmd === '') ||
+		!$permission.power?.includes(device.id)}
+	class:tooltip={(device.status === 'online' && device.shutdown_cmd === '') ||
+		!$permission.power?.includes(device.id)}
 	data-tip={device.status === 'online' && device.shutdown_cmd === ''
 		? 'No shutdown command set'
+		: !$permission.power?.includes(device.id)
+		? 'No permission to shut down this device'
 		: null}
 >
 	<div
 		class="flex items-start p-2 gap-4"
-		on:click={device.status === 'online' && device.shutdown_cmd === '' ? null : handleClick}
-		on:keydown={device.status === 'online' && device.shutdown_cmd === '' ? null : handleClick}
+		on:click={(device.status === 'online' && device.shutdown_cmd === '') ||
+		!$permission.power?.includes(device.id)
+			? null
+			: handleClick}
+		on:keydown={(device.status === 'online' && device.shutdown_cmd === '') ||
+		!$permission.power?.includes(device.id)
+			? null
+			: handleClick}
 		role="none"
 	>
 		{#if device.status === 'offline'}

@@ -2,9 +2,10 @@
 	import { formatDistance, parseISO } from 'date-fns';
 	import DeviceCardNic from './DeviceCardNic.svelte';
 	import { scale } from 'svelte/transition';
-	import type { Device } from '$lib/types/device';
 	import Fa from 'svelte-fa';
 	import { faCircleArrowDown, faCircleArrowUp, faLock } from '@fortawesome/free-solid-svg-icons';
+	import { isAdmin, permission } from '$lib/stores/pocketbase';
+	import type { Device } from '$lib/types/device';
 
 	export let device: Device;
 
@@ -60,7 +61,9 @@
 					addSuffix: true
 				})}
 			</span>
-			<a class="btn btn-sm btn-neutral ms-auto" href="/device/{device.id}">Edit</a>
+			{#if $isAdmin || $permission.update?.includes(device.id)}
+				<a class="btn btn-sm btn-neutral ms-auto" href="/device/{device.id}">Edit</a>
+			{/if}
 		</div>
 	</div>
 </div>

@@ -1,17 +1,22 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase } from '$lib/stores/pocketbase';
+	import { pocketbase, permission } from '$lib/stores/pocketbase';
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
 	import { faSave, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 	import type { Device, Port, Group } from '$lib/types/device';
+	import { onMount } from 'svelte';
 
 	export let device: Device;
 
 	let deleteModal: HTMLDialogElement;
 	let deviceGroups = [] as Group[];
 	let newGroup = '';
+
+	onMount(async () => {
+		await getGroups();
+	});
 
 	async function save() {
 		// create/update all ports
@@ -248,7 +253,7 @@
 					{/each}
 				</div>
 				<button
-					class="btn btn-wide btn-neutral mt-4"
+					class="btn btn-wide btn-primary mt-4"
 					on:click={() => createEmptyPort()}
 					type="button">Add new port</button
 				>
@@ -419,31 +424,29 @@
 				You can add devices to a group to have them sorted by group on the dashboard.
 			</p>
 			<div class="flex flex-row flex-wrap gap-2">
-				{#await getGroups() then}
-					{#each deviceGroups as group}
-						<div class="join">
-							<div class=" tooltip" data-tip="Delete">
-								<button
-									class="join-item btn btn-error"
-									type="button"
-									on:click={() => deleteGroup(group)}><Fa icon={faX} /></button
-								>
-							</div>
-							<div
-								class="btn bg-base-100 hover:bg-base-200 join-item"
-								on:click={() => toggleGroup(group.id)}
-								role="none"
+				{#each deviceGroups as group}
+					<div class="join">
+						<div class=" tooltip" data-tip="Delete">
+							<button
+								class="join-item btn btn-error"
+								type="button"
+								on:click={() => deleteGroup(group)}><Fa icon={faX} /></button
 							>
-								<input
-									type="checkbox"
-									class="checkbox"
-									checked={device.groups.indexOf(group.id) !== -1}
-								/>
-								{group.name}
-							</div>
 						</div>
-					{/each}
-				{/await}
+						<div
+							class="btn bg-base-100 hover:bg-base-200 join-item"
+							on:click={() => toggleGroup(group.id)}
+							role="none"
+						>
+							<input
+								type="checkbox"
+								class="checkbox"
+								checked={device.groups.indexOf(group.id) !== -1}
+							/>
+							{group.name}
+						</div>
+					</div>
+				{/each}
 			</div>
 			<div class="join">
 				<input
@@ -452,14 +455,14 @@
 					type="text"
 					bind:value={newGroup}
 				/>
-				<button class="btn btn-success join-item" type="button" on:click={() => addGroup()}
+				<button class="btn btn-primary join-item" type="button" on:click={() => addGroup()}
 					>Create</button
 				>
 			</div>
 		</div>
 	</div>
 	<div class="card-actions mt-6 justify-end gap-4">
-		{#if device.id}
+		{#if $permission.delete?.includes(device.id)}
 			<button class="btn btn-error" type="button" on:click={() => deleteModal.showModal()}
 				><Fa icon={faTrash} />Delete</button
 			>
