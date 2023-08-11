@@ -13,7 +13,8 @@ export default {
 				light: {
 					...themes['[data-theme=light]'],
 					primary: '#55BCD9',
-					secondary: '#D4A35C'
+					secondary: '#D4A35C',
+					'primary-content': '#ffffff'
 				}
 			},
 			{
@@ -28,7 +29,8 @@ export default {
 				cupcake: {
 					...themes['[data-theme=cupcake]'],
 					primary: '#55BCD9',
-					secondary: '#D4A35C'
+					secondary: '#D4A35C',
+					'primary-content': '#ffffff'
 				}
 			},
 			'bumblebee',
