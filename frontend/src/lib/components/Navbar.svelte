@@ -58,9 +58,12 @@
 		? $pocketbase.authStore?.model.avatar
 		: Math.floor(Math.random() * 9).toString();
 
-	function logout() {
+	async function logout() {
+		await $pocketbase.collection('devices').unsubscribe('*');
+		await $pocketbase.collection('ports').unsubscribe('*');
+		await $pocketbase.collection('permissions').unsubscribe('*');
 		$pocketbase.authStore.clear();
-		goto('/login');
+		goto('/login', { invalidateAll: true });
 	}
 </script>
 
@@ -208,7 +211,9 @@
 						<a class="justify-between" href="/account">Edit profile</a>
 					</li>
 					<li>
-						<div on:click={() => logout()} on:keydown={() => logout()} role="none">Logout</div>
+						<div on:click={async () => logout()} on:keydown={async () => logout()} role="none">
+							Logout
+						</div>
 					</li>
 				</ul>
 			</div>

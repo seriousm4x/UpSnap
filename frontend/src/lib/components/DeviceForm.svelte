@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase, permission } from '$lib/stores/pocketbase';
+	import { pocketbase, permission, isAdmin } from '$lib/stores/pocketbase';
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
@@ -440,7 +440,7 @@
 						>
 							<input
 								type="checkbox"
-								class="checkbox"
+								class="checkbox checked:checkbox-primary"
 								checked={device.groups.indexOf(group.id) !== -1}
 							/>
 							{group.name}
@@ -462,7 +462,7 @@
 		</div>
 	</div>
 	<div class="card-actions mt-6 justify-end gap-4">
-		{#if $permission.delete?.includes(device.id)}
+		{#if $isAdmin || $permission.delete?.includes(device.id)}
 			<button class="btn btn-error" type="button" on:click={() => deleteModal.showModal()}
 				><Fa icon={faTrash} />Delete</button
 			>

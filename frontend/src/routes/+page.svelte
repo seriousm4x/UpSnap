@@ -5,17 +5,25 @@
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
-	import { faPlus } from '@fortawesome/free-solid-svg-icons';
+	import {
+		faChevronCircleLeft,
+		faChevronCircleRight,
+		faPlus
+	} from '@fortawesome/free-solid-svg-icons';
 	import { browser } from '$app/environment';
 	import type { Device } from '$lib/types/device';
 
-	let devices = [] as Device[];
 	let loading = true;
-	let order: string;
+	let devices = [] as Device[];
 	let devicesWithGroup: {
 		[key: string]: Device[];
 	};
 	let devicesWithoutGroups = [] as Device[];
+	let orderBy: 'name' | 'ip';
+	let orderExpanded = false;
+	let orderByGroups: boolean;
+	const gridClass =
+		'grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4';
 
 	$: {
 		devicesWithoutGroups = [];
@@ -35,10 +43,10 @@
 	}
 
 	$: if (browser) {
-		if (order === undefined) {
-			order = localStorage.getItem('order') || 'group';
-		}
-		localStorage.setItem('order', order || 'group');
+		localStorage.setItem('orderBy', orderBy || 'name');
+	}
+	$: if (browser && orderByGroups !== undefined) {
+		localStorage.setItem('orderByGroups', orderByGroups.toString());
 	}
 
 	function getAllDevices() {
@@ -57,6 +65,16 @@
 	}
 
 	onMount(() => {
+		// get soring from local storage
+		const lsO = localStorage.getItem('orderBy');
+		if (lsO === 'name' || lsO === 'ip') {
+			orderBy = lsO;
+		} else {
+			orderBy = 'name';
+		}
+		orderByGroups = localStorage.getItem('orderByGroups') === 'true' ? true : false;
+
+		// get collections and subscribe to changes
 		getAllDevices();
 
 		$pocketbase.collection('devices').subscribe('*', () => {
@@ -78,65 +96,69 @@
 {:else if devices.length > 0}
 	<div class="flex justify-end">
 		<div class="join mb-4">
-			<input
-				class="join-item btn"
-				type="radio"
-				name="order"
-				aria-label="Groups"
-				bind:group={order}
-				value="group"
-			/>
-			<input
-				class="join-item btn"
-				type="radio"
-				name="order"
-				aria-label="Name"
-				bind:group={order}
-				value="name"
-			/>
-			<input
-				class="join-item btn"
-				type="radio"
-				name="order"
-				aria-label="IP"
-				bind:group={order}
-				value="ip"
-			/>
+			{#if orderExpanded}
+				<div class="join-item">
+					<div class="join">
+						<button
+							class="join-item btn"
+							type="button"
+							on:click={() => (orderByGroups = !orderByGroups)}
+							>Groups
+							<input
+								type="checkbox"
+								class="checkbox checked:checkbox-primary"
+								checked={orderByGroups}
+							/>
+						</button>
+					</div>
+				</div>
+				<input
+					class="join-item btn"
+					type="radio"
+					name="order"
+					aria-label="Name"
+					bind:group={orderBy}
+					value="name"
+				/>
+				<input
+					class="join-item btn"
+					type="radio"
+					name="order"
+					aria-label="IP"
+					bind:group={orderBy}
+					value="ip"
+				/>
+			{/if}
+			<div class="tooltip" data-tip="Order">
+				<button class="join-item btn" on:click={() => (orderExpanded = !orderExpanded)}>
+					{#if orderExpanded}
+						<Fa icon={faChevronCircleRight} size="lg" />
+					{:else}
+						<Fa icon={faChevronCircleLeft} size="lg" />
+					{/if}
+				</button>
+			</div>
 		</div>
 	</div>
-	{#if order === 'group'}
-		<div
-			class="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
-		>
+	{#if orderByGroups}
+		<div class={gridClass}>
 			{#if devicesWithoutGroups.length > 0}
-				{#each devicesWithoutGroups.sort( (a, b) => a.name.localeCompare( b.name, undefined, { numeric: true, sensitivity: 'base' } ) ) as device}
+				{#each devicesWithoutGroups.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], undefined, { numeric: true, sensitivity: 'base' } ) ) as device}
 					<DeviceCard {device} />
 				{/each}
 			{/if}
 		</div>
 		{#each Object.keys(devicesWithGroup).sort( (a, b) => a.localeCompare( b, undefined, { numeric: true, sensitivity: 'base' } ) ) as group}
 			<h1 class="mt-6 mb-4 text-2xl font-bold">{group}</h1>
-			<div
-				class="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
-			>
+			<div class={gridClass}>
 				{#each devicesWithGroup[group] as device}
 					<DeviceCard {device} />
 				{/each}
 			</div>
 		{/each}
-	{:else if order === 'name'}
-		<div
-			class="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
-		>
-			{#each devices.sort( (a, b) => a.name.localeCompare( b.name, undefined, { numeric: true, sensitivity: 'base' } ) ) as device}
-				<DeviceCard {device} />
-			{/each}
-		</div>
-	{:else if order === 'ip'}
-		<div
-			class="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4"
-		>
-			{#each devices.sort( (a, b) => a.ip.localeCompare( b.ip, undefined, { numeric: true } ) ) as device}
+	{:else}
+		<div class={gridClass}>
+			{#each devices.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], undefined, { numeric: true, sensitivity: 'base' } ) ) as device}
 				<DeviceCard {device} />
 			{/each}
 		</div>
