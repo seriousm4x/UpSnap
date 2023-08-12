@@ -22,7 +22,10 @@ export default {
 					...themes['[data-theme=dark]'],
 					primary: '#55BCD9',
 					secondary: '#D4A35C',
-					'base-300': '#101316'
+					'base-300': '#12161b',
+					'--rounded-btn': '1.9rem',
+					'--tab-border': '2px',
+					'--tab-radius': '.5rem'
 				}
 			},
 			{
