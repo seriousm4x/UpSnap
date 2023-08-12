@@ -172,9 +172,15 @@
 					</div>
 				</div>
 			</div>
+		{:else}
+			<div class="container text-center">
+				<p>No users</p>
+			</div>
 		{/each}
-		<div class="card-actions mt-6 justify-end gap-4">
-			<button class="btn btn-success" type="submit"><Fa icon={faSave} />Save</button>
-		</div>
+		{#if users.length > 0}
+			<div class="card-actions mt-6 justify-end gap-4">
+				<button class="btn btn-success" type="submit"><Fa icon={faSave} />Save</button>
+			</div>
+		{/if}
 	</form>
 {/await}

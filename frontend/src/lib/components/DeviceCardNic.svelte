@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, permission, isAdmin } from '$lib/stores/pocketbase';
 	import Fa from 'svelte-fa';
 	import { faCircle, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 	import type { Device } from '$lib/types/device';
+	import toast from 'svelte-french-toast';
 
 	export let device: Device;
 
+	let hoverText = '';
 	let interval: number;
 	let timeout = 120;
 	$: minutes = Math.floor(timeout / 60);
@@ -14,12 +16,30 @@
 		countdown();
 	}
 
+	$: if (device.status === 'online') {
+		if (device.shutdown_cmd === '') {
+			hoverText = 'No shutdown command set';
+		} else if (!$isAdmin && !$permission.power?.includes(device.id)) {
+			hoverText = 'No permission to shut down this device';
+		} else {
+			hoverText = 'Shut down';
+		}
+	} else if (device.status === 'offline') {
+		if (!$isAdmin && !$permission.power?.includes(device.id)) {
+			hoverText = 'No permission to power on this device';
+		} else {
+			hoverText = 'Power on';
+		}
+	}
+
 	// TODO: change wake and shutdown to nic based routes, not device based
 	function wake() {
 		fetch(`${backendUrl}api/upsnap/wake/${device.id}`, {
 			headers: {
 				Authorization: $pocketbase.authStore.token
 			}
+		}).catch((err) => {
+			toast.error(err.message);
 		});
 	}
 
@@ -28,6 +48,8 @@
 			headers: {
 				Authorization: $pocketbase.authStore.token
 			}
+		}).catch((err) => {
+			toast.error(err.message);
 		});
 	}
 
@@ -54,26 +76,15 @@
 </script>
 
 <li
+	class="tooltip"
 	class:disabled={(device.status === 'online' && device.shutdown_cmd === '') ||
-		!$permission.power?.includes(device.id)}
-	class:tooltip={(device.status === 'online' && device.shutdown_cmd === '') ||
-		!$permission.power?.includes(device.id)}
-	data-tip={device.status === 'online' && device.shutdown_cmd === ''
-		? 'No shutdown command set'
-		: !$permission.power?.includes(device.id)
-		? 'No permission to shut down this device'
-		: null}
+		(!isAdmin && !$permission.power?.includes(device.id))}
+	data-tip={hoverText}
 >
 	<div
 		class="flex items-start p-2 gap-4"
-		on:click={(device.status === 'online' && device.shutdown_cmd === '') ||
-		!$permission.power?.includes(device.id)
-			? null
-			: handleClick}
-		on:keydown={(device.status === 'online' && device.shutdown_cmd === '') ||
-		!$permission.power?.includes(device.id)
-			? null
-			: handleClick}
+		on:click={handleClick}
+		on:keydown={handleClick}
 		role="none"
 	>
 		{#if device.status === 'offline'}

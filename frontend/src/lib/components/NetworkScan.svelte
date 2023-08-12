@@ -130,7 +130,7 @@
 							placeholder="192.168.1.0/24"
 							bind:value={scanRange}
 						/>
-						<button class="btn join-item" on:click={() => saveSettings()}>Save</button>
+						<button class="btn btn-primary join-item" on:click={() => saveSettings()}>Save</button>
 					</div>
 				</div>
 				<div>

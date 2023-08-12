@@ -18,6 +18,26 @@
 	$: isAdmin.set($pocketbase.authStore.isValid && !$pocketbase.authStore.model?.collectionName);
 
 	onMount(async () => {
+		$pocketbase.authStore.onChange(() => {
+			// load user permissions
+			if ($pocketbase.authStore.model?.collectionName === 'users') {
+				$pocketbase
+					.collection('permissions')
+					.getFirstListItem(`user.id = '${$pocketbase.authStore.model.id}'`)
+					.then((data) => {
+						permission.set(data as Permission);
+					})
+					.catch(() => {
+						toast.error('No permissons set for user. Ask your admin to grant you permissions.');
+					});
+
+				$pocketbase.collection('permissions').subscribe('*', (event) => {
+					permission.set(event.record as Permission);
+					toast.success('Your permissions have been updated.');
+				});
+			}
+		});
+
 		// set settingsPub store on load
 		if (!$settingsPub) {
 			const res = await $pocketbase.collection('settings_public').getFirstListItem('');
@@ -47,24 +67,6 @@
 			await $pocketbase.collection('users').authRefresh();
 		} else {
 			await $pocketbase.admins.authRefresh();
-		}
-
-		// load user permissions
-		if ($pocketbase.authStore.model?.collectionName === 'users') {
-			$pocketbase
-				.collection('permissions')
-				.getFirstListItem(`user.id = '${$pocketbase.authStore.model.id}'`)
-				.then((data) => {
-					permission.set(data as Permission);
-				})
-				.catch(() => {
-					toast.error('No permissons set for user. Ask your admin to grant you permissions.');
-				});
-
-			$pocketbase.collection('permissions').subscribe('*', (event) => {
-				permission.set(event.record as Permission);
-				toast.success('Your permissions have been updated.');
-			});
 		}
 	});
 </script>
