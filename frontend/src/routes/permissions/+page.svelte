@@ -131,7 +131,7 @@
 							</label>
 						</div>
 					{/each}
-					<div class="grid grid-cols-5 gap-4 place-items-center">
+					<div class="grid grid-cols-5 gap-4 justify-items-center">
 						<div class="font-bold" />
 						<div class="font-bold">Read</div>
 						<div class="font-bold">Update</div>
@@ -139,13 +139,15 @@
 						<div class="font-bold">Power</div>
 						{#each devices as device}
 							{#each permissions.filter((perm) => perm.user === user.id) as permission}
-								<div class="flex flex-row gap-2 place-self-start">
+								<div
+									class="flex flex-row flex-wrap gap-2 place-self-start break-all col-start-1 col-end-6 sm:col-end-1"
+								>
 									<span class="font-bold">{device.name}</span>
 									<span class="badge hidden sm:block">{device.ip}</span>
 								</div>
 								<input
 									type="checkbox"
-									class="checkbox checked:checkbox-primary"
+									class="checkbox checked:checkbox-primary col-start-2"
 									bind:group={permission.read}
 									value={device.id}
 								/>
