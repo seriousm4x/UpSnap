@@ -22,8 +22,8 @@ const config = {
 				'/welcome',
 				'/device/[id]',
 				'/device/new',
-				'/settings',
-				'/permissions'
+				'/users',
+				'/settings'
 			]
 		}
 	}

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { isAdmin, pocketbase } from '$lib/stores/pocketbase';
-	import { backendUrl } from '$lib/stores/pocketbase';
+	import { isAdmin, pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
 	import { faSave } from '@fortawesome/free-solid-svg-icons';
@@ -93,11 +92,15 @@
 		<div class="flex flex-row gap-4 items-center">
 			<div class="avatar">
 				<div class="w-16 rounded-full">
-					<img
-						src="{backendUrl}_/images/avatars/avatar{newAvatar ??
-							$pocketbase.authStore.model?.avatar}.svg"
-						alt="Avatar {newAvatar ?? $pocketbase.authStore.model?.avatar}"
-					/>
+					<!-- svelte static build will fail, because the image gets served from pocketbase
+								and is not a local static file -->
+					{#if $pocketbase.authStore.model?.avatar}
+						<img
+							src="{backendUrl}_/images/avatars/avatar{newAvatar ??
+								$pocketbase.authStore.model?.avatar}.svg"
+							alt="Avatar {newAvatar ?? $pocketbase.authStore.model?.avatar}"
+						/>
+					{/if}
 				</div>
 			</div>
 			<div>
@@ -129,7 +132,11 @@
 							on:click={() => (newAvatar = i)}
 							role="none"
 						>
-							<img src="{backendUrl}_/images/avatars/avatar{i}.svg" alt="Avatar {i}" />
+							<!-- svelte static build will fail, because the image gets served from pocketbase
+								and is not a local static file -->
+							{#if $pocketbase.authStore.model?.avatar}
+								<img src="{backendUrl}_/images/avatars/avatar{i}.svg" alt="Avatar {i}" />
+							{/if}
 						</div>
 					</div>
 				{/each}
