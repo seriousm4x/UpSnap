@@ -151,7 +151,7 @@
 		{#each Object.keys(devicesWithGroup).sort( (a, b) => a.localeCompare( b, undefined, { numeric: true, sensitivity: 'base' } ) ) as group}
 			<h1 class="mt-6 mb-4 text-2xl font-bold">{group}</h1>
 			<div class={gridClass}>
-				{#each devicesWithGroup[group] as device}
+				{#each devicesWithGroup[group].sort( (a, b) => a[orderBy].localeCompare( b[orderBy], undefined, { numeric: true, sensitivity: 'base' } ) ) as device}
 					<DeviceCard {device} />
 				{/each}
 			</div>
