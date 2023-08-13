@@ -11,7 +11,9 @@
 		faKey,
 		faSwatchbook,
 		faChevronDown,
-		faCheck
+		faCheck,
+		faUserPen,
+		faUserLargeSlash
 	} from '@fortawesome/free-solid-svg-icons';
 	import { themeChange } from 'theme-change';
 	import { onMount } from 'svelte';
@@ -92,7 +94,7 @@
 				class="menu dropdown-content mt-3 z-[1] p-2 gap-1 shadow bg-base-300 rounded-box w-52"
 			>
 				<li>
-					<a href="/" class="rounded-lg px-4 py-2" class:active={$page.url.pathname === '/'}
+					<a href="/" class="px-4 py-2" class:active={$page.url.pathname === '/'}
 						><Fa icon={faHome} />Home</a
 					>
 				</li>
@@ -100,7 +102,7 @@
 					<li>
 						<a
 							href="/permissions"
-							class="rounded-lg px-4 py-2"
+							class="px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/permissions')}
 							><Fa icon={faKey} />Permissions</a
 						>
@@ -108,7 +110,7 @@
 					<li>
 						<a
 							href="/settings/"
-							class="rounded-lg px-4 py-2"
+							class="px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/settings')}
 							><Fa icon={faCog} />Settings</a
 						>
@@ -204,24 +206,22 @@
 						<img src="{backendUrl}_/images/avatars/avatar{avatar}.svg" alt="Profile pic" />
 					</div>
 				</label>
-				<div
-					class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-40"
+				<ul
+					tabindex="-1"
+					class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-40"
 				>
-					<p class="font-bold">
+					<li class="menu-title">
 						{$isAdmin ? $pocketbase.authStore.model.email : $pocketbase.authStore.model.username}
-					</p>
-
-					<ul tabindex="-1" class="">
-						<li>
-							<a href="/account">Edit account</a>
-						</li>
-						<li>
-							<div on:click={async () => logout()} on:keydown={async () => logout()} role="none">
-								Logout
-							</div>
-						</li>
-					</ul>
-				</div>
+					</li>
+					<li>
+						<a href="/account"><Fa icon={faUserPen} />Edit account</a>
+					</li>
+					<li>
+						<div on:click={async () => logout()} on:keydown={async () => logout()} role="none">
+							<Fa icon={faUserLargeSlash} />Logout
+						</div>
+					</li>
+				</ul>
 			</div>
 		{/if}
 	</div>
