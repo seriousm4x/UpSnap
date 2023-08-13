@@ -42,8 +42,8 @@
 		});
 	}
 
-	$: if (browser) {
-		localStorage.setItem('orderBy', orderBy || 'name');
+	$: if (browser && orderBy !== undefined) {
+		localStorage.setItem('orderBy', orderBy);
 	}
 	$: if (browser && orderByGroups !== undefined) {
 		localStorage.setItem('orderByGroups', orderByGroups.toString());
@@ -72,7 +72,11 @@
 		} else {
 			orderBy = 'name';
 		}
-		orderByGroups = localStorage.getItem('orderByGroups') === 'true' ? true : false;
+		if (localStorage.getItem('orderByGroups') === null) {
+			orderByGroups = true;
+		} else {
+			orderByGroups = localStorage.getItem('orderByGroups') === 'true' ? true : false;
+		}
 
 		// get collections and subscribe to changes
 		getAllDevices();
