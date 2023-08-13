@@ -170,8 +170,8 @@
 						<label tabindex="-1" class="avatar" for="avatar{index}">
 							<div class="w-10 rounded-full" id="avatar{index}">
 								<img
-									src="{backendUrl}_/images/avatars/avatar{$pocketbase.authStore.model?.avatar}.svg"
-									alt="Avatar {$pocketbase.authStore.model?.avatar}"
+									src="{backendUrl}_/images/avatars/avatar{user.avatar}.svg"
+									alt="Avatar {user.avatar}"
 								/>
 							</div>
 						</label>
