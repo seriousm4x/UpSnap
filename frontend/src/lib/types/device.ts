@@ -5,7 +5,7 @@ export type Device = Record & {
 	ip: string;
 	mac: string;
 	netmask: string;
-	status: string;
+	status: 'pending' | 'online' | 'offline' | '';
 	ports: string[];
 	link: URL;
 	wake_cron: string;

@@ -4,6 +4,7 @@ export type ScannedDevice = {
 	mac: string;
 	mac_vendor: string;
 	netmask: string;
+	status: 'pending' | 'online' | 'offline' | '';
 };
 
 export type ScanResponse = {

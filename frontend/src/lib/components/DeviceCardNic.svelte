@@ -16,7 +16,9 @@
 		countdown();
 	}
 
-	$: if (device.status === 'online') {
+	$: if (device.status === 'pending' || device.status === '') {
+		hoverText = 'Pending';
+	} else if (device.status === 'online') {
 		if (device.shutdown_cmd === '') {
 			hoverText = 'No shutdown command set';
 		} else if (!$isAdmin && !$permission.power?.includes(device.id)) {
@@ -77,7 +79,8 @@
 
 <li
 	class="tooltip"
-	class:disabled={(device.status === 'online' && device.shutdown_cmd === '') ||
+	class:disabled={device.status === 'pending' ||
+		(device.status === 'online' && device.shutdown_cmd === '') ||
 		(!isAdmin && !$permission.power?.includes(device.id))}
 	data-tip={hoverText}
 >

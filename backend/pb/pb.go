@@ -121,21 +121,21 @@ func StartPocketBase(distDirFS fs.FS) {
 			var permissionRec *models.Record
 			permissionRec, err := App.Dao().FindFirstRecordByFilter("permissions",
 				fmt.Sprintf("user.id = '%s'", userId))
-			if err != nil {
+			if err != nil && err.Error() != "sql: no rows in result set" {
 				logger.Error.Println(err)
 				return err
-			}
-
-			permissionRec.Set("read", append(permissionRec.GetStringSlice("read"), deviceRec.Id))
-			permissionRec.Set("update", append(permissionRec.GetStringSlice("update"), deviceRec.Id))
-			permissionRec.Set("delete", append(permissionRec.GetStringSlice("delete"), deviceRec.Id))
-			permissionRec.Set("power", append(permissionRec.GetStringSlice("power"), deviceRec.Id))
-
-			if err := App.Dao().SaveRecord(permissionRec); err != nil {
-				logger.Error.Println(err)
-				return err
+			} else if permissionRec != nil {
+				permissionRec.Set("read", append(permissionRec.GetStringSlice("read"), deviceRec.Id))
+				permissionRec.Set("update", append(permissionRec.GetStringSlice("update"), deviceRec.Id))
+				permissionRec.Set("delete", append(permissionRec.GetStringSlice("delete"), deviceRec.Id))
+				permissionRec.Set("power", append(permissionRec.GetStringSlice("power"), deviceRec.Id))
+				if err := App.Dao().SaveRecord(permissionRec); err != nil {
+					logger.Error.Println(err)
+					return err
+				}
 			}
 		}
+
 		if e.Model.TableName() == "devices" || e.Model.TableName() == "ports" {
 			// refresh the device list on database events
 			if err := refreshDeviceList(); err != nil {
