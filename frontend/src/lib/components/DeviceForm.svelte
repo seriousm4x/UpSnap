@@ -238,7 +238,7 @@
 						required
 					/>
 				</div>
-				<span class="badge text-error me-4 self-center">* required field</span>
+				<span class="badge text-error self-center">* required field</span>
 			</div>
 		</div>
 	</div>

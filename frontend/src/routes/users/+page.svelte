@@ -273,7 +273,10 @@
 				<div class="flex flex-row flex-wrap gap-4">
 					<div class="form-control w-full max-w-xs">
 						<label class="label" for="username">
-							<span class="label-text">Username</span>
+							<div class="label-text">
+								<span>Username</span>
+								<span class="text-error">*</span>
+							</div>
 						</label>
 						<input
 							id="username"
@@ -286,7 +289,10 @@
 					</div>
 					<div class="form-control w-full max-w-xs">
 						<label class="label" for="password">
-							<span class="label-text">Password</span>
+							<div class="label-text">
+								<span>Password</span>
+								<span class="text-error">*</span>
+							</div>
 						</label>
 						<input
 							id="password"
@@ -301,7 +307,10 @@
 					</div>
 					<div class="form-control w-full max-w-xs">
 						<label class="label" for="passwordConfirm">
-							<span class="label-text">Password confirm</span>
+							<div class="label-text">
+								<span>Password confirm</span>
+								<span class="text-error">*</span>
+							</div>
 						</label>
 						<input
 							id="passwordConfirm"
@@ -315,6 +324,7 @@
 						/>
 					</div>
 				</div>
+				<span class="badge text-error mt-4 self-center">* required field</span>
 				<div class="card-actions justify-end">
 					<button type="submit" class="btn btn-success mt-2"><Fa icon={faPlus} />Add</button>
 				</div>
