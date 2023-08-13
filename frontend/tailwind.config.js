@@ -62,7 +62,6 @@ export default {
 			'night',
 			'coffee',
 			'winter'
-		],
-		darkTheme: 'dracula'
+		]
 	}
 };
