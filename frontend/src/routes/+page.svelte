@@ -148,14 +148,20 @@
 				{/each}
 			{/if}
 		</div>
-		{#each Object.keys(devicesWithGroup).sort( (a, b) => a.localeCompare( b, undefined, { numeric: true, sensitivity: 'base' } ) ) as group}
-			<h1 class="mt-6 mb-4 text-2xl font-bold">{group}</h1>
-			<div class={gridClass}>
-				{#each devicesWithGroup[group].sort( (a, b) => a[orderBy].localeCompare( b[orderBy], undefined, { numeric: true, sensitivity: 'base' } ) ) as device}
-					<DeviceCard {device} />
+		{#if Object.keys(devicesWithGroup).length > 0}
+			<div class="flex flex-col gap-6">
+				{#each Object.keys(devicesWithGroup).sort( (a, b) => a.localeCompare( b, undefined, { numeric: true, sensitivity: 'base' } ) ) as group}
+					<div>
+						<h1 class="mb-4 text-2xl font-bold">{group}</h1>
+						<div class={gridClass}>
+							{#each devicesWithGroup[group].sort( (a, b) => a[orderBy].localeCompare( b[orderBy], undefined, { numeric: true, sensitivity: 'base' } ) ) as device}
+								<DeviceCard {device} />
+							{/each}
+						</div>
+					</div>
 				{/each}
 			</div>
-		{/each}
+		{/if}
 	{:else}
 		<div class={gridClass}>
 			{#each devices.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], undefined, { numeric: true, sensitivity: 'base' } ) ) as device}
