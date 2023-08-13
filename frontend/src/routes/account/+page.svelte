@@ -94,7 +94,7 @@
 				<div class="w-16 rounded-full">
 					<!-- svelte static build will fail, because the image gets served from pocketbase
 								and is not a local static file -->
-					{#if $pocketbase.authStore.model?.avatar}
+					{#if $pocketbase.authStore.model?.id}
 						<img
 							src="{backendUrl}_/images/avatars/avatar{newAvatar ??
 								$pocketbase.authStore.model?.avatar}.svg"
@@ -134,7 +134,7 @@
 						>
 							<!-- svelte static build will fail, because the image gets served from pocketbase
 								and is not a local static file -->
-							{#if $pocketbase.authStore.model?.avatar}
+							{#if $pocketbase.authStore.model?.id}
 								<img src="{backendUrl}_/images/avatars/avatar{i}.svg" alt="Avatar {i}" />
 							{/if}
 						</div>
