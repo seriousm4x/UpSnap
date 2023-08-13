@@ -118,7 +118,7 @@
 				already the case and you don't need to do anything). Scanning might take some seconds.
 			</p>
 			<div class="flex flex-row flex-wrap gap-4 items-end">
-				<div>
+				<form on:submit|preventDefault={saveSettings}>
 					<label class="label" for="scan-range">
 						<span class="label-text">IP range</span>
 					</label>
@@ -130,9 +130,9 @@
 							placeholder="192.168.1.0/24"
 							bind:value={scanRange}
 						/>
-						<button class="btn btn-primary join-item" on:click={() => saveSettings()}>Save</button>
+						<button class="btn btn-primary join-item" type="submit">Save</button>
 					</div>
-				</div>
+				</form>
 				<div>
 					<div>
 						{#if !$settingsPriv.scan_range}
