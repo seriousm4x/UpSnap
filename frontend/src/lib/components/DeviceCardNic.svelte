@@ -114,7 +114,7 @@
 			<div>{device.mac}</div>
 			<div class="flex flex-wrap gap-x-4 gap-y-0">
 				{#if device?.expand?.ports}
-					{#each device?.expand?.ports as port}
+					{#each device?.expand?.ports.sort((a, b) => a.number - b.number) as port}
 						<span class="flex items-center gap-1 break-all">
 							{#if port.status}
 								<Fa icon={faCircle} class="text-success" />
