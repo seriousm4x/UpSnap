@@ -1,9 +1,9 @@
-name: v3 build
+name: release
 
 on:
   push:
     tags:
-      - "3.*.*"
+      - "*.*.*"
   workflow_dispatch:
 
 jobs:
