@@ -8,12 +8,12 @@
 		faCog,
 		faHome,
 		faPlus,
-		faKey,
 		faSwatchbook,
 		faChevronDown,
 		faCheck,
-		faUserPen,
-		faUserLargeSlash
+		faUsersGear,
+		faUserGear,
+		faDoorOpen
 	} from '@fortawesome/free-solid-svg-icons';
 	import { themeChange } from 'theme-change';
 	import { onMount } from 'svelte';
@@ -101,10 +101,10 @@
 				{#if $isAdmin}
 					<li>
 						<a
-							href="/permissions"
+							href="/users"
 							class="px-4 py-2"
-							class:active={$page.url.pathname.startsWith('/permissions')}
-							><Fa icon={faKey} />Permissions</a
+							class:active={$page.url.pathname.startsWith('/users')}
+							><Fa icon={faUsersGear} />Users</a
 						>
 					</li>
 					<li>
@@ -138,11 +138,8 @@
 			</li>
 			{#if $isAdmin}
 				<li>
-					<a
-						href="/permissions"
-						class="p-2"
-						class:active={$page.url.pathname.startsWith('/permissions')}
-						><Fa icon={faKey} />Permissions</a
+					<a href="/users" class="p-2" class:active={$page.url.pathname.startsWith('/users')}
+						><Fa icon={faUsersGear} />Users</a
 					>
 				</li>
 				<li>
@@ -203,7 +200,7 @@
 			<div class="dropdown dropdown-end">
 				<label tabindex="-1" class="btn btn-ghost btn-circle avatar" for="avatar">
 					<div class="w-10 rounded-full" id="avatar">
-						<img src="{backendUrl}_/images/avatars/avatar{avatar}.svg" alt="Profile pic" />
+						<img src="{backendUrl}_/images/avatars/avatar{avatar}.svg" alt="Avatar {avatar}" />
 					</div>
 				</label>
 				<ul
@@ -214,11 +211,11 @@
 						{$isAdmin ? $pocketbase.authStore.model.email : $pocketbase.authStore.model.username}
 					</li>
 					<li>
-						<a href="/account"><Fa icon={faUserPen} />Edit account</a>
+						<a href="/account"><Fa icon={faUserGear} />Edit account</a>
 					</li>
 					<li>
 						<div on:click={async () => logout()} on:keydown={async () => logout()} role="none">
-							<Fa icon={faUserLargeSlash} />Logout
+							<Fa icon={faDoorOpen} />Logout
 						</div>
 					</li>
 				</ul>
