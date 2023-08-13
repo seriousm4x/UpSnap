@@ -28,7 +28,7 @@
 						permission.set(data as Permission);
 					})
 					.catch(() => {
-						toast.error('No permissons set for user. Ask your admin to grant you permissions.');
+						return;
 					});
 
 				$pocketbase.collection('permissions').subscribe('*', (event) => {
@@ -64,9 +64,17 @@
 		}
 
 		if ($pocketbase.authStore.model?.collectionName === 'users') {
-			await $pocketbase.collection('users').authRefresh();
+			await $pocketbase
+				.collection('users')
+				.authRefresh()
+				.catch(() => {
+					goto('/login');
+				});
 		} else {
-			await $pocketbase.admins.authRefresh();
+			await $pocketbase.admins.authRefresh().catch(() => {
+				$pocketbase.authStore.clear();
+				goto('/login');
+			});
 		}
 	});
 </script>

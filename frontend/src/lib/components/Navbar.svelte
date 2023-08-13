@@ -48,15 +48,16 @@
 		'winter'
 	];
 	let activeTheme: string | null = '';
+	let avatar = $pocketbase.authStore.model?.avatar;
 
 	onMount(() => {
 		themeChange(false);
 		activeTheme = document.documentElement.getAttribute('data-theme');
-	});
 
-	$: avatar = $pocketbase.authStore?.model?.avatar
-		? $pocketbase.authStore?.model.avatar
-		: Math.floor(Math.random() * 9).toString();
+		$pocketbase.authStore.onChange(() => {
+			avatar = $pocketbase.authStore.model?.avatar;
+		});
+	});
 
 	async function logout() {
 		await $pocketbase.collection('devices').unsubscribe('*');
@@ -203,19 +204,24 @@
 						<img src="{backendUrl}_/images/avatars/avatar{avatar}.svg" alt="Profile pic" />
 					</div>
 				</label>
-				<ul
-					tabindex="-1"
+				<div
 					class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-40"
 				>
-					<li>
-						<a class="justify-between" href="/account">Edit profile</a>
-					</li>
-					<li>
-						<div on:click={async () => logout()} on:keydown={async () => logout()} role="none">
-							Logout
-						</div>
-					</li>
-				</ul>
+					<p class="font-bold">
+						{$isAdmin ? $pocketbase.authStore.model.email : $pocketbase.authStore.model.username}
+					</p>
+
+					<ul tabindex="-1" class="">
+						<li>
+							<a href="/account">Edit account</a>
+						</li>
+						<li>
+							<div on:click={async () => logout()} on:keydown={async () => logout()} role="none">
+								Logout
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		{/if}
 	</div>

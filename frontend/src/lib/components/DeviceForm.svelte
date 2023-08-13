@@ -248,6 +248,7 @@
 			<p class="my-2">UpSnap can also check if given ports are open. You can define them below.</p>
 			<div class="form-control w-full">
 				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+					<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 					{#each device.expand.ports as _, index}
 						<DeviceFormPort bind:device {index} />
 					{/each}
