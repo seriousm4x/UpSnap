@@ -23,23 +23,21 @@
 
 	function changeAvatar() {
 		if ($isAdmin) {
+			if (!$pocketbase.authStore.model?.id) return;
 			$pocketbase.admins
-				.authRefresh()
-				.then((data) => {
-					data.admin.avatar = newAvatar;
-					$pocketbase.authStore.save(data.token, data.admin);
+				.update($pocketbase.authStore.model.id, { avatar: newAvatar })
+				.then(() => {
 					toast.success('Avatar saved.');
 				})
 				.catch((err) => {
 					toast.error(err.message);
 				});
 		} else {
+			if (!$pocketbase.authStore.model?.id) return;
 			$pocketbase
 				.collection('users')
-				.authRefresh()
-				.then((data) => {
-					data.record.avatar = newAvatar;
-					$pocketbase.authStore.save(data.token, data.record);
+				.update($pocketbase.authStore.model.id, { avatar: newAvatar })
+				.then(() => {
 					toast.success('Avatar saved.');
 				})
 				.catch((err) => {

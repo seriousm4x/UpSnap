@@ -72,7 +72,6 @@
 				});
 		} else {
 			await $pocketbase.admins.authRefresh().catch(() => {
-				$pocketbase.authStore.clear();
 				goto('/login');
 			});
 		}
