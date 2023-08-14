@@ -38,7 +38,7 @@ func RunPing(app *pocketbase.PocketBase) {
 		for _, device := range Devices {
 			// ping
 			go func(device *models.Record) {
-				oldStatus := device.Get("status")
+				oldStatus := device.GetString("status")
 				newStatus := networking.PingDevice(device)
 				if newStatus {
 					if oldStatus == "offline" || oldStatus == "" {

@@ -63,6 +63,7 @@
 	}
 
 	function countdown() {
+		timeout = 120;
 		clearInterval(interval);
 		const end = Date.parse(device.updated) + 2 * 60 * 1000;
 		interval = setInterval(() => {
