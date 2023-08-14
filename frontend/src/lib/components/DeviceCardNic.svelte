@@ -81,13 +81,26 @@
 	class="tooltip"
 	class:disabled={device.status === 'pending' ||
 		(device.status === 'online' && device.shutdown_cmd === '') ||
-		(!isAdmin && !$permission.power?.includes(device.id))}
+		!isAdmin ||
+		!$permission.power?.includes(device.id)}
 	data-tip={hoverText}
 >
 	<div
 		class="flex items-start p-2 gap-4"
-		on:click={handleClick}
-		on:keydown={handleClick}
+		on:click={device.status === 'pending'
+			? null
+			: device.status === 'online' && device.shutdown_cmd === ''
+			? null
+			: !isAdmin && !$permission.power?.includes(device.id)
+			? null
+			: handleClick}
+		on:keydown={device.status === 'pending'
+			? null
+			: device.status === 'online' && device.shutdown_cmd === ''
+			? null
+			: !isAdmin && !$permission.power?.includes(device.id)
+			? null
+			: handleClick}
 		role="none"
 	>
 		{#if device.status === 'offline'}
