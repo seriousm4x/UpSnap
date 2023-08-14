@@ -52,7 +52,7 @@
 	}
 
 	async function createDevice(device: Device) {
-		device.created_by = $pocketbase.authStore.model?.id ?? '';
+		device.created_by = $isAdmin ? '' : $pocketbase.authStore.model?.id ?? '';
 		$pocketbase
 			.collection('devices')
 			.create(device)
