@@ -92,9 +92,9 @@
 	async function addAll() {
 		let count = 0;
 		await Promise.all(
-			scanResponse.devices.map(async (device) => {
-				if (!addAllCheckbox && device.name === 'Unknown') return;
-				await createDevice(device)
+			scanResponse.devices.map(async (dev) => {
+				if (!addAllCheckbox && dev.name === 'Unknown') return;
+				await createDevice(dev)
 					.catch((err) => {
 						toast.error(err.message);
 					})
@@ -200,20 +200,25 @@
 						<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
 						<span class="label-text ms-2">Include devices where name is "Unknown"</span>
 					</label>
-					<button
-						class="btn btn-success"
-						on:click={() => addAll()}
-						disabled={!addAllCheckbox &&
-							scanResponse.devices.filter((device) => {
-								device.name !== 'Unknown';
-							}).length === 0}
-					>
-						<Fa icon={faPlus} /> Add all ({addAllCheckbox
-							? scanResponse.devices.length
-							: scanResponse.devices.filter((device) => {
-									device.name !== 'Unknown';
-							  }).length})
-					</button>
+					{#if addAllCheckbox}
+						<button
+							class="btn btn-success"
+							on:click={() => addAll()}
+							disabled={scanResponse.devices.length === 0}
+						>
+							<Fa icon={faPlus} /> Add all ({scanResponse.devices.length})
+						</button>
+					{:else}
+						<button
+							class="btn btn-success"
+							on:click={() => addAll()}
+							disabled={scanResponse.devices.filter((dev) => dev.name !== 'Unknown').length === 0}
+						>
+							<Fa icon={faPlus} /> Add all ({scanResponse.devices.filter(
+								(dev) => dev.name !== 'Unknown'
+							).length})
+						</button>
+					{/if}
 				</div>
 			{/if}
 		</div>
