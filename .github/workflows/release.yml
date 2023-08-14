@@ -25,8 +25,9 @@ jobs:
       # build sveltekit frontend
       - name: Build frontend
         run: |
-          npm --prefix=./frontend i
-          UPSNAP_VERSION=${GITHUB_REF##*/} npm --prefix=./frontend run build
+          npm i -g pnpm
+          pnpm --prefix=./frontend i
+          UPSNAP_VERSION=${GITHUB_REF##*/} pnpm --prefix=./frontend run build
           cp -r ./frontend/build/* ./backend/pb_public/
 
       # setup go
