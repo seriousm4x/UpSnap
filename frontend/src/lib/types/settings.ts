@@ -9,5 +9,6 @@ export type SettingsPublic = Record & {
 
 export type SettingsPrivate = Record & {
 	interval: number;
+	lazy_ping: boolean;
 	scan_range: string;
 };

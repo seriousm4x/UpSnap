@@ -21,9 +21,9 @@ func RunPing(app *pocketbase.PocketBase) {
 	// init cronjob
 	CronPing = cron.New()
 	CronPing.AddFunc(settingsPrivateRecords[0].GetString("interval"), func() {
-		// skip cron if no realtime clients connected
+		// skip cron if no realtime clients connected and lazy_ping is turned on
 		realtimeClients := len(app.SubscriptionsBroker().Clients())
-		if realtimeClients == 0 {
+		if realtimeClients == 0 && settingsPrivateRecords[0].GetBool("lazy_ping") {
 			return
 		}
 		// expand ports field

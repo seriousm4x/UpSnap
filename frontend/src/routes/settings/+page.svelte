@@ -67,8 +67,17 @@
 			.collection('settings_public')
 			.update(settingsPubClone.id, settingsPubClone)
 			.then((res) => {
-				toast.success('Saved settings');
 				settingsPub.set(res as SettingsPublic);
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+		await $pocketbase
+			.collection('settings_private')
+			.update(settingsPrivClone.id, settingsPrivClone)
+			.then((res) => {
+				toast.success('Saved settings');
+				settingsPriv.set(res as SettingsPrivate);
 				goto('/');
 			})
 			.catch((err) => {
@@ -90,7 +99,7 @@
 						class="badge">@every 3s</span
 					>.
 				</p>
-				<p class="mb-2">
+				<p>
 					Learn more about the correct syntax for cron on
 					<a target="_blank" class="link" href="https://en.wikipedia.org/wiki/Cron">Wikipedia</a>
 					or refer to the
@@ -98,13 +107,28 @@
 						>package documentation</a
 					>.
 				</p>
-				<div class="form-control w-full">
+				<div class="form-control w-full mt-2">
 					<input
 						type="text"
 						placeholder="e.g. '@every 5s' or '@every 1m'"
 						class="input w-full max-w-xs"
 						bind:value={settingsPrivClone.interval}
 					/>
+				</div>
+				<h2 class="card-title mt-2">Lazy ping</h2>
+				<p class="mt-2">
+					When lazy ping is turned on, UpSnap will only ping devices if there is an active user
+					visiting the website. If it's turned off, UpSnap will always ping devices.
+				</p>
+				<div class="form-control w-fit">
+					<label class="label cursor-pointer gap-2">
+						<input
+							type="checkbox"
+							class="checkbox checkbox-primary"
+							bind:checked={settingsPrivClone.lazy_ping}
+						/>
+						<span class="label-text">Enable</span>
+					</label>
 				</div>
 			</div>
 		</div>
