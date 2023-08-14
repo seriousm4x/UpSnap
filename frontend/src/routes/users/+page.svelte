@@ -160,6 +160,7 @@
 	function toggleAllPermissions(user: User, key: string) {
 		const perm = permissions.find((perm) => perm.user === user.id);
 		if (!perm) return;
+		if (perm[key] === undefined) perm[key] = [];
 		if (devices.length === perm[key].length) {
 			// remove all perms
 			perm[key] = [];
