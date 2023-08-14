@@ -156,6 +156,23 @@
 		getPermissionsPromise = getPermissions();
 		getDevicesPromise = getDevices();
 	}
+
+	function toggleAllPermissions(user: User, key: string) {
+		const perm = permissions.find((perm) => perm.user === user.id);
+		if (!perm) return;
+		if (devices.length === perm[key].length) {
+			// remove all perms
+			perm[key] = [];
+		} else {
+			// grant all perms
+			devices.forEach((dev) => {
+				if (!perm[key].includes(dev.id)) {
+					perm[key] = [...perm[key], dev.id];
+				}
+			});
+		}
+		devices = devices;
+	}
 </script>
 
 {#await Promise.all([getUsersPromise, getPermissionsPromise, getDevicesPromise])}
@@ -239,7 +256,36 @@
 											/>
 										{/each}
 									{/each}
+									<button
+										class="btn btn-sm btn-neutral col-start-2"
+										type="button"
+										on:click={() => {
+											toggleAllPermissions(user, 'read');
+										}}>Toggle</button
+									>
+									<button
+										class=" btn btn-sm btn-neutral"
+										type="button"
+										on:click={() => {
+											toggleAllPermissions(user, 'update');
+										}}>Toggle</button
+									>
+									<button
+										class=" btn btn-sm btn-neutral"
+										type="button"
+										on:click={() => {
+											toggleAllPermissions(user, 'delete');
+										}}>Toggle</button
+									>
+									<button
+										class=" btn btn-sm btn-neutral"
+										type="button"
+										on:click={() => {
+											toggleAllPermissions(user, 'power');
+										}}>Toggle</button
+									>
 								</div>
+								<div class="mt-4 flex flex-row flex-wrap gap-4 justify-end"></div>
 							{/if}
 						</div>
 					</div>
