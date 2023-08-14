@@ -8,6 +8,7 @@
 	export let device: Device;
 
 	let hoverText = '';
+	let disabled = false;
 	let interval: number;
 	let timeout = 120;
 	$: minutes = Math.floor(timeout / 60);
@@ -17,19 +18,25 @@
 	}
 
 	$: if (device.status === 'pending' || device.status === '') {
+		disabled = true;
 		hoverText = 'Pending';
 	} else if (device.status === 'online') {
 		if (device.shutdown_cmd === '') {
+			disabled = true;
 			hoverText = 'No shutdown command set';
 		} else if (!$isAdmin && !$permission.power?.includes(device.id)) {
+			disabled = true;
 			hoverText = 'No permission to shut down this device';
 		} else {
+			disabled = false;
 			hoverText = 'Shut down';
 		}
 	} else if (device.status === 'offline') {
 		if (!$isAdmin && !$permission.power?.includes(device.id)) {
+			disabled = true;
 			hoverText = 'No permission to power on this device';
 		} else {
+			disabled = false;
 			hoverText = 'Power on';
 		}
 	}
@@ -77,30 +84,11 @@
 	}
 </script>
 
-<li
-	class="tooltip"
-	class:disabled={device.status === 'pending' ||
-		(device.status === 'online' && device.shutdown_cmd === '') ||
-		!isAdmin ||
-		!$permission.power?.includes(device.id)}
-	data-tip={hoverText}
->
+<li class="tooltip" class:disabled data-tip={hoverText}>
 	<div
 		class="flex items-start p-2 gap-4"
-		on:click={device.status === 'pending'
-			? null
-			: device.status === 'online' && device.shutdown_cmd === ''
-			? null
-			: !isAdmin && !$permission.power?.includes(device.id)
-			? null
-			: handleClick}
-		on:keydown={device.status === 'pending'
-			? null
-			: device.status === 'online' && device.shutdown_cmd === ''
-			? null
-			: !isAdmin && !$permission.power?.includes(device.id)
-			? null
-			: handleClick}
+		on:click={disabled ? null : handleClick}
+		on:keydown={disabled ? null : handleClick}
 		role="none"
 	>
 		{#if device.status === 'offline'}
