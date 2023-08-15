@@ -49,18 +49,20 @@ func RunPing(app *pocketbase.PocketBase) {
 					return
 				}
 				if networking.PingDevice(d) {
-					if status == "offline" || status == "" {
-						d.Set("status", "online")
-						if err := app.Dao().SaveRecord(d); err != nil {
-							logger.Error.Println("Failed to save record:", err)
-						}
+					if status == "online" {
+						return
+					}
+					d.Set("status", "online")
+					if err := app.Dao().SaveRecord(d); err != nil {
+						logger.Error.Println("Failed to save record:", err)
 					}
 				} else {
-					if status == "online" || status == "" {
-						d.Set("status", "offline")
-						if err := app.Dao().SaveRecord(d); err != nil {
-							logger.Error.Println("Failed to save record:", err)
-						}
+					if status == "offline" {
+						return
+					}
+					d.Set("status", "offline")
+					if err := app.Dao().SaveRecord(d); err != nil {
+						logger.Error.Println("Failed to save record:", err)
 					}
 				}
 			}(device)
@@ -76,10 +78,6 @@ func RunPing(app *pocketbase.PocketBase) {
 					if isUp != port.GetBool("status") {
 						port.Set("status", isUp)
 						if err := app.Dao().SaveRecord(port); err != nil {
-							logger.Error.Println("Failed to save record:", err)
-						}
-						d.RefreshUpdated()
-						if err := app.Dao().SaveRecord(d); err != nil {
 							logger.Error.Println("Failed to save record:", err)
 						}
 					}

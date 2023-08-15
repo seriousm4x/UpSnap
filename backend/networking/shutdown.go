@@ -35,7 +35,7 @@ func ShutdownDevice(device *models.Record) error {
 		return fmt.Errorf("%s", stderr.String())
 	}
 
-	// check state every second for 2 min
+	// check state every seconds for 2 min
 	start := time.Now()
 	for {
 		time.Sleep(1 * time.Second)

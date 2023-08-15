@@ -15,7 +15,7 @@ func WakeDevice(device *models.Record) error {
 		return err
 	}
 
-	// check state every second for 2 min
+	// check state every seconds for 2 min
 	start := time.Now()
 	for {
 		time.Sleep(1 * time.Second)

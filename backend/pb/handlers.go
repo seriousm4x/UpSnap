@@ -24,14 +24,14 @@ func HandlerWake(c echo.Context) error {
 	if err := App.Dao().SaveRecord(record); err != nil {
 		logger.Error.Println("Failed to save record:", err)
 	}
-	go func(*models.Record) {
-		if err := networking.WakeDevice(record); err != nil {
+	go func(r *models.Record) {
+		if err := networking.WakeDevice(r); err != nil {
 			logger.Error.Println(err)
-			record.Set("status", "offline")
+			r.Set("status", "offline")
 		} else {
-			record.Set("status", "online")
+			r.Set("status", "online")
 		}
-		if err := App.Dao().SaveRecord(record); err != nil {
+		if err := App.Dao().SaveRecord(r); err != nil {
 			logger.Error.Println("Failed to save record:", err)
 		}
 	}(record)
@@ -72,14 +72,14 @@ func HandlerShutdown(c echo.Context) error {
 	if err := App.Dao().SaveRecord(record); err != nil {
 		logger.Error.Println("Failed to save record:", err)
 	}
-	go func(*models.Record) {
-		if err := networking.ShutdownDevice(record); err != nil {
+	go func(r *models.Record) {
+		if err := networking.ShutdownDevice(r); err != nil {
 			logger.Error.Println(err)
-			record.Set("status", "online")
+			r.Set("status", "online")
 		} else {
-			record.Set("status", "offline")
+			r.Set("status", "offline")
 		}
-		if err := App.Dao().SaveRecord(record); err != nil {
+		if err := App.Dao().SaveRecord(r); err != nil {
 			logger.Error.Println("Failed to save record:", err)
 		}
 	}(record)

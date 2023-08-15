@@ -11,7 +11,6 @@
 	let disabled = false;
 	let timeout = 120;
 	var interval: number;
-	$: if (device.ip === '10.10.0.198') console.log(device.status);
 
 	$: if (device.status === 'pending' && !interval) {
 		countdown(Date.parse(device.updated));
@@ -74,13 +73,11 @@
 	}
 
 	function countdown(updated: number) {
-		console.log('start countdown');
 		timeout = 120;
 		const end = updated + 2 * 60 * 1000;
 		interval = setInterval(() => {
 			timeout = Math.round((end - Date.now()) / 1000);
 			if (timeout <= 0 || device.status !== 'pending') {
-				console.log('clear countdown');
 				clearInterval(interval);
 			}
 		}, 1000);
