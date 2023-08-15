@@ -63,20 +63,18 @@
 	}
 
 	function countdown() {
-		timeout = 120;
-		clearInterval(interval);
 		const end = Date.parse(device.updated) + 2 * 60 * 1000;
 		interval = setInterval(() => {
-			const left = Math.round((end - Date.now()) / 1000);
-			if (left >= 0) {
-				timeout = left;
-			} else {
+			timeout = Math.round((end - Date.now()) / 1000);
+			if (timeout <= 0 || device.status !== 'pending') {
 				clearInterval(interval);
 			}
 		}, 1000);
 	}
 
 	function handleClick() {
+		clearInterval(interval);
+		timeout = 120;
 		if (device.status === 'offline') {
 			wake();
 		} else if (device.status === 'online') {
