@@ -6,12 +6,19 @@
 	import { faLockOpen, faEye } from '@fortawesome/free-solid-svg-icons';
 	import { toggleVisibility } from '$lib/helpers/forms';
 	import toast from 'svelte-french-toast';
+	import { onMount } from 'svelte';
 
 	let inputPassword: HTMLInputElement;
 	let form = {
 		email: '',
 		password: ''
 	};
+
+	onMount(() => {
+		if ($pocketbase.authStore.isValid) {
+			goto('/');
+		}
+	});
 
 	function tryAdminThenUser() {
 		$pocketbase.admins

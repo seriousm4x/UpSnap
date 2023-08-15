@@ -63,6 +63,12 @@
 			return;
 		}
 
+		// only refresh token if valid less than 1 day
+		const jwt = parseJwt($pocketbase.authStore.token);
+		if (jwt.exp > Date.now() / 1000 + 60 * 60 * 24) {
+			return;
+		}
+
 		if ($pocketbase.authStore.model?.collectionName === 'users') {
 			await $pocketbase
 				.collection('users')
@@ -76,6 +82,22 @@
 			});
 		}
 	});
+
+	function parseJwt(token: string) {
+		var base64Url = token.split('.')[1];
+		var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+		var jsonPayload = decodeURIComponent(
+			window
+				.atob(base64)
+				.split('')
+				.map(function (c) {
+					return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+				})
+				.join('')
+		);
+
+		return JSON.parse(jsonPayload);
+	}
 </script>
 
 <svelte:head>
