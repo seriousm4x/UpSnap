@@ -15,7 +15,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^2.0.3",
 		"@sveltejs/kit": "^1.22.6",
-		"@typescript-eslint/eslint-plugin": "^6.3.0",
+		"@typescript-eslint/eslint-plugin": "^6.4.0",
 		"@typescript-eslint/parser": "^6.4.0",
 		"autoprefixer": "^10.4.15",
 		"daisyui": "^3.5.1",
