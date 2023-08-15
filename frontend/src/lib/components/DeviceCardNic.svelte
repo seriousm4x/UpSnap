@@ -2,21 +2,22 @@
 	import { pocketbase, backendUrl, permission, isAdmin } from '$lib/stores/pocketbase';
 	import Fa from 'svelte-fa';
 	import { faCircle, faPowerOff } from '@fortawesome/free-solid-svg-icons';
-	import type { Device } from '$lib/types/device';
 	import toast from 'svelte-french-toast';
+	import type { Device } from '$lib/types/device';
 
 	export let device: Device;
 
 	let hoverText = '';
 	let disabled = false;
-	let interval: number;
 	let timeout = 120;
+	var interval: number;
+	$: if (device.ip === '10.10.0.198') console.log(device.status);
+
+	$: if (device.status === 'pending' && !interval) {
+		countdown(Date.parse(device.updated));
+	}
 	$: minutes = Math.floor(timeout / 60);
 	$: seconds = timeout % 60;
-	$: if (device.status === 'pending') {
-		countdown();
-	}
-
 	$: if (device.status === 'pending' || device.status === '') {
 		disabled = true;
 		hoverText = 'Pending';
@@ -47,9 +48,14 @@
 			headers: {
 				Authorization: $pocketbase.authStore.token
 			}
-		}).catch((err) => {
-			toast.error(err.message);
-		});
+		})
+			.then(async (data) => {
+				const dev = (await data.json()) as Device;
+				countdown(Date.parse(dev.updated));
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	}
 
 	function shutdown() {
@@ -57,24 +63,30 @@
 			headers: {
 				Authorization: $pocketbase.authStore.token
 			}
-		}).catch((err) => {
-			toast.error(err.message);
-		});
+		})
+			.then(async (data) => {
+				const dev = (await data.json()) as Device;
+				countdown(Date.parse(dev.updated));
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	}
 
-	function countdown() {
-		const end = Date.parse(device.updated) + 2 * 60 * 1000;
+	function countdown(updated: number) {
+		console.log('start countdown');
+		timeout = 120;
+		const end = updated + 2 * 60 * 1000;
 		interval = setInterval(() => {
 			timeout = Math.round((end - Date.now()) / 1000);
 			if (timeout <= 0 || device.status !== 'pending') {
+				console.log('clear countdown');
 				clearInterval(interval);
 			}
 		}, 1000);
 	}
 
 	function handleClick() {
-		clearInterval(interval);
-		timeout = 120;
 		if (device.status === 'offline') {
 			wake();
 		} else if (device.status === 'online') {

@@ -380,7 +380,7 @@
 							type="number"
 							min="1"
 							max="65535"
-							placeholder="8009"
+							placeholder="Default: 8009"
 							class="input w-80"
 							bind:value={device.sol_port}
 							disabled={!device.sol_enabled}
@@ -468,7 +468,7 @@
 			<div class="mockup-code text-sm max-w-fit">
 				<pre data-prefix="#"><code>Shutdown remote linux machine:</code></pre>
 				<pre data-prefix="$" class="text-warning"><code
-						>sshpass -p your_password ssh -o "StrictHostKeyChecking=no" user@hostname "sudo poweroff"</code
+						>sshpass -p password ssh -o "StrictHostKeyChecking=no" user@192.168.1.13 "sudo poweroff"</code
 					></pre>
 			</div>
 			<div class="form-control w-full">
