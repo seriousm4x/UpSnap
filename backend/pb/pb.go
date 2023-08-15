@@ -32,10 +32,8 @@ func StartPocketBase(distDirFS fs.FS) {
 
 	// event hooks
 	App.OnBeforeServe().Add(func(e *core.ServeEvent) error {
-		// set static website path
 		e.Router.GET("/*", apis.StaticDirectoryHandler(distDirFS, true))
 
-		// add wake route to api
 		e.Router.AddRoute(echo.Route{
 			Method:  http.MethodGet,
 			Path:    "/api/upsnap/wake/:id",
@@ -46,7 +44,6 @@ func StartPocketBase(distDirFS fs.FS) {
 			},
 		})
 
-		// add shutdown route to api
 		e.Router.AddRoute(echo.Route{
 			Method:  http.MethodGet,
 			Path:    "/api/upsnap/shutdown/:id",
@@ -57,7 +54,6 @@ func StartPocketBase(distDirFS fs.FS) {
 			},
 		})
 
-		// add network scan route to api
 		e.Router.AddRoute(echo.Route{
 			Method:  http.MethodGet,
 			Path:    "/api/upsnap/scan",
@@ -68,17 +64,14 @@ func StartPocketBase(distDirFS fs.FS) {
 			},
 		})
 
-		// import environment and set settings
 		if err := importSettings(); err != nil {
 			return err
 		}
 
-		// reset device states
 		if err := resetDeviceStates(); err != nil {
 			return err
 		}
 
-		// run cronjobs
 		go cronjobs.RunPing(App)
 		go cronjobs.RunWakeShutdown(App)
 
@@ -92,10 +85,6 @@ func StartPocketBase(distDirFS fs.FS) {
 				}
 				go cronjobs.RunPing(App)
 			} else if e.Model.TableName() == "devices" {
-				if err := refreshDeviceList(); err != nil {
-					logger.Error.Println(err)
-					return err
-				}
 				for _, job := range cronjobs.CronWakeShutdown.Entries() {
 					cronjobs.CronWakeShutdown.Remove(job.ID)
 				}
@@ -135,14 +124,6 @@ func StartPocketBase(distDirFS fs.FS) {
 				}
 			}
 		}
-
-		if e.Model.TableName() == "devices" || e.Model.TableName() == "ports" {
-			// refresh the device list on database events
-			if err := refreshDeviceList(); err != nil {
-				logger.Error.Println(err)
-				return err
-			}
-		}
 		return nil
 	})
 	App.OnModelAfterDelete().Add(func(e *core.ModelEvent) error {
@@ -151,23 +132,16 @@ func StartPocketBase(distDirFS fs.FS) {
 				logger.Error.Println(err)
 				return err
 			}
-		} else if e.Model.TableName() == "devices" || e.Model.TableName() == "ports" {
-			if err := refreshDeviceList(); err != nil {
-				logger.Error.Println(err)
-				return err
-			}
 		}
 		return nil
 	})
 
-	// start pocketbase
 	if err := App.Start(); err != nil {
 		logger.Error.Fatalln(err)
 	}
 }
 
 func importSettings() error {
-	// get first settingsPrivate record
 	settingsPrivateRecords, err := App.Dao().FindRecordsByExpr("settings_private")
 	if err != nil {
 		return err
@@ -181,7 +155,6 @@ func importSettings() error {
 		settingsPrivate = settingsPrivateRecords[0]
 	}
 
-	// get first settingsPublic record
 	settingsPublicRecords, err := App.Dao().FindRecordsByExpr("settings_public")
 	if err != nil {
 		return err
@@ -207,18 +180,15 @@ func importSettings() error {
 		interval = os.Getenv("UPSNAP_INTERVAL")
 	}
 
-	// set private settings
 	settingsPrivate.Set("interval", interval)
 	if scanRange := os.Getenv("UPSNAP_SCAN_RANGE"); scanRange != "" {
 		settingsPrivate.Set("scan_range", scanRange)
 	}
 
-	// set public settings
 	if websiteTitle := os.Getenv("UPSNAP_WEBSITE_TITLE"); websiteTitle != "" {
 		settingsPublic.Set("website_title", websiteTitle)
 	}
 
-	// save records
 	if err := App.Dao().SaveRecord(settingsPrivate); err != nil {
 		return err
 	}
@@ -240,19 +210,11 @@ func resetDeviceStates() error {
 		return err
 	}
 	for _, device := range devices {
-		device.Set("status", "offline")
-		if err := App.Dao().SaveRecord(device); err != nil {
+		d := device
+		d.Set("status", "offline")
+		if err := App.Dao().SaveRecord(d); err != nil {
 			return err
 		}
-	}
-	cronjobs.Devices = devices
-	return nil
-}
-
-func refreshDeviceList() error {
-	var err error
-	if cronjobs.Devices, err = App.Dao().FindRecordsByExpr("devices"); err != nil {
-		return err
 	}
 	return nil
 }

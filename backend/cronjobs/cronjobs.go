@@ -8,7 +8,6 @@ import (
 	"github.com/seriousm4x/upsnap/networking"
 )
 
-var Devices []*models.Record
 var CronPing *cron.Cron
 var CronWakeShutdown *cron.Cron
 
@@ -26,52 +25,61 @@ func RunPing(app *pocketbase.PocketBase) {
 		if realtimeClients == 0 && settingsPrivateRecords[0].GetBool("lazy_ping") {
 			return
 		}
+
+		devices, err := app.Dao().FindRecordsByExpr("devices")
+		if err != nil {
+			logger.Error.Println(err)
+			return
+		}
+
 		// expand ports field
 		expandFetchFunc := func(c *models.Collection, ids []string) ([]*models.Record, error) {
 			return app.Dao().FindRecordsByIds(c.Id, ids, nil)
 		}
-		merr := app.Dao().ExpandRecords(Devices, []string{"ports"}, expandFetchFunc)
+		merr := app.Dao().ExpandRecords(devices, []string{"ports"}, expandFetchFunc)
 		if len(merr) > 0 {
 			return
 		}
 
-		for _, device := range Devices {
-			// ping
-			go func(device *models.Record) {
-				oldStatus := device.GetString("status")
-				newStatus := networking.PingDevice(device)
-				if newStatus {
-					if oldStatus == "offline" || oldStatus == "" {
-						device.Set("status", "online")
-						if err := app.Dao().SaveRecord(device); err != nil {
+		for _, device := range devices {
+			// ping device
+			go func(d *models.Record) {
+				status := d.GetString("status")
+				if status == "pending" {
+					return
+				}
+				if networking.PingDevice(d) {
+					if status == "offline" || status == "" {
+						d.Set("status", "online")
+						if err := app.Dao().SaveRecord(d); err != nil {
 							logger.Error.Println("Failed to save record:", err)
 						}
 					}
 				} else {
-					if oldStatus == "online" || oldStatus == "" {
-						device.Set("status", "offline")
-						if err := app.Dao().SaveRecord(device); err != nil {
+					if status == "online" || status == "" {
+						d.Set("status", "offline")
+						if err := app.Dao().SaveRecord(d); err != nil {
 							logger.Error.Println("Failed to save record:", err)
 						}
 					}
 				}
 			}(device)
 
-			// scan ports
-			go func(device *models.Record) {
-				ports, err := app.Dao().FindRecordsByIds("ports", device.GetStringSlice("ports"))
+			// ping ports
+			go func(d *models.Record) {
+				ports, err := app.Dao().FindRecordsByIds("ports", d.GetStringSlice("ports"))
 				if err != nil {
 					logger.Error.Println(err)
 				}
 				for _, port := range ports {
-					isUp := networking.CheckPort(device.GetString("ip"), port.GetString("number"))
+					isUp := networking.CheckPort(d.GetString("ip"), port.GetString("number"))
 					if isUp != port.GetBool("status") {
 						port.Set("status", isUp)
 						if err := app.Dao().SaveRecord(port); err != nil {
 							logger.Error.Println("Failed to save record:", err)
 						}
-						device.RefreshUpdated()
-						if err := app.Dao().SaveRecord(device); err != nil {
+						d.RefreshUpdated()
+						if err := app.Dao().SaveRecord(d); err != nil {
 							logger.Error.Println("Failed to save record:", err)
 						}
 					}
@@ -84,15 +92,19 @@ func RunPing(app *pocketbase.PocketBase) {
 
 func RunWakeShutdown(app *pocketbase.PocketBase) {
 	CronWakeShutdown = cron.New()
-	for _, device := range Devices {
-		wake_cron := device.GetString("wake_cron")
-		wake_cron_enabled := device.GetBool("wake_cron_enabled")
-		shutdown_cron := device.GetString("shutdown_cron")
-		shutdown_cron_enabled := device.GetBool("shutdown_cron_enabled")
+	devices, err := app.Dao().FindRecordsByExpr("devices")
+	if err != nil {
+		logger.Error.Println(err)
+		return
+	}
+	for _, device := range devices {
+		dev := device
+		wake_cron := dev.GetString("wake_cron")
+		wake_cron_enabled := dev.GetBool("wake_cron_enabled")
+		shutdown_cron := dev.GetString("shutdown_cron")
+		shutdown_cron_enabled := dev.GetBool("shutdown_cron_enabled")
 
 		if wake_cron_enabled && wake_cron != "" {
-			// avoid using last element
-			// https://github.com/robfig/cron/issues/115
 			go func(d *models.Record) {
 				_, err := CronWakeShutdown.AddFunc(wake_cron, func() {
 					d.Set("status", "pending")
@@ -115,12 +127,10 @@ func RunWakeShutdown(app *pocketbase.PocketBase) {
 				if err != nil {
 					logger.Error.Println(err)
 				}
-			}(device)
+			}(dev)
 		}
 
 		if shutdown_cron_enabled && shutdown_cron != "" {
-			// avoid using last element
-			// https://github.com/robfig/cron/issues/115
 			go func(d *models.Record) {
 				_, err := CronWakeShutdown.AddFunc(shutdown_cron, func() {
 					d.Set("status", "pending")
@@ -143,7 +153,7 @@ func RunWakeShutdown(app *pocketbase.PocketBase) {
 				if err != nil {
 					logger.Error.Println(err)
 				}
-			}(device)
+			}(dev)
 		}
 	}
 	CronWakeShutdown.Run()

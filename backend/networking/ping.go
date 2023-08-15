@@ -16,7 +16,7 @@ func PingDevice(device *models.Record) bool {
 		return false
 	}
 	pinger.Count = 1
-	pinger.Timeout = 500 * 1000000 // 500ms
+	pinger.Timeout = 500 * time.Millisecond
 	pinger.SetPrivileged(true)
 	err = pinger.Run()
 	if err != nil {
