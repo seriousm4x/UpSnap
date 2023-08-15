@@ -1,10 +1,17 @@
 <script lang="ts">
-	import { formatDistance, parseISO } from 'date-fns';
+	import { pocketbase, isAdmin, backendUrl, permission } from '$lib/stores/pocketbase';
 	import DeviceCardNic from './DeviceCardNic.svelte';
-	import { scale } from 'svelte/transition';
 	import Fa from 'svelte-fa';
-	import { faCircleArrowDown, faCircleArrowUp, faLock } from '@fortawesome/free-solid-svg-icons';
-	import { isAdmin, permission } from '$lib/stores/pocketbase';
+	import {
+		faBed,
+		faCircleArrowDown,
+		faCircleArrowUp,
+		faLock,
+		faPen
+	} from '@fortawesome/free-solid-svg-icons';
+	import { scale } from 'svelte/transition';
+	import { formatDistance, parseISO } from 'date-fns';
+	import toast from 'svelte-french-toast';
 	import type { Device } from '$lib/types/device';
 
 	export let device: Device;
@@ -17,6 +24,16 @@
 		interval = setInterval(() => {
 			now = Date.now();
 		}, 1000);
+	}
+
+	function sleep() {
+		fetch(`${backendUrl}api/upsnap/sleep/${device.id}`, {
+			headers: {
+				Authorization: $pocketbase.authStore.token
+			}
+		}).catch((err) => {
+			toast.error(err.message);
+		});
 	}
 </script>
 
@@ -33,36 +50,54 @@
 			<!-- TODO: change to nic array once backend supports it -->
 			<DeviceCardNic {device} />
 		</ul>
-		<div class="flex flex-row flex-wrap gap-2">
-			{#if device.wake_cron_enabled}
-				<div class="tooltip" data-tip="Wake cron">
-					<span class="badge badge-success gap-1 p-3"
-						><Fa icon={faCircleArrowUp} />{device.wake_cron}</span
-					>
-				</div>
-			{/if}
-			{#if device.shutdown_cron_enabled}
-				<div class="tooltip" data-tip="Shutdown cron">
-					<span class="badge badge-error gap-1 p-3"
-						><Fa icon={faCircleArrowDown} />{device.shutdown_cron}</span
-					>
-				</div>
-			{/if}
-			{#if device.password}
-				<div class="tooltip" data-tip="Wake password">
-					<span class="badge gap-1 p-3"><Fa icon={faLock} />Password</span>
-				</div>
-			{/if}
-		</div>
-		<div class="card-actions mt-auto">
+		{#if device.wake_cron_enabled || device.shutdown_cron_enabled || device.password}
+			<div class="flex flex-row flex-wrap gap-2">
+				{#if device.wake_cron_enabled}
+					<div class="tooltip" data-tip="Wake cron">
+						<span class="badge badge-success gap-1 p-3"
+							><Fa icon={faCircleArrowUp} />{device.wake_cron}</span
+						>
+					</div>
+				{/if}
+				{#if device.shutdown_cron_enabled}
+					<div class="tooltip" data-tip="Shutdown cron">
+						<span class="badge badge-error gap-1 p-3"
+							><Fa icon={faCircleArrowDown} />{device.shutdown_cron}</span
+						>
+					</div>
+				{/if}
+				{#if device.password}
+					<div class="tooltip" data-tip="Wake password">
+						<span class="badge gap-1 p-3"><Fa icon={faLock} />Password</span>
+					</div>
+				{/if}
+			</div>
+		{/if}
+		<div class="card-actions mt-auto items-center">
 			<span class="tooltip" data-tip="Last status change: {device.updated}">
 				{formatDistance(parseISO(device.updated), now, {
 					includeSeconds: true,
 					addSuffix: true
 				})}
 			</span>
-			{#if $isAdmin || $permission.update?.includes(device.id)}
-				<a class="btn btn-sm btn-neutral ms-auto" href="/device/{device.id}">Edit</a>
+			{#if $isAdmin || $permission.update?.includes(device.id) || $permission.power?.includes(device.id)}
+				<div class="dropdown dropdown-top dropdown-end bg-base-300 ms-auto">
+					<label tabindex="-1" class="btn btn-sm m-1" for="more-{device.id}">More</label>
+					<ul
+						id="more-{device.id}"
+						tabindex="-1"
+						class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit"
+					>
+						{#if ($isAdmin || $permission.power?.includes(device.id)) && device.sol_enabled}
+							<li><button on:click={() => sleep()}><Fa icon={faBed} />Sleep</button></li>
+						{/if}
+						{#if $isAdmin || $permission.update?.includes(device.id)}
+							<li>
+								<a href="/device/{device.id}"><Fa icon={faPen} />Edit</a>
+							</li>
+						{/if}
+					</ul>
+				</div>
 			{/if}
 		</div>
 	</div>

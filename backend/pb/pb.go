@@ -46,6 +46,16 @@ func StartPocketBase(distDirFS fs.FS) {
 
 		e.Router.AddRoute(echo.Route{
 			Method:  http.MethodGet,
+			Path:    "/api/upsnap/sleep/:id",
+			Handler: HandlerSleep,
+			Middlewares: []echo.MiddlewareFunc{
+				apis.ActivityLogger(App),
+				RequireUpSnapPermission(),
+			},
+		})
+
+		e.Router.AddRoute(echo.Route{
+			Method:  http.MethodGet,
 			Path:    "/api/upsnap/shutdown/:id",
 			Handler: HandlerShutdown,
 			Middlewares: []echo.MiddlewareFunc{

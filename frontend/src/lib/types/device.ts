@@ -20,6 +20,11 @@ export type Device = Record & {
 		groups: Group[];
 	};
 	created_by: string;
+	sol_enabled: boolean;
+	sol_auth: boolean;
+	sol_user: string;
+	sol_passwort: string;
+	sol_port: number;
 };
 
 export type Port = Record & {

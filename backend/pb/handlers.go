@@ -20,11 +20,11 @@ func HandlerWake(c echo.Context) error {
 	if err != nil {
 		return apis.NewNotFoundError("The device does not exist.", err)
 	}
+	record.Set("status", "pending")
+	if err := App.Dao().SaveRecord(record); err != nil {
+		logger.Error.Println("Failed to save record:", err)
+	}
 	go func(*models.Record) {
-		record.Set("status", "pending")
-		if err := App.Dao().SaveRecord(record); err != nil {
-			logger.Error.Println("Failed to save record:", err)
-		}
 		if err := networking.WakeDevice(record); err != nil {
 			logger.Error.Println(err)
 			record.Set("status", "offline")
@@ -38,16 +38,41 @@ func HandlerWake(c echo.Context) error {
 	return c.JSON(http.StatusOK, record)
 }
 
+func HandlerSleep(c echo.Context) error {
+	record, err := App.Dao().FindFirstRecordByData("devices", "id", c.PathParam("id"))
+	if err != nil {
+		return apis.NewNotFoundError("The device does not exist.", err)
+	}
+	record.Set("status", "pending")
+	if err := App.Dao().SaveRecord(record); err != nil {
+		logger.Error.Println("Failed to save record:", err)
+	}
+	resp, err := networking.SleepDevice(record)
+	if err != nil {
+		logger.Error.Println(err)
+		record.Set("status", "online")
+		if err := App.Dao().SaveRecord(record); err != nil {
+			logger.Error.Println("Failed to save record:", err)
+		}
+		return apis.NewBadRequestError(resp.Message, nil)
+	}
+	record.Set("status", "offline")
+	if err := App.Dao().SaveRecord(record); err != nil {
+		logger.Error.Println("Failed to save record:", err)
+	}
+	return c.JSON(http.StatusOK, nil)
+}
+
 func HandlerShutdown(c echo.Context) error {
 	record, err := App.Dao().FindFirstRecordByData("devices", "id", c.PathParam("id"))
 	if err != nil {
 		return apis.NewNotFoundError("The device does not exist.", err)
 	}
+	record.Set("status", "pending")
+	if err := App.Dao().SaveRecord(record); err != nil {
+		logger.Error.Println("Failed to save record:", err)
+	}
 	go func(*models.Record) {
-		record.Set("status", "pending")
-		if err := App.Dao().SaveRecord(record); err != nil {
-			logger.Error.Println("Failed to save record:", err)
-		}
 		if err := networking.ShutdownDevice(record); err != nil {
 			logger.Error.Println(err)
 			record.Set("status", "online")

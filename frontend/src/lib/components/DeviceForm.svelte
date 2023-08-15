@@ -325,6 +325,128 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="card w-full bg-base-300 shadow-xl mt-6">
+		<div class="card-body">
+			<h2 class="card-title">Sleep-On-LAN</h2>
+			<p class="mt-2">
+				You can put computers to sleep using the <a
+					class="link"
+					href="https://github.com/SR-G/sleep-on-lan"
+					target="_blank">Sleep-On-LAN</a
+				>
+				tool. Sleep-On-LAN (SOL) is an external tool/daemon that operates on the PCs you want to put
+				to sleep, providing a REST endpoint to put the PC to sleep. For instructions on setting up Sleep-On-LAN,
+				please refer to the
+				<a href="https://github.com/SR-G/sleep-on-lan#usage" class="link" target="_blank">Usage</a> section.
+			</p>
+			<p>
+				SOL is confiugred to send requests over HTTP instead of UDP to enable authorization and make
+				requests more reliable.
+			</p>
+			<p class="font-bold">
+				Therefore, please ensure that you include <span class="badge">HTTP:&lt;YOURPORT&gt;</span>
+				in the <span class="badge">Listeners</span> section of the
+				<a href="https://github.com/SR-G/sleep-on-lan#configuration" class="link" target="_blank"
+					>SOL configuration</a
+				>.
+			</p>
+			<div class="flex flex-row flex-wrap gap-4 items-end mt-4">
+				<div>
+					<div class="form-control flex flex-row flex-wrap gap-4">
+						<div class="flex flex-row gap-2 items-center">
+							<input
+								id="sol-enable"
+								type="checkbox"
+								class="toggle toggle-success"
+								bind:checked={device.sol_enabled}
+							/>
+							<label class="label cursor-pointer" for="sol-enable">
+								<span class="label-text">Enable Sleep-On-LAN</span>
+							</label>
+						</div>
+					</div>
+					<div class="form-control flex flex-col">
+						<label class="label" for="sol-port">
+							<span class="label-text"
+								>SOL Port
+								{#if device.sol_enabled}
+									<span class="text-error">*</span>
+								{/if}
+							</span>
+						</label>
+						<input
+							id="sol-port"
+							type="number"
+							min="1"
+							max="65535"
+							placeholder="8009"
+							class="input w-80"
+							bind:value={device.sol_port}
+							disabled={!device.sol_enabled}
+							required={device.sol_enabled}
+						/>
+					</div>
+				</div>
+				{#if device.sol_enabled}
+					<div>
+						<div class="form-control flex flex-row flex-wrap gap-4">
+							<div class="flex flex-row gap-2 items-center">
+								<input
+									id="sol-auth"
+									type="checkbox"
+									class="toggle toggle-success"
+									bind:checked={device.sol_auth}
+								/>
+								<label class="label cursor-pointer" for="sol-auth">
+									<span class="label-text">Authorization</span>
+								</label>
+							</div>
+						</div>
+						<div class="form-control flex flex-col">
+							<label class="label" for="sol-user">
+								<span class="label-text"
+									>SOL User
+									{#if device.sol_auth}
+										<span class="text-error">*</span>
+									{/if}
+								</span>
+							</label>
+							<input
+								id="sol-user"
+								type="text"
+								placeholder="username"
+								class="input w-80"
+								bind:value={device.sol_user}
+								disabled={!device.sol_auth}
+								required={device.sol_auth}
+							/>
+						</div>
+					</div>
+					<div class="form-control flex flex-col">
+						<label class="label" for="sol-password">
+							<span class="label-text"
+								>SOL Password
+								{#if device.sol_auth}
+									<span class="text-error">*</span>
+								{/if}
+							</span>
+						</label>
+						<input
+							id="sol-password"
+							type="password"
+							placeholder="password"
+							class="input w-80"
+							bind:value={device.sol_password}
+							disabled={!device.sol_auth}
+							required={device.sol_auth}
+						/>
+					</div>
+				{/if}
+			</div>
+		</div>
+	</div>
+
 	<div class="card w-full bg-base-300 shadow-xl mt-6">
 		<div class="card-body">
 			<h2 class="card-title">Shutdown</h2>
