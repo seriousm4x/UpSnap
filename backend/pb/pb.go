@@ -146,9 +146,19 @@ func StartPocketBase(distDirFS fs.FS) {
 		return nil
 	})
 
+	App.OnTerminate().PreAdd(func(e *core.TerminateEvent) error {
+		logger.Info.Println("Stopping cronjobs")
+		ctx := cronjobs.CronPing.Stop()
+		<-ctx.Done()
+		ctx = cronjobs.CronWakeShutdown.Stop()
+		<-ctx.Done()
+		return nil
+	})
+
 	if err := App.Start(); err != nil {
 		logger.Error.Fatalln(err)
 	}
+
 }
 
 func importSettings() error {
