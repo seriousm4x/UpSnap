@@ -73,7 +73,7 @@
 <div class="navbar bg-base-100">
 	<div class="justify-start">
 		<div class="dropdown">
-			<label tabindex="-1" class="btn btn-ghost md:hidden" for="mobile-menu">
+			<label tabindex="-1" class="btn btn-ghost lg:hidden" for="mobile-menu">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-5 w-5"
@@ -93,6 +93,11 @@
 				tabindex="-1"
 				class="menu dropdown-content mt-3 z-[1] p-2 gap-1 shadow bg-base-300 rounded-box w-52"
 			>
+				{#if $settingsPub?.website_title}
+					<div class="menu-title">
+						{$settingsPub?.website_title}
+					</div>
+				{/if}
 				<li>
 					<a href="/" class="px-4 py-2" class:active={$page.url.pathname === '/'}
 						><Fa icon={faHome} />Home</a
@@ -118,7 +123,7 @@
 				{/if}
 			</ul>
 		</div>
-		<a class="btn btn-ghost normal-case text-xl" href="/">
+		<a class="btn btn-ghost normal-case text-xl px-2" href="/">
 			<img
 				src={$settingsPub?.id && $settingsPub?.favicon
 					? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
@@ -126,10 +131,13 @@
 				alt={$settingsPub?.website_title ? $settingsPub?.website_title : 'UpSnap'}
 				width="45"
 				height="45"
-			/>{$settingsPub?.website_title ? $settingsPub?.website_title : ''}
+			/>
 		</a>
 	</div>
-	<div class="hidden md:flex">
+	<div class="hidden lg:flex">
+		{#if $settingsPub?.website_title}
+			<span class="px-2">{$settingsPub?.website_title}</span>
+		{/if}
 		<ul class="menu menu-horizontal px-1 gap-1">
 			<li>
 				<a href="/" class="p-2" class:active={$page.url.pathname === '/'}
