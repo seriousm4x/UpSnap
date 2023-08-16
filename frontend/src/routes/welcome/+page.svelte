@@ -6,6 +6,7 @@
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
 	import { faArrowRight, faEye } from '@fortawesome/free-solid-svg-icons';
+	import { onMount } from 'svelte';
 
 	let stepsCompleted = 0;
 	let inputPassword: HTMLInputElement;
@@ -15,6 +16,12 @@
 		password: '',
 		confirm: ''
 	};
+
+	onMount(() => {
+		if (!$settingsPub.setup_completed && $pocketbase.authStore.isValid) {
+			$pocketbase.authStore.clear();
+		}
+	});
 
 	async function register() {
 		$pocketbase.admins
