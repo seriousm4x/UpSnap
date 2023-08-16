@@ -99,11 +99,13 @@
 						tabindex="-1"
 						class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit"
 					>
-						{#if ($isAdmin || $permission.power?.includes(device.id)) && device.status === 'online' && device.shutdown_cmd !== ''}
-							<li><button on:click={() => reboot()}><Fa icon={faRotateLeft} />Reboot</button></li>
-						{/if}
-						{#if ($isAdmin || $permission.power?.includes(device.id)) && device.sol_enabled}
-							<li><button on:click={() => sleep()}><Fa icon={faBed} />Sleep</button></li>
+						{#if ($isAdmin || $permission.power?.includes(device.id)) && device.status === 'online'}
+							{#if device.shutdown_cmd !== ''}
+								<li><button on:click={() => reboot()}><Fa icon={faRotateLeft} />Reboot</button></li>
+							{/if}
+							{#if device.sol_enabled}
+								<li><button on:click={() => sleep()}><Fa icon={faBed} />Sleep</button></li>
+							{/if}
 						{/if}
 						{#if $isAdmin || $permission.update?.includes(device.id)}
 							<li>
