@@ -336,8 +336,8 @@
 					target="_blank">Sleep-On-LAN</a
 				>
 				tool. Sleep-On-LAN (SOL) is an external tool/daemon that operates on the PCs you want to put
-				to sleep, providing a REST endpoint to put the PC to sleep. For instructions on setting up Sleep-On-LAN,
-				please refer to the
+				to sleep, providing a REST endpoint. For instructions on setting up Sleep-On-LAN, please refer
+				to the
 				<a href="https://github.com/SR-G/sleep-on-lan#usage" class="link" target="_blank">Usage</a> section.
 			</p>
 			<p>
