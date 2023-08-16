@@ -1,5 +1,5 @@
 release:
-  # draft: true
+  draft: true
   prerelease: auto
 before:
   hooks:
@@ -9,7 +9,7 @@ builds:
     env:
       - CGO_ENABLED=0
     ldflags:
-      - -s -w -X github.com/seriousm4x/upsnap/pb.Version={{ .Version }}
+      - -s -w -X github.com/seriousm4x/upsnap/pb.Version={{ .Tag }}
     goos:
       - linux
       - windows
