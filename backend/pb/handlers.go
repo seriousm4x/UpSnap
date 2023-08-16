@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase/apis"
@@ -61,6 +62,35 @@ func HandlerSleep(c echo.Context) error {
 		logger.Error.Println("Failed to save record:", err)
 	}
 	return c.JSON(http.StatusOK, nil)
+}
+
+func HandlerReboot(c echo.Context) error {
+	record, err := App.Dao().FindFirstRecordByData("devices", "id", c.PathParam("id"))
+	if err != nil {
+		return apis.NewNotFoundError("The device does not exist.", err)
+	}
+	record.Set("status", "pending")
+	if err := App.Dao().SaveRecord(record); err != nil {
+		logger.Error.Println("Failed to save record:", err)
+	}
+	go func(r *models.Record) {
+		if err := networking.ShutdownDevice(r); err != nil {
+			logger.Error.Println(err)
+			r.Set("status", "online")
+		} else {
+			time.Sleep(15 * time.Second) // some devices might not respond to ping but are still shutting down
+			if err := networking.WakeDevice(r); err != nil {
+				logger.Error.Println(err)
+				r.Set("status", "offline")
+			} else {
+				r.Set("status", "online")
+			}
+		}
+		if err := App.Dao().SaveRecord(r); err != nil {
+			logger.Error.Println("Failed to save record:", err)
+		}
+	}(record)
+	return c.JSON(http.StatusOK, record)
 }
 
 func HandlerShutdown(c echo.Context) error {

@@ -7,7 +7,8 @@
 		faCircleArrowDown,
 		faCircleArrowUp,
 		faLock,
-		faPen
+		faPen,
+		faRotateLeft
 	} from '@fortawesome/free-solid-svg-icons';
 	import { scale } from 'svelte/transition';
 	import { formatDistance, parseISO } from 'date-fns';
@@ -28,6 +29,16 @@
 
 	function sleep() {
 		fetch(`${backendUrl}api/upsnap/sleep/${device.id}`, {
+			headers: {
+				Authorization: $pocketbase.authStore.token
+			}
+		}).catch((err) => {
+			toast.error(err.message);
+		});
+	}
+
+	function reboot() {
+		fetch(`${backendUrl}api/upsnap/reboot/${device.id}`, {
 			headers: {
 				Authorization: $pocketbase.authStore.token
 			}
@@ -88,6 +99,9 @@
 						tabindex="-1"
 						class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit"
 					>
+						{#if ($isAdmin || $permission.power?.includes(device.id)) && device.status === 'online' && device.shutdown_cmd !== ''}
+							<li><button on:click={() => reboot()}><Fa icon={faRotateLeft} />Reboot</button></li>
+						{/if}
 						{#if ($isAdmin || $permission.power?.includes(device.id)) && device.sol_enabled}
 							<li><button on:click={() => sleep()}><Fa icon={faBed} />Sleep</button></li>
 						{/if}
