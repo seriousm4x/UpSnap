@@ -8,10 +8,14 @@ import (
 	"github.com/seriousm4x/upsnap/networking"
 )
 
+var PingRunning bool = false
+var WakeShutdownRunning bool = false
 var CronPing *cron.Cron
 var CronWakeShutdown *cron.Cron
 
 func RunPing(app *pocketbase.PocketBase) {
+	PingRunning = true
+
 	settingsPrivateRecords, err := app.Dao().FindRecordsByExpr("settings_private")
 	if err != nil {
 		logger.Error.Println(err)
@@ -89,6 +93,8 @@ func RunPing(app *pocketbase.PocketBase) {
 }
 
 func RunWakeShutdown(app *pocketbase.PocketBase) {
+	WakeShutdownRunning = true
+
 	CronWakeShutdown = cron.New()
 	devices, err := app.Dao().FindRecordsByExpr("devices")
 	if err != nil {
@@ -155,4 +161,18 @@ func RunWakeShutdown(app *pocketbase.PocketBase) {
 		}
 	}
 	CronWakeShutdown.Run()
+}
+
+func StopAll() {
+	if PingRunning {
+		logger.Info.Println("stopping ping cronjob")
+		ctx := CronPing.Stop()
+		<-ctx.Done()
+
+	}
+	if WakeShutdownRunning {
+		logger.Info.Println("stopping wake/shutdown cronjob")
+		ctx := CronWakeShutdown.Stop()
+		<-ctx.Done()
+	}
 }
