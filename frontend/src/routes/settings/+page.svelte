@@ -8,13 +8,13 @@
 	import { faSave } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { PUBLIC_VERSION } from '$env/static/public';
 	import type { SettingsPublic, SettingsPrivate } from '$lib/types/settings';
 
 	let settingsPubClone: SettingsPublic | undefined;
 	let settingsPrivClone: SettingsPrivate | undefined;
 	let faviconPreview: HTMLImageElement;
 	let faviconInputElement: HTMLInputElement;
-	let version = import.meta.env.UPSNAP_VERSION;
 
 	onMount(() => {
 		if (!$isAdmin) {
@@ -185,12 +185,12 @@
 		</div>
 	</form>
 	<div class="container mx-auto text-center mt-6">
-		{#if version === undefined}
+		{#if PUBLIC_VERSION === undefined}
 			UpSnap version: (untracked)
 		{:else}
 			UpSnap version: <a
-				href="https://github.com/seriousm4x/UpSnap/releases/tag/{version}"
-				class="text-reset">{version}</a
+				href="https://github.com/seriousm4x/UpSnap/releases/tag/{PUBLIC_VERSION}"
+				class="text-reset">{PUBLIC_VERSION}</a
 			>
 		{/if}
 	</div>
