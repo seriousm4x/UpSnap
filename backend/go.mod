@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/labstack/echo/v5 v5.0.0-20230722203903-ec5b858dab61
 	github.com/mdlayher/wol v0.0.0-20220221231636-b763a792253a
-	github.com/pocketbase/dbx v1.10.0
+	github.com/pocketbase/dbx v1.10.1
 	github.com/pocketbase/pocketbase v0.17.5
 	github.com/prometheus-community/pro-bing v0.3.0
 	github.com/robfig/cron/v3 v3.0.1
