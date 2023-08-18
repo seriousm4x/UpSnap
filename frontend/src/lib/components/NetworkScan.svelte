@@ -18,6 +18,8 @@
 		devices: []
 	};
 	let addAllCheckbox = true;
+	let replaceNetmaskCheckbox = false;
+	let replaceNetmask = '';
 
 	onMount(() => {
 		if (!$settingsPriv) {
@@ -75,7 +77,11 @@
 	}
 
 	async function createDevice(device: ScannedDevice): Promise<Device> {
-		device.netmask = scanResponse.netmask;
+		if (replaceNetmaskCheckbox) {
+			device.netmask = replaceNetmask;
+		} else {
+			device.netmask = scanResponse.netmask;
+		}
 		return $pocketbase.collection('devices').create(device);
 	}
 
@@ -195,12 +201,55 @@
 						</div>
 					</div>
 				{/each}
-				<div class="form-control max-w-fit flex flex-row flex-wrap gap-4 mt-4 ms-auto">
+				<h2 class="card-title mt-4">Add all devices</h2>
+				<div class="form-control max-w-fit">
 					<label class="label cursor-pointer">
-						<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
-						<span class="label-text ms-2">Include devices where name is "Unknown"</span>
+						<input type="checkbox" class="checkbox" bind:checked={replaceNetmaskCheckbox} />
+						<span class="label-text ms-2">Replace netmask for all devices?</span>
 					</label>
-					{#if addAllCheckbox}
+				</div>
+				{#if replaceNetmaskCheckbox}
+					<div class="form-control max-w-fit">
+						<label class="label cursor-pointer" for="replaceNetmaskInput">
+							<span class="label-text ms-2">New netmask</span>
+						</label>
+						<input
+							id="replaceNetmaskInput"
+							class="input input-bordered"
+							type="text"
+							placeholder="255.255.0.0"
+							bind:value={replaceNetmask}
+						/>
+					</div>
+				{/if}
+				{#if scanResponse.devices.find((dev) => dev.name === 'Unknown')}
+					<div class="form-control max-w-fit">
+						<label class="label cursor-pointer">
+							<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
+							<span class="label-text ms-2">Include devices where name is "Unknown"</span>
+						</label>
+						{#if addAllCheckbox}
+							<button
+								class="btn btn-success"
+								on:click={() => addAll()}
+								disabled={scanResponse.devices.length === 0}
+							>
+								<Fa icon={faPlus} /> Add all ({scanResponse.devices.length})
+							</button>
+						{:else}
+							<button
+								class="btn btn-success"
+								on:click={() => addAll()}
+								disabled={scanResponse.devices.filter((dev) => dev.name !== 'Unknown').length === 0}
+							>
+								<Fa icon={faPlus} /> Add all ({scanResponse.devices.filter(
+									(dev) => dev.name !== 'Unknown'
+								).length})
+							</button>
+						{/if}
+					</div>
+				{:else}
+					<div class="form-control max-w-fit">
 						<button
 							class="btn btn-success"
 							on:click={() => addAll()}
@@ -208,18 +257,8 @@
 						>
 							<Fa icon={faPlus} /> Add all ({scanResponse.devices.length})
 						</button>
-					{:else}
-						<button
-							class="btn btn-success"
-							on:click={() => addAll()}
-							disabled={scanResponse.devices.filter((dev) => dev.name !== 'Unknown').length === 0}
-						>
-							<Fa icon={faPlus} /> Add all ({scanResponse.devices.filter(
-								(dev) => dev.name !== 'Unknown'
-							).length})
-						</button>
-					{/if}
-				</div>
+					</div>
+				{/if}
 			{/if}
 		</div>
 	</div>
