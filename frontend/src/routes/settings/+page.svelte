@@ -185,12 +185,12 @@
 		</div>
 	</form>
 	<div class="container mx-auto text-center mt-6">
-		{#if PUBLIC_VERSION === undefined}
+		{#if PUBLIC_VERSION === ''}
 			UpSnap version: (untracked)
 		{:else}
 			UpSnap version: <a
 				href="https://github.com/seriousm4x/UpSnap/releases/tag/{PUBLIC_VERSION}"
-				class="text-reset">{PUBLIC_VERSION}</a
+				class="link">{PUBLIC_VERSION}</a
 			>
 		{/if}
 	</div>
