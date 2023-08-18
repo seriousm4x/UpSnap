@@ -213,7 +213,7 @@
 				</label>
 				<ul
 					tabindex="-1"
-					class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-40"
+					class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box"
 				>
 					<li class="menu-title">
 						{$isAdmin ? $pocketbase.authStore.model.email : $pocketbase.authStore.model.username}
