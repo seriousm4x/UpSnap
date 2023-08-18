@@ -46,7 +46,7 @@
 			})
 			.catch((err) => {
 				if (err.data?.data?.passwordConfirm?.message) {
-					toast.error("Passwords don't match.");
+					toast.error("Passwords don't match");
 				} else if (err.data?.data?.email?.message) {
 					toast.error(err.data.data.email.message);
 				} else {

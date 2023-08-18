@@ -27,7 +27,7 @@
 			$pocketbase.admins
 				.update($pocketbase.authStore.model.id, { avatar: newAvatar })
 				.then(() => {
-					toast.success('Avatar saved.');
+					toast.success('Avatar saved');
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -38,7 +38,7 @@
 				.collection('users')
 				.update($pocketbase.authStore.model.id, { avatar: newAvatar })
 				.then(() => {
-					toast.success('Avatar saved.');
+					toast.success('Avatar saved');
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -70,7 +70,7 @@
 					if (j?.data?.password?.message) {
 						toast.error(j?.data?.password?.message);
 					} else if (j?.data?.passwordConfirm?.message) {
-						toast.error("Passwords don't match.");
+						toast.error("Passwords don't match");
 					} else if (j.data?.oldPassword?.message) {
 						toast.error(j.data.oldPassword.message);
 					} else {

@@ -58,7 +58,7 @@
 			.collection('users')
 			.create(newUser)
 			.then((data) => {
-				toast.success(`User ${data.username} created.`);
+				toast.success(`User ${data.username} created`);
 				newUser.username = '';
 				newUser.password = '';
 				newUser.passwordConfirm = '';
@@ -74,14 +74,14 @@
 			.collection('users')
 			.delete(user.id)
 			.then(async () => {
-				toast.success(`User ${user.username} deleted.`);
+				toast.success(`User ${user.username} deleted`);
 				let permission = permissions.find((perm) => perm.user === user.id);
 				if (permission?.id !== undefined) {
 					await $pocketbase
 						.collection('permissions')
 						.delete(permission.id)
 						.then(() => {
-							toast.success(`Permissions for ${user.username} deleted.`);
+							toast.success(`Permissions for ${user.username} deleted`);
 						})
 						.catch((err) => {
 							toast.error(err.message);
@@ -130,7 +130,7 @@
 					// if (i > -1) {
 					// 	permissions[i] = data as Permission;
 					// }
-					toast.success(`Permissions for ${user.username} created.`);
+					toast.success(`Permissions for ${user.username} created`);
 					reload();
 				})
 				.catch((err) => {
@@ -142,7 +142,7 @@
 				.collection('permissions')
 				.update(permission.id, permission)
 				.then(() => {
-					toast.success(`Permissions for ${user.username} updated.`);
+					toast.success(`Permissions for ${user.username} updated`);
 					reload();
 				})
 				.catch((err) => {

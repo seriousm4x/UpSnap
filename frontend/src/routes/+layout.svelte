@@ -33,7 +33,7 @@
 
 				$pocketbase.collection('permissions').subscribe('*', (event) => {
 					permission.set(event.record as Permission);
-					toast.success('Your permissions have been updated.');
+					toast.success('Your permissions have been updated');
 				});
 			}
 		});
