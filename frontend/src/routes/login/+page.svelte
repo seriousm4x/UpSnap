@@ -102,7 +102,7 @@
 				</label>
 				<div class="card-actions mt-4">
 					<div class="dropdown">
-						<label tabindex="-1" class="btn btn-neutral m-1" for="other-providers">Other</label>
+						<label tabindex="-1" class="btn btn-neutral" for="other-providers">Other</label>
 						<ul
 							id="other-providers"
 							tabindex="-1"
