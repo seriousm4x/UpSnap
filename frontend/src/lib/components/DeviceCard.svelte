@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { pocketbase, isAdmin, backendUrl, permission } from '$lib/stores/pocketbase';
 	import DeviceCardNic from './DeviceCardNic.svelte';
 	import Fa from 'svelte-fa';
@@ -16,6 +17,33 @@
 	import type { Device } from '$lib/types/device';
 
 	export let device: Device;
+
+	let moreButtons = [
+		{
+			text: 'Edit',
+			icon: faPen,
+			onClick: () => goto(`/device/${device.id}`),
+			requires: $isAdmin || $permission.update?.includes(device.id)
+		},
+		{
+			text: 'Sleep',
+			icon: faBed,
+			onClick: () => sleep(),
+			requires:
+				($isAdmin || $permission.power?.includes(device.id)) &&
+				device.status === 'online' &&
+				device.sol_enabled
+		},
+		{
+			text: 'Reboot',
+			icon: faRotateLeft,
+			onClick: () => reboot(),
+			requires:
+				($isAdmin || $permission.power?.includes(device.id)) &&
+				device.status === 'online' &&
+				device.shutdown_cmd !== ''
+		}
+	];
 
 	// update device status change
 	let now = Date.now();
@@ -91,7 +119,7 @@
 					addSuffix: true
 				})}
 			</span>
-			{#if $isAdmin || $permission.update?.includes(device.id) || $permission.power?.includes(device.id)}
+			{#if moreButtons.filter((btn) => btn.requires).length > 0}
 				<div class="dropdown dropdown-top dropdown-end bg-base-300 ms-auto">
 					<label tabindex="-1" class="btn btn-sm m-1" for="more-{device.id}">More</label>
 					<ul
@@ -99,19 +127,15 @@
 						tabindex="-1"
 						class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit"
 					>
-						{#if ($isAdmin || $permission.power?.includes(device.id)) && device.status === 'online'}
-							{#if device.shutdown_cmd !== ''}
-								<li><button on:click={() => reboot()}><Fa icon={faRotateLeft} />Reboot</button></li>
+						{#each moreButtons as btn}
+							{#if btn.requires}
+								<li>
+									<button on:click={btn.onClick}>
+										<Fa icon={btn.icon} />{btn.text}
+									</button>
+								</li>
 							{/if}
-							{#if device.sol_enabled}
-								<li><button on:click={() => sleep()}><Fa icon={faBed} />Sleep</button></li>
-							{/if}
-						{/if}
-						{#if $isAdmin || $permission.update?.includes(device.id)}
-							<li>
-								<a href="/device/{device.id}"><Fa icon={faPen} />Edit</a>
-							</li>
-						{/if}
+						{/each}
 					</ul>
 				</div>
 			{/if}
