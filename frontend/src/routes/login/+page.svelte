@@ -3,7 +3,7 @@
 	import { pocketbase, isAdmin } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Fa from 'svelte-fa';
-	import { faLockOpen, faEye } from '@fortawesome/free-solid-svg-icons';
+	import { faLockOpen, faEye, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 	import { toggleVisibility } from '$lib/helpers/forms';
 	import toast from 'svelte-french-toast';
 	import { onMount } from 'svelte';
@@ -38,6 +38,21 @@
 					.catch((err) => {
 						toast.error(err.message);
 					});
+			});
+	}
+
+	function loginOIDC() {
+		$pocketbase
+			.collection('users')
+			.authWithOAuth2({ provider: 'oidc' })
+			.then(() => {
+				isAdmin.set(true);
+				goto('/');
+			})
+			.catch((err) => {
+				console.log(err);
+
+				toast.error(err.message);
 			});
 	}
 </script>
@@ -85,8 +100,28 @@
 						bind:this={inputPassword}
 					/>
 				</label>
-				<div class="card-actions justify-end mt-4">
-					<button class="btn btn-primary" type="submit">Login <Fa icon={faLockOpen} /></button>
+				<div class="card-actions mt-4">
+					<div class="dropdown">
+						<label tabindex="-1" class="btn btn-neutral m-1" for="other-providers">Other</label>
+						<ul
+							id="other-providers"
+							tabindex="-1"
+							class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-56"
+						>
+							<li class="menu-title flex flex-row gap-2 items-center">
+								Other Auth Providers <a
+									href="https://github.com/seriousm4x/UpSnap/wiki/Auth-providers"
+									target="_blank"><Fa icon={faQuestionCircle} /></a
+								>
+							</li>
+							<li>
+								<button type="button" on:click={loginOIDC}>OIDC 1</button>
+							</li>
+						</ul>
+					</div>
+					<button class="btn btn-primary ms-auto" type="submit"
+						>Login <Fa icon={faLockOpen} /></button
+					>
 				</div>
 			</form>
 		</div>
