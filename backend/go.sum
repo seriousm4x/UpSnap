@@ -173,8 +173,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pocketbase/dbx v1.10.1 h1:cw+vsyfCJD8YObOVeqb93YErnlxwYMkNZ4rwN0G0AaA=
 github.com/pocketbase/dbx v1.10.1/go.mod h1:xXRCIAKTHMgUCyCKZm55pUOdvFziJjQfXaWKhu2vhMs=
-github.com/pocketbase/pocketbase v0.17.5 h1:3KwMrlSMt1rcwZK2Z1/wFa5p/rkDHpcyeCRvUDXMb+Y=
-github.com/pocketbase/pocketbase v0.17.5/go.mod h1:IqsgywiDX5ewaUdeG+0NNckBLWp5mFhJSca1PH9zSp4=
+github.com/pocketbase/pocketbase v0.17.6 h1:bbgKBKnJh/2eakf/XDKu/Foj9FpAez0Xi7254pubzMM=
+github.com/pocketbase/pocketbase v0.17.6/go.mod h1:HdS3hduJ0y/tpzvGfcU4C4OpkR+bwWEYvkIUvWXcCK8=
 github.com/prometheus-community/pro-bing v0.3.0 h1:SFT6gHqXwbItEDJhTkzPWVqU6CLEtqEfNAPp47RUON4=
 github.com/prometheus-community/pro-bing v0.3.0/go.mod h1:p9dLb9zdmv+eLxWfCT6jESWuDrS+YzpPkQBgysQF8a0=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
