@@ -41,7 +41,7 @@
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.4.2",
 		"date-fns": "^2.30.0",
-		"pocketbase": "^0.16.0",
+		"pocketbase": "^0.17.2",
 		"svelte-fa": "^3.0.4",
 		"svelte-french-toast": "^1.2.0",
 		"theme-change": "^2.5.0"
