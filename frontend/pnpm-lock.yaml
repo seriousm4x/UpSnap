@@ -41,8 +41,8 @@ devDependencies:
     specifier: ^10.4.15
     version: 10.4.15(postcss@8.4.28)
   daisyui:
-    specifier: ^3.5.1
-    version: 3.5.1
+    specifier: ^3.6.3
+    version: 3.6.3
   eslint:
     specifier: ^8.47.0
     version: 8.47.0
@@ -925,8 +925,8 @@ packages:
     hasBin: true
     dev: true
 
-  /daisyui@3.5.1:
-    resolution: {integrity: sha512-7GG+9QXnr2qQMCqnyFU8TxpaOYJigXiEtmzoivmiiZZHvxqIwYdaMAkgivqTVxEgy3Hot3m1suzZjmt1zUrvmA==}
+  /daisyui@3.6.3:
+    resolution: {integrity: sha512-VNWogAjx37H8kNYd2E/+r1OXc6dOvJTKlKltqIKAlNMFVfx2BIKPcmnVxaHQLfj2vhv1mYDBjgWj+1enQ+4yZA==}
     engines: {node: '>=16.9.0'}
     dependencies:
       colord: 2.9.3
