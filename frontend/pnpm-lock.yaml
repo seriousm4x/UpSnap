@@ -12,8 +12,8 @@ dependencies:
     specifier: ^2.30.0
     version: 2.30.0
   pocketbase:
-    specifier: ^0.16.0
-    version: 0.16.0
+    specifier: ^0.17.3
+    version: 0.17.3
   svelte-fa:
     specifier: ^3.0.4
     version: 3.0.4
@@ -1697,8 +1697,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /pocketbase@0.16.0:
-    resolution: {integrity: sha512-sndPu4Mbu1Y2VefvO2gIa/No5aIdP6E5br9HUGomvDYSfkmGfBxJNkivJSSKlr9KwWnaF8otf14304UUeFGOrA==}
+  /pocketbase@0.17.3:
+    resolution: {integrity: sha512-tqtk7kd8K4/5BspCzqf8DcbjS+iCBLFdpC7s/d6hAuxeoqP5MH6llRICm22dldJDFcTa1chuCfyeeKoU5mYaHQ==}
     dev: false
 
   /postcss-import@15.1.0(postcss@8.4.28):
