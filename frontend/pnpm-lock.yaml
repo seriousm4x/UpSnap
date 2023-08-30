@@ -50,8 +50,8 @@ devDependencies:
     specifier: ^9.0.0
     version: 9.0.0(eslint@8.47.0)
   eslint-plugin-svelte:
-    specifier: ^2.32.4
-    version: 2.32.4(eslint@8.47.0)(svelte@4.2.0)
+    specifier: ^2.33.0
+    version: 2.33.0(eslint@8.47.0)(svelte@4.2.0)
   husky:
     specifier: ^8.0.3
     version: 8.0.3
@@ -1058,8 +1058,8 @@ packages:
       eslint: 8.47.0
     dev: true
 
-  /eslint-plugin-svelte@2.32.4(eslint@8.47.0)(svelte@4.2.0):
-    resolution: {integrity: sha512-VJ12i2Iogug1jvhwxSlognnfGj76P5gks/V4pUD4SCSVQOp14u47MNP0zAG8AQR3LT0Fi1iUvIFnY4l9z5Rwbg==}
+  /eslint-plugin-svelte@2.33.0(eslint@8.47.0)(svelte@4.2.0):
+    resolution: {integrity: sha512-kk7Z4BfxVjFYJseFcOpS8kiKNio7KnAnhFagmM89h1wNSKlM7tIn+uguNQppKM9leYW+S+Us0Rjg2Qg3zsEcvg==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0-0
@@ -1080,7 +1080,7 @@ packages:
       postcss-selector-parser: 6.0.13
       semver: 7.5.4
       svelte: 4.2.0
-      svelte-eslint-parser: 0.32.2(svelte@4.2.0)
+      svelte-eslint-parser: 0.33.0(svelte@4.2.0)
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -1776,8 +1776,8 @@ packages:
       postcss: 8.4.29
     dev: true
 
-  /postcss-scss@4.0.6(postcss@8.4.29):
-    resolution: {integrity: sha512-rLDPhJY4z/i4nVFZ27j9GqLxj1pwxE80eAzUNRMXtcpipFYIeowerzBgG3yJhMtObGEXidtIgbUpQ3eLDsf5OQ==}
+  /postcss-scss@4.0.7(postcss@8.4.29):
+    resolution: {integrity: sha512-xPv2GseoyXPa58Nro7M73ZntttusuCmZdeOojUFR5PZDz2BR62vfYx1w9TyOnp1+nYFowgOMipsCBhxzVkAEPw==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.4.19
@@ -2045,8 +2045,8 @@ packages:
       - sugarss
     dev: true
 
-  /svelte-eslint-parser@0.32.2(svelte@4.2.0):
-    resolution: {integrity: sha512-Ok9D3A4b23iLQsONrjqtXtYDu5ZZ/826Blaw2LeFZVTg1pwofKDG4mz3/GYTax8fQ0plRGHI6j+d9VQYy5Lo/A==}
+  /svelte-eslint-parser@0.33.0(svelte@4.2.0):
+    resolution: {integrity: sha512-5awZ6Bs+Tb/zQwa41PSdcLynAVQTwW0HGyCBjtbAQ59taLZqDgQSMzRlDmapjZdDtzERm0oXDZNE0E+PKJ6ryg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       svelte: ^3.37.0 || ^4.0.0
@@ -2058,7 +2058,7 @@ packages:
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
       postcss: 8.4.29
-      postcss-scss: 4.0.6(postcss@8.4.29)
+      postcss-scss: 4.0.7(postcss@8.4.29)
       svelte: 4.2.0
     dev: true
 
