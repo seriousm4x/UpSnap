@@ -14,14 +14,14 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-static": "^2.0.3",
-		"@sveltejs/kit": "^1.22.6",
-		"@typescript-eslint/eslint-plugin": "^6.4.1",
-		"@typescript-eslint/parser": "^6.4.0",
+		"@sveltejs/kit": "^1.24.0",
+		"@typescript-eslint/eslint-plugin": "^6.5.0",
+		"@typescript-eslint/parser": "^6.5.0",
 		"autoprefixer": "^10.4.15",
-		"daisyui": "^3.5.1",
-		"eslint": "^8.47.0",
+		"daisyui": "^3.6.4",
+		"eslint": "^8.48.0",
 		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-svelte": "^2.32.4",
+		"eslint-plugin-svelte": "^2.33.0",
 		"husky": "^8.0.3",
 		"postcss": "^8.4.29",
 		"prettier": "^3.0.3",
@@ -30,7 +30,7 @@
 		"svelte-check": "^3.5.1",
 		"tailwindcss": "^3.3.3",
 		"tslib": "^2.6.2",
-		"typescript": "^5.1.6",
+		"typescript": "^5.2.2",
 		"vite": "^4.4.9"
 	},
 	"type": "module",
@@ -41,7 +41,7 @@
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.4.2",
 		"date-fns": "^2.30.0",
-		"pocketbase": "^0.16.0",
+		"pocketbase": "^0.17.3",
 		"svelte-fa": "^3.0.4",
 		"svelte-french-toast": "^1.2.0",
 		"theme-change": "^2.5.0"
