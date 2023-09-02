@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase, permission, isAdmin } from '$lib/stores/pocketbase';
+	import { pocketbase, permission } from '$lib/stores/pocketbase';
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
@@ -52,7 +52,7 @@
 	}
 
 	async function createDevice(device: Device) {
-		device.created_by = $isAdmin ? '' : $pocketbase.authStore.model?.id ?? '';
+		device.created_by = $pocketbase.authStore.isAdmin ? '' : $pocketbase.authStore.model?.id ?? '';
 		$pocketbase
 			.collection('devices')
 			.create(device)
@@ -585,7 +585,7 @@
 		</div>
 	</div>
 	<div class="card-actions mt-6 justify-end gap-4">
-		{#if $isAdmin || $permission.delete?.includes(device.id)}
+		{#if $pocketbase.authStore.isAdmin || $permission.delete?.includes(device.id)}
 			<button class="btn btn-error" type="button" on:click={() => deleteModal.showModal()}
 				><Fa icon={faTrash} />Delete</button
 			>

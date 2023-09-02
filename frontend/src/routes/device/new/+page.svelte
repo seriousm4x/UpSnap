@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
 	import NetworkScan from '$lib/components/NetworkScan.svelte';
-	import { permission, isAdmin } from '$lib/stores/pocketbase';
+	import { pocketbase, permission } from '$lib/stores/pocketbase';
 	import { faBinoculars, faWrench } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
@@ -17,7 +17,7 @@
 	} as Device;
 
 	$: if (Object.hasOwn($permission, 'create')) {
-		if (!$isAdmin && !$permission.create) {
+		if (!$pocketbase.authStore.isAdmin && !$permission.create) {
 			toast(`You don't have permission to visit ${$page.url.pathname}`, {
 				icon: '⛔'
 			});
@@ -34,7 +34,7 @@
 		{
 			name: 'network scan',
 			icon: faBinoculars,
-			show: $isAdmin
+			show: $pocketbase.authStore.isAdmin
 		}
 	];
 	let activeTab = 'manual';

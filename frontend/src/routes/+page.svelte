@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { pocketbase, permission, isAdmin } from '$lib/stores/pocketbase';
+	import { pocketbase, permission } from '$lib/stores/pocketbase';
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import toast from 'svelte-french-toast';
@@ -176,7 +176,7 @@
 {:else}
 	<div class="container text-center">
 		<p>No devices here.</p>
-		{#if $isAdmin || $permission.create}
+		{#if $pocketbase.authStore.isAdmin || $permission.create}
 			<p>
 				<a href="/device/new" class="btn btn-ghost"
 					><Fa icon={faPlus} class="ms-2" />Add your first device

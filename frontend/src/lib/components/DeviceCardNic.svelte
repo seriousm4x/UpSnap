@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pocketbase, backendUrl, permission, isAdmin } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
 	import Fa from 'svelte-fa';
 	import { faCircle, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 	import toast from 'svelte-french-toast';
@@ -24,7 +24,7 @@
 		if (device.shutdown_cmd === '') {
 			disabled = true;
 			hoverText = 'No shutdown command set';
-		} else if (!$isAdmin && !$permission.power?.includes(device.id)) {
+		} else if (!$pocketbase.authStore.isAdmin && !$permission.power?.includes(device.id)) {
 			disabled = true;
 			hoverText = 'No permission to shut down this device';
 		} else {
@@ -32,7 +32,7 @@
 			hoverText = 'Shut down';
 		}
 	} else if (device.status === 'offline') {
-		if (!$isAdmin && !$permission.power?.includes(device.id)) {
+		if (!$pocketbase.authStore.isAdmin && !$permission.power?.includes(device.id)) {
 			disabled = true;
 			hoverText = 'No permission to power on this device';
 		} else {

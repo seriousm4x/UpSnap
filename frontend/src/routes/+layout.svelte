@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { pocketbase, backendUrl, permission, isAdmin } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
@@ -14,8 +14,6 @@
 	const toastOptions: ToastOptions = {
 		duration: 5000
 	};
-
-	$: isAdmin.set($pocketbase.authStore.isValid && !$pocketbase.authStore.model?.collectionName);
 
 	onMount(async () => {
 		$pocketbase.authStore.onChange(() => {

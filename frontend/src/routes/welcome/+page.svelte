@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase, isAdmin } from '$lib/stores/pocketbase';
+	import { pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import { toggleVisibility } from '$lib/helpers/forms';
 	import toast from 'svelte-french-toast';
@@ -35,7 +35,6 @@
 					.authWithPassword(form.email, form.password)
 					.then(() => {
 						stepsCompleted = 2;
-						isAdmin.set(true);
 					})
 					.catch((err) => {
 						if (err.data?.data?.identity?.message) {

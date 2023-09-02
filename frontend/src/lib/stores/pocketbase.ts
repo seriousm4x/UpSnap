@@ -12,4 +12,3 @@ pb.autoCancellation(false);
 // export stores
 export const pocketbase = writable(pb);
 export const permission = writable({} as Permission);
-export const isAdmin = writable(false);

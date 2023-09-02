@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { pocketbase, permission, isAdmin } from '$lib/stores/pocketbase';
+	import { pocketbase, permission } from '$lib/stores/pocketbase';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
 	import toast from 'svelte-french-toast';
 	import type { Device, Port } from '$lib/types/device';
 
 	$: if (Object.hasOwn($permission, 'update')) {
-		if (!$isAdmin && !$permission.update.includes($page.params.id)) {
+		if (!$pocketbase.authStore.isAdmin && !$permission.update.includes($page.params.id)) {
 			toast(`You don't have permission to visit ${$page.url.pathname}`, {
 				icon: '⛔'
 			});
@@ -22,6 +22,9 @@
 			.getOne($page.params.id, { expand: 'ports,groups' });
 
 		let device = resp as Device;
+
+		if (!device.expand) device.expand = {};
+
 		if (!device.expand.ports) {
 			device.expand.ports = [] as Port[];
 		}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase, isAdmin, backendUrl, permission } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
 	import DeviceCardNic from './DeviceCardNic.svelte';
 	import Fa from 'svelte-fa';
 	import {
@@ -23,14 +23,14 @@
 			text: 'Edit',
 			icon: faPen,
 			onClick: () => goto(`/device/${device.id}`),
-			requires: $isAdmin || $permission.update?.includes(device.id)
+			requires: $pocketbase.authStore.isAdmin || $permission.update?.includes(device.id)
 		},
 		{
 			text: 'Sleep',
 			icon: faBed,
 			onClick: () => sleep(),
 			requires:
-				($isAdmin || $permission.power?.includes(device.id)) &&
+				($pocketbase.authStore.isAdmin || $permission.power?.includes(device.id)) &&
 				device.status === 'online' &&
 				device.sol_enabled
 		},
@@ -39,7 +39,7 @@
 			icon: faRotateLeft,
 			onClick: () => reboot(),
 			requires:
-				($isAdmin || $permission.power?.includes(device.id)) &&
+				($pocketbase.authStore.isAdmin || $permission.power?.includes(device.id)) &&
 				device.status === 'online' &&
 				device.shutdown_cmd !== ''
 		}

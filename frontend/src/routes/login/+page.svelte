@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase, isAdmin } from '$lib/stores/pocketbase';
+	import { pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Fa from 'svelte-fa';
 	import { faLockOpen, faEye, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +24,6 @@
 		$pocketbase.admins
 			.authWithPassword(form.email, form.password)
 			.then(() => {
-				isAdmin.set(true);
 				goto('/');
 			})
 			.catch(() => {
@@ -32,7 +31,6 @@
 					.collection('users')
 					.authWithPassword(form.email, form.password)
 					.then(() => {
-						isAdmin.set(false);
 						goto('/');
 					})
 					.catch((err) => {
@@ -46,7 +44,6 @@
 			.collection('users')
 			.authWithOAuth2({ provider: 'oidc' })
 			.then(() => {
-				isAdmin.set(true);
 				goto('/');
 			})
 			.catch((err) => {

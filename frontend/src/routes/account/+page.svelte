@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { isAdmin, pocketbase, backendUrl } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
 	import { faSave } from '@fortawesome/free-solid-svg-icons';
@@ -22,7 +22,7 @@
 	});
 
 	function changeAvatar() {
-		if ($isAdmin) {
+		if ($pocketbase.authStore.isAdmin) {
 			if (!$pocketbase.authStore.model?.id) return;
 			$pocketbase.admins
 				.update($pocketbase.authStore.model.id, { avatar: newAvatar })
@@ -48,7 +48,7 @@
 
 	function changePassword() {
 		fetch(
-			`${backendUrl}api/${$isAdmin ? 'admins' : `collections/users/records`}/${
+			`${backendUrl}api/${$pocketbase.authStore.isAdmin ? 'admins' : `collections/users/records`}/${
 				$pocketbase.authStore.model?.id
 			}`,
 			{
@@ -57,7 +57,7 @@
 					Authorization: $pocketbase.authStore.token,
 					'Content-Type': 'application/json'
 				},
-				body: $isAdmin ? adminBody : userBody
+				body: $pocketbase.authStore.isAdmin ? adminBody : userBody
 			}
 		)
 			.then(async (data) => {
@@ -103,9 +103,11 @@
 			</div>
 			<div>
 				<h2 class="card-title">
-					{$isAdmin ? $pocketbase.authStore.model?.email : $pocketbase.authStore.model?.username}
+					{$pocketbase.authStore.isAdmin
+						? $pocketbase.authStore.model?.email
+						: $pocketbase.authStore.model?.username}
 				</h2>
-				<h3>{$isAdmin ? 'Admin' : 'User'}</h3>
+				<h3>{$pocketbase.authStore.isAdmin ? 'Admin' : 'User'}</h3>
 			</div>
 		</div>
 		<h2 class="card-title mt-4">Avatar</h2>
@@ -149,7 +151,7 @@
 		<p>After the password has been changed, you will need to log in again.</p>
 		<form on:submit|preventDefault={changePassword}>
 			<div class="form-control w-full max-w-xs">
-				{#if !$isAdmin}
+				{#if !$pocketbase.authStore.isAdmin}
 					<label class="label" for="password-old">
 						<span class="label-text">Old password</span>
 					</label>
@@ -172,7 +174,7 @@
 					type="password"
 					placeholder="New password"
 					class="input input-bordered w-full max-w-xs"
-					minlength={$isAdmin ? 10 : 5}
+					minlength={$pocketbase.authStore.isAdmin ? 10 : 5}
 					maxlength="72"
 					bind:value={newPassword.password}
 					required
@@ -187,7 +189,7 @@
 					type="password"
 					placeholder="New password"
 					class="input input-bordered w-full max-w-xs"
-					minlength={$isAdmin ? 10 : 5}
+					minlength={$pocketbase.authStore.isAdmin ? 10 : 5}
 					maxlength="72"
 					bind:value={newPassword.confirm}
 					required

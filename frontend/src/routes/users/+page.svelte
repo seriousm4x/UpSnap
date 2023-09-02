@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { pocketbase, isAdmin, backendUrl } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
@@ -32,7 +32,7 @@
 	});
 
 	onMount(() => {
-		if (!$isAdmin) {
+		if (!$pocketbase.authStore.isAdmin) {
 			toast(`You don't have permission to visit ${$page.url.pathname}`, {
 				icon: '⛔'
 			});

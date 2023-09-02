@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { pocketbase, backendUrl, permission, isAdmin } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import Fa from 'svelte-fa';
 	import {
@@ -103,7 +103,7 @@
 						><Fa icon={faHome} />Home</a
 					>
 				</li>
-				{#if $isAdmin}
+				{#if $pocketbase.authStore.isAdmin}
 					<li>
 						<a
 							href="/users"
@@ -144,7 +144,7 @@
 					><Fa icon={faHome} />Home</a
 				>
 			</li>
-			{#if $isAdmin}
+			{#if $pocketbase.authStore.isAdmin}
 				<li>
 					<a href="/users" class="p-2" class:active={$page.url.pathname.startsWith('/users')}
 						><Fa icon={faUsersGear} />Users</a
@@ -199,7 +199,7 @@
 	</div>
 	<div class="justify-end ms-auto">
 		{#if $pocketbase.authStore?.model !== null}
-			{#if $isAdmin || $permission.create}
+			{#if $pocketbase.authStore.isAdmin || $permission.create}
 				<a class="btn btn-success me-4" href="/device/new">
 					<Fa icon={faPlus} />
 					New
@@ -216,7 +216,9 @@
 					class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box"
 				>
 					<li class="menu-title">
-						{$isAdmin ? $pocketbase.authStore.model.email : $pocketbase.authStore.model.username}
+						{$pocketbase.authStore.isAdmin
+							? $pocketbase.authStore.model.email
+							: $pocketbase.authStore.model.username}
 					</li>
 					<li>
 						<a href="/account"><Fa icon={faUserGear} />Edit account</a>
