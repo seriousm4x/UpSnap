@@ -193,6 +193,7 @@ package
 # End of https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,svelte,node
 
 build
+data
 
 backend/pb_data
 backend/pb_public/*

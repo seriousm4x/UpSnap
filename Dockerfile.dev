@@ -1,0 +1,24 @@
+FROM node:alpine as node
+WORKDIR /app
+COPY frontend/ .
+RUN npm i -g pnpm &&\
+    pnpm i &&\
+    pnpm run build
+
+FROM golang:alpine as go
+WORKDIR /app
+COPY backend/ .
+COPY --from=node /app/build ./pb_public
+ENV CGO_ENABLED=0
+RUN go build -o upsnap main.go &&\
+    chmod +x upsnap
+
+FROM alpine:3
+RUN apk update &&\
+    apk add --no-cache tzdata ca-certificates nmap samba samba-common-tools openssh sshpass curl &&\
+    rm -rf /var/cache/apk/*
+WORKDIR /app
+COPY --from=go /app/upsnap upsnap
+HEALTHCHECK --interval=10s \
+    CMD curl -fs "http://localhost:8090/api/health" || exit 1
+ENTRYPOINT ["./upsnap", "serve", "--http=0.0.0.0:8090"]

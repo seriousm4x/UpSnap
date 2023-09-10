@@ -2,12 +2,14 @@ version: "3"
 services:
   upsnap:
     container_name: upsnap
-    image: ghcr.io/seriousm4x/upsnap:4
+    build:
+      dockerfile: Dockerfile.dev
     network_mode: host
     restart: unless-stopped
     volumes:
       - ./data:/app/pb_data
-    # # To use a non-root user, create the mountpoint first (mkdir data) so that it has the right permission.
+    # # To use a non-root user, create the mountpoint first before starting
+    # # the container (mkdir data) so that it has the right permissions.
     # user: 1000:1000
     # environment:
     #   - TZ=Europe/Berlin # Set container timezone for cron schedules

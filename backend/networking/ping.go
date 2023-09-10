@@ -2,6 +2,7 @@ package networking
 
 import (
 	"net"
+	"runtime"
 	"time"
 
 	"github.com/pocketbase/pocketbase/models"
@@ -17,7 +18,13 @@ func PingDevice(device *models.Record) bool {
 	}
 	pinger.Count = 1
 	pinger.Timeout = 500 * time.Millisecond
-	pinger.SetPrivileged(true)
+
+	// windows needs privileged permissions.
+	// If you have issues on linux, see here: https://github.com/prometheus-community/pro-bing#linux
+	if runtime.GOOS == "windows" {
+		pinger.SetPrivileged(true)
+	}
+
 	err = pinger.Run()
 	if err != nil {
 		logger.Error.Println(err)

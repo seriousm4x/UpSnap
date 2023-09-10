@@ -2,6 +2,8 @@
 .gitignore
 .dockerignore
 Dockerfile
+Dockerfile.dev
+data
 README.md
 
 frontend/.svelte-kit
