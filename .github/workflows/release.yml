@@ -75,7 +75,7 @@ jobs:
       # docker buildx
       - name: Set up Docker Buildx
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       # ghcr.io login
       - name: Log in to the Container registry
