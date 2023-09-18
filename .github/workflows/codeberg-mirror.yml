@@ -1,10 +1,10 @@
 # Sync repo to the Codeberg mirror
-name: Mirror Sync
+name: codeberg mirror
 on:
   push:
     branches: ["master"]
     tags:
-      - '*'
+      - "*"
   workflow_dispatch:
 jobs:
   codeberg:
