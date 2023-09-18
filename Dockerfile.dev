@@ -11,7 +11,10 @@ COPY backend/ .
 COPY --from=node /app/build ./pb_public
 ENV CGO_ENABLED=0
 RUN go build -o upsnap main.go &&\
-    chmod +x upsnap
+    chmod +x upsnap &&\
+    apk update &&\
+    apk add --no-cache libcap &&\
+    setcap 'cap_net_raw=+ep' ./upsnap
 
 FROM alpine:3
 RUN apk update &&\

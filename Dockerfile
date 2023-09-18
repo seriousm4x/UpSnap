@@ -8,7 +8,10 @@ WORKDIR /app
 RUN wget https://github.com/seriousm4x/UpSnap/releases/download/${VERSION}/UpSnap_${VERSION}_${BUILDX_ARCH}.zip &&\
     unzip UpSnap_${VERSION}_${BUILDX_ARCH}.zip &&\
     rm -f UpSnap_${VERSION}_${BUILDX_ARCH}.zip &&\
-    chmod +x upsnap
+    chmod +x upsnap &&\
+    apk update &&\
+    apk add --no-cache libcap &&\
+    setcap 'cap_net_raw=+ep' ./upsnap
 
 FROM alpine:3
 RUN apk update &&\
