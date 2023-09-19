@@ -37,7 +37,20 @@
 
 ## 🚀 Run the binary
 
-Just download the latest binary from the [release page](https://github.com/seriousm4x/UpSnap/releases) and run it `./upsnap serve --http=0.0.0.0:8090`.
+Just download the latest binary from the [release page](https://github.com/seriousm4x/UpSnap/releases) and run it.
+
+**Root**:
+
+```bash
+sudo ./upsnap serve --http=0.0.0.0:8090
+```
+
+**Non-Root**:
+
+```bash
+sudo setcap cap_net_raw=+ep ./upsnap # only once after downloading
+./upsnap serve --http=0.0.0.0:8090
+```
 
 For more options check `./upsnap --help` or visit [PocketBase documentation](https://pocketbase.io/docs).
 
@@ -47,16 +60,27 @@ If you want to use network discovery, make sure to have `nmap` installed and run
 
 You can use the [docker-compose](docker-compose.yml) example. See the comments in the file for customization.
 
-If you want to change the port, change the following (5000 in this case):
+### Non-root docker user:
+
+Create the mount point first:
+
+```bash
+mkdir data
+```
+
+Then add `user: 1000:1000` to the docker-compose file (or whatever your $UID:$GID is).
+
+### Change port
+
+If you want to change the port from 8090 to something else, change the following (5000 in this case):
 
 ```yml
 entrypoint: /bin/sh -c "./upsnap serve --http 0.0.0.0:5000"
 healthcheck:
   test: curl -fs "http://localhost:5000/api/health" || exit 1
-  interval: 10s
 ```
 
-And if you need additional packages inside the container, do this:
+### Install additional packages for shutdown cmd
 
 ```yml
 entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http 0.0.0.0:8090"
@@ -76,7 +100,7 @@ upsnap.example.com {
 
 ## 🔒 User permissions
 
-UpSnap offers unique access for each user, per device. While admins have all permissions, they can assign specific rights to users such as displaying/hiding a device, accessing device editing, deleting and powering devices on/off.
+UpSnap offers unique access for each user, per device. While admins have all permissions, they can assign specific rights to users such as displaying/hiding a device, accessing device editing, deleting and powering devices on/off. See the last screenshot in the [📸 Screenshots section](#📸-screenshots).
 
 ## 🌍 Exposing to the open web
 
