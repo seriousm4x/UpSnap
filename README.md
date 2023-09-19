@@ -39,13 +39,13 @@
 
 Just download the latest binary from the [release page](https://github.com/seriousm4x/UpSnap/releases) and run it.
 
-**Root**:
+### Root:
 
 ```bash
 sudo ./upsnap serve --http=0.0.0.0:8090
 ```
 
-**Non-Root**:
+### Non-root:
 
 ```bash
 sudo setcap cap_net_raw=+ep ./upsnap # only once after downloading
