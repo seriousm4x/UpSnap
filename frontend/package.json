@@ -23,7 +23,7 @@
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.33.2",
 		"husky": "^8.0.3",
-		"postcss": "^8.4.30",
+		"postcss": "^8.4.31",
 		"prettier": "^3.0.3",
 		"prettier-plugin-svelte": "^3.0.3",
 		"svelte": "^4.2.1",
