@@ -1,11 +1,29 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import toast from 'svelte-french-toast';
 	import Fa from 'svelte-fa';
 	import { faSave } from '@fortawesome/free-solid-svg-icons';
+	import { loadLocaleAsync } from '$lib/i18n/i18n-util.async';
+	import { setLocale } from '$lib/i18n/i18n-svelte';
+	import { baseLocale, locales } from '$lib/i18n/i18n-util';
+	import { detectLocale, navigatorDetector } from 'typesafe-i18n/detectors';
+	import LL from '$lib/i18n/i18n-svelte';
+	import type { Locales } from '$lib/i18n/i18n-types';
 
 	let newAvatar: number;
+
+	// locales
+	const languageEmojis = {
+		'en-US': '🇺🇸',
+		'de-DE': '🇩🇪'
+	};
+	let localStorageLang: Locales | 'auto' = 'auto';
+	let selectedLanguage: Locales | 'auto' = localStorageLang;
+	$: selectedLanguage = localStorageLang as Locales;
+
+	// password change
 	let newPassword = {
 		old: '',
 		password: '',
@@ -21,13 +39,27 @@
 		passwordConfirm: newPassword.confirm
 	});
 
-	function changeAvatar() {
+	onMount(() => {
+		localStorageLang = (localStorage.getItem('lang') as Locales) || 'auto';
+	});
+
+	async function saveUser() {
+		let newLang = selectedLanguage;
+		if (newLang === 'auto') {
+			localStorage.removeItem('lang');
+			newLang = detectLocale(baseLocale, locales, navigatorDetector);
+		} else {
+			localStorage.setItem('lang', newLang);
+		}
+		await loadLocaleAsync(newLang);
+		setLocale(newLang);
+
 		if ($pocketbase.authStore.isAdmin) {
 			if (!$pocketbase.authStore.model?.id) return;
 			$pocketbase.admins
 				.update($pocketbase.authStore.model.id, { avatar: newAvatar })
 				.then(() => {
-					toast.success('Avatar saved');
+					toast.success($LL.account.toast_admin_saved());
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -38,7 +70,7 @@
 				.collection('users')
 				.update($pocketbase.authStore.model.id, { avatar: newAvatar })
 				.then(() => {
-					toast.success('Avatar saved');
+					toast.success($LL.account.toast_user_saved());
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -62,7 +94,7 @@
 		)
 			.then(async (data) => {
 				if (data.ok) {
-					toast.success('Password changed. Please login again.');
+					toast.success($LL.account.toast_password_changed());
 					$pocketbase.authStore.clear();
 					goto('/login');
 				} else {
@@ -70,7 +102,7 @@
 					if (j?.data?.password?.message) {
 						toast.error(j?.data?.password?.message);
 					} else if (j?.data?.passwordConfirm?.message) {
-						toast.error("Passwords don't match");
+						toast.error($LL.account.toast_passwords_missmatch());
 					} else if (j.data?.oldPassword?.message) {
 						toast.error(j.data.oldPassword.message);
 					} else {
@@ -82,9 +114,14 @@
 				toast.error(err.message);
 			});
 	}
+
+	function localeToFullName(lang: Locales) {
+		const languageNames = new Intl.DisplayNames([lang], { type: 'language' });
+		return languageNames.of(lang) ?? '';
+	}
 </script>
 
-<h1 class="text-3xl font-bold mb-8">Account</h1>
+<h1 class="text-3xl font-bold mb-8">{$LL.account.page_title()}</h1>
 <div class="card w-full bg-base-300 shadow-xl">
 	<div class="card-body">
 		<div class="flex flex-row gap-4 items-center">
@@ -107,11 +144,15 @@
 						? $pocketbase.authStore.model?.email
 						: $pocketbase.authStore.model?.username}
 				</h2>
-				<h3>{$pocketbase.authStore.isAdmin ? 'Admin' : 'User'}</h3>
+				<h3>
+					{$pocketbase.authStore.isAdmin
+						? $LL.account.account_type_admin()
+						: $LL.account.account_type_user()}
+				</h3>
 			</div>
 		</div>
-		<h2 class="card-title mt-4">Avatar</h2>
-		<form on:submit|preventDefault={changeAvatar}>
+		<form on:submit|preventDefault={saveUser}>
+			<h2 class="card-title mt-4 mb-2">{$LL.account.avatar_title()}</h2>
 			<div class="flex flex-row flex-wrap gap-4">
 				{#each [...Array(10).keys()] as i}
 					<div class="avatar btn btn-ghost btn-circle">
@@ -135,30 +176,49 @@
 							<!-- svelte static build will fail, because the image gets served from pocketbase
 								and is not a local static file -->
 							{#if $pocketbase.authStore.model?.id}
-								<img src="{backendUrl}_/images/avatars/avatar{i}.svg" alt="Avatar {i}" />
+								<img
+									src="{backendUrl}_/images/avatars/avatar{i}.svg"
+									alt="{$LL.account.avatar_title()} {i}"
+								/>
 							{/if}
 						</div>
 					</div>
 				{/each}
 			</div>
-			<button type="submit" class="btn btn-success mt-2"><Fa icon={faSave} />Save</button>
+			<h2 class="card-title mt-4 mb-2">{$LL.account.language_title()}</h2>
+			<select class="select select-bordered w-full max-w-xs" bind:value={selectedLanguage}>
+				<option value="auto" selected={localStorageLang === null}
+					>🌐 {$LL.account.language_option_auto()}</option
+				>
+				{#each locales.sort( (a, b) => a.localeCompare( b, undefined, { sensitivity: 'base' } ) ) as lang}
+					<option value={lang} selected={localStorageLang === lang}>
+						{languageEmojis[lang]}
+						{localeToFullName(lang)} [{lang}]
+					</option>
+				{/each}
+			</select>
+			<div class="mt-2">
+				<button type="submit" class="btn btn-success mt-2"
+					><Fa icon={faSave} />{$LL.buttons.save()}</button
+				>
+			</div>
 		</form>
 	</div>
 </div>
 <div class="card w-full bg-base-300 shadow-xl mt-6">
 	<div class="card-body">
-		<h2 class="card-title">Change password</h2>
-		<p>After the password has been changed, you will need to log in again.</p>
+		<h2 class="card-title">{$LL.account.change_password_title()}</h2>
+		<p>{$LL.account.change_password_body()}</p>
 		<form on:submit|preventDefault={changePassword}>
 			<div class="form-control w-full max-w-xs">
 				{#if !$pocketbase.authStore.isAdmin}
 					<label class="label" for="password-old">
-						<span class="label-text">Old password</span>
+						<span class="label-text">{$LL.account.change_password_label()}</span>
 					</label>
 					<input
 						id="password-old"
 						type="password"
-						placeholder="Old password"
+						placeholder={$LL.account.change_password_label()}
 						class="input input-bordered w-full max-w-xs"
 						minlength="5"
 						maxlength="72"
@@ -167,12 +227,12 @@
 					/>
 				{/if}
 				<label class="label" for="password-new">
-					<span class="label-text">New password</span>
+					<span class="label-text">{$LL.account.change_password_new()}</span>
 				</label>
 				<input
 					id="password-new"
 					type="password"
-					placeholder="New password"
+					placeholder={$LL.account.change_password_new()}
 					class="input input-bordered w-full max-w-xs"
 					minlength={$pocketbase.authStore.isAdmin ? 10 : 5}
 					maxlength="72"
@@ -182,12 +242,12 @@
 			</div>
 			<div class="form-control w-full max-w-xs">
 				<label class="label" for="password-confirm">
-					<span class="label-text">Confirm password</span>
+					<span class="label-text">{$LL.account.change_password_confirm()}</span>
 				</label>
 				<input
 					id="password-confirm"
 					type="password"
-					placeholder="New password"
+					placeholder={$LL.account.change_password_confirm()}
 					class="input input-bordered w-full max-w-xs"
 					minlength={$pocketbase.authStore.isAdmin ? 10 : 5}
 					maxlength="72"
@@ -195,7 +255,11 @@
 					required
 				/>
 			</div>
-			<button type="submit" class="btn btn-success mt-2"><Fa icon={faSave} />Save</button>
+			<div class="mt-2">
+				<button type="submit" class="btn btn-success mt-2"
+					><Fa icon={faSave} />{$LL.buttons.change()}</button
+				>
+			</div>
 		</form>
 	</div>
 </div>
