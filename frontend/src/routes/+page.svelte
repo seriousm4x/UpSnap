@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { pocketbase, permission } from '$lib/stores/pocketbase';
+	import { browser } from '$app/environment';
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import PageLoading from '$lib/components/PageLoading.svelte';
-	import toast from 'svelte-french-toast';
-	import Fa from 'svelte-fa';
+	import { permission, pocketbase } from '$lib/stores/pocketbase';
+	import type { Device } from '$lib/types/device';
 	import {
 		faChevronCircleLeft,
 		faChevronCircleRight,
 		faPlus
 	} from '@fortawesome/free-solid-svg-icons';
-	import { browser } from '$app/environment';
-	import type { Device } from '$lib/types/device';
+	import { onMount } from 'svelte';
+	import Fa from 'svelte-fa';
+	import toast from 'svelte-french-toast';
 
 	let loading = true;
 	let devices = [] as Device[];

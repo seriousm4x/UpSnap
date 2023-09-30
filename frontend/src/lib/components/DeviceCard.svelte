@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
-	import DeviceCardNic from './DeviceCardNic.svelte';
-	import Fa from 'svelte-fa';
+	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
+	import type { Device } from '$lib/types/device';
 	import {
 		faBed,
 		faCircleArrowDown,
@@ -11,10 +10,11 @@
 		faPen,
 		faRotateLeft
 	} from '@fortawesome/free-solid-svg-icons';
-	import { scale } from 'svelte/transition';
 	import { formatDistance, parseISO } from 'date-fns';
+	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
-	import type { Device } from '$lib/types/device';
+	import { scale } from 'svelte/transition';
+	import DeviceCardNic from './DeviceCardNic.svelte';
 
 	export let device: Device;
 

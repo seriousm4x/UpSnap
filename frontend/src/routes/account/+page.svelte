@@ -1,16 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
-	import toast from 'svelte-french-toast';
-	import Fa from 'svelte-fa';
-	import { faSave } from '@fortawesome/free-solid-svg-icons';
-	import { loadLocaleAsync } from '$lib/i18n/i18n-util.async';
-	import { setLocale } from '$lib/i18n/i18n-svelte';
-	import { baseLocale, locales } from '$lib/i18n/i18n-util';
-	import { detectLocale, navigatorDetector } from 'typesafe-i18n/detectors';
-	import LL from '$lib/i18n/i18n-svelte';
+	import LL, { setLocale } from '$lib/i18n/i18n-svelte';
 	import type { Locales } from '$lib/i18n/i18n-types';
+	import { baseLocale, locales } from '$lib/i18n/i18n-util';
+	import { loadLocaleAsync } from '$lib/i18n/i18n-util.async';
+	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
+	import { faSave } from '@fortawesome/free-solid-svg-icons';
+	import { onMount } from 'svelte';
+	import Fa from 'svelte-fa';
+	import toast from 'svelte-french-toast';
+	import { detectLocale, navigatorDetector } from 'typesafe-i18n/detectors';
 
 	let newAvatar: number;
 

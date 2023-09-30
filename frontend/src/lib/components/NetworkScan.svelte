@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
-	import { settingsPriv } from '$lib/stores/settings';
 	import PageLoading from '$lib/components/PageLoading.svelte';
-	import Fa from 'svelte-fa';
-	import { faMagnifyingGlass, faPlus, faX } from '@fortawesome/free-solid-svg-icons';
-	import toast from 'svelte-french-toast';
-	import type { SettingsPrivate } from '$lib/types/settings';
-	import type { ScanResponse, ScannedDevice } from '$lib/types/scan';
+	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
+	import { settingsPriv } from '$lib/stores/settings';
 	import type { Device } from '$lib/types/device';
+	import type { ScanResponse, ScannedDevice } from '$lib/types/scan';
+	import type { SettingsPrivate } from '$lib/types/settings';
+	import { faMagnifyingGlass, faPlus, faX } from '@fortawesome/free-solid-svg-icons';
+	import { onMount } from 'svelte';
+	import Fa from 'svelte-fa';
+	import toast from 'svelte-french-toast';
 
 	let scanRange = '';
 	let scanRunning = false;

@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
 	import NetworkScan from '$lib/components/NetworkScan.svelte';
-	import { pocketbase, permission } from '$lib/stores/pocketbase';
+	import { permission, pocketbase } from '$lib/stores/pocketbase';
+	import type { Device, Port } from '$lib/types/device';
 	import { faBinoculars, faWrench } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
-	import type { Device, Port } from '$lib/types/device';
 
 	let device: Device = {
 		expand: {

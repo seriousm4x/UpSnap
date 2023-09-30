@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
+	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
-	import Fa from 'svelte-fa';
 	import {
+		faCheck,
+		faChevronDown,
 		faCog,
+		faDoorOpen,
 		faHome,
 		faPlus,
 		faSwatchbook,
-		faChevronDown,
-		faCheck,
-		faUsersGear,
 		faUserGear,
-		faDoorOpen
+		faUsersGear
 	} from '@fortawesome/free-solid-svg-icons';
-	import { themeChange } from 'theme-change';
 	import { onMount } from 'svelte';
+	import Fa from 'svelte-fa';
+	import { themeChange } from 'theme-change';
 
 	let availableThemes = [
 		'light',

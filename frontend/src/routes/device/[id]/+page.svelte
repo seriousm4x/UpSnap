@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { pocketbase, permission } from '$lib/stores/pocketbase';
-	import PageLoading from '$lib/components/PageLoading.svelte';
+	import { page } from '$app/stores';
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
-	import toast from 'svelte-french-toast';
+	import PageLoading from '$lib/components/PageLoading.svelte';
+	import { permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Port } from '$lib/types/device';
+	import toast from 'svelte-french-toast';
 
 	$: if (Object.hasOwn($permission, 'update')) {
 		if (!$pocketbase.authStore.isAdmin && !$permission.update.includes($page.params.id)) {

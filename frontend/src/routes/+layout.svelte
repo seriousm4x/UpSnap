@@ -1,19 +1,19 @@
 <script lang="ts">
-	import '../app.css';
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
-	import { settingsPub } from '$lib/stores/settings';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
-	import toast, { Toaster, type ToastOptions } from 'svelte-french-toast';
 	import { setLocale } from '$lib/i18n/i18n-svelte';
-	import { loadLocaleAsync } from '$lib/i18n/i18n-util.async';
-	import { detectLocale, localStorageDetector, navigatorDetector } from 'typesafe-i18n/detectors';
 	import { baseLocale, locales } from '$lib/i18n/i18n-util';
-	import type { SettingsPublic } from '$lib/types/settings';
+	import { loadLocaleAsync } from '$lib/i18n/i18n-util.async';
+	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
+	import { settingsPub } from '$lib/stores/settings';
 	import type { Permission } from '$lib/types/permission';
+	import type { SettingsPublic } from '$lib/types/settings';
+	import { onMount } from 'svelte';
+	import toast, { Toaster, type ToastOptions } from 'svelte-french-toast';
+	import { detectLocale, localStorageDetector, navigatorDetector } from 'typesafe-i18n/detectors';
+	import '../app.css';
 
 	const toastOptions: ToastOptions = {
 		duration: 5000

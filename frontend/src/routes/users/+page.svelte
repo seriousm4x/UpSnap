@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
+	import { page } from '$app/stores';
 	import PageLoading from '$lib/components/PageLoading.svelte';
-	import toast from 'svelte-french-toast';
-	import Fa from 'svelte-fa';
-	import { faPlus, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
-	import type { User } from '$lib/types/user';
+	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device } from '$lib/types/device';
 	import type { Permission } from '$lib/types/permission';
+	import type { User } from '$lib/types/user';
+	import { faPlus, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import { onMount } from 'svelte';
+	import Fa from 'svelte-fa';
+	import toast from 'svelte-french-toast';
 
 	let getUsersPromise = getUsers();
 	let getPermissionsPromise = getPermissions();

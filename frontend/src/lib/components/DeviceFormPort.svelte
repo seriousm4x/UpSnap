@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { pocketbase } from '$lib/stores/pocketbase';
-	import { scale } from 'svelte/transition';
-	import Fa from 'svelte-fa';
-	import { faTrash } from '@fortawesome/free-solid-svg-icons';
-	import toast from 'svelte-french-toast';
 	import type { Device, Port } from '$lib/types/device';
+	import { faTrash } from '@fortawesome/free-solid-svg-icons';
 	import type { Record } from 'pocketbase';
+	import Fa from 'svelte-fa';
+	import toast from 'svelte-french-toast';
+	import { scale } from 'svelte/transition';
 
 	export let device: Device;
 	export let index: number;

@@ -1,6 +1,6 @@
-import { writable } from 'svelte/store';
-import PocketBase from 'pocketbase';
 import type { Permission } from '$lib/types/permission';
+import PocketBase from 'pocketbase';
+import { writable } from 'svelte/store';
 
 // set backend url based on environment
 export const backendUrl = import.meta.env.DEV ? 'http://127.0.0.1:8090/' : '/';

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { toggleVisibility } from '$lib/helpers/forms';
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
-	import { toggleVisibility } from '$lib/helpers/forms';
-	import toast from 'svelte-french-toast';
-	import Fa from 'svelte-fa';
 	import { faArrowRight, faEye } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
+	import Fa from 'svelte-fa';
+	import toast from 'svelte-french-toast';
 
 	let stepsCompleted = 0;
 	let inputPassword: HTMLInputElement;

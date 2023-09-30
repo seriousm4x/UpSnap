@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { settingsPub, settingsPriv } from '$lib/stores/settings';
-	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
-	import PageLoading from '$lib/components/PageLoading.svelte';
-	import toast from 'svelte-french-toast';
-	import Fa from 'svelte-fa';
-	import { faSave } from '@fortawesome/free-solid-svg-icons';
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { PUBLIC_VERSION } from '$env/static/public';
-	import type { SettingsPublic, SettingsPrivate } from '$lib/types/settings';
+	import PageLoading from '$lib/components/PageLoading.svelte';
+	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
+	import { settingsPriv, settingsPub } from '$lib/stores/settings';
+	import type { SettingsPrivate, SettingsPublic } from '$lib/types/settings';
+	import { faSave } from '@fortawesome/free-solid-svg-icons';
+	import { onMount } from 'svelte';
+	import Fa from 'svelte-fa';
+	import toast from 'svelte-french-toast';
 
 	let settingsPubClone: SettingsPublic | undefined;
 	let settingsPrivClone: SettingsPrivate | undefined;

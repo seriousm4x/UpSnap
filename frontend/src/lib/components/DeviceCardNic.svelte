@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { pocketbase, backendUrl, permission } from '$lib/stores/pocketbase';
-	import Fa from 'svelte-fa';
-	import { faCircle, faPowerOff } from '@fortawesome/free-solid-svg-icons';
-	import toast from 'svelte-french-toast';
+	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device } from '$lib/types/device';
+	import { faCircle, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+	import Fa from 'svelte-fa';
+	import toast from 'svelte-french-toast';
 
 	export let device: Device;
 

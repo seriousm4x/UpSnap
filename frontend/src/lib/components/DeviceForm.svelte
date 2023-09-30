@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase, permission } from '$lib/stores/pocketbase';
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
-	import toast from 'svelte-french-toast';
-	import Fa from 'svelte-fa';
+	import { permission, pocketbase } from '$lib/stores/pocketbase';
+	import type { Device, Group, Port } from '$lib/types/device';
 	import { faSave, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
-	import type { Device, Port, Group } from '$lib/types/device';
 	import { onMount } from 'svelte';
+	import Fa from 'svelte-fa';
+	import toast from 'svelte-french-toast';
 
 	export let device: Device;
 
