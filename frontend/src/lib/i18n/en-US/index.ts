@@ -1,6 +1,16 @@
 import type { BaseTranslation } from '../i18n-types';
 
 const en_US = {
+	home: {
+		order_groups: 'Groups',
+		order_name: 'Name',
+		order_ip: 'IP',
+		order_tooltip: 'Order',
+		message_no_devices: 'No devices here.',
+		message_add_first_device: 'Add your first device',
+		message_grant_permissions:
+			'Please ask the admin to grant you permissions to existing devices or to create new ones.'
+	},
 	account: {
 		page_title: 'Account',
 		account_type_admin: 'Admin',

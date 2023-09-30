@@ -2,8 +2,9 @@
 	import { browser } from '$app/environment';
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import PageLoading from '$lib/components/PageLoading.svelte';
+	import LL from '$lib/i18n/i18n-svelte';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
-	import type { Device } from '$lib/types/device';
+	import type { Device, Group } from '$lib/types/device';
 	import {
 		faChevronCircleLeft,
 		faChevronCircleRight,
@@ -33,7 +34,7 @@
 	$: {
 		devicesWithGroup = {};
 		devices.forEach((dev) => {
-			dev?.expand?.groups?.forEach((group) => {
+			dev?.expand?.groups?.forEach((group: Group) => {
 				if (!devicesWithGroup[group.name]) {
 					devicesWithGroup[group.name] = [];
 				}
@@ -107,7 +108,7 @@
 							class="join-item btn"
 							type="button"
 							on:click={() => (orderByGroups = !orderByGroups)}
-							>Groups
+							>{$LL.home.order_groups()}
 							<input
 								type="checkbox"
 								class="checkbox checked:checkbox-primary"
@@ -120,7 +121,7 @@
 					class="join-item btn"
 					type="radio"
 					name="order"
-					aria-label="Name"
+					aria-label={$LL.home.order_name()}
 					bind:group={orderBy}
 					value="name"
 				/>
@@ -128,12 +129,12 @@
 					class="join-item btn"
 					type="radio"
 					name="order"
-					aria-label="IP"
+					aria-label={$LL.home.order_ip()}
 					bind:group={orderBy}
 					value="ip"
 				/>
 			{/if}
-			<div class="tooltip" data-tip="Order">
+			<div class="tooltip" data-tip={$LL.home.order_tooltip()}>
 				<button class="join-item btn" on:click={() => (orderExpanded = !orderExpanded)}>
 					{#if orderExpanded}
 						<Fa icon={faChevronCircleRight} size="lg" />
@@ -175,16 +176,16 @@
 	{/if}
 {:else}
 	<div class="container text-center">
-		<p>No devices here.</p>
+		<p>{$LL.home.message_no_devices()}</p>
 		{#if $pocketbase.authStore.isAdmin || $permission.create}
 			<p>
 				<a href="/device/new" class="btn btn-ghost"
-					><Fa icon={faPlus} class="ms-2" />Add your first device
+					><Fa icon={faPlus} class="ms-2" />{$LL.home.message_add_first_device()}
 				</a>
 			</p>
 		{:else}
 			<p>
-				Please ask the admin to grant you permissions to existing devices or to create new ones.
+				{$LL.home.message_grant_permissions()}
 			</p>
 		{/if}
 	</div>

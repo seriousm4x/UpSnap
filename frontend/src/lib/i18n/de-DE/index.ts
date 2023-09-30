@@ -3,6 +3,16 @@ import type { Translation } from '../i18n-types';
 
 const de_DE = {
 	...(en_US as Translation),
+	home: {
+		order_groups: 'Gruppen',
+		order_name: 'Name',
+		order_ip: 'IP',
+		order_tooltip: 'Sortieren',
+		message_no_devices: 'Keine Geräte.',
+		message_add_first_device: 'Füge dein erstes Gerät hinzu',
+		message_grant_permissions:
+			'Bitte frag den Administrator, dir Berechtigungen für bestehende Geräte zu erteilen oder neue Geräte zu erstellen.'
+	},
 	account: {
 		page_title: 'Account',
 		account_type_admin: 'Admin',
