@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"net/http"
 	"os"
+	"path"
 
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
@@ -21,7 +22,36 @@ var App *pocketbase.PocketBase
 var Version = "(untracked)"
 
 func StartPocketBase(distDirFS fs.FS) {
-	App = pocketbase.New()
+	// set data dir
+	// use "./pb_data" if it's in the same dir as upsnap binary
+	// else use os.UserConfigDir() / upsnap
+	var dataDir string
+	baseDir, err := os.Getwd()
+	if err != nil {
+		logger.Error.Fatalln(err)
+	}
+	pb_data := path.Join(baseDir, "pb_data")
+	if _, err = os.Stat(pb_data); err == nil {
+		dataDir = pb_data
+	} else if os.IsNotExist(err) {
+		userConfigDir, err := os.UserConfigDir()
+		if err != nil {
+			logger.Error.Fatalln(err)
+		}
+		upsnap_data := path.Join(userConfigDir, "upsnap")
+		if _, err = os.Stat(upsnap_data); err == nil {
+			dataDir = upsnap_data
+		} else if os.IsNotExist(err) {
+			if err := os.MkdirAll(upsnap_data, 0700); err != nil {
+				logger.Error.Fatalln(err)
+			}
+		}
+	}
+
+	// create app
+	App = pocketbase.NewWithConfig(pocketbase.Config{
+		DefaultDataDir: dataDir,
+	})
 	App.RootCmd.Short = "UpSnap CLI"
 	App.RootCmd.Version = Version
 
