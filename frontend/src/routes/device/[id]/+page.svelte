@@ -3,13 +3,14 @@
 	import { page } from '$app/stores';
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
 	import PageLoading from '$lib/components/PageLoading.svelte';
+	import LL from '$lib/i18n/i18n-svelte';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Port } from '$lib/types/device';
 	import toast from 'svelte-french-toast';
 
 	$: if (Object.hasOwn($permission, 'update')) {
 		if (!$pocketbase.authStore.isAdmin && !$permission.update.includes($page.params.id)) {
-			toast(`You don't have permission to visit ${$page.url.pathname}`, {
+			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});
 			goto('/');

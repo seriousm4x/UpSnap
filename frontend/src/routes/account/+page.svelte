@@ -58,7 +58,7 @@
 			$pocketbase.admins
 				.update($pocketbase.authStore.model.id, { avatar: newAvatar })
 				.then(() => {
-					toast.success($LL.account.toast_admin_saved());
+					toast.success($LL.toasts.admin_saved());
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -69,7 +69,7 @@
 				.collection('users')
 				.update($pocketbase.authStore.model.id, { avatar: newAvatar })
 				.then(() => {
-					toast.success($LL.account.toast_user_saved());
+					toast.success($LL.toasts.user_saved());
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -93,7 +93,7 @@
 		)
 			.then(async (data) => {
 				if (data.ok) {
-					toast.success($LL.account.toast_password_changed());
+					toast.success($LL.toasts.password_changed());
 					$pocketbase.authStore.clear();
 					goto('/login');
 				} else {
@@ -101,7 +101,7 @@
 					if (j?.data?.password?.message) {
 						toast.error(j?.data?.password?.message);
 					} else if (j?.data?.passwordConfirm?.message) {
-						toast.error($LL.account.toast_passwords_missmatch());
+						toast.error($LL.toasts.passwords_missmatch());
 					} else if (j.data?.oldPassword?.message) {
 						toast.error(j.data.oldPassword.message);
 					} else {

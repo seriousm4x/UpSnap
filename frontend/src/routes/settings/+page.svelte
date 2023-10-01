@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import { PUBLIC_VERSION } from '$env/static/public';
 	import PageLoading from '$lib/components/PageLoading.svelte';
+	import LL from '$lib/i18n/i18n-svelte';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPriv, settingsPub } from '$lib/stores/settings';
 	import type { SettingsPrivate, SettingsPublic } from '$lib/types/settings';
@@ -18,7 +19,7 @@
 
 	onMount(() => {
 		if (!$pocketbase.authStore.isAdmin) {
-			toast(`You don't have permission to visit ${$page.url.pathname}`, {
+			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});
 			goto('/');
@@ -76,7 +77,7 @@
 			.collection('settings_private')
 			.update(settingsPrivClone.id, settingsPrivClone)
 			.then((res) => {
-				toast.success('Saved settings');
+				toast.success($LL.toasts.settings_saved());
 				settingsPriv.set(res as SettingsPrivate);
 				goto('/');
 			})
@@ -89,23 +90,21 @@
 {#if settingsPubClone === undefined || settingsPrivClone === undefined}
 	<PageLoading />
 {:else}
-	<h1 class="text-3xl font-bold mb-8">Settings</h1>
+	<h1 class="text-3xl font-bold mb-8">{$LL.settings.settings_title()}</h1>
 	<form on:submit|preventDefault={save}>
 		<div class="card w-full bg-base-300 shadow-xl mt-6">
 			<div class="card-body">
-				<h2 class="card-title">Ping interval</h2>
+				<h2 class="card-title">{$LL.settings.ping_interval_title()}</h2>
 				<p class="mt-2">
-					Sets the interval in which the devices are pinged. Leave blank to use default value of <span
-						class="badge">@every 3s</span
-					>.
+					<!-- eslint-disable svelte/no-at-html-tags -->
+					{@html $LL.settings.ping_interval_desc1()}
 				</p>
 				<p>
-					Learn more about the correct syntax for cron on
-					<a target="_blank" class="link" href="https://en.wikipedia.org/wiki/Cron">Wikipedia</a>
-					or refer to the
-					<a target="_blank" class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3"
-						>package documentation</a
-					>.
+					<!-- Usage of  @html is not a nice way to do this, but it's safe in this case. If someones finds
+						a good solution to avoid @html but still be able to use multiple links in a single sentence,
+						please create a pr/issue. -->
+					<!-- eslint-disable svelte/no-at-html-tags -->
+					{@html $LL.settings.ping_interval_desc2()}
 				</p>
 				<div class="form-control w-full mt-2">
 					<input
@@ -115,10 +114,9 @@
 						bind:value={settingsPrivClone.interval}
 					/>
 				</div>
-				<h2 class="card-title mt-2">Lazy ping</h2>
+				<h2 class="card-title mt-2">{$LL.settings.lazy_ping_title()}</h2>
 				<p class="mt-2">
-					When lazy ping is turned on, UpSnap will only ping devices if there is an active user
-					visiting the website. If it's turned off, UpSnap will always ping devices.
+					{$LL.settings.lazy_ping_desc()}
 				</p>
 				<div class="form-control w-fit">
 					<label class="label cursor-pointer gap-2">
@@ -127,15 +125,15 @@
 							class="checkbox checkbox-primary"
 							bind:checked={settingsPrivClone.lazy_ping}
 						/>
-						<span class="label-text">Enable</span>
+						<span class="label-text">{$LL.settings.lazy_ping_enable()}</span>
 					</label>
 				</div>
 			</div>
 		</div>
 		<div class="card w-full bg-base-300 shadow-xl mt-6">
 			<div class="card-body">
-				<h2 class="card-title">Website title</h2>
-				<p class="my-2">Sets the title of the website and in the browser tab.</p>
+				<h2 class="card-title">{$LL.settings.website_title_title()}</h2>
+				<p class="my-2">{$LL.settings.website_title_desc()}</p>
 				<div class="form-control w-full">
 					<input
 						type="text"
@@ -148,12 +146,12 @@
 		</div>
 		<div class="card w-full bg-base-300 shadow-xl mt-6">
 			<div class="card-body">
-				<h2 class="card-title">Icon</h2>
+				<h2 class="card-title">{$LL.settings.icon_title()}</h2>
 				<p class="my-2">
-					Set a custom favicon. Supported file types are
-					<span class="badge">.ico</span>, <span class="badge">.png</span>,
-					<span class="badge">.svg</span>, <span class="badge">.gif</span> and
-					<span class="badge">.jpg/.jpeg</span>.
+					{$LL.settings.icon_desc()}
+					<span class="badge">.ico</span> <span class="badge">.png</span>
+					<span class="badge">.svg</span> <span class="badge">.gif</span>
+					<span class="badge">.jpg/.jpeg</span>
 				</p>
 				<div>
 					<img
@@ -175,22 +173,23 @@
 					<button
 						class="btn btn-outline btn-error"
 						on:click={() => resetFavicon()}
-						on:keydown={() => resetFavicon()}>Reset</button
+						on:keydown={() => resetFavicon()}>{$LL.buttons.reset()}</button
 					>
 				</div>
 			</div>
 		</div>
 		<div class="card-actions justify-end mt-6">
-			<button class="btn btn-success" type="submit"><Fa icon={faSave} />Save</button>
+			<button class="btn btn-success" type="submit"><Fa icon={faSave} />{$LL.buttons.save()}</button
+			>
 		</div>
 	</form>
 	<div class="container mx-auto text-center mt-6">
 		{#if PUBLIC_VERSION === ''}
-			UpSnap version: (untracked)
+			{$LL.settings.upsnap_version()}: (untracked)
 		{:else}
-			UpSnap version: <a
-				href="https://github.com/seriousm4x/UpSnap/releases/tag/{PUBLIC_VERSION}"
-				class="link">{PUBLIC_VERSION}</a
+			{$LL.settings.upsnap_version()}:
+			<a href="https://github.com/seriousm4x/UpSnap/releases/tag/{PUBLIC_VERSION}" class="link"
+				>{PUBLIC_VERSION}</a
 			>
 		{/if}
 	</div>

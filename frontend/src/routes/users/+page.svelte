@@ -2,11 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import PageLoading from '$lib/components/PageLoading.svelte';
+	import LL from '$lib/i18n/i18n-svelte';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device } from '$lib/types/device';
 	import type { Permission } from '$lib/types/permission';
 	import type { User } from '$lib/types/user';
-	import { faPlus, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+	import { faPlus, faRetweet, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
@@ -33,7 +34,7 @@
 
 	onMount(() => {
 		if (!$pocketbase.authStore.isAdmin) {
-			toast(`You don't have permission to visit ${$page.url.pathname}`, {
+			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});
 			goto('/');
@@ -58,7 +59,7 @@
 			.collection('users')
 			.create(newUser)
 			.then((data) => {
-				toast.success(`User ${data.username} created`);
+				toast.success($LL.toasts.user_created({ username: data.username }));
 				newUser.username = '';
 				newUser.password = '';
 				newUser.passwordConfirm = '';
@@ -74,14 +75,14 @@
 			.collection('users')
 			.delete(user.id)
 			.then(async () => {
-				toast.success(`User ${user.username} deleted`);
+				toast.success($LL.toasts.user_deleted({ username: user.username }));
 				let permission = permissions.find((perm) => perm.user === user.id);
 				if (permission?.id !== undefined) {
 					await $pocketbase
 						.collection('permissions')
 						.delete(permission.id)
 						.then(() => {
-							toast.success(`Permissions for ${user.username} deleted`);
+							toast.success($LL.toasts.permissions_deleted({ username: user.username }));
 						})
 						.catch((err) => {
 							toast.error(err.message);
@@ -130,7 +131,7 @@
 					// if (i > -1) {
 					// 	permissions[i] = data as Permission;
 					// }
-					toast.success(`Permissions for ${user.username} created`);
+					toast.success($LL.toasts.permissions_created({ username: user.username }));
 					reload();
 				})
 				.catch((err) => {
@@ -142,7 +143,7 @@
 				.collection('permissions')
 				.update(permission.id, permission)
 				.then(() => {
-					toast.success(`Permissions for ${user.username} updated`);
+					toast.success($LL.toasts.permissions_updated({ username: user.username }));
 					reload();
 				})
 				.catch((err) => {
@@ -179,7 +180,7 @@
 {#await Promise.all([getUsersPromise, getPermissionsPromise, getDevicesPromise])}
 	<PageLoading />
 {:then}
-	<h1 class="text-3xl font-bold mb-8">Users</h1>
+	<h1 class="text-3xl font-bold mb-8">{$LL.users.page_title()}</h1>
 	{#each users as user, index}
 		<form on:submit|preventDefault={() => save(user)}>
 			<div class="card w-full bg-base-300 shadow-xl mt-6">
@@ -203,37 +204,37 @@
 									bind:checked={permission.create}
 									class="checkbox checked:checkbox-primary"
 								/>
-								<span class="label-text font-bold"
-									>Allow {user.username} to create new devices and edit device groups?</span
-								>
+								{$LL.users.allow_create_devices({ username: user.username })}
 							</label>
 						</div>
 					{/each}
 					<div class="collapse collapse-arrow bg-base-200">
 						<input type="checkbox" />
-						<div class="collapse-title text-xl font-medium">Device permissions</div>
+						<div class="collapse-title text-xl font-medium">{$LL.users.device_permissions()}</div>
 						<div class="collapse-content">
 							{#if devices.length === 0}
-								<p>No devices here. <a href="/device/new" class="link">Create new device</a></p>
+								<p>
+									{$LL.home.message_no_devices()}
+									<a href="/device/new" class="link">{$LL.users.create_new_device()}</a>
+								</p>
 							{:else}
-								<div class="grid grid-cols-5 gap-4 justify-items-center">
-									<div class="font-bold" />
-									<div class="font-bold">Read</div>
-									<div class="font-bold">Update</div>
-									<div class="font-bold">Delete</div>
-									<div class="font-bold">Power</div>
+								<div class="grid grid-cols-4 md:grid-cols-5 gap-4 justify-items-center">
+									<div class="font-bold md:col-start-2">{$LL.users.read()}</div>
+									<div class="font-bold">{$LL.users.update()}</div>
+									<div class="font-bold">{$LL.users.delete()}</div>
+									<div class="font-bold">{$LL.users.power()}</div>
 									{#each devices as device}
 										<hr class="col-span-full w-full border-b-1 opacity-30 border-neutral" />
 										{#each permissions.filter((perm) => perm.user === user.id) as permission}
 											<div
-												class="flex flex-row flex-wrap gap-2 place-self-start break-all col-span-full sm:col-span-1"
+												class="flex flex-row flex-wrap gap-2 place-self-start break-all col-span-full md:col-span-1"
 											>
 												<span class="font-bold">{device.name}</span>
-												<span class="badge hidden sm:block">{device.ip}</span>
+												<span class="badge hidden md:block">{device.ip}</span>
 											</div>
 											<input
 												type="checkbox"
-												class="checkbox checked:checkbox-primary col-start-2"
+												class="checkbox checked:checkbox-primary md:col-start-2"
 												bind:group={permission.read}
 												value={device.id}
 											/>
@@ -258,32 +259,48 @@
 										{/each}
 									{/each}
 									<button
-										class="btn btn-sm btn-neutral col-start-2"
+										class="btn btn-sm btn-neutral md:col-start-2"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'read');
-										}}>Toggle</button
+										}}
+										><span class="hidden md:block">{$LL.users.toggle()}</span><Fa
+											icon={faRetweet}
+											size="1.5x"
+										/></button
 									>
 									<button
 										class=" btn btn-sm btn-neutral"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'update');
-										}}>Toggle</button
+										}}
+										><span class="hidden md:block">{$LL.users.toggle()}</span><Fa
+											icon={faRetweet}
+											size="1.5x"
+										/></button
 									>
 									<button
 										class=" btn btn-sm btn-neutral"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'delete');
-										}}>Toggle</button
+										}}
+										><span class="hidden md:block">{$LL.users.toggle()}</span><Fa
+											icon={faRetweet}
+											size="1.5x"
+										/></button
 									>
 									<button
 										class=" btn btn-sm btn-neutral"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'power');
-										}}>Toggle</button
+										}}
+										><span class="hidden md:block">{$LL.users.toggle()}</span><Fa
+											icon={faRetweet}
+											size="1.5x"
+										/></button
 									>
 								</div>
 								<div class="mt-4 flex flex-row flex-wrap gap-4 justify-end"></div>
@@ -294,9 +311,11 @@
 						<button
 							class="join-item btn btn-error"
 							type="button"
-							on:click={() => deleteModal.showModal()}><Fa icon={faTrash} />Delete</button
+							on:click={() => deleteModal.showModal()}
+							><Fa icon={faTrash} />{$LL.buttons.delete()}</button
 						>
-						<button class="join-item btn btn-success" type="submit"><Fa icon={faSave} />Save</button
+						<button class="join-item btn btn-success" type="submit"
+							><Fa icon={faSave} />{$LL.buttons.save()}</button
 						>
 					</div>
 				</div>
@@ -304,31 +323,33 @@
 		</form>
 		<dialog class="modal" bind:this={deleteModal}>
 			<form method="dialog" class="modal-box">
-				<h3 class="font-bold text-lg">Confirm delete</h3>
-				<p class="py-4">Are you sure you want to delete <strong>{user.username}</strong>?</p>
+				<h3 class="font-bold text-lg">{$LL.users.confirm_delete_title()}</h3>
+				<p class="py-4">{$LL.users.confirm_delete_desc({ username: user.username })}</p>
 				<div class="modal-action">
-					<button class="btn">Cancle</button>
-					<button class="btn btn-error" on:click={() => deleteUser(user)}>Delete</button>
+					<button class="btn">{$LL.buttons.cancle()}</button>
+					<button class="btn btn-error" on:click={() => deleteUser(user)}
+						>{$LL.buttons.delete()}</button
+					>
 				</div>
 			</form>
 		</dialog>
 	{/each}
 	<div class="card w-full bg-base-300 shadow-xl mt-6">
 		<div class="card-body">
-			<h2 class="card-title">Create new user</h2>
+			<h2 class="card-title">{$LL.users.create_new_user()}</h2>
 			<form on:submit|preventDefault={createUser}>
 				<div class="flex flex-row flex-wrap gap-4">
 					<div class="form-control w-full max-w-xs">
 						<label class="label" for="username">
 							<div class="label-text">
-								<span>Username</span>
+								<span>{$LL.users.username()}</span>
 								<span class="text-error">*</span>
 							</div>
 						</label>
 						<input
 							id="username"
 							type="text"
-							placeholder="Username"
+							placeholder={$LL.users.username()}
 							class="input input-bordered w-full max-w-xs"
 							required
 							bind:value={newUser.username}
@@ -337,14 +358,14 @@
 					<div class="form-control w-full max-w-xs">
 						<label class="label" for="password">
 							<div class="label-text">
-								<span>Password</span>
+								<span>{$LL.users.password()}</span>
 								<span class="text-error">*</span>
 							</div>
 						</label>
 						<input
 							id="password"
 							type="password"
-							placeholder="Password"
+							placeholder={$LL.users.password()}
 							class="input input-bordered w-full max-w-xs"
 							minlength="5"
 							maxlength="72"
@@ -355,14 +376,14 @@
 					<div class="form-control w-full max-w-xs">
 						<label class="label" for="passwordConfirm">
 							<div class="label-text">
-								<span>Password confirm</span>
+								<span>{$LL.users.password_confirm()}</span>
 								<span class="text-error">*</span>
 							</div>
 						</label>
 						<input
 							id="passwordConfirm"
 							type="password"
-							placeholder="Password"
+							placeholder={$LL.users.password_confirm()}
 							class="input input-bordered w-full max-w-xs"
 							minlength="5"
 							maxlength="72"
@@ -371,9 +392,11 @@
 						/>
 					</div>
 				</div>
-				<span class="badge text-error mt-4 self-center">* required field</span>
+				<span class="badge text-error mt-4 self-center">* {$LL.users.required_field()}</span>
 				<div class="card-actions justify-end">
-					<button type="submit" class="btn btn-success mt-2"><Fa icon={faPlus} />Add</button>
+					<button type="submit" class="btn btn-success mt-2"
+						><Fa icon={faPlus} />{$LL.buttons.add()}</button
+					>
 				</div>
 			</form>
 		</div>

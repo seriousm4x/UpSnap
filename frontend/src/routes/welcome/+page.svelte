@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { toggleVisibility } from '$lib/helpers/forms';
+	import LL from '$lib/i18n/i18n-svelte';
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import { faArrowRight, faEye } from '@fortawesome/free-solid-svg-icons';
@@ -45,7 +46,7 @@
 			})
 			.catch((err) => {
 				if (err.data?.data?.passwordConfirm?.message) {
-					toast.error("Passwords don't match");
+					toast.error($LL.toasts.passwords_missmatch());
 				} else if (err.data?.data?.email?.message) {
 					toast.error(err.data.data.email.message);
 				} else {
@@ -61,20 +62,22 @@
 			{#if $settingsPub?.setup_completed}
 				<figure class="w-72 mx-auto pt-6"><img src="/gopher.svg" alt="Gopher" /></figure>
 				<div class="card-body">
-					<h2 class="card-title">I didn't expect you here! 🧐</h2>
-					<p>You are already done with the setup! Nothing to do.</p>
+					<h2 class="card-title">{$LL.welcome.not_expected_title()}</h2>
+					<p>{$LL.welcome.not_expected_desc()}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-primary" on:click={() => goto('/')}>Take me back</button>
+						<button class="btn btn-primary" on:click={() => goto('/')}
+							>{$LL.welcome.not_expected_back()}</button
+						>
 					</div>
 				</div>
 			{:else if stepsCompleted === 0}
 				<figure class="w-44 mx-auto pt-6"><img src="/gopher.svg" alt="Gopher" /></figure>
 				<div class="card-body">
-					<h2 class="card-title">Welcome to UpSnap 🥳</h2>
-					<p>Please complete the following steps to finish the setup.</p>
+					<h2 class="card-title">{$LL.welcome.step1_page_title()}</h2>
+					<p>{$LL.welcome.step1_setup_desc()}</p>
 					<div class="card-actions justify-end">
 						<button class="btn btn-primary" on:click={() => (stepsCompleted = 1)}
-							>Next <Fa icon={faArrowRight} /></button
+							>{$LL.welcome.step1_setup_btn_next()} <Fa icon={faArrowRight} /></button
 						>
 					</div>
 				</div>
@@ -82,11 +85,11 @@
 				<div class="card-body">
 					<div class="flex flex-row gap-4">
 						<figure class="w-16"><img src="/gopher.svg" alt="Gopher" /></figure>
-						<h2 class="card-title">Create an admin account</h2>
+						<h2 class="card-title">{$LL.welcome.step2_page_title()}</h2>
 					</div>
 					<form class="form-control w-full" on:submit|preventDefault={register}>
 						<label class="label" for="email">
-							<span class="label-text">Email:</span>
+							<span class="label-text">{$LL.welcome.step2_label_email()}</span>
 						</label>
 						<input
 							id="email"
@@ -96,8 +99,8 @@
 							bind:value={form.email}
 						/>
 						<label class="label" for="password">
-							<span class="label-text">Password:</span>
-							<span class="label-text-alt">min. 10 characters</span>
+							<span class="label-text">{$LL.welcome.step2_label_password()}</span>
+							<span class="label-text-alt">{$LL.welcome.step2_label_min_chars()}</span>
 						</label>
 						<label class="relative block">
 							<div
@@ -120,7 +123,7 @@
 							/>
 						</label>
 						<label class="label" for="passwordConfirm">
-							<span class="label-text">Password confirm:</span>
+							<span class="label-text">{$LL.welcome.step2_label_password_confirm()}</span>
 						</label>
 						<label class="relative block">
 							<div
@@ -144,7 +147,7 @@
 						</label>
 						<div class="card-actions justify-end mt-4">
 							<button class="btn btn-primary" type="submit"
-								>Create <Fa icon={faArrowRight} /></button
+								>{$LL.welcome.step2_btn_create()} <Fa icon={faArrowRight} /></button
 							>
 						</div>
 					</form>
@@ -152,19 +155,21 @@
 			{:else if stepsCompleted === 2}
 				<figure class="w-72 mx-auto pt-6"><img src="/gopher.svg" alt="Gopher" /></figure>
 				<div class="card-body">
-					<h2 class="card-title">You are all set! 🎉</h2>
-					<p>Go ahead and add some devices to your dashboard.</p>
+					<h2 class="card-title">{$LL.welcome.step3_page_title()}</h2>
+					<p>{$LL.welcome.step3_page_desc()}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-success" on:click={() => goto('/')}>Lets go!</button>
+						<button class="btn btn-success" on:click={() => goto('/')}
+							>{$LL.welcome.step3_btn_done()}</button
+						>
 					</div>
 				</div>
 			{/if}
 		</div>
 		{#if !$settingsPub?.setup_completed}
 			<ul class="steps steps-horizontal">
-				<li class="step step-primary">Welcome</li>
-				<li class="step" class:step-primary={stepsCompleted > 0}>Create account</li>
-				<li class="step" class:step-primary={stepsCompleted > 1}>Done</li>
+				<li class="step step-primary">{$LL.welcome.progress_step1()}</li>
+				<li class="step" class:step-primary={stepsCompleted > 0}>{$LL.welcome.progress_step2()}</li>
+				<li class="step" class:step-primary={stepsCompleted > 1}>{$LL.welcome.progress_step3()}</li>
 			</ul>
 		{/if}
 	</div>

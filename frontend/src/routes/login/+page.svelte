@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { toggleVisibility } from '$lib/helpers/forms';
+	import LL from '$lib/i18n/i18n-svelte';
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import { faEye, faLockOpen, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
@@ -62,11 +63,11 @@
 			{/if}
 			<div class="flex flex-row gap-4">
 				<figure class="w-16"><img src="/gopher.svg" alt="Gopher" /></figure>
-				<h2 class="card-title">Welcome</h2>
+				<h2 class="card-title">{$LL.login.welcome()}</h2>
 			</div>
 			<form class="form-control w-full" on:submit|preventDefault={tryAdminThenUser}>
 				<label class="label" for="email">
-					<span class="label-text">Email or Username:</span>
+					<span class="label-text">{$LL.login.email_label()}</span>
 				</label>
 				<input
 					id="email"
@@ -76,7 +77,7 @@
 					bind:value={form.email}
 				/>
 				<label class="label" for="password">
-					<span class="label-text">Password:</span>
+					<span class="label-text">{$LL.login.password_label()}</span>
 				</label>
 				<label class="relative block">
 					<div
@@ -99,16 +100,18 @@
 				</label>
 				<div class="card-actions mt-4">
 					<div class="dropdown">
-						<label tabindex="-1" class="btn btn-neutral" for="other-providers">Other</label>
+						<label tabindex="-1" class="btn btn-neutral" for="other-providers"
+							>{$LL.login.btn_more()}</label
+						>
 						<ul
 							id="other-providers"
 							tabindex="-1"
 							class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-56"
 						>
 							<li class="menu-title flex flex-row gap-2 items-center">
-								Other Auth Providers <a
-									href="https://github.com/seriousm4x/UpSnap/wiki/Auth-providers"
-									target="_blank"><Fa icon={faQuestionCircle} /></a
+								{$LL.login.menu_title_auth_providers()}
+								<a href="https://github.com/seriousm4x/UpSnap/wiki/Auth-providers" target="_blank"
+									><Fa icon={faQuestionCircle} /></a
 								>
 							</li>
 							<li>
@@ -117,7 +120,7 @@
 						</ul>
 					</div>
 					<button class="btn btn-primary ms-auto" type="submit"
-						>Login <Fa icon={faLockOpen} /></button
+						>{$LL.login.btn_login()} <Fa icon={faLockOpen} /></button
 					>
 				</div>
 			</form>
