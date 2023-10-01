@@ -23,7 +23,7 @@
 		// create/update all ports
 		let portIds: string[] = [];
 		await Promise.all(
-			device.expand.ports.map(async (port) => {
+			device.expand.ports.map(async (port: Port) => {
 				if (port.id === undefined) {
 					const data = await createPort(port as Port);
 					if (data === undefined) return;
