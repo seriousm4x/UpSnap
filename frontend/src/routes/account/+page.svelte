@@ -16,7 +16,7 @@
 	// locales
 	const languageEmojis = {
 		'en-US': '🇺🇸',
-		'de-DE': '🇩🇪'
+		de: '🇩🇪'
 	};
 	let localStorageLang: Locales | 'auto' = 'auto';
 	let selectedLanguage: Locales | 'auto' = localStorageLang;

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LL from '$lib/i18n/i18n-svelte';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device } from '$lib/types/device';
 	import { faCircle, faPowerOff } from '@fortawesome/free-solid-svg-icons';
@@ -19,25 +20,25 @@
 	$: seconds = timeout % 60;
 	$: if (device.status === 'pending' || device.status === '') {
 		disabled = true;
-		hoverText = 'Pending';
+		hoverText = $LL.device.card_nic_tooltip_pending();
 	} else if (device.status === 'online') {
 		if (device.shutdown_cmd === '') {
 			disabled = true;
-			hoverText = 'No shutdown command set';
+			hoverText = $LL.device.card_nic_tooltip_shutdown_no_cmd();
 		} else if (!$pocketbase.authStore.isAdmin && !$permission.power?.includes(device.id)) {
 			disabled = true;
-			hoverText = 'No permission to shut down this device';
+			hoverText = $LL.device.card_nic_tooltip_shutdown_no_permission();
 		} else {
 			disabled = false;
-			hoverText = 'Shut down';
+			hoverText = $LL.device.card_nic_tooltip_shutdown();
 		}
 	} else if (device.status === 'offline') {
 		if (!$pocketbase.authStore.isAdmin && !$permission.power?.includes(device.id)) {
 			disabled = true;
-			hoverText = 'No permission to power on this device';
+			hoverText = $LL.device.card_nic_tooltip_power_no_permission();
 		} else {
 			disabled = false;
-			hoverText = 'Power on';
+			hoverText = $LL.device.card_nic_tooltip_power();
 		}
 	}
 

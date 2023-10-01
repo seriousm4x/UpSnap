@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import LL from '$lib/i18n/i18n-svelte';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import {
@@ -100,7 +101,7 @@
 				{/if}
 				<li>
 					<a href="/" class="px-4 py-2" class:active={$page.url.pathname === '/'}
-						><Fa icon={faHome} />Home</a
+						><Fa icon={faHome} />{$LL.home.page_title()}</a
 					>
 				</li>
 				{#if $pocketbase.authStore.isAdmin}
@@ -109,7 +110,7 @@
 							href="/users"
 							class="px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/users')}
-							><Fa icon={faUsersGear} />Users</a
+							><Fa icon={faUsersGear} />{$LL.users.page_title()}</a
 						>
 					</li>
 					<li>
@@ -117,7 +118,7 @@
 							href="/settings/"
 							class="px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/settings')}
-							><Fa icon={faCog} />Settings</a
+							><Fa icon={faCog} />{$LL.settings.settings_title()}</a
 						>
 					</li>
 				{/if}
@@ -141,18 +142,18 @@
 		<ul class="menu menu-horizontal px-1 gap-1">
 			<li>
 				<a href="/" class="p-2" class:active={$page.url.pathname === '/'}
-					><Fa icon={faHome} />Home</a
+					><Fa icon={faHome} />{$LL.home.page_title()}</a
 				>
 			</li>
 			{#if $pocketbase.authStore.isAdmin}
 				<li>
 					<a href="/users" class="p-2" class:active={$page.url.pathname.startsWith('/users')}
-						><Fa icon={faUsersGear} />Users</a
+						><Fa icon={faUsersGear} />{$LL.users.page_title()}</a
 					>
 				</li>
 				<li>
 					<a href="/settings/" class="p-2" class:active={$page.url.pathname.startsWith('/settings')}
-						><Fa icon={faCog} />Settings</a
+						><Fa icon={faCog} />{$LL.settings.settings_title()}</a
 					>
 				</li>
 			{/if}
@@ -161,7 +162,7 @@
 	<div class="dropdown md:dropdown-end">
 		<div tabindex="-1" class="btn normal-case btn-ghost">
 			<Fa icon={faSwatchbook} />
-			<span class="hidden font-normal md:inline">Theme</span>
+			<span class="hidden font-normal md:inline">{$LL.navbar.theme()}</span>
 			<Fa icon={faChevronDown} />
 		</div>
 		<div
@@ -202,7 +203,7 @@
 			{#if $pocketbase.authStore.isAdmin || $permission.create}
 				<a class="btn btn-success me-4" href="/device/new">
 					<Fa icon={faPlus} />
-					New
+					{$LL.navbar.new()}
 				</a>
 			{/if}
 			<div class="dropdown dropdown-end">
@@ -221,11 +222,11 @@
 							: $pocketbase.authStore.model.username}
 					</li>
 					<li>
-						<a href="/account"><Fa icon={faUserGear} />Edit account</a>
+						<a href="/account"><Fa icon={faUserGear} />{$LL.navbar.edit_account()}</a>
 					</li>
 					<li>
 						<div on:click={async () => logout()} on:keydown={async () => logout()} role="none">
-							<Fa icon={faDoorOpen} />Logout
+							<Fa icon={faDoorOpen} />{$LL.navbar.logout()}
 						</div>
 					</li>
 				</ul>

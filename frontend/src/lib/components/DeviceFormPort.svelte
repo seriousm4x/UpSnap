@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LL from '$lib/i18n/i18n-svelte';
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Port } from '$lib/types/device';
 	import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +33,7 @@
 			<div class="flex flex-row gap-2">
 				<div>
 					<label class="label p-0" for="port-name-{index}">
-						<span class="label-text">Name</span>
+						<span class="label-text">{$LL.device.ports_name()}</span>
 					</label>
 					<input
 						id="port-name-{index}"
@@ -45,7 +46,7 @@
 				</div>
 				<div>
 					<label class="label p-0" for="port-number-{index}">
-						<span class="label-text">Number</span>
+						<span class="label-text">{$LL.device.ports_number()}</span>
 					</label>
 					<input
 						id="port-number-{index}"
@@ -63,7 +64,7 @@
 				<button
 					class="btn btn-xs btn-outline btn-error"
 					on:click={() => deletePort(device.expand.ports[index])}
-					type="button"><Fa icon={faTrash} />Delete</button
+					type="button"><Fa icon={faTrash} />{$LL.buttons.delete()}</button
 				>
 			</div>
 		</div>

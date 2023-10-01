@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import LL, { locale } from '$lib/i18n/i18n-svelte';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device } from '$lib/types/device';
 	import {
@@ -10,6 +11,7 @@
 		faPen,
 		faRotateLeft
 	} from '@fortawesome/free-solid-svg-icons';
+	import type { Locale } from 'date-fns';
 	import { formatDistance, parseISO } from 'date-fns';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
@@ -20,13 +22,13 @@
 
 	let moreButtons = [
 		{
-			text: 'Edit',
+			text: $LL.device.card_btn_more_edit(),
 			icon: faPen,
 			onClick: () => goto(`/device/${device.id}`),
 			requires: $pocketbase.authStore.isAdmin || $permission.update?.includes(device.id)
 		},
 		{
-			text: 'Sleep',
+			text: $LL.device.card_btn_more_sleep(),
 			icon: faBed,
 			onClick: () => sleep(),
 			requires:
@@ -35,7 +37,7 @@
 				device.sol_enabled
 		},
 		{
-			text: 'Reboot',
+			text: $LL.device.card_btn_more_reboot(),
 			icon: faRotateLeft,
 			onClick: () => reboot(),
 			requires:
@@ -53,6 +55,22 @@
 		interval = setInterval(() => {
 			now = Date.now();
 		}, 1000);
+	}
+
+	// dynamically import locales
+	// it's ugly but the only working solution i found in ~ 3 hours
+	var dateFnsLocale: Locale;
+	$: if ($locale !== undefined) {
+		(async () => {
+			switch ($locale) {
+				case 'de':
+					dateFnsLocale = (await import('date-fns/locale/de/index.js')).default;
+					break;
+				case 'en-US':
+					dateFnsLocale = (await import('date-fns/locale/en-US/index.js')).default;
+					break;
+			}
+		})();
 	}
 
 	function sleep() {
@@ -92,36 +110,44 @@
 		{#if device.wake_cron_enabled || device.shutdown_cron_enabled || device.password}
 			<div class="flex flex-row flex-wrap gap-2">
 				{#if device.wake_cron_enabled}
-					<div class="tooltip" data-tip="Wake cron">
+					<div class="tooltip" data-tip={$LL.device.card_tooltip_wake_cron()}>
 						<span class="badge badge-success gap-1 p-3"
 							><Fa icon={faCircleArrowUp} />{device.wake_cron}</span
 						>
 					</div>
 				{/if}
 				{#if device.shutdown_cron_enabled}
-					<div class="tooltip" data-tip="Shutdown cron">
+					<div class="tooltip" data-tip={$LL.device.card_tooltip_shutdown_cron()}>
 						<span class="badge badge-error gap-1 p-3"
 							><Fa icon={faCircleArrowDown} />{device.shutdown_cron}</span
 						>
 					</div>
 				{/if}
 				{#if device.password}
-					<div class="tooltip" data-tip="Wake password">
-						<span class="badge gap-1 p-3"><Fa icon={faLock} />Password</span>
+					<div class="tooltip" data-tip={$LL.device.card_tooltip_wake_password()}>
+						<span class="badge gap-1 p-3"><Fa icon={faLock} />{$LL.device.card_password()}</span>
 					</div>
 				{/if}
 			</div>
 		{/if}
 		<div class="card-actions mt-auto items-center">
-			<span class="tooltip" data-tip="Last status change: {device.updated}">
-				{formatDistance(parseISO(device.updated), now, {
-					includeSeconds: true,
-					addSuffix: true
-				})}
+			<span
+				class="tooltip"
+				data-tip="{$LL.device.card_tooltip_last_status_change()}: {device.updated}"
+			>
+				{#if dateFnsLocale !== undefined}
+					{formatDistance(parseISO(device.updated), now, {
+						includeSeconds: true,
+						addSuffix: true,
+						locale: dateFnsLocale
+					})}
+				{/if}
 			</span>
 			{#if moreButtons.filter((btn) => btn.requires).length > 0}
 				<div class="dropdown dropdown-top dropdown-end bg-base-300 ms-auto">
-					<label tabindex="-1" class="btn btn-sm m-1" for="more-{device.id}">More</label>
+					<label tabindex="-1" class="btn btn-sm m-1" for="more-{device.id}"
+						>{$LL.device.card_btn_more()}</label
+					>
 					<ul
 						id="more-{device.id}"
 						tabindex="-1"
