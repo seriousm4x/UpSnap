@@ -546,9 +546,9 @@
 					</div>
 				{/each}
 			</div>
-			<div class="join">
+			<div class="join max-w-xs">
 				<input
-					class="input input-bordered join-item"
+					class="input input-bordered join-item w-full"
 					placeholder={$LL.device.groups_placeholder()}
 					type="text"
 					bind:value={newGroup}
