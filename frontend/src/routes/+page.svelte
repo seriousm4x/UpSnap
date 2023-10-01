@@ -176,16 +176,16 @@
 	{/if}
 {:else}
 	<div class="container text-center">
-		<p>{$LL.home.message_no_devices()}</p>
+		<p>{$LL.home.no_devices()}</p>
 		{#if $pocketbase.authStore.isAdmin || $permission.create}
 			<p>
 				<a href="/device/new" class="btn btn-ghost"
-					><Fa icon={faPlus} class="ms-2" />{$LL.home.message_add_first_device()}
+					><Fa icon={faPlus} class="ms-2" />{$LL.home.add_first_device()}
 				</a>
 			</p>
 		{:else}
 			<p>
-				{$LL.home.message_grant_permissions()}
+				{$LL.home.grant_permissions()}
 			</p>
 		{/if}
 	</div>

@@ -214,7 +214,7 @@
 						<div class="collapse-content">
 							{#if devices.length === 0}
 								<p>
-									{$LL.home.message_no_devices()}
+									{$LL.home.no_devices()}
 									<a href="/device/new" class="link">{$LL.users.create_new_device()}</a>
 								</p>
 							{:else}

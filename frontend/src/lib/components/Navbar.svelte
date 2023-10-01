@@ -118,7 +118,7 @@
 							href="/settings/"
 							class="px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/settings')}
-							><Fa icon={faCog} />{$LL.settings.settings_title()}</a
+							><Fa icon={faCog} />{$LL.settings.page_title()}</a
 						>
 					</li>
 				{/if}
@@ -153,7 +153,7 @@
 				</li>
 				<li>
 					<a href="/settings/" class="p-2" class:active={$page.url.pathname.startsWith('/settings')}
-						><Fa icon={faCog} />{$LL.settings.settings_title()}</a
+						><Fa icon={faCog} />{$LL.settings.page_title()}</a
 					>
 				</li>
 			{/if}

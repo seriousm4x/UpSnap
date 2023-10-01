@@ -90,7 +90,7 @@
 {#if settingsPubClone === undefined || settingsPrivClone === undefined}
 	<PageLoading />
 {:else}
-	<h1 class="text-3xl font-bold mb-8">{$LL.settings.settings_title()}</h1>
+	<h1 class="text-3xl font-bold mb-8">{$LL.settings.page_title()}</h1>
 	<form on:submit|preventDefault={save}>
 		<div class="card w-full bg-base-300 shadow-xl mt-6">
 			<div class="card-body">

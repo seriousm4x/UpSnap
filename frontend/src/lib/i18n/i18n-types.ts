@@ -38,15 +38,15 @@ type RootTranslation = {
 		/**
 		 * N​o​ ​d​e​v​i​c​e​s​ ​h​e​r​e​.
 		 */
-		message_no_devices: string
+		no_devices: string
 		/**
 		 * A​d​d​ ​y​o​u​r​ ​f​i​r​s​t​ ​d​e​v​i​c​e
 		 */
-		message_add_first_device: string
+		add_first_device: string
 		/**
 		 * P​l​e​a​s​e​ ​a​s​k​ ​t​h​e​ ​a​d​m​i​n​ ​t​o​ ​g​r​a​n​t​ ​y​o​u​ ​p​e​r​m​i​s​s​i​o​n​s​ ​t​o​ ​e​x​i​s​t​i​n​g​ ​d​e​v​i​c​e​s​ ​o​r​ ​t​o​ ​c​r​e​a​t​e​ ​n​e​w​ ​o​n​e​s​.
 		 */
-		message_grant_permissions: string
+		grant_permissions: string
 	}
 	account: {
 		/**
@@ -424,7 +424,7 @@ type RootTranslation = {
 		/**
 		 * S​e​t​t​i​n​g​s
 		 */
-		settings_title: string
+		page_title: string
 		/**
 		 * P​i​n​g​ ​i​n​t​e​r​v​a​l
 		 */
@@ -769,15 +769,15 @@ export type TranslationFunctions = {
 		/**
 		 * No devices here.
 		 */
-		message_no_devices: () => LocalizedString
+		no_devices: () => LocalizedString
 		/**
 		 * Add your first device
 		 */
-		message_add_first_device: () => LocalizedString
+		add_first_device: () => LocalizedString
 		/**
 		 * Please ask the admin to grant you permissions to existing devices or to create new ones.
 		 */
-		message_grant_permissions: () => LocalizedString
+		grant_permissions: () => LocalizedString
 	}
 	account: {
 		/**
@@ -1155,7 +1155,7 @@ export type TranslationFunctions = {
 		/**
 		 * Settings
 		 */
-		settings_title: () => LocalizedString
+		page_title: () => LocalizedString
 		/**
 		 * Ping interval
 		 */

@@ -9,9 +9,9 @@ const de = {
 		order_name: 'Name',
 		order_ip: 'IP',
 		order_tooltip: 'Sortieren',
-		message_no_devices: 'Keine Geräte.',
-		message_add_first_device: 'Füge dein erstes Gerät hinzu',
-		message_grant_permissions:
+		no_devices: 'Keine Geräte.',
+		add_first_device: 'Füge dein erstes Gerät hinzu',
+		grant_permissions:
 			'Bitte frag den Administrator, dir Berechtigungen für bestehende Geräte zu erteilen oder neue Geräte zu erstellen.'
 	},
 	account: {
@@ -120,7 +120,7 @@ const de = {
 		btn_login: 'Login'
 	},
 	settings: {
-		settings_title: 'Einstellungen',
+		page_title: 'Einstellungen',
 		ping_interval_title: 'Ping Intervall',
 		ping_interval_desc1:
 			'Legt den Intervall fest, in dem Geräte gepingt werden. Leer lassen um den Standardwert von <span class="badge">@every 3s</span> zu verwenden.',

@@ -7,9 +7,9 @@ const en_US = {
 		order_name: 'Name',
 		order_ip: 'IP',
 		order_tooltip: 'Order',
-		message_no_devices: 'No devices here.',
-		message_add_first_device: 'Add your first device',
-		message_grant_permissions:
+		no_devices: 'No devices here.',
+		add_first_device: 'Add your first device',
+		grant_permissions:
 			'Please ask the admin to grant you permissions to existing devices or to create new ones.'
 	},
 	account: {
@@ -117,7 +117,7 @@ const en_US = {
 		btn_login: 'Login'
 	},
 	settings: {
-		settings_title: 'Settings',
+		page_title: 'Settings',
 		ping_interval_title: 'Ping interval',
 		ping_interval_desc1:
 			'Sets the interval in which the devices are pinged. Leave blank to use default value of <span class="badge">@every 3s</span>.',
