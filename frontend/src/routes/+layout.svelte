@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
-	import { setLocale } from '$lib/i18n/i18n-svelte';
+	import LL, { setLocale } from '$lib/i18n/i18n-svelte';
 	import { baseLocale, locales } from '$lib/i18n/i18n-util';
 	import { loadLocaleAsync } from '$lib/i18n/i18n-util.async';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
@@ -45,7 +45,7 @@
 
 				$pocketbase.collection('permissions').subscribe('*', (event) => {
 					permission.set(event.record as Permission);
-					toast.success('Your permissions have been updated');
+					toast.success($LL.toasts.permissions_updated_personal());
 				});
 			}
 		});

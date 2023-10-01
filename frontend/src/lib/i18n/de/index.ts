@@ -195,6 +195,7 @@ const de = {
 		permissions_created: 'Berechtigungen für {username} erstellt',
 		permissions_deleted: 'Berechtigungen für {username} gelöscht',
 		permissions_updated: 'Berechtigungen für {username} geändert',
+		permissions_updated_personal: 'Deine Berechtigungen wurden geupdated',
 		no_permission: 'Du hast keine Berechtigung für {url}',
 		device_created: '{device} erstellt',
 		devices_created_multiple: '{count|int} Geräte erstellt',

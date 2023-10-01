@@ -190,6 +190,7 @@ const en_US = {
 		permissions_created: 'Permissions for {username} created',
 		permissions_deleted: 'Permissions for {username} deleted',
 		permissions_updated: 'Permissions for {username} updated',
+		permissions_updated_personal: 'Your permissions have been updated',
 		no_permission: "You don't have permission to visit {url}",
 		device_created: 'Created {device}',
 		devices_created_multiple: 'Created {count|int} devices',
