@@ -80,8 +80,8 @@ const de = {
 		shutdown_desc:
 			'Dieser <strong>Shell-Befehl</strong> wird in deinem Container ausgeführt (wenn du Docker verwendest) oder auf deinem Host (wenn du die Binärdatei verwendest). Um zu überprüfen, ob das funktioniert, kannst du den Befehl zuerst im Container oder auf deiner Host-Shell ausführen. Übliche Befehle sind <span class="badge">net rpc</span> für Windows, <span class="badge">sshpass</span> für Linux oder <span class="badge">curl</span> im Allgemeinen, um Webanfragen durchzuführen.',
 		shutdown_examples: 'Beispiele:',
-		shutdown_examples_windows: 'Entfernen Windows PC ausschalten:',
-		shutdown_examples_linux: 'Entfernen Linux PC ausschalten:',
+		shutdown_examples_windows: 'Entfernten Windows PC ausschalten:',
+		shutdown_examples_linux: 'Entfernten Linux PC ausschalten:',
 		shutdown_cmd: 'Befehl zum ausschalten',
 		shutdown_cron_desc:
 			'Genau wie das Einrichten eines Cron-Jobs, um das Gerät aufzuwecken, kannst du auch einen Cron-Job planen, um dieses Gerät herunterzufahren.',
