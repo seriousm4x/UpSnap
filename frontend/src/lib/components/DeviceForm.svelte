@@ -253,7 +253,7 @@
 					{/each}
 				</div>
 				<button
-					class="btn btn-wide btn-primary mt-4"
+					class="btn max-w-xs btn-primary mt-4"
 					on:click={() => createEmptyPort()}
 					type="button">{$LL.device.ports_add_new()}</button
 				>
@@ -285,7 +285,7 @@
 				{@html $LL.settings.ping_interval_desc2()}
 			</p>
 			<div class="form-control flex flex-row flex-wrap gap-4">
-				<div>
+				<div class="w-full max-w-xs">
 					<label class="label" for="wake-cron">
 						<span class="label-text"
 							>{$LL.device.wake_cron()}
@@ -298,7 +298,7 @@
 						id="wake-cron"
 						type="text"
 						placeholder="M H DoM M DoW"
-						class="input w-80"
+						class="input w-full max-w-xs"
 						bind:value={device.wake_cron}
 						disabled={!device.wake_cron_enabled}
 						required={device.wake_cron_enabled}
@@ -362,7 +362,7 @@
 							type="number"
 							min="1"
 							max="65535"
-							class="input w-80"
+							class="input"
 							bind:value={device.sol_port}
 							disabled={!device.sol_enabled}
 							required={device.sol_enabled}
@@ -397,7 +397,7 @@
 								id="sol-user"
 								type="text"
 								placeholder={$LL.device.sol_user()}
-								class="input w-80"
+								class="input"
 								bind:value={device.sol_user}
 								disabled={!device.sol_auth}
 								required={device.sol_auth}
@@ -417,7 +417,7 @@
 							id="sol-password"
 							type="password"
 							placeholder={$LL.device.sol_password()}
-							class="input w-80"
+							class="input"
 							bind:value={device.sol_password}
 							disabled={!device.sol_auth}
 							required={device.sol_auth}
@@ -464,7 +464,7 @@
 				{$LL.device.shutdown_cron_desc()}
 			</p>
 			<div class="form-control flex flex-row flex-wrap gap-4">
-				<div>
+				<div class="w-full max-w-xs">
 					<label class="label" for="shutdown-cron">
 						<span class="label-text"
 							>{$LL.device.shutdown_cron()}
@@ -477,7 +477,7 @@
 						id="shutdown-cron"
 						type="text"
 						placeholder="M H DoM M DoW"
-						class="input w-80"
+						class="input w-full max-w-xs"
 						bind:value={device.shutdown_cron}
 						disabled={!device.shutdown_cron_enabled}
 						required={device.shutdown_cron_enabled}
