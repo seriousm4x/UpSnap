@@ -19,7 +19,7 @@
 	};
 
 	onMount(() => {
-		if (!$settingsPub.setup_completed && $pocketbase.authStore.isValid) {
+		if ($settingsPub && $settingsPub.setup_completed === false && $pocketbase.authStore.isValid) {
 			$pocketbase.authStore.clear();
 		}
 	});

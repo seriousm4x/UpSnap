@@ -57,7 +57,7 @@
 		}
 
 		// redirect to welcome page if setup is not completed
-		if (!$settingsPub.setup_completed && $page.url.pathname !== '/welcome') {
+		if ($settingsPub.setup_completed === false && $page.url.pathname !== '/welcome') {
 			goto('/welcome');
 			return;
 		}
@@ -81,17 +81,17 @@
 			return;
 		}
 
-		if ($pocketbase.authStore.model?.collectionName === 'users') {
+		if ($pocketbase.authStore.isAdmin) {
+			await $pocketbase.admins.authRefresh().catch(() => {
+				goto('/login');
+			});
+		} else {
 			await $pocketbase
 				.collection('users')
 				.authRefresh()
 				.catch(() => {
 					goto('/login');
 				});
-		} else {
-			await $pocketbase.admins.authRefresh().catch(() => {
-				goto('/login');
-			});
 		}
 	});
 
