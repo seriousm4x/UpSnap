@@ -42,14 +42,14 @@ changelog:
     - title: "Bug fixes"
       regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
       order: 1
-    - title: Others
-      order: 2
     - title: "Go dependencies"
       regexp: '^.*?go-dep(\([[:word:]]+\))??!?:.+$'
-      order: 997
+      order: 2
     - title: "Npm dependencies"
       regexp: '^.*?npm-dep(\([[:word:]]+\))??!?:.+$'
-      order: 998
+      order: 3
     - title: "Github Actions"
       regexp: '^.*?gh-action(\([[:word:]]+\))??!?:.+$'
+      order: 4
+    - title: Others
       order: 999
