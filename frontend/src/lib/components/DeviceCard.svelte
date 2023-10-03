@@ -63,14 +63,20 @@
 	$: if ($locale !== undefined) {
 		(async () => {
 			switch ($locale) {
-				case 'de' || 'de-DE':
+				case 'de':
+				case 'de-DE':
 					dateFnsLocale = (await import('date-fns/locale/de/index.js')).default;
 					break;
-				case 'en' || 'en-US':
+				case 'en':
+				case 'en-US':
 					dateFnsLocale = (await import('date-fns/locale/en-US/index.js')).default;
 					break;
-				case 'pt' || 'pt-PT':
+				case 'pt':
+				case 'pt-PT':
 					dateFnsLocale = (await import('date-fns/locale/pt/index.js')).default;
+					break;
+				default:
+					dateFnsLocale = (await import('date-fns/locale/en-US/index.js')).default;
 					break;
 			}
 		})();

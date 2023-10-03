@@ -12,7 +12,7 @@ import { detectLocale as detectLocaleFn } from 'typesafe-i18n/detectors';
 import { initExtendDictionary } from 'typesafe-i18n/utils';
 import type { Formatters, Locales, Translations, TranslationFunctions } from './i18n-types';
 
-export const baseLocale: Locales = 'en-US';
+export const baseLocale: Locales = 'en';
 
 export const locales: Locales[] = ['de', 'de-DE', 'en', 'en-US', 'pt', 'pt-PT'];
 

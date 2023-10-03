@@ -7,7 +7,7 @@ import type {
 } from 'typesafe-i18n';
 
 export type BaseTranslation = BaseTranslationType;
-export type BaseLocale = 'en-US';
+export type BaseLocale = 'en';
 
 export type Locales = 'de' | 'de-DE' | 'en' | 'en-US' | 'pt' | 'pt-PT';
 
