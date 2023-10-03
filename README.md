@@ -36,6 +36,12 @@
 | ![](/assets/settings-dark.webp)   | ![](/assets/settings-light.webp)   |
 | ![](/assets/users-dark.webp)      | ![](/assets/users-light.webp)      |
 
+## 🐧 Install from the [AUR](https://aur.archlinux.org/packages/upsnap-bin)
+
+```bash
+yay -Sy upsnap-bin
+```
+
 ## 🚀 Run the binary
 
 Just download the latest binary from the [release page](https://github.com/seriousm4x/UpSnap/releases) and run it.
@@ -110,6 +116,16 @@ Although UpSnap has user authorisation, it is **not recommended to expose it to 
 **Reason**: The shutdown device command is basically a command piped to #sh (root if you run docker). If anyone gains unauthorized access and can abuse this api route in any way, the attacker has access to a (root) shell on your local network.
 
 **Recommended**: If you need access from outside your network, please use a vpn. Wireguard or OpenVPN is your way to go.
+
+## 🌐 Help translating
+
+UpSnap is available in the following languages so far:
+
+- 🇺🇸 **English** (en-US)
+- 🇩🇪 **German** (de-DE)
+- 🇵🇹 **Portuguese** (pt-PT)
+
+**If you want to contribute and help translating, check the wiki: [How to add languages](https://github.com/seriousm4x/UpSnap/wiki/Ho-to-add-languages)**
 
 ## 🔧 Help developing
 
