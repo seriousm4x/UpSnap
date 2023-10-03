@@ -55,4 +55,4 @@ changelog:
       order: 999
 git:
   ignore_tags:
-    - ".*beta.*"
+    - beta
