@@ -1,6 +1,8 @@
 name: go test
 
-on: [push]
+on:
+  push:
+    paths: backend/**
 
 jobs:
   check-runner:
