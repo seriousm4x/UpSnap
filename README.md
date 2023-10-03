@@ -125,7 +125,7 @@ UpSnap is available in the following languages so far:
 - 🇩🇪 **German** (de-DE)
 - 🇵🇹 **Portuguese** (pt-PT)
 
-**If you want to contribute and help translating, check the wiki: [How to add languages](https://github.com/seriousm4x/UpSnap/wiki/Ho-to-add-languages)**
+**If you want to contribute and help translating, check the wiki: [How to add languages](https://github.com/seriousm4x/UpSnap/wiki/How-to-add-languages)**
 
 ## 🔧 Help developing
 
