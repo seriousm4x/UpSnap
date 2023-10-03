@@ -62,8 +62,8 @@ jobs:
           args: release --clean
           workdir: backend
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AUR_KEY: ${{ secrets.AUR_KEY }}
+          GITHUB_TOKEN: "{{ secrets.GITHUB_TOKEN }}"
+          AUR_KEY: "{{ secrets.AUR_KEY }}"
 
   docker:
     needs:
