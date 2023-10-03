@@ -63,13 +63,13 @@
 	$: if ($locale !== undefined) {
 		(async () => {
 			switch ($locale) {
-				case 'de':
+				case 'de' || 'de-DE':
 					dateFnsLocale = (await import('date-fns/locale/de/index.js')).default;
 					break;
-				case 'en-US':
+				case 'en' || 'en-US':
 					dateFnsLocale = (await import('date-fns/locale/en-US/index.js')).default;
 					break;
-				case 'pt-PT':
+				case 'pt' || 'pt-PT':
 					dateFnsLocale = (await import('date-fns/locale/pt/index.js')).default;
 					break;
 			}
