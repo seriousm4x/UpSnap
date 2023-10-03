@@ -20,6 +20,7 @@
 - 🔌 Ping Any Port You Choose
 - 🔍 Discover Devices with Network Scanning (nmap required)
 - 👤 Secured User Management
+- 🌐 i18n support for [these](https://github.com/seriousm4x/UpSnap/tree/master/frontend/src/lib/i18n) languages
 - 🎨 29 Themes
 - 🐳 [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7, arm/v6
 - 🏠 Self-Hostable, No Cloud Bullshit!
