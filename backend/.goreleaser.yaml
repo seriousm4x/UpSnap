@@ -63,7 +63,7 @@ aurs:
     maintainers:
       - "SeriousM4x <maxi at quoss dot org>"
     license: "MIT"
-    private_key: ${{ .Env.AUR_KEY }}
+    private_key: "{{ .Env.AUR_KEY }}"
     git_url: "ssh://aur@aur.archlinux.org/upsnap-bin.git"
     package: |-
       # bin
