@@ -1,8 +1,8 @@
-import en_US from '../en-US';
+import en from '../en';
 import type { Translation } from '../i18n-types';
 
 const pt = {
-	...(en_US as unknown as Translation),
+	...(en as unknown as Translation),
 	home: {
 		page_title: 'Início',
 		order_groups: 'Grupos',
