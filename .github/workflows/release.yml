@@ -7,8 +7,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  goreleaser:
+  check-runner:
     runs-on: ubuntu-latest
+    outputs:
+      runner-label: ${{ steps.set-runner.outputs.runner-label }}
+    steps:
+      - name: Set runner
+        id: set-runner
+        run: |
+          runners=$(curl -s -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.REPO_ACCESS_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/actions/runners")
+          available=$(echo "$runners" | jq '.runners[] | select(.status == "online" and .busy == false and .labels[] .name == "self-hosted")')
+          if [ -n "$available" ]; then
+            echo "runner-label=self-hosted" >> "$GITHUB_OUTPUT"
+          else
+            echo "runner-label=ubuntu-latest" >> "$GITHUB_OUTPUT"
+          fi
+
+  goreleaser:
+    needs: check-runner
+    runs-on: ${{ needs.check-runner.outputs.runner-label }}
     steps:
       # pull code
       - name: Checkout
@@ -48,8 +65,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docker:
-    needs: goreleaser
-    runs-on: ubuntu-latest
+    needs:
+      - goreleaser
+      - check-runner
+    runs-on: ${{ needs.check-runner.outputs.runner-label }}
     steps:
       # pull code
       - name: Check Out Repo

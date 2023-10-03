@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       runner-label: ${{ steps.set-runner.outputs.runner-label }}
-
     steps:
       - name: Set runner
         id: set-runner
@@ -25,12 +24,10 @@ jobs:
     runs-on: ${{ needs.check-runner.outputs.runner-label }}
     steps:
       - uses: actions/checkout@v4
-
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: ">=1.21"
-
       - name: Test
         run: |
           cd backend
