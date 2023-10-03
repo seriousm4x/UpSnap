@@ -63,7 +63,7 @@ jobs:
           workdir: backend
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AUR_KEY: "/home/max/.ssh/home/id_aur"
+          AUR_KEY: ${{ secrets.AUR_KEY }}
 
   docker:
     needs:
