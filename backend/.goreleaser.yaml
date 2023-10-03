@@ -44,15 +44,37 @@ changelog:
       order: 1
     - title: "Go dependencies"
       regexp: '^.*?go-dep(\([[:word:]]+\))??!?:.+$'
-      order: 2
+      order: 3
     - title: "Npm dependencies"
       regexp: '^.*?npm-dep(\([[:word:]]+\))??!?:.+$'
-      order: 3
+      order: 4
     - title: "Github Actions"
       regexp: '^.*?gh-action(\([[:word:]]+\))??!?:.+$'
-      order: 4
+      order: 5
     - title: Others
-      order: 999
+      order: 2
 git:
   ignore_tags:
-    - beta
+    - "{{ if not .Prerelease}}beta{{ end }}"
+aurs:
+  - name: upsnap-bin
+    homepage: https://github.com/seriousm4x/UpSnap
+    description: "A simple wake on lan web app written with SvelteKit, Go and PocketBase."
+    maintainers:
+      - "SeriousM4x <maxi at quoss dot org>"
+    license: "MIT"
+    private_key: ${{ secrets.AUR_KEY }}
+    git_url: "ssh://aur@aur.archlinux.org/upsnap-bin.git"
+    package: |-
+      # bin
+      install -Dm755 "./upsnap" "${pkgdir}/usr/bin/upsnap"
+      sudo setcap cap_net_raw=+ep "${pkgdir}/usr/bin/upsnap"
+    skip_upload: auto
+    depends:
+      - sudo
+      - libcap
+    optdepends:
+      - "nmap: to scan for network devices"
+    commit_author:
+      name: goreleaserbot
+      email: bot@goreleaser.com
