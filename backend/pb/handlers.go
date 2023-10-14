@@ -128,7 +128,8 @@ type Nmaprun struct {
 
 func HandlerScan(c echo.Context) error {
 	// check if nmap installed
-	if _, err := exec.LookPath("nmap"); err != nil {
+	nmap, err := exec.LookPath("nmap")
+	if err != nil {
 		return apis.NewBadRequestError(err.Error(), nil)
 	}
 
@@ -145,7 +146,7 @@ func HandlerScan(c echo.Context) error {
 	}
 
 	// run nmap
-	cmd := exec.Command("nmap", "-sn", "-oX", "-", scanRange, "--host-timeout", "500ms")
+	cmd := exec.Command(nmap, "-sn", "-oX", "-", scanRange, "--host-timeout", "500ms")
 	cmdOutput, err := cmd.Output()
 	if err != nil {
 		return err
