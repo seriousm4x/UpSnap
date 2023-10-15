@@ -160,7 +160,7 @@ const de = {
 		delete: 'Löschen',
 		change: 'Ändern',
 		reset: 'Zurücksetzen',
-		cancle: 'Abbrechen',
+		cancel: 'Abbrechen',
 		add: 'Hinzufügen'
 	},
 	welcome: {
