@@ -71,6 +71,10 @@
 				case 'en-US':
 					dateFnsLocale = (await import('date-fns/locale/en-US/index.js')).default;
 					break;
+				case 'fr':
+				case 'fr-FR':
+					dateFnsLocale = (await import('date-fns/locale/fr/index.js')).default;
+					break;
 				case 'pt':
 				case 'pt-PT':
 					dateFnsLocale = (await import('date-fns/locale/pt/index.js')).default;
