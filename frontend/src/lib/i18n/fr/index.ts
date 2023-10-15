@@ -162,7 +162,7 @@ const fr = {
 		delete: 'Supprimer',
 		change: 'Modifier',
 		reset: 'Réinitialiser',
-		cancle: 'Annuler',
+		cancel: 'Annuler',
 		add: 'Ajouter'
 	},
 	welcome: {
