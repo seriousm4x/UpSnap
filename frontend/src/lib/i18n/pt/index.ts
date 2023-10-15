@@ -159,7 +159,7 @@ const pt = {
 		delete: 'Apagar',
 		change: 'Alterar',
 		reset: 'Repor',
-		cancle: 'Cancelar',
+		cancel: 'Cancelar',
 		add: 'Adicionar'
 	},
 	welcome: {

@@ -326,7 +326,7 @@
 				<h3 class="font-bold text-lg">{$LL.users.confirm_delete_title()}</h3>
 				<p class="py-4">{$LL.users.confirm_delete_desc({ username: user.username })}</p>
 				<div class="modal-action">
-					<button class="btn">{$LL.buttons.cancle()}</button>
+					<button class="btn">{$LL.buttons.cancel()}</button>
 					<button class="btn btn-error" on:click={() => deleteUser(user)}
 						>{$LL.buttons.delete()}</button
 					>

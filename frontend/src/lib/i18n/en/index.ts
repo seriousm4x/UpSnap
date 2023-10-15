@@ -156,7 +156,7 @@ const en = {
 		delete: 'Delete',
 		change: 'Change',
 		reset: 'Reset',
-		cancle: 'Cancle',
+		cancel: 'Cancel',
 		add: 'Add'
 	},
 	welcome: {
