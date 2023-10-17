@@ -2,6 +2,7 @@ package networking
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"os/exec"
 	"runtime"
@@ -28,24 +29,41 @@ func ShutdownDevice(device *models.Record) error {
 		shell_arg = "-c"
 	}
 
-	cmd := exec.Command(shell, shell_arg, shutdown_cmd)
+	ctx := context.Background()
+	ctx, cancel := context.WithCancel(ctx)
+
+	cmd := exec.CommandContext(ctx, shell, shell_arg, shutdown_cmd)
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("%s", stderr.String())
+
+	if err := cmd.Start(); err != nil {
+		logger.Error.Println(err)
 	}
+
+	done := make(chan error, 1)
+	go func() {
+		done <- cmd.Wait()
+	}()
 
 	// check state every seconds for 2 min
 	start := time.Now()
 	for {
-		time.Sleep(1 * time.Second)
-		isOnline := PingDevice(device)
-		if !isOnline {
-			return nil
-		}
-		if time.Since(start) >= 2*time.Minute {
-			break
+		select {
+		case <-time.After(1 * time.Second):
+			if time.Since(start) >= 2*time.Minute {
+				cancel()
+				return fmt.Errorf("%s not offline after 2 minutes", device.GetString("name"))
+			}
+			isOnline := PingDevice(device)
+			if !isOnline {
+				cancel()
+				return nil
+			}
+		case err := <-done:
+			if err != nil {
+				cancel()
+				return fmt.Errorf("%s", stderr.String())
+			}
 		}
 	}
-	return fmt.Errorf(device.GetString("name"), "not offline after 2 min")
 }
