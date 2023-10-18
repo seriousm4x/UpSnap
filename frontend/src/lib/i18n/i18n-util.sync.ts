@@ -13,6 +13,8 @@ import fr from './fr';
 import fr_FR from './fr-FR';
 import pt from './pt';
 import pt_PT from './pt-PT';
+import zh from './zh';
+import zh_CN from './zh-CN';
 
 const localeTranslations = {
 	de,
@@ -22,7 +24,9 @@ const localeTranslations = {
 	fr,
 	'fr-FR': fr_FR,
 	pt,
-	'pt-PT': pt_PT
+	'pt-PT': pt_PT,
+	zh,
+	'zh-CN': zh_CN
 };
 
 export const loadLocale = (locale: Locales): void => {
