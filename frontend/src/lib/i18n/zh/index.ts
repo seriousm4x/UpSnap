@@ -55,8 +55,7 @@ const zh = {
 		ports_name: '名称',
 		ports_number: '端口号',
 		link: '链接',
-		link_desc:
-			'为您的设备名设置一个可点击的链接.',
+		link_desc: '为您的设备名设置一个可点击的链接.',
 		wake: '唤醒',
 		wake_desc: '您可以通过计划任务来唤醒设备.',
 		wake_cron: '唤醒计划任务',
@@ -64,8 +63,7 @@ const zh = {
 		sol: 'Sleep-On-LAN',
 		sol_desc1:
 			'您可以使用 <a class="link" href="https://github.com/SR-G/sleep-on-lan" target="_blank">Sleep-On-LAN</a> 工具让计算机进入睡眠状态. Sleep-On-LAN (SOL) 是一个外部的工具/守护程序, 它在您想要进入休眠状态的PC上运行并提供RestApi接口. 有关 Sleep-On-LAN 设置的说明, 请参阅文档 <a href="https://github.com/SR-G/sleep-on-lan#usage" class="link" target="_blank">Usage</a> 部分.',
-		sol_desc2:
-			'SOL 配置为通过HTTP而不是UDP发送请求, 以启用认证功能并使请求更可靠',
+		sol_desc2: 'SOL 配置为通过HTTP而不是UDP发送请求, 以启用认证功能并使请求更可靠',
 		sol_desc3:
 			'因此, 请确保在 <a href="https://github.com/SR-G/sleep-on-lan#configuration" class="link" target="_blank">SOL 配置</a> 的 <span class="badge">Listeners</span> 部分中包含<span class="badge">HTTP:&lt;YOURPORT&gt;</span>',
 		sol_enable: '启用 Sleep-On-LAN',
@@ -90,7 +88,8 @@ const zh = {
 		groups_desc: '您可以将设备添加到组, 以便在控制面板上按组对其进行排序.',
 		groups_placeholder: "例如: 'Basement' 或 'Office'",
 		network_scan_range_saved: '扫描范围已保存',
-		network_scan_desc: '自动扫描网络中的设备. 要实现这一点, 您需要以超级用户/管理员身份运行 UpSnap, 并在您的 $PATH 中安装和使用nmap(对于docker用户, 您不需要执行任何操作). 扫描可能需要一些时间.',
+		network_scan_desc:
+			'自动扫描网络中的设备. 要实现这一点, 您需要以超级用户/管理员身份运行 UpSnap, 并在您的 $PATH 中安装和使用nmap(对于docker用户, 您不需要执行任何操作). 扫描可能需要一些时间.',
 		network_scan_ip_range: 'IP 范围',
 		network_scan_no_range: '无扫描范围',
 		network_scan_unsaved_changes: '未保存的更改',
@@ -116,13 +115,11 @@ const zh = {
 	settings: {
 		page_title: '设置',
 		ping_interval_title: 'Ping 间隔',
-		ping_interval_desc1:
-			'设置 ping 的间隔。为空时使用默认值 <span class="badge">@every 3s</span>.',
+		ping_interval_desc1: '设置 ping 的间隔。为空时使用默认值 <span class="badge">@every 3s</span>.',
 		ping_interval_desc2:
-			'有关 cron 的更多信息, 请访问<a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> 或参阅 <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">cron 文档</a>.',
+			'有关 cron 的更多信息, 请访问<a class="link" href="https://zh.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> 或参阅 <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">cron 文档</a>.',
 		lazy_ping_title: 'Lazy ping',
-		lazy_ping_desc:
-			"当开关打开时, UpSnap 只会在用户访问网站期间进行 ping 操作.",
+		lazy_ping_desc: '当开关打开时, UpSnap 只会在用户访问网站期间进行 ping 操作.',
 		lazy_ping_enable: '启用',
 		website_title_title: '网站标题',
 		website_title_desc: '设置在浏览器选项卡和网站中显示标题',
@@ -169,7 +166,7 @@ const zh = {
 		step3_page_title: '一切就绪! 🎉',
 		step3_page_desc: '继续向您的仪表板添加一些设备.',
 		step3_btn_done: '开始使用!',
-		not_expected_title: "意料之外! 🧐",
+		not_expected_title: '意料之外! 🧐',
 		not_expected_desc: '您已经完成了设置, 无需再次设置',
 		not_expected_back: '返回',
 		progress_step1: '欢迎',
@@ -183,12 +180,12 @@ const zh = {
 		user_deleted: '用户 {username} 已删除',
 		settings_saved: '设置已保存',
 		password_changed: '密码已修改, 请重新登录.',
-		passwords_missmatch: "两次输入的密码不匹配",
+		passwords_missmatch: '两次输入的密码不匹配',
 		permissions_created: '用户 {username} 的权限已创建',
 		permissions_deleted: '用户 {username} 的权限已删除',
 		permissions_updated: '用户 {username} 的权限已更新',
 		permissions_updated_personal: '您的权限已更新',
-		no_permission: "您没有权限访问 {url}",
+		no_permission: '您没有权限访问 {url}',
 		device_created: '已创建 {device}',
 		devices_created_multiple: '已创建 {count|int} 个设备',
 		device_updated: '已更新 {device}',

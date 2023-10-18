@@ -9,7 +9,17 @@ import type {
 export type BaseTranslation = BaseTranslationType;
 export type BaseLocale = 'en';
 
-export type Locales = 'de' | 'de-DE' | 'en' | 'en-US' | 'fr' | 'fr-FR' | 'pt' | 'pt-PT' | 'zh' | 'zh-CN';
+export type Locales =
+	| 'de'
+	| 'de-DE'
+	| 'en'
+	| 'en-US'
+	| 'fr'
+	| 'fr-FR'
+	| 'pt'
+	| 'pt-PT'
+	| 'zh'
+	| 'zh-CN';
 
 export type Translation = RootTranslation;
 
