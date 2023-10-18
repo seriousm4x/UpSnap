@@ -22,7 +22,9 @@
 		de: '🇩🇪',
 		'de-DE': '🇩🇪',
 		pt: '🇵🇹',
-		'pt-PT': '🇵🇹'
+		'pt-PT': '🇵🇹',
+		zh: '🇨🇳',
+		'zh-CN': '🇨🇳'
 	};
 	let localStorageLang: Locales | 'auto' = 'auto';
 	let selectedLanguage: Locales | 'auto' = localStorageLang;
