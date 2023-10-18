@@ -80,9 +80,9 @@ const fr = {
 		shutdown: 'Arrêt',
 		shutdown_desc:
 			'Cette <strong>commande shell</strong> va s\'exécuter au sein de votre conteneur (si vous utilisez Docker) ou sur votre hôte (si vous utilisez l\'exécutable). Pour vérifier que cela fonctionne, vous pouvez d\'abord exécuter la commande à l\'intérieur du conteneur ou sur le shell de l\'hôte. Les commandes courantes sont <span class="badge">net rpc</span> pour Windows, <span class="badge">sshpass</span> pour Linux ou <span class="badge">curl</span> en général pour faire des requêtes web.',
-		shutdown_examples: 'Exemples:',
-		shutdown_examples_windows: 'Arrêter une machine Windows distante:',
-		shutdown_examples_linux: 'Arrêter une machine Linux distante:',
+		shutdown_examples: 'Exemples :',
+		shutdown_examples_windows: 'Arrêter une machine Windows distante :',
+		shutdown_examples_linux: 'Arrêter une machine Linux distante :',
 		shutdown_cmd: "Commande d'arrêt",
 		shutdown_cron_desc:
 			"Exactement comme configurer cron pour réveiller l'appareil, vous pouvez aussi planifier un job cron pour arrêter cet appareil.",
@@ -94,7 +94,7 @@ const fr = {
 		groups: 'Groupes',
 		groups_desc:
 			'Vous pouvez ajouter des appareils à un groupe pour pouvoir les trier sur le tableau de bord.',
-		groups_placeholder: 'par ex. «Bureau»', // I had to strink because the original English text in French gives a too long text
+		groups_placeholder: 'par ex. « Bureau »', // I had to strink because the original English text in French gives a too long text
 		network_scan_range_saved: "Plage d'analyse sauvegardée",
 		network_scan_desc:
 			"Analyser automatiquement votre réseau pour trouver des appareils. Pour que cela fonctionne, vous devez exécuter UpSnap en tant que root/administrateur et avoir nmap installé et disponible dans votre $PATH (pour les utilisateurs Docker, cela est déjà le cas et vous n'avez besoin de rien faire). L'analyse peut prendre quelques secondes.",
@@ -103,10 +103,10 @@ const fr = {
 		network_scan_unsaved_changes: 'Modifications non sauvegardées',
 		network_scan_running: 'Analyse en cours',
 		network_scan: 'Analyser',
-		network_scan_ip: 'IP:',
-		network_scan_mac: 'Mac:',
-		network_scan_mac_vendor: "Fabricant ayant l'adresse Mac:",
-		network_scan_netmask: 'Masque réseau:',
+		network_scan_ip: 'IP :',
+		network_scan_mac: 'Mac :',
+		network_scan_mac_vendor: "Fabricant ayant l'adresse Mac :",
+		network_scan_netmask: 'Masque réseau :',
 		network_scan_add_all: 'Ajouter tous les appareils',
 		network_scan_replace_netmask: 'Remplacer le masque réseau pour tous les appareils ?',
 		network_scan_new_netmask: 'Nouveau masque réseau',
@@ -114,8 +114,8 @@ const fr = {
 	},
 	login: {
 		welcome: 'Bienvenue',
-		email_label: "Courriel ou nom d'utilisateur:",
-		password_label: 'Mot de passe:',
+		email_label: "Courriel ou nom d'utilisateur :",
+		password_label: 'Mot de passe :',
 		btn_more: 'Plus',
 		menu_title_auth_providers: "Autres fournisseurs d'authentification",
 		btn_login: 'Connexion'
@@ -135,8 +135,8 @@ const fr = {
 		website_title_desc:
 			"Définit le titre du site ainsi que le texte affiché dans l'onglet du navigateur.",
 		icon_title: 'Icône',
-		icon_desc: 'Définit un favicon personnalisé. Les types de fichier compatibles sont:',
-		upsnap_version: 'Version de UpSnap'
+		icon_desc: 'Définit un favicon personnalisé. Les types de fichier compatibles sont :',
+		upsnap_version: 'Version de UpSnap '
 	},
 	users: {
 		page_title: 'Utilisateurs',
@@ -150,7 +150,7 @@ const fr = {
 		power: 'Allumer',
 		toggle: 'Inverser',
 		confirm_delete_title: 'Confirmation de la suppression',
-		confirm_delete_desc: 'Voulez-vous vraiment supprimer {username}?',
+		confirm_delete_desc: 'Voulez-vous vraiment supprimer {username} ?',
 		create_new_user: "Création d'un nouvel utilisateur",
 		username: "Nom d'utilisateur",
 		password: 'Mot de passe',
@@ -170,10 +170,10 @@ const fr = {
 		step1_setup_desc: "Veuillez suivre les étapes suivantes pour terminer l'installation.",
 		step1_setup_btn_next: 'Suivant',
 		step2_page_title: 'Création du compte administrateur',
-		step2_label_email: 'Courriel:',
-		step2_label_password: 'Mot de passe:',
+		step2_label_email: 'Courriel :',
+		step2_label_password: 'Mot de passe :',
 		step2_label_min_chars: 'min. 10 caractères',
-		step2_label_password_confirm: 'Confirmation du mot de passe:',
+		step2_label_password_confirm: 'Confirmation du mot de passe :',
 		step2_btn_create: 'Créer',
 		step3_page_title: 'Vous êtes tout bon ! 🎉',
 		step3_page_desc: 'Allez-y et ajoutez quelques appareils à votre tableau de bord.',
