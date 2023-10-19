@@ -165,13 +165,13 @@ func RunWakeShutdown(app *pocketbase.PocketBase) {
 
 func StopAll() {
 	if PingRunning {
-		logger.Info.Println("stopping ping cronjob")
+		logger.Info.Println("Stopping ping cronjob")
 		ctx := CronPing.Stop()
 		<-ctx.Done()
 
 	}
 	if WakeShutdownRunning {
-		logger.Info.Println("stopping wake/shutdown cronjob")
+		logger.Info.Println("Stopping wake/shutdown cronjob")
 		ctx := CronWakeShutdown.Stop()
 		<-ctx.Done()
 	}

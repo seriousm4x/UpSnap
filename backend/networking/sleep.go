@@ -16,7 +16,7 @@ type SolResponse struct {
 }
 
 func SleepDevice(device *models.Record) (SolResponse, error) {
-	logger.Info.Println("sleep triggered for", device.GetString("name"))
+	logger.Info.Println("Sleep triggered for", device.GetString("name"))
 
 	var solResp SolResponse
 	var url string
