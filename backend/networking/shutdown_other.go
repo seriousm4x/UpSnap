@@ -6,6 +6,8 @@ package networking
 import (
 	"os"
 	"os/exec"
+
+	"golang.org/x/sys/windows"
 )
 
 // Set platform specifiy custom process attributes
