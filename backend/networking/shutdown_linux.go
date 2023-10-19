@@ -4,9 +4,8 @@ import (
 	"os"
 	"os/exec"
 
-	"golang.org/x/sys/unix"
-
 	"github.com/seriousm4x/upsnap/logger"
+	"golang.org/x/sys/unix"
 )
 
 // Set platform specifiy custom process attributes
@@ -16,10 +15,18 @@ func SetProcessAttributes(cmd *exec.Cmd) {
 
 // Kills child processes on Linux. Windows doesn't provide a direct way to kill child processes, so we kill just the main process.
 func KillProcess(process *os.Process) error {
+	logger.Warning.Println("Your shutdown cmd didn't finish in 2 minutes. It will be killed.")
 	pgid, err := unix.Getpgid(process.Pid)
-	logger.Debug.Println(pgid)
 	if err != nil {
 		return err
 	}
-	return unix.Kill(-pgid, unix.SIGKILL)
+
+	err = unix.Kill(-pgid, unix.SIGTERM)
+	if err != nil {
+		return unix.Kill(-pgid, unix.SIGKILL)
+	}
+
+	_, err = process.Wait()
+
+	return err
 }

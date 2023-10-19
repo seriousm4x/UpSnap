@@ -31,9 +31,10 @@ func ShutdownDevice(device *models.Record) error {
 
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
 	cmd := exec.CommandContext(ctx, shell, shell_arg, shutdown_cmd)
 	SetProcessAttributes(cmd)
-	logger.Debug.Println(cmd)
 
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
@@ -56,7 +57,6 @@ func ShutdownDevice(device *models.Record) error {
 				if err := KillProcess(cmd.Process); err != nil {
 					logger.Error.Println(err)
 				}
-				cancel()
 				return fmt.Errorf("%s not offline after 2 minutes", device.GetString("name"))
 			}
 			isOnline := PingDevice(device)
@@ -64,7 +64,6 @@ func ShutdownDevice(device *models.Record) error {
 				if err := KillProcess(cmd.Process); err != nil {
 					logger.Error.Println(err)
 				}
-				cancel()
 				return nil
 			}
 		case err := <-done:
@@ -72,7 +71,6 @@ func ShutdownDevice(device *models.Record) error {
 				if err := KillProcess(cmd.Process); err != nil {
 					logger.Error.Println(err)
 				}
-				cancel()
 				return fmt.Errorf("%s", stderr.String())
 			}
 		}
