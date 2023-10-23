@@ -132,40 +132,42 @@
 							<Fa icon={faSwatchbook} />
 							Themes</summary
 						>
-						<ul class="max-h-72 overflow-scroll">
-							{#each availableThemes as theme}
-								<li>
-									<button
-										class="outline-base-content overflow-hidden rounded-lg text-left"
-										data-set-theme={theme}
-										on:click={() => (activeTheme = theme)}
-										on:keydown={() => (activeTheme = theme)}
-									>
-										<div
-											data-theme={theme}
-											class="bg-base-100 text-base-content rounded w-full cursor-pointer font-sans"
+						<ul>
+							<div class="h-fit max-h-72 overflow-scroll">
+								{#each availableThemes as theme}
+									<li>
+										<button
+											class="outline-base-content overflow-hidden rounded-lg text-left"
+											data-set-theme={theme}
+											on:click={() => (activeTheme = theme)}
+											on:keydown={() => (activeTheme = theme)}
 										>
-											<div class="grid grid-cols-5 grid-rows-3">
-												<div
-													class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3"
-												>
-													<Fa
-														icon={faCheck}
-														class={activeTheme === theme ? 'visible' : 'invisible'}
-													/>
-													<div class="flex-grow text-sm">{theme}</div>
-													<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
-														<div class="bg-primary w-2 rounded" />
-														<div class="bg-secondary w-2 rounded" />
-														<div class="bg-accent w-2 rounded" />
-														<div class="bg-neutral w-2 rounded" />
+											<div
+												data-theme={theme}
+												class="bg-base-100 text-base-content rounded w-full cursor-pointer font-sans"
+											>
+												<div class="grid grid-cols-5 grid-rows-3">
+													<div
+														class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3"
+													>
+														<Fa
+															icon={faCheck}
+															class={activeTheme === theme ? 'visible' : 'invisible'}
+														/>
+														<div class="flex-grow text-sm">{theme}</div>
+														<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
+															<div class="bg-primary w-2 rounded" />
+															<div class="bg-secondary w-2 rounded" />
+															<div class="bg-accent w-2 rounded" />
+															<div class="bg-neutral w-2 rounded" />
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-									</button>
-								</li>
-							{/each}
+										</button>
+									</li>
+								{/each}
+							</div>
 						</ul>
 					</details>
 				</li>
