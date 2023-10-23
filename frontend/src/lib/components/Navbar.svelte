@@ -74,7 +74,11 @@
 <div class="navbar bg-base-100">
 	<div class="justify-start">
 		<div class="dropdown">
-			<label tabindex="-1" class="btn btn-ghost lg:hidden" for="mobile-menu">
+			<label
+				tabindex="-1"
+				class="btn btn-ghost {$settingsPub?.website_title ? 'lg:hidden' : 'md:hidden'}"
+				for="mobile-menu"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-5 w-5"
@@ -92,7 +96,7 @@
 			<ul
 				id="mobile-menu"
 				tabindex="-1"
-				class="menu dropdown-content mt-3 z-[1] p-2 gap-1 shadow bg-base-300 rounded-box w-52"
+				class="menu dropdown-content mt-3 z-[1] p-2 gap-1 shadow bg-base-300 rounded-box w-max"
 			>
 				{#if $settingsPub?.website_title}
 					<div class="menu-title">
@@ -122,6 +126,49 @@
 						>
 					</li>
 				{/if}
+				<li>
+					<details>
+						<summary>
+							<Fa icon={faSwatchbook} />
+							Themes</summary
+						>
+						<ul class="max-h-72 overflow-scroll">
+							{#each availableThemes as theme}
+								<li>
+									<button
+										class="outline-base-content overflow-hidden rounded-lg text-left"
+										data-set-theme={theme}
+										on:click={() => (activeTheme = theme)}
+										on:keydown={() => (activeTheme = theme)}
+									>
+										<div
+											data-theme={theme}
+											class="bg-base-100 text-base-content rounded w-full cursor-pointer font-sans"
+										>
+											<div class="grid grid-cols-5 grid-rows-3">
+												<div
+													class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3"
+												>
+													<Fa
+														icon={faCheck}
+														class={activeTheme === theme ? 'visible' : 'invisible'}
+													/>
+													<div class="flex-grow text-sm">{theme}</div>
+													<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
+														<div class="bg-primary w-2 rounded" />
+														<div class="bg-secondary w-2 rounded" />
+														<div class="bg-accent w-2 rounded" />
+														<div class="bg-neutral w-2 rounded" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</button>
+								</li>
+							{/each}
+						</ul>
+					</details>
+				</li>
 			</ul>
 		</div>
 		<a class="btn btn-ghost normal-case text-xl px-2" href="/">
@@ -135,7 +182,7 @@
 			/>
 		</a>
 	</div>
-	<div class="hidden lg:flex">
+	<div class="hidden {$settingsPub?.website_title ? 'lg:flex' : 'md:flex'}">
 		{#if $settingsPub?.website_title}
 			<span class="px-2">{$settingsPub?.website_title}</span>
 		{/if}
@@ -158,43 +205,43 @@
 				</li>
 			{/if}
 		</ul>
-	</div>
-	<div class="dropdown md:dropdown-end">
-		<div tabindex="-1" class="btn normal-case btn-ghost">
-			<Fa icon={faSwatchbook} />
-			<span class="hidden font-normal md:inline">{$LL.navbar.theme()}</span>
-			<Fa icon={faChevronDown} />
-		</div>
-		<div
-			class="dropdown-content bg-base-200 text-base-content rounded-box h-fit max-h-96 w-56 overflow-y-auto shadow mt-3 z-[1]"
-		>
-			<div class="grid grid-cols-1 gap-3 p-3" tabindex="-1">
-				{#each availableThemes as theme}
-					<button
-						class="outline-base-content overflow-hidden rounded-lg text-left"
-						data-set-theme={theme}
-						on:click={() => (activeTheme = theme)}
-						on:keydown={() => (activeTheme = theme)}
-					>
-						<div
-							data-theme={theme}
-							class="bg-base-100 text-base-content w-full cursor-pointer font-sans"
+		<div class="dropdown dropdown-end">
+			<div tabindex="-1" class="btn normal-case btn-ghost">
+				<Fa icon={faSwatchbook} />
+				<span class="font-normal">{$LL.navbar.theme()}</span>
+				<Fa icon={faChevronDown} />
+			</div>
+			<div
+				class="dropdown-content bg-base-200 text-base-content rounded-box h-fit max-h-96 w-56 overflow-y-auto shadow mt-3 z-[1]"
+			>
+				<div class="grid grid-cols-1 gap-3 p-3" tabindex="-1">
+					{#each availableThemes as theme}
+						<button
+							class="outline-base-content overflow-hidden rounded-lg text-left"
+							data-set-theme={theme}
+							on:click={() => (activeTheme = theme)}
+							on:keydown={() => (activeTheme = theme)}
 						>
-							<div class="grid grid-cols-5 grid-rows-3">
-								<div class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3">
-									<Fa icon={faCheck} class={activeTheme === theme ? 'visible' : 'invisible'} />
-									<div class="flex-grow text-sm">{theme}</div>
-									<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
-										<div class="bg-primary w-2 rounded" />
-										<div class="bg-secondary w-2 rounded" />
-										<div class="bg-accent w-2 rounded" />
-										<div class="bg-neutral w-2 rounded" />
+							<div
+								data-theme={theme}
+								class="bg-base-100 text-base-content w-full cursor-pointer font-sans"
+							>
+								<div class="grid grid-cols-5 grid-rows-3">
+									<div class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3">
+										<Fa icon={faCheck} class={activeTheme === theme ? 'visible' : 'invisible'} />
+										<div class="flex-grow text-sm">{theme}</div>
+										<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
+											<div class="bg-primary w-2 rounded" />
+											<div class="bg-secondary w-2 rounded" />
+											<div class="bg-accent w-2 rounded" />
+											<div class="bg-neutral w-2 rounded" />
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</button>
-				{/each}
+						</button>
+					{/each}
+				</div>
 			</div>
 		</div>
 	</div>
