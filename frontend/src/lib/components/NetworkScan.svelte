@@ -127,10 +127,10 @@
 					<label class="label" for="scan-range">
 						<span class="label-text">{$LL.device.network_scan_ip_range()}</span>
 					</label>
-					<div class="join">
+					<div class="join max-w-xs">
 						<input
 							id="scan-range"
-							class="input input-bordered join-item"
+							class="input input-bordered join-item w-full"
 							type="text"
 							placeholder="192.168.1.0/24"
 							bind:value={scanRange}

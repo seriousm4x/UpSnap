@@ -436,13 +436,13 @@
 				{@html $LL.device.shutdown_desc()}
 			</p>
 			<p class="my-2 font-bold">{$LL.device.shutdown_examples()}</p>
-			<div class="mockup-code text-sm max-w-fit">
+			<div class="mockup-code text-sm min-w-0 max-w-fit">
 				<pre data-prefix="#"><code>{$LL.device.shutdown_examples_windows()}</code></pre>
 				<pre data-prefix="$" class="text-warning"><code
 						>net rpc shutdown -I 192.168.1.13 -U "user%password"</code
 					></pre>
 			</div>
-			<div class="mockup-code text-sm max-w-fit">
+			<div class="mockup-code text-sm min-w-0 max-w-fit">
 				<pre data-prefix="#"><code>{$LL.device.shutdown_examples_linux()}</code></pre>
 				<pre data-prefix="$" class="text-warning"><code
 						>sshpass -p password ssh -o "StrictHostKeyChecking=no" user@192.168.1.13 "sudo poweroff"</code
