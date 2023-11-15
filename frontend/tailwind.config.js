@@ -11,7 +11,7 @@ export default {
 		themes: [
 			{
 				light: {
-					...themes['[data-theme=light]'],
+					...themes['light'],
 					primary: '#55BCD9',
 					secondary: '#D4A35C',
 					'primary-content': '#ffffff'
@@ -19,7 +19,7 @@ export default {
 			},
 			{
 				dark: {
-					...themes['[data-theme=dark]'],
+					...themes['dark'],
 					primary: '#55BCD9',
 					secondary: '#D4A35C',
 					'base-300': '#12161b',
@@ -30,7 +30,7 @@ export default {
 			},
 			{
 				cupcake: {
-					...themes['[data-theme=cupcake]'],
+					...themes['cupcake'],
 					primary: '#55BCD9',
 					secondary: '#D4A35C',
 					'primary-content': '#ffffff'
@@ -61,7 +61,10 @@ export default {
 			'lemonade',
 			'night',
 			'coffee',
-			'winter'
+			'winter',
+			'dim',
+			'nord',
+			'sunset'
 		]
 	}
 };

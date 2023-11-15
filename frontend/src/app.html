@@ -11,8 +11,8 @@
 			const theme = localStorage.getItem('theme')
 				? localStorage.getItem('theme')
 				: preferesDark
-				? darkTheme
-				: lightTheme;
+				  ? darkTheme
+				  : lightTheme;
 			document.documentElement.setAttribute('data-theme', theme);
 
 			window

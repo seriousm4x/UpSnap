@@ -48,7 +48,10 @@
 		'lemonade',
 		'night',
 		'coffee',
-		'winter'
+		'winter',
+		'dim',
+		'nord',
+		'sunset'
 	];
 	let activeTheme: string | null = '';
 	let avatar = $pocketbase.authStore.model?.avatar;
