@@ -1,6 +1,6 @@
-import type { Record } from 'pocketbase';
+import type { RecordModel } from 'pocketbase';
 
-export type Permission = Record & {
+export type Permission = RecordModel & {
 	user: string;
 	create: boolean;
 	read: string[];

@@ -42,6 +42,10 @@ const zh = {
 		card_nic_tooltip_shutdown_no_permission: '没有关闭此设备的权限',
 		card_nic_tooltip_power: '启动',
 		card_nic_tooltip_power_no_permission: '没有启动此设备的权限',
+		modal_confirm_wake_title: '唤醒 {device}?',
+		modal_confirm_wake_desc: '请确认唤醒 {device}.',
+		modal_confirm_shutdown_title: '关闭 {device}?',
+		modal_confirm_shutdown_desc: '请确认关闭 {device}.',
 		general: '通用',
 		general_name: '名称',
 		general_name_placeholder: '设备名',
@@ -102,7 +106,8 @@ const zh = {
 		network_scan_add_all: '添加全部设备',
 		network_scan_replace_netmask: '更换所有设备的子网掩码?',
 		network_scan_new_netmask: '新子网掩码',
-		network_scan_include_unknown: '包括名称为 “Unknown” 的设备'
+		network_scan_include_unknown: '包括名称为 “Unknown” 的设备',
+		require_confirmation: '要求确认'
 	},
 	login: {
 		welcome: '欢迎使用',
@@ -151,7 +156,8 @@ const zh = {
 		change: '更改',
 		reset: '重置',
 		cancel: '取消',
-		add: '添加'
+		add: '添加',
+		confirm: '确认'
 	},
 	welcome: {
 		step1_page_title: '欢迎使用 UpSnap 🥳',

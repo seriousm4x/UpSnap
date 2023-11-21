@@ -3,7 +3,7 @@
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Port } from '$lib/types/device';
 	import { faTrash } from '@fortawesome/free-solid-svg-icons';
-	import type { Record } from 'pocketbase';
+	import type { RecordModel } from 'pocketbase';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 	import { scale } from 'svelte/transition';
@@ -11,7 +11,7 @@
 	export let device: Device;
 	export let index: number;
 
-	function deletePort(port: Port | Record) {
+	function deletePort(port: Port | RecordModel) {
 		if (port.id !== undefined) {
 			$pocketbase
 				.collection('ports')

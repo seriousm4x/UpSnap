@@ -46,6 +46,10 @@ const fr = {
 			"Vous n'avez pas la permission pour éteindre cet appareil",
 		card_nic_tooltip_power: 'Allumer',
 		card_nic_tooltip_power_no_permission: "Vous n'avez pas la permission pour allumer cet appareil",
+		modal_confirm_wake_title: 'Réveiller {device} ?',
+		modal_confirm_wake_desc: 'Veuillez confirmer le réveil de {device}.',
+		modal_confirm_shutdown_title: 'Arrêter {device} ?',
+		modal_confirm_shutdown_desc: "Veuillez confirmer l'arrêt du {device}.",
 		general: 'Général',
 		general_name: 'Nom',
 		general_name_placeholder: "Nom de l'appareil",
@@ -110,7 +114,8 @@ const fr = {
 		network_scan_add_all: 'Ajouter tous les appareils',
 		network_scan_replace_netmask: 'Remplacer le masque réseau pour tous les appareils ?',
 		network_scan_new_netmask: 'Nouveau masque réseau',
-		network_scan_include_unknown: 'Inclure les appareils dont nom est « Inconnu »'
+		network_scan_include_unknown: 'Inclure les appareils dont nom est « Inconnu »',
+		require_confirmation: 'Demande de confirmation'
 	},
 	login: {
 		welcome: 'Bienvenue',
@@ -163,7 +168,8 @@ const fr = {
 		change: 'Modifier',
 		reset: 'Réinitialiser',
 		cancel: 'Annuler',
-		add: 'Ajouter'
+		add: 'Ajouter',
+		confirm: 'Confirmer'
 	},
 	welcome: {
 		step1_page_title: 'Bienvenue sur UpSnap 🥳',

@@ -45,6 +45,10 @@ const de = {
 		card_nic_tooltip_shutdown_no_permission: 'Keine Berechtigung zum ausschalten',
 		card_nic_tooltip_power: 'Einschalten',
 		card_nic_tooltip_power_no_permission: 'Keine Berechtigung zum einschalten',
+		modal_confirm_wake_title: '{device} einschalten?',
+		modal_confirm_wake_desc: 'Bitte bestätigen, um {device} einzuschalten.',
+		modal_confirm_shutdown_title: '{device} herunterfahren?',
+		modal_confirm_shutdown_desc: 'Bitte bestätigen, um {device} herunterzufahren.',
 		general: 'Allgemein',
 		general_name: 'Name',
 		general_name_placeholder: 'Gerätename',
@@ -109,7 +113,8 @@ const de = {
 		network_scan_add_all: 'Alle Geräte hinzufügen',
 		network_scan_replace_netmask: 'Netmask für alle Geräte ändern?',
 		network_scan_new_netmask: 'Neue Netmask',
-		network_scan_include_unknown: 'Schließe Geräte ein, bei denen der Name "Unknown" ist.'
+		network_scan_include_unknown: 'Schließe Geräte ein, bei denen der Name "Unknown" ist.',
+		require_confirmation: 'Bestätigung erforderlich'
 	},
 	login: {
 		welcome: 'Willkommen',
@@ -161,7 +166,8 @@ const de = {
 		change: 'Ändern',
 		reset: 'Zurücksetzen',
 		cancel: 'Abbrechen',
-		add: 'Hinzufügen'
+		add: 'Hinzufügen',
+		confirm: 'Bestätigen'
 	},
 	welcome: {
 		step1_page_title: 'Willkommen bei UpSnap 🥳',

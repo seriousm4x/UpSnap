@@ -182,6 +182,26 @@ type RootTranslation = {
 		 */
 		card_nic_tooltip_power_no_permission: string;
 		/**
+		 * W​a​k​e​ ​{​d​e​v​i​c​e​}​?
+		 * @param {unknown} device
+		 */
+		modal_confirm_wake_title: RequiredParams<'device'>;
+		/**
+		 * P​l​e​a​s​e​ ​c​o​n​f​i​r​m​ ​t​o​ ​w​a​k​e​ ​{​d​e​v​i​c​e​}​.
+		 * @param {unknown} device
+		 */
+		modal_confirm_wake_desc: RequiredParams<'device'>;
+		/**
+		 * S​h​u​t​d​o​w​n​ ​{​d​e​v​i​c​e​}​?
+		 * @param {unknown} device
+		 */
+		modal_confirm_shutdown_title: RequiredParams<'device'>;
+		/**
+		 * P​l​e​a​s​e​ ​c​o​n​f​i​r​m​ ​t​o​ ​s​h​u​t​d​o​w​n​ ​{​d​e​v​i​c​e​}​.
+		 * @param {unknown} device
+		 */
+		modal_confirm_shutdown_desc: RequiredParams<'device'>;
+		/**
 		 * G​e​n​e​r​a​l
 		 */
 		general: string;
@@ -405,6 +425,10 @@ type RootTranslation = {
 		 * I​n​c​l​u​d​e​ ​d​e​v​i​c​e​s​ ​w​h​e​r​e​ ​n​a​m​e​ ​i​s​ ​"​U​n​k​n​o​w​n​"
 		 */
 		network_scan_include_unknown: string;
+		/**
+		 * R​e​q​u​i​r​e​ ​C​o​n​f​i​r​m​a​t​i​o​n
+		 */
+		require_confirmation: string;
 	};
 	login: {
 		/**
@@ -575,6 +599,10 @@ type RootTranslation = {
 		 * A​d​d
 		 */
 		add: string;
+		/**
+		 * C​o​n​f​i​r​m
+		 */
+		confirm: string;
 	};
 	welcome: {
 		/**
@@ -913,6 +941,22 @@ export type TranslationFunctions = {
 		 */
 		card_nic_tooltip_power_no_permission: () => LocalizedString;
 		/**
+		 * Wake {device}?
+		 */
+		modal_confirm_wake_title: (arg: { device: unknown }) => LocalizedString;
+		/**
+		 * Please confirm to wake {device}.
+		 */
+		modal_confirm_wake_desc: (arg: { device: unknown }) => LocalizedString;
+		/**
+		 * Shutdown {device}?
+		 */
+		modal_confirm_shutdown_title: (arg: { device: unknown }) => LocalizedString;
+		/**
+		 * Please confirm to shutdown {device}.
+		 */
+		modal_confirm_shutdown_desc: (arg: { device: unknown }) => LocalizedString;
+		/**
 		 * General
 		 */
 		general: () => LocalizedString;
@@ -1136,6 +1180,10 @@ export type TranslationFunctions = {
 		 * Include devices where name is "Unknown"
 		 */
 		network_scan_include_unknown: () => LocalizedString;
+		/**
+		 * Require Confirmation
+		 */
+		require_confirmation: () => LocalizedString;
 	};
 	login: {
 		/**
@@ -1304,6 +1352,10 @@ export type TranslationFunctions = {
 		 * Add
 		 */
 		add: () => LocalizedString;
+		/**
+		 * Confirm
+		 */
+		confirm: () => LocalizedString;
 	};
 	welcome: {
 		/**

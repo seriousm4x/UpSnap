@@ -12,6 +12,8 @@
 	let disabled = false;
 	let timeout = 120;
 	var interval: number;
+	let modalWake: HTMLDialogElement;
+	let modalShutdown: HTMLDialogElement;
 
 	$: if (device.status === 'pending' && !interval) {
 		countdown(Date.parse(device.updated));
@@ -86,9 +88,17 @@
 
 	function handleClick() {
 		if (device.status === 'offline') {
-			wake();
+			device.wake_confirm ? askConfirmation('wake') : wake();
 		} else if (device.status === 'online') {
-			shutdown();
+			device.shutdown_confirm ? askConfirmation('shutdown') : shutdown();
+		}
+	}
+
+	function askConfirmation(action: string) {
+		if (action === 'wake') {
+			modalWake.showModal();
+		} else {
+			modalShutdown.showModal();
 		}
 	}
 </script>
@@ -140,6 +150,36 @@
 		</div>
 	</div>
 </li>
+
+<dialog class="modal" bind:this={modalWake}>
+	<div class="modal-box">
+		<h3 class="font-bold text-lg">
+			{$LL.device.modal_confirm_wake_title({ device: device.name })}
+		</h3>
+		<p class="py-4">{$LL.device.modal_confirm_wake_desc({ device: device.name })}</p>
+		<div class="modal-action">
+			<form method="dialog" class="flex flex-row flex-wrap gap-2">
+				<button class="btn btn-neutral">{$LL.buttons.cancel()}</button>
+				<button class="btn btn-success" on:click={wake}>{$LL.buttons.confirm()}</button>
+			</form>
+		</div>
+	</div>
+</dialog>
+
+<dialog class="modal" bind:this={modalShutdown}>
+	<div class="modal-box">
+		<h3 class="font-bold text-lg">
+			{$LL.device.modal_confirm_shutdown_title({ device: device.name })}
+		</h3>
+		<p class="py-4">{$LL.device.modal_confirm_shutdown_desc({ device: device.name })}</p>
+		<div class="modal-action">
+			<form method="dialog" class="flex flex-row flex-wrap gap-2">
+				<button class="btn btn-neutral">{$LL.buttons.cancel()}</button>
+				<button class="btn btn-success" on:click={shutdown}>{$LL.buttons.confirm()}</button>
+			</form>
+		</div>
+	</div>
+</dialog>
 
 <style>
 	:global(.menu li.disabled) {

@@ -1,6 +1,6 @@
-import type { Record } from 'pocketbase';
+import type { RecordModel } from 'pocketbase';
 
-export type User = Record & {
+export type User = RecordModel & {
 	username: string;
 	email: string;
 	avatar: number;

@@ -285,6 +285,19 @@
 				{@html $LL.settings.ping_interval_desc2()}
 			</p>
 			<div class="form-control flex flex-row flex-wrap gap-4">
+				<div class="flex flex-row gap-2 items-center">
+					<input
+						id="wake-confirm"
+						type="checkbox"
+						class="toggle toggle-success"
+						bind:checked={device.wake_confirm}
+					/>
+					<label class="label cursor-pointer" for="wake-confirm">
+						<span class="label-text">{$LL.device.require_confirmation()}</span>
+					</label>
+				</div>
+			</div>
+			<div class="form-control flex flex-row flex-wrap gap-4">
 				<div class="w-full max-w-xs">
 					<label class="label" for="wake-cron">
 						<span class="label-text"
@@ -459,6 +472,19 @@
 					class="input w-full max-w-xs mb-2"
 					bind:value={device.shutdown_cmd}
 				/>
+			</div>
+			<div class="form-control flex flex-row flex-wrap gap-4">
+				<div class="flex flex-row gap-2 items-center">
+					<input
+						id="shutdown-confirm"
+						type="checkbox"
+						class="toggle toggle-success"
+						bind:checked={device.shutdown_confirm}
+					/>
+					<label class="label cursor-pointer" for="shutdown-confirm">
+						<span class="label-text">{$LL.device.require_confirmation()}</span>
+					</label>
+				</div>
 			</div>
 			<p class="my-2">
 				{$LL.device.shutdown_cron_desc()}

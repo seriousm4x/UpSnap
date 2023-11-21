@@ -1,6 +1,6 @@
-import type { Record } from 'pocketbase';
+import type { RecordModel } from 'pocketbase';
 
-export type Device = Record & {
+export type Device = RecordModel & {
 	name: string;
 	ip: string;
 	mac: string;
@@ -10,9 +10,11 @@ export type Device = Record & {
 	link: URL;
 	wake_cron: string;
 	wake_cron_enabled: boolean;
+	wake_confirm: boolean;
 	shutdown_cron: string;
 	shutdown_cron_enabled: boolean;
 	shutdown_cmd: string;
+	shutdown_confirm: boolean;
 	password: string;
 	groups: string[];
 	expand: {
@@ -27,11 +29,11 @@ export type Device = Record & {
 	sol_port: number;
 };
 
-export type Port = Record & {
+export type Port = RecordModel & {
 	name: string;
 	number: number;
 };
 
-export type Group = Record & {
+export type Group = RecordModel & {
 	name: string;
 };
