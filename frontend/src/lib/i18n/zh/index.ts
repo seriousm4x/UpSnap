@@ -43,9 +43,9 @@ const zh = {
 		card_nic_tooltip_power: '启动',
 		card_nic_tooltip_power_no_permission: '没有启动此设备的权限',
 		modal_confirm_wake_title: '唤醒 {device}?',
-		modal_confirm_wake_desc: '请确认唤醒 {device}.',
+		modal_confirm_wake_desc: '您确定要唤醒 {device} 吗?',
 		modal_confirm_shutdown_title: '关闭 {device}?',
-		modal_confirm_shutdown_desc: '请确认关闭 {device}.',
+		modal_confirm_shutdown_desc: '您确定要关闭 {device} 吗?',
 		general: '通用',
 		general_name: '名称',
 		general_name_placeholder: '设备名',
@@ -107,7 +107,7 @@ const zh = {
 		network_scan_replace_netmask: '更换所有设备的子网掩码?',
 		network_scan_new_netmask: '新子网掩码',
 		network_scan_include_unknown: '包括名称为 “Unknown” 的设备',
-		require_confirmation: '要求确认'
+		require_confirmation: '二次确认'
 	},
 	login: {
 		welcome: '欢迎使用',
