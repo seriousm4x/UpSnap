@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@fortawesome/free-solid-svg-icons':
-    specifier: ^6.4.2
-    version: 6.4.2
+    specifier: ^6.5.0
+    version: 6.5.0
   date-fns:
     specifier: ^2.30.0
     version: 2.30.0
@@ -355,18 +355,18 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /@fortawesome/fontawesome-common-types@6.4.2:
-    resolution: {integrity: sha512-1DgP7f+XQIJbLFCTX1V2QnxVmpLdKdzzo2k8EmvDOePfchaIGQ9eCHj2up3/jNEbZuBqel5OxiaOJf37TWauRA==}
+  /@fortawesome/fontawesome-common-types@6.5.0:
+    resolution: {integrity: sha512-vYC8oN2l8meu05sRi1j3Iie/HNFAeIxpitYFhsUrBc11TxiMken9QdXnSQ0q16FYsOSt/6soxs5ghdk+VYGiog==}
     engines: {node: '>=6'}
     requiresBuild: true
     dev: false
 
-  /@fortawesome/free-solid-svg-icons@6.4.2:
-    resolution: {integrity: sha512-sYwXurXUEQS32fZz9hVCUUv/xu49PEJEyUOsA51l6PU/qVgfbTb2glsTEaJngVVT8VqBATRIdh7XVgV1JF1LkA==}
+  /@fortawesome/free-solid-svg-icons@6.5.0:
+    resolution: {integrity: sha512-6ZPq8mme67Q7O9Fbp2O+Z7mPZbcWTsRv555JLftLaTodiV0Wq+99YgMhyQ8O6mgNQfComqS9OEvqs7M8ySA92g==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.4.2
+      '@fortawesome/fontawesome-common-types': 6.5.0
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
