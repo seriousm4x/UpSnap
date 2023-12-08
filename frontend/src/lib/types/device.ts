@@ -6,10 +6,12 @@ export type Device = RecordModel & {
 	mac: string;
 	netmask: string;
 	status: 'pending' | 'online' | 'offline' | '';
+	ping_cmd: string;
 	ports: string[];
 	link: URL;
 	wake_cron: string;
 	wake_cron_enabled: boolean;
+	wake_cmd: string;
 	wake_confirm: boolean;
 	shutdown_cron: string;
 	shutdown_cron_enabled: boolean;

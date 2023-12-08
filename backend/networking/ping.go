@@ -2,6 +2,8 @@ package networking
 
 import (
 	"net"
+	"os/exec"
+	"runtime"
 	"time"
 
 	"github.com/pocketbase/pocketbase/models"
@@ -10,23 +12,45 @@ import (
 )
 
 func PingDevice(device *models.Record) bool {
-	pinger, err := probing.NewPinger(device.GetString("ip"))
-	if err != nil {
-		logger.Error.Println(err)
-		return false
-	}
-	pinger.Count = 1
-	pinger.Timeout = 500 * time.Millisecond
-	pinger.SetPrivileged(true)
-	err = pinger.Run()
-	if err != nil {
-		logger.Error.Println(err)
-		return false
-	}
-	stats := pinger.Statistics()
-	if stats.PacketLoss > 0 {
-		return false
+	ping_cmd := device.GetString("ping_cmd")
+	if ping_cmd == "" {
+		pinger, err := probing.NewPinger(device.GetString("ip"))
+		if err != nil {
+			logger.Error.Println(err)
+			return false
+		}
+		pinger.Count = 1
+		pinger.Timeout = 500 * time.Millisecond
+		pinger.SetPrivileged(true)
+		err = pinger.Run()
+		if err != nil {
+			logger.Error.Println(err)
+			return false
+		}
+		stats := pinger.Statistics()
+		if stats.PacketLoss > 0 {
+			return false
+		} else {
+			return true
+		}
 	} else {
+		var shell string
+		var shell_arg string
+		if runtime.GOOS == "windows" {
+			shell = "cmd"
+			shell_arg = "/C"
+		} else {
+			shell = "/bin/sh"
+			shell_arg = "-c"
+		}
+
+		cmd := exec.Command(shell, shell_arg, ping_cmd)
+		err := cmd.Run()
+
+		if err != nil {
+			return false
+		}
+
 		return true
 	}
 }

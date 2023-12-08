@@ -278,12 +278,45 @@
 	</div>
 	<div class="card w-full bg-base-300 shadow-xl mt-6">
 		<div class="card-body">
+			<h2 class="card-title">{$LL.device.ping()}</h2>
+			<p class="my-2">
+				<!-- eslint-disable svelte/no-at-html-tags -->
+				{@html $LL.device.ping_desc()}
+			</p>
+			<div class="form-control w-full">
+				<label class="label cursor-pointer" for="ping-cmd">
+					<span class="label-text">{$LL.device.ping_cmd()}</span>
+				</label>
+				<input
+					id="ping-cmd"
+					type="text"
+					placeholder="$:"
+					class="input w-full max-w-xs mb-2"
+					bind:value={device.ping_cmd}
+				/>
+			</div>
+		</div>
+	</div>
+	<div class="card w-full bg-base-300 shadow-xl mt-6">
+		<div class="card-body">
 			<h2 class="card-title">{$LL.device.wake()}</h2>
 			<p class="my-2">
 				{$LL.device.wake_desc()}
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.settings.ping_interval_desc2()}
 			</p>
+			<div class="form-control w-full">
+				<label class="label cursor-pointer" for="wake-cmd">
+					<span class="label-text">{$LL.device.wake_cmd()}</span>
+				</label>
+				<input
+					id="wake-cmd"
+					type="text"
+					placeholder="$:"
+					class="input w-full max-w-xs mb-2"
+					bind:value={device.wake_cmd}
+				/>
+			</div>
 			<div class="form-control flex flex-row flex-wrap gap-4">
 				<div class="flex flex-row gap-2 items-center">
 					<input
