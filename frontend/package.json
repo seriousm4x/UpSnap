@@ -44,7 +44,7 @@
 		"@fortawesome/free-solid-svg-icons": "^6.5.1",
 		"date-fns": "^2.30.0",
 		"npm-run-all": "^4.1.5",
-		"pocketbase": "^0.19.0",
+		"pocketbase": "^0.20.0",
 		"svelte-fa": "^3.0.4",
 		"svelte-french-toast": "^1.2.0",
 		"theme-change": "^2.5.0",
