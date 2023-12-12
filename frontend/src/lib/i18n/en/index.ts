@@ -63,7 +63,8 @@ const en = {
 		link_desc:
 			'Makes your device name a clickable link, perfect for linking a dashboard for example.',
 		ping: 'Ping',
-		ping_desc: 'You can use a custom shell command to see if the device is powered on. The command should return an exit code of <span class="badge">0</span> to indicate that the device is powered on, any other exit code will mark the device as powered off.',
+		ping_desc:
+			'You can use a custom shell command to see if the device is powered on. The command should return an exit code of <span class="badge">0</span> to indicate that the device is powered on, any other exit code will mark the device as powered off.',
 		ping_cmd: 'Custom ping command',
 		wake: 'Wake',
 		wake_desc: 'You can power this device using a scheduled cron job.',
