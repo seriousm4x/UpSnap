@@ -14,9 +14,9 @@ import (
 
 func WakeDevice(device *models.Record) error {
 	logger.Info.Println("Wake triggered for", device.GetString("name"))
+
 	wake_cmd := device.GetString("wake_cmd")
 	if wake_cmd != "" {
-
 		var shell string
 		var shell_arg string
 		if runtime.GOOS == "windows" {

@@ -47,11 +47,7 @@ func PingDevice(device *models.Record) bool {
 		cmd := exec.Command(shell, shell_arg, ping_cmd)
 		err := cmd.Run()
 
-		if err != nil {
-			return false
-		}
-
-		return true
+		return err == nil
 	}
 }
 
