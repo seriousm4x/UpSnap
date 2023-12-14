@@ -79,7 +79,7 @@ const de = {
 		sol_desc2:
 			'SOL ist so konfiguriert, dass es Anfragen über HTTP statt über UDP sendet, um eine Autorisierung zu ermöglichen und die Zuverlässigkeit der Anfragen zu erhöhen.',
 		sol_desc3:
-			'Daher stellen Sie bitte sicher, dass Sie <span class="badge">HTTP:&lt;DEINPORT&gt;</span> im Abschnitt <span class="badge">Listener</span> der <a href="https://github.com/SR-G/sleep-on-lan#configuration" class="link" target="_blank">SOL-Konfiguration</a> hinzufügen.',
+			'Daher stell bitte sicher, dass du <span class="badge">HTTP:&lt;DEINPORT&gt;</span> im Abschnitt <span class="badge">Listener</span> der <a href="https://github.com/SR-G/sleep-on-lan#configuration" class="link" target="_blank">SOL-Konfiguration</a> hinzufügst.',
 		sol_enable: 'Sleep-On-LAN aktivieren',
 		sol_port: 'SOL Port',
 		sol_authorization: 'Authorisierung',
