@@ -64,8 +64,13 @@ const de = {
 		link: 'Link',
 		link_desc:
 			'Macht Ihren Gerätenamen zu einem anklickbaren Link, ideal zum Beispiel für die Verknüpfung eines Dashboards.',
+		ping: 'Ping',
+		ping_desc:
+			'Du kannst einen benutzerdefinierten Shell-Befehl verwenden, um festzustellen, ob das Gerät eingeschaltet ist. Der Befehl sollte einen Exit-Code von <span class="badge">0</span> zurückgeben, um anzuzeigen, dass das Gerät eingeschaltet ist. Jeder andere Exit-Code setzt den Status auf offline.',
+		ping_cmd: 'Eigener Ping-Befehl',
 		wake: 'Einschalten',
 		wake_desc: 'Du kannst das Gerät mit einem Cron-Job einschalten.',
+		wake_cmd: 'Eigener Einschalt-Befehl',
 		wake_cron: 'Cron',
 		wake_cron_enable: 'Aktivieren',
 		sol: 'Sleep-On-LAN',

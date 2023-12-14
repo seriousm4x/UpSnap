@@ -60,8 +60,13 @@ const zh = {
 		ports_number: '端口号',
 		link: '链接',
 		link_desc: '为您的设备名设置一个可点击的链接.',
+		ping: 'Ping',
+		ping_desc:
+			'您可以使用自定义 shell 命令来查看设备是否已接通电源。该命令应返回 <span class="badge">0</span> 的退出代码，表示设备电源已打开，任何其他退出代码都将标记设备电源已关闭。',
+		ping_cmd: '自定义 ping 命令',
 		wake: '唤醒',
 		wake_desc: '您可以通过计划任务来唤醒设备.',
+		wake_cmd: '自定义唤醒命令',
 		wake_cron: '唤醒计划任务',
 		wake_cron_enable: '启用定时唤醒',
 		sol: 'Sleep-On-LAN',

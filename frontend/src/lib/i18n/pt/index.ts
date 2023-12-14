@@ -64,8 +64,13 @@ const pt = {
 		link: 'Link',
 		link_desc:
 			'Permite que o nome do seu dispositivo seja um link. Perfeito para dashboard, por exemplo.',
+		ping: 'Ping',
+		ping_desc:
+			'Pode utilizar um comando shell personalizado para ver se o dispositivo está ligado. O comando deve devolver um código de saída de <span class="badge">0</span> para indicar que o dispositivo está ligado, qualquer outro código de saída marcará o dispositivo como desligado.',
+		ping_cmd: 'Comando ping personalizado',
 		wake: 'Ligar',
 		wake_desc: 'Poderá ligar este dispositivo através dum cron job agendado.',
+		wake_cmd: 'Comando de despertar personalizado',
 		wake_cron: 'Wake cron',
 		wake_cron_enable: 'Ativar wake cron',
 		sol: 'Sleep-On-LAN',

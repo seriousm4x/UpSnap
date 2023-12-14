@@ -65,8 +65,13 @@ const fr = {
 		link: 'Lien',
 		link_desc:
 			'Rend le nom de votre appareil cliquable, parfait pour y lier un tableau de bord par exemple.',
+		ping: 'Ping',
+		ping_desc:
+			"Vous pouvez utiliser une commande shell personnalisée pour vérifier si l'appareil est sous tension. La commande doit renvoyer un code de sortie de <span class='badge'>0</span> pour indiquer que l'appareil est sous tension, tout autre code de sortie indiquera que l'appareil est hors tension.",
+		ping_cmd: 'Commande ping personnalisée',
 		wake: 'Réveil',
 		wake_desc: 'Vous pouvez allumer cet appareil en utilisant un job cron planifié.',
+		wake_cmd: 'Commande de réveil personnalisée',
 		wake_cron: 'Réveil avec cron',
 		wake_cron_enable: 'Activer le réveil avec cron',
 		sol: 'Sleep-On-LAN',
