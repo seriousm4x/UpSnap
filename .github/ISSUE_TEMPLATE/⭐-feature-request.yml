@@ -1,0 +1,10 @@
+title: "[Feature] <feature-name-goes-here>"
+labels: ["feature-requests"]
+
+body:
+    - type: textarea
+      id: feature
+      attributes:
+          label: The feature
+      validations:
+          required: true
