@@ -219,7 +219,7 @@
 							id="replaceNetmaskInput"
 							class="input input-bordered"
 							type="text"
-							placeholder="255.255.0.0"
+							placeholder="255.255.255.0"
 							bind:value={replaceNetmask}
 						/>
 					</div>

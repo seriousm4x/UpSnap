@@ -231,7 +231,7 @@
 					<input
 						id="device-netmask"
 						type="text"
-						placeholder="255.255.255.0"
+						placeholder="255.255.255.255"
 						class="input w-full max-w-xs"
 						bind:value={device.netmask}
 						required
