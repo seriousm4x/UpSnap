@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+    - name: I have a question or need support
+      url: https://github.com/seriousm4x/UpSnap/discussions/categories/help-wanted
+      about: Please use our GitHub Discussion if you need help.
+    - name: Feature Request
+      url: https://github.com/seriousm4x/UpSnap/discussions/categories/feature-requests
+      about: Please use our GitHub Discussion for making feature requests.

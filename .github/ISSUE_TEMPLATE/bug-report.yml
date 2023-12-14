@@ -10,7 +10,7 @@ body:
 
               If you have a feature or enhancement request, please use the [feature request][fr] section of our [GitHub Discussions][fr].
 
-              [fr]: https://github.com/seriousm4x/UpSnap/discussions/new?category=feature-request
+              [fr]: https://github.com/seriousm4x/UpSnap/discussions/new?category=feature-requests
 
     - type: textarea
       validations:
