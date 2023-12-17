@@ -57,9 +57,6 @@ func CheckPort(host string, port string) bool {
 	if err != nil {
 		return false
 	}
-	if conn != nil {
-		defer conn.Close()
-		return true
-	}
-	return false
+	defer conn.Close()
+	return conn != nil
 }
