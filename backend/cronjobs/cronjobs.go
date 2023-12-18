@@ -8,21 +8,24 @@ import (
 	"github.com/seriousm4x/upsnap/networking"
 )
 
-var PingRunning bool = false
-var WakeShutdownRunning bool = false
-var CronPing *cron.Cron
-var CronWakeShutdown *cron.Cron
+var (
+	PingRunning         = false
+	WakeShutdownRunning = false
+	CronPing            = cron.New()
+	CronWakeShutdown    = cron.New()
+)
 
-func RunPing(app *pocketbase.PocketBase) {
-	PingRunning = true
+func SetPingJobs(app *pocketbase.PocketBase) {
+	// remove existing jobs
+	for _, job := range CronPing.Entries() {
+		CronPing.Remove(job.ID)
+	}
 
 	settingsPrivateRecords, err := app.Dao().FindRecordsByExpr("settings_private")
 	if err != nil {
 		logger.Error.Println(err)
 	}
 
-	// init cronjob
-	CronPing = cron.New()
 	CronPing.AddFunc(settingsPrivateRecords[0].GetString("interval"), func() {
 		// skip cron if no realtime clients connected and lazy_ping is turned on
 		realtimeClients := len(app.SubscriptionsBroker().Clients())
@@ -89,13 +92,14 @@ func RunPing(app *pocketbase.PocketBase) {
 			}(device)
 		}
 	})
-	CronPing.Run()
 }
 
-func RunWakeShutdown(app *pocketbase.PocketBase) {
-	WakeShutdownRunning = true
+func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
+	// remove existing jobs
+	for _, job := range CronWakeShutdown.Entries() {
+		CronWakeShutdown.Remove(job.ID)
+	}
 
-	CronWakeShutdown = cron.New()
 	devices, err := app.Dao().FindRecordsByExpr("devices")
 	if err != nil {
 		logger.Error.Println(err)
@@ -109,70 +113,93 @@ func RunWakeShutdown(app *pocketbase.PocketBase) {
 		shutdown_cron_enabled := dev.GetBool("shutdown_cron_enabled")
 
 		if wake_cron_enabled && wake_cron != "" {
-			go func(d *models.Record) {
-				_, err := CronWakeShutdown.AddFunc(wake_cron, func() {
-					d.Set("status", "pending")
-					if err := app.Dao().SaveRecord(d); err != nil {
+			_, err := CronWakeShutdown.AddFunc(wake_cron, func() {
+				status := dev.GetString("status")
+				if status == "pending" || status == "online" {
+					return
+				}
+				dev.Set("status", "pending")
+				if err := app.Dao().SaveRecord(dev); err != nil {
+					logger.Error.Println("Failed to save record:", err)
+				}
+				if err := networking.WakeDevice(dev); err != nil {
+					logger.Error.Println(err)
+					dev.Set("status", "offline")
+					if err := app.Dao().SaveRecord(dev); err != nil {
 						logger.Error.Println("Failed to save record:", err)
 					}
-					if err := networking.WakeDevice(d); err != nil {
-						logger.Error.Println(err)
-						d.Set("status", "offline")
-						if err := app.Dao().SaveRecord(d); err != nil {
-							logger.Error.Println("Failed to save record:", err)
-						}
-					} else {
-						d.Set("status", "online")
-						if err := app.Dao().SaveRecord(d); err != nil {
-							logger.Error.Println("Failed to save record:", err)
-						}
+				} else {
+					dev.Set("status", "online")
+					if err := app.Dao().SaveRecord(dev); err != nil {
+						logger.Error.Println("Failed to save record:", err)
 					}
-				})
-				if err != nil {
-					logger.Error.Println(err)
 				}
-			}(dev)
+			})
+			if err != nil {
+				logger.Error.Println(err)
+			}
 		}
 
 		if shutdown_cron_enabled && shutdown_cron != "" {
-			go func(d *models.Record) {
-				_, err := CronWakeShutdown.AddFunc(shutdown_cron, func() {
-					d.Set("status", "pending")
-					if err := app.Dao().SaveRecord(d); err != nil {
+			_, err := CronWakeShutdown.AddFunc(shutdown_cron, func() {
+				status := dev.GetString("status")
+				if status == "pending" || status == "offline" {
+					return
+				}
+				dev.Set("status", "pending")
+				if err := app.Dao().SaveRecord(dev); err != nil {
+					logger.Error.Println("Failed to save record:", err)
+				}
+				if err := networking.ShutdownDevice(dev); err != nil {
+					logger.Error.Println(err)
+					dev.Set("status", "online")
+					if err := app.Dao().SaveRecord(dev); err != nil {
 						logger.Error.Println("Failed to save record:", err)
 					}
-					if err := networking.ShutdownDevice(d); err != nil {
-						logger.Error.Println(err)
-						d.Set("status", "online")
-						if err := app.Dao().SaveRecord(d); err != nil {
-							logger.Error.Println("Failed to save record:", err)
-						}
-					} else {
-						d.Set("status", "offline")
-						if err := app.Dao().SaveRecord(d); err != nil {
-							logger.Error.Println("Failed to save record:", err)
-						}
+				} else {
+					dev.Set("status", "offline")
+					if err := app.Dao().SaveRecord(dev); err != nil {
+						logger.Error.Println("Failed to save record:", err)
 					}
-				})
-				if err != nil {
-					logger.Error.Println(err)
 				}
-			}(dev)
+			})
+			if err != nil {
+				logger.Error.Println(err)
+			}
 		}
 	}
-	CronWakeShutdown.Run()
 }
 
-func StopAll() {
-	if PingRunning {
-		logger.Info.Println("Stopping ping cronjob")
-		ctx := CronPing.Stop()
-		<-ctx.Done()
+func StartWakeShutdown() {
+	WakeShutdownRunning = true
+	go CronWakeShutdown.Run()
 
-	}
+}
+
+func StopWakeShutdown() {
 	if WakeShutdownRunning {
 		logger.Info.Println("Stopping wake/shutdown cronjob")
 		ctx := CronWakeShutdown.Stop()
 		<-ctx.Done()
 	}
+	WakeShutdownRunning = false
+}
+
+func StartPing() {
+	PingRunning = true
+	go CronPing.Run()
+}
+
+func StopPing() {
+	if PingRunning {
+		logger.Info.Println("Stopping wake/shutdown cronjob")
+		ctx := CronPing.Stop()
+		<-ctx.Done()
+	}
+	PingRunning = false
+}
+
+func StopAll() {
+	StopPing()
+	StopWakeShutdown()
 }

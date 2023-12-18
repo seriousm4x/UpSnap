@@ -122,23 +122,37 @@ func StartPocketBase(distDirFS fs.FS) {
 			return err
 		}
 
-		go cronjobs.RunPing(App)
-		go cronjobs.RunWakeShutdown(App)
+		cronjobs.SetPingJobs(App)
+		cronjobs.StartPing()
+		cronjobs.SetWakeShutdownJobs(App)
+		cronjobs.StartWakeShutdown()
 
 		// restart ping cronjobs or wake/shutdown cronjobs on model update
 		// add event hook before starting server.
 		// using this outside App.OnBeforeServe() would not work
 		App.OnModelAfterUpdate("settings_private", "devices").Add(func(e *core.ModelEvent) error {
 			if e.Model.TableName() == "settings_private" {
-				for _, job := range cronjobs.CronPing.Entries() {
-					cronjobs.CronPing.Remove(job.ID)
-				}
-				go cronjobs.RunPing(App)
+				cronjobs.SetPingJobs(App)
 			} else if e.Model.TableName() == "devices" {
-				for _, job := range cronjobs.CronWakeShutdown.Entries() {
-					cronjobs.CronWakeShutdown.Remove(job.ID)
+				// only restart wake/shutdown cronjobs if new model's cron changed
+				newRecord := e.Model.(*models.Record)
+				newWakeCron := newRecord.GetString("wake_cron")
+				newWakeCronEnabled := newRecord.GetBool("wake_cron_enabled")
+				newShutdownCron := newRecord.GetString("shutdown_cron")
+				newShutdownCronEnabled := newRecord.GetBool("shutdown_cron_enabled")
+
+				oldRecord := newRecord.OriginalCopy()
+				oldWakeCron := oldRecord.GetString("wake_cron")
+				oldWakeCronEnabled := oldRecord.GetBool("wake_cron_enabled")
+				oldShutdownCron := oldRecord.GetString("shutdown_cron")
+				oldShutdownCronEnabled := oldRecord.GetBool("shutdown_cron_enabled")
+
+				if newWakeCron != oldWakeCron ||
+					newWakeCronEnabled != oldWakeCronEnabled ||
+					newShutdownCron != oldShutdownCron ||
+					newShutdownCronEnabled != oldShutdownCronEnabled {
+					cronjobs.SetWakeShutdownJobs(App)
 				}
-				go cronjobs.RunWakeShutdown(App)
 			}
 			return nil
 		})
