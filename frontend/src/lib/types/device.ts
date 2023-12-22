@@ -34,6 +34,7 @@ export type Device = RecordModel & {
 export type Port = RecordModel & {
 	name: string;
 	number: number;
+	link: string;
 };
 
 export type Group = RecordModel & {

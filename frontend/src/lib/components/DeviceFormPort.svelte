@@ -60,6 +60,18 @@
 					/>
 				</div>
 			</div>
+			<div>
+				<label class="label p-0" for="port-link-{index}">
+					<span class="label-text">{$LL.device.link()}</span>
+				</label>
+				<input
+					id="port-link-{index}"
+					type="url"
+					placeholder="https:// ..."
+					class="input input-sm input-bordered w-full"
+					bind:value={device.expand.ports[index].link}
+				/>
+			</div>
 			<div class="card-actions justify-end">
 				<button
 					class="btn btn-xs btn-outline btn-error"

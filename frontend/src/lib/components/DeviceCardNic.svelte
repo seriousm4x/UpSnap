@@ -132,15 +132,23 @@
 		<div class="grow">
 			<div class="text-lg font-bold leading-4">{device.ip}</div>
 			<div>{device.mac}</div>
-			<div class="flex flex-wrap gap-x-4 gap-y-0">
+			<div class="flex flex-wrap gap-x-4">
 				{#if device?.expand?.ports}
 					{#each device?.expand?.ports.sort((a, b) => a.number - b.number) as port}
 						<span class="flex items-center gap-1 break-all">
 							{#if port.status}
 								<Fa icon={faCircle} class="text-success" />
-								{port.name} ({port.number})
 							{:else}
 								<Fa icon={faCircle} class="text-error" />
+							{/if}
+							{#if port.link}
+								<a
+									href={port.link}
+									target="_blank"
+									class="underline"
+									on:click={(e) => e.stopPropagation()}>{port.name} ({port.number})</a
+								>
+							{:else}
 								{port.name} ({port.number})
 							{/if}
 						</span>
