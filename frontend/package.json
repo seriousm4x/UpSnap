@@ -42,7 +42,7 @@
 	},
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.5.1",
-		"date-fns": "^3.0.4",
+		"date-fns": "^3.0.6",
 		"npm-run-all": "^4.1.5",
 		"pocketbase": "^0.20.1",
 		"svelte-fa": "^3.0.4",
