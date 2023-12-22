@@ -13,6 +13,11 @@
 	} from '@fortawesome/free-solid-svg-icons';
 	import type { Locale } from 'date-fns';
 	import { formatDistance, parseISO } from 'date-fns';
+	import { de } from 'date-fns/locale/de';
+	import { enUS } from 'date-fns/locale/en-US';
+	import { fr } from 'date-fns/locale/fr';
+	import { pt } from 'date-fns/locale/pt';
+	import { zhCN } from 'date-fns/locale/zh-CN';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 	import { scale } from 'svelte/transition';
@@ -65,26 +70,26 @@
 			switch ($locale) {
 				case 'de':
 				case 'de-DE':
-					dateFnsLocale = (await import('date-fns/locale/de/index.js')).default;
+					dateFnsLocale = de;
 					break;
 				case 'en':
 				case 'en-US':
-					dateFnsLocale = (await import('date-fns/locale/en-US/index.js')).default;
+					dateFnsLocale = enUS;
 					break;
 				case 'fr':
 				case 'fr-FR':
-					dateFnsLocale = (await import('date-fns/locale/fr/index.js')).default;
+					dateFnsLocale = fr;
 					break;
 				case 'pt':
 				case 'pt-PT':
-					dateFnsLocale = (await import('date-fns/locale/pt/index.js')).default;
+					dateFnsLocale = pt;
 					break;
 				case 'zh':
 				case 'zh-CN':
-					dateFnsLocale = (await import('date-fns/locale/zh-CN/index.js')).default;
+					dateFnsLocale = zhCN;
 					break;
 				default:
-					dateFnsLocale = (await import('date-fns/locale/en-US/index.js')).default;
+					dateFnsLocale = enUS;
 					break;
 			}
 		})();
