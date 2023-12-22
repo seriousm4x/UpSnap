@@ -7,14 +7,14 @@ services:
     restart: unless-stopped
     volumes:
       - ./data:/app/pb_data
-      # # To use a non-root user, create the mountpoint first (mkdir data) so that it has the right permission.
-      # user: 1000:1000
-      # environment:
-      #   - TZ=Europe/Berlin # Set container timezone for cron schedules
-      #   - UPSNAP_INTERVAL=@every 10s # Sets the interval in which the devices are pinged
-      #   - UPSNAP_SCAN_RANGE=192.168.1.0/24 # Scan range is used for device discovery on local network
-      #   - UPSNAP_SCAN_TIMEOUT=500ms # Scan timeout is nmap's --host-timeout value to wait for devices (https://nmap.org/book/man-performance.html)
-      #   - UPSNAP_PING_PRIVILEGED=true # Set to false if you don't have root user permissions
+    # # To use a non-root user, create the mountpoint first (mkdir data) so that it has the right permission.
+    # user: 1000:1000
+    # environment:
+    #   - TZ=Europe/Berlin # Set container timezone for cron schedules
+    #   - UPSNAP_INTERVAL=@every 10s # Sets the interval in which the devices are pinged
+    #   - UPSNAP_SCAN_RANGE=192.168.1.0/24 # Scan range is used for device discovery on local network
+    #   - UPSNAP_SCAN_TIMEOUT=500ms # Scan timeout is nmap's --host-timeout value to wait for devices (https://nmap.org/book/man-performance.html)
+    #   - UPSNAP_PING_PRIVILEGED=true # Set to false if you don't have root user permissions
     #   - UPSNAP_WEBSITE_TITLE=Custom name # Custom website title
     # # dns is used for name resolution during network scan
     # dns:
