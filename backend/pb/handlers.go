@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"net"
 	"net/http"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -146,7 +147,11 @@ func HandlerScan(c echo.Context) error {
 	}
 
 	// run nmap
-	cmd := exec.Command(nmap, "-sn", "-oX", "-", scanRange, "--host-timeout", "500ms")
+	timeout := os.Getenv("UPSNAP_SCAN_TIMEOUT")
+	if timeout == "" {
+		timeout = "500ms"
+	}
+	cmd := exec.Command(nmap, "-sn", "-oX", "-", scanRange, "--host-timeout", timeout)
 	cmdOutput, err := cmd.Output()
 	if err != nil {
 		return err
