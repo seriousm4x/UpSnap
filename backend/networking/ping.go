@@ -2,8 +2,10 @@ package networking
 
 import (
 	"net"
+	"os"
 	"os/exec"
 	"runtime"
+	"strconv"
 	"time"
 
 	"github.com/pocketbase/pocketbase/models"
@@ -21,7 +23,11 @@ func PingDevice(device *models.Record) bool {
 		}
 		pinger.Count = 1
 		pinger.Timeout = 500 * time.Millisecond
-		pinger.SetPrivileged(true)
+		privileged, err := strconv.ParseBool(os.Getenv("UPSNAP_PING_PRIVILEGED"))
+		if err != nil {
+			privileged = true
+		}
+		pinger.SetPrivileged(privileged)
 		err = pinger.Run()
 		if err != nil {
 			logger.Error.Println(err)
