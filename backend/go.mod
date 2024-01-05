@@ -11,7 +11,7 @@ require (
 	github.com/pocketbase/pocketbase v0.20.4
 	github.com/prometheus-community/pro-bing v0.3.0
 	github.com/robfig/cron/v3 v3.0.1
-	golang.org/x/sys v0.15.0
+	golang.org/x/sys v0.16.0
 )
 
 require (
