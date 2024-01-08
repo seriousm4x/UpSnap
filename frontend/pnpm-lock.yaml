@@ -77,8 +77,8 @@ devDependencies:
     specifier: ^3.6.2
     version: 3.6.2(postcss@8.4.33)(svelte@4.2.8)
   tailwindcss:
-    specifier: ^3.4.0
-    version: 3.4.0
+    specifier: ^3.4.1
+    version: 3.4.1
   tslib:
     specifier: ^2.6.2
     version: 2.6.2
@@ -2736,8 +2736,8 @@ packages:
       magic-string: 0.30.5
       periscopic: 3.1.0
 
-  /tailwindcss@3.4.0:
-    resolution: {integrity: sha512-VigzymniH77knD1dryXbyxR+ePHihHociZbXnLZHUyzf2MMs2ZVqlUrZ3FvpXP8pno9JzmILt1sZPD19M3IxtA==}
+  /tailwindcss@3.4.1:
+    resolution: {integrity: sha512-qAYmXRfk3ENzuPBakNK0SRrUDipP8NQnEY6772uDhflcQz5EhRdD7JNZxyrFHVQNCwULPBn6FNPp9brpO7ctcA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
