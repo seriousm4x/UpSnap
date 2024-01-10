@@ -9,8 +9,8 @@ dependencies:
     specifier: ^6.5.1
     version: 6.5.1
   date-fns:
-    specifier: ^3.1.0
-    version: 3.1.0
+    specifier: ^3.2.0
+    version: 3.2.0
   npm-run-all:
     specifier: ^4.1.5
     version: 4.1.5
@@ -1015,8 +1015,8 @@ packages:
       - postcss
     dev: true
 
-  /date-fns@3.1.0:
-    resolution: {integrity: sha512-ZO7yefXV/wCWzd3I9haCHmfzlfA3i1a2HHO7ZXjtJrRjXt8FULKJ2Vl8wji3XYF4dQ0ZJ/tokXDZeYlFvgms9Q==}
+  /date-fns@3.2.0:
+    resolution: {integrity: sha512-E4KWKavANzeuusPi0jUjpuI22SURAznGkx7eZV+4i6x2A+IZxAMcajgkvuDAU1bg40+xuhW1zRdVIIM/4khuIg==}
     dev: false
 
   /debug@4.3.4:
