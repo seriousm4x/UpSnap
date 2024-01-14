@@ -15,7 +15,7 @@
 	let getUsersPromise = getUsers();
 	let getPermissionsPromise = getPermissions();
 	let getDevicesPromise = getDevices();
-	let deleteModal: HTMLDialogElement;
+	let deleteModal = [] as HTMLDialogElement[];
 
 	let users = [] as User[];
 	let permissions = [] as Permission[];
@@ -311,7 +311,7 @@
 						<button
 							class="join-item btn btn-error"
 							type="button"
-							on:click={() => deleteModal.showModal()}
+							on:click={() => deleteModal[index].showModal()}
 							><Fa icon={faTrash} />{$LL.buttons.delete()}</button
 						>
 						<button class="join-item btn btn-success" type="submit"
@@ -321,7 +321,7 @@
 				</div>
 			</div>
 		</form>
-		<dialog class="modal" bind:this={deleteModal}>
+		<dialog class="modal" bind:this={deleteModal[index]}>
 			<form method="dialog" class="modal-box">
 				<h3 class="font-bold text-lg">{$LL.users.confirm_delete_title()}</h3>
 				<p class="py-4">{$LL.users.confirm_delete_desc({ username: user.username })}</p>
