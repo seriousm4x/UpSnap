@@ -18,8 +18,8 @@ dependencies:
     specifier: ^0.20.3
     version: 0.20.3
   svelte-fa:
-    specifier: ^4.0.1
-    version: 4.0.1(svelte@4.2.8)
+    specifier: ^4.0.2
+    version: 4.0.2(svelte@4.2.8)
   svelte-french-toast:
     specifier: ^1.2.0
     version: 1.2.0(svelte@4.2.8)
@@ -2754,8 +2754,8 @@ packages:
       svelte: 4.2.8
     dev: true
 
-  /svelte-fa@4.0.1(svelte@4.2.8):
-    resolution: {integrity: sha512-+9+h2A6+pLdPW/vJNr1RhhQGKHlbtJD0dm+IabShawH3XNVUwlxH+Euet6HKR47DtNeqzDndD/xySrUVLVaEzQ==}
+  /svelte-fa@4.0.2(svelte@4.2.8):
+    resolution: {integrity: sha512-lza8Jfii6jcpMQB73mBStONxaLfZsUS+rKJ/hH6WxsHUd+g68+oHIL9yQTk4a0uY9HQk78T/CPvQnED0msqJfg==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
