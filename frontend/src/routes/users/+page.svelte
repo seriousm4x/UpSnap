@@ -71,23 +71,24 @@
 	}
 
 	async function deleteUser(user: User) {
+		let permission = permissions.find((perm) => perm.user === user.id);
+		if (permission?.id !== undefined) {
+			await $pocketbase
+				.collection('permissions')
+				.delete(permission.id)
+				.then(() => {
+					toast.success($LL.toasts.permissions_deleted({ username: user.username }));
+				})
+				.catch((err) => {
+					toast.error(err.message);
+				});
+		}
+
 		await $pocketbase
 			.collection('users')
 			.delete(user.id)
 			.then(async () => {
 				toast.success($LL.toasts.user_deleted({ username: user.username }));
-				let permission = permissions.find((perm) => perm.user === user.id);
-				if (permission?.id !== undefined) {
-					await $pocketbase
-						.collection('permissions')
-						.delete(permission.id)
-						.then(() => {
-							toast.success($LL.toasts.permissions_deleted({ username: user.username }));
-						})
-						.catch((err) => {
-							toast.error(err.message);
-						});
-				}
 				reload();
 			})
 			.catch((err) => {
