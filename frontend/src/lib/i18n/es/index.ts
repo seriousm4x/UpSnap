@@ -6,7 +6,7 @@ const es = {
 	home: {
 		page_title: 'Inicio',
 		order_groups: 'Grupos',
-		order_name: 'Nome',
+		order_name: 'Nombre',
 		order_ip: 'IP',
 		order_tooltip: 'Orden',
 		no_devices: 'Sin dispositivos.',
@@ -55,7 +55,7 @@ const es = {
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Máscara de red',
-		general_required_field: 'campo obligatorio',
+		general_required_field: 'Campo obligatorio',
 		ports: 'Puertos',
 		ports_desc: 'UpSnap puede comprobar si ciertos puertos están abiertos.',
 		ports_add_new: 'Añadir nuevo puerto',
