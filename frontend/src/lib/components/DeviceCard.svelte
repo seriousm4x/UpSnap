@@ -15,6 +15,7 @@
 	import { formatDistance, parseISO } from 'date-fns';
 	import { de } from 'date-fns/locale/de';
 	import { enUS } from 'date-fns/locale/en-US';
+	import { es } from 'date-fns/locale/es';
 	import { fr } from 'date-fns/locale/fr';
 	import { pt } from 'date-fns/locale/pt';
 	import { zhCN } from 'date-fns/locale/zh-CN';
@@ -22,7 +23,6 @@
 	import toast from 'svelte-french-toast';
 	import { scale } from 'svelte/transition';
 	import DeviceCardNic from './DeviceCardNic.svelte';
-	import es from '../i18n/es';
 
 	export let device: Device;
 
