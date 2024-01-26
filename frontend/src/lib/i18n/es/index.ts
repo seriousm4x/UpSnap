@@ -162,7 +162,7 @@ const es = {
 		username: 'Usuario',
 		password: 'Contraseña',
 		password_confirm: 'Confirmar contraseña',
-		required_field: 'campo obligatorio'
+		required_field: 'Campo obligatorio'
 	},
 	buttons: {
 		save: 'Guardar',
