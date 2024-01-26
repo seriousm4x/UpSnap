@@ -9,6 +9,8 @@ import de from './de';
 import de_DE from './de-DE';
 import en from './en';
 import en_US from './en-US';
+import es from './es';
+import es_ES from './es-ES';
 import fr from './fr';
 import fr_FR from './fr-FR';
 import pt from './pt';
@@ -21,6 +23,8 @@ const localeTranslations = {
 	'de-DE': de_DE,
 	en,
 	'en-US': en_US,
+	es,
+	'es-ES': es_ES,
 	fr,
 	'fr-FR': fr_FR,
 	pt,
