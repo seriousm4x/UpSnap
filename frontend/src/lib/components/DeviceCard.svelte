@@ -22,6 +22,7 @@
 	import toast from 'svelte-french-toast';
 	import { scale } from 'svelte/transition';
 	import DeviceCardNic from './DeviceCardNic.svelte';
+	import es from '../i18n/es';
 
 	export let device: Device;
 
@@ -79,6 +80,10 @@
 				case 'fr':
 				case 'fr-FR':
 					dateFnsLocale = fr;
+					break;
+				case 'es':
+				case 'es-ES':
+					dateFnsLocale = es;
 					break;
 				case 'pt':
 				case 'pt-PT':
