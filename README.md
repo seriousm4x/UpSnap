@@ -123,6 +123,7 @@ UpSnap is available in the following languages so far:
 
 -   🇺🇸 **English** (en-US)
 -   🇩🇪 **German** (de-DE)
+-   🇪🇸 **Spanish** (es-ES)
 -   🇫🇷 **French** (fr-FR)
 -   🇵🇹 **Portuguese** (pt-PT)
 -   🇨🇳 **Chinese** (zh-CN)
