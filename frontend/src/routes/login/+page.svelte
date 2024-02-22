@@ -5,6 +5,7 @@
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import { faEye, faLockOpen, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+	import type { AuthProviderInfo } from 'pocketbase';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
@@ -40,16 +41,15 @@
 			});
 	}
 
-	function loginOIDC() {
+	function loginWithProvider(provider: AuthProviderInfo) {
 		$pocketbase
 			.collection('users')
-			.authWithOAuth2({ provider: 'oidc' })
+			.authWithOAuth2({ provider: provider.name })
 			.then(() => {
 				goto('/');
 			})
 			.catch((err) => {
 				console.log(err);
-
 				toast.error(err.message);
 			});
 	}
@@ -114,9 +114,17 @@
 									><Fa icon={faQuestionCircle} /></a
 								>
 							</li>
-							<li>
-								<button type="button" on:click={loginOIDC}>OIDC 1</button>
-							</li>
+							{#await $pocketbase.collection('users').listAuthMethods() then authMethods}
+								{#if authMethods.authProviders.length > 0}
+									{#each authMethods.authProviders as provider}
+										<li>
+											<button type="button" on:click={() => loginWithProvider(provider)}
+												>{provider.displayName}</button
+											>
+										</li>
+									{/each}
+								{/if}
+							{/await}
 						</ul>
 					</div>
 					<button class="btn btn-primary ms-auto" type="submit"
