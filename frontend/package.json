@@ -18,7 +18,7 @@
 		"@sveltejs/adapter-static": "^2.0.3",
 		"@sveltejs/kit": "^1.30.4",
 		"@typescript-eslint/eslint-plugin": "^7.0.2",
-		"@typescript-eslint/parser": "^7.0.2",
+		"@typescript-eslint/parser": "^7.1.0",
 		"autoprefixer": "^10.4.17",
 		"daisyui": "^4.7.2",
 		"eslint": "^8.57.0",
