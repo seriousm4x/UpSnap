@@ -58,31 +58,15 @@
 
 		// redirect to welcome page if setup is not completed
 		if ($settingsPub.setup_completed === false && $page.url.pathname !== '/welcome') {
+			$pocketbase.authStore.clear();
 			goto('/welcome');
 			return;
 		}
 
-		// load auth from localstorage
-		const pbCookie = localStorage.getItem('pocketbase_auth');
-		if (!pbCookie) {
-			goto('/login');
-			return;
-		}
-
-		$pocketbase.authStore.loadFromCookie('pb_auth=' + pbCookie);
-		if (!$pocketbase.authStore.isValid) {
-			goto('/login');
-			return;
-		}
-
-		// only refresh token if valid less than 1 day
-		const jwt = parseJwt($pocketbase.authStore.token);
-		if (jwt.exp > Date.now() / 1000 + 60 * 60 * 24) {
-			return;
-		}
-
+		// refresh auth token
 		if ($pocketbase.authStore.isAdmin) {
 			await $pocketbase.admins.authRefresh().catch(() => {
+				$pocketbase.authStore.clear();
 				goto('/login');
 			});
 		} else {
@@ -90,26 +74,11 @@
 				.collection('users')
 				.authRefresh()
 				.catch(() => {
+					$pocketbase.authStore.clear();
 					goto('/login');
 				});
 		}
 	});
-
-	function parseJwt(token: string) {
-		var base64Url = token.split('.')[1];
-		var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-		var jsonPayload = decodeURIComponent(
-			window
-				.atob(base64)
-				.split('')
-				.map(function (c) {
-					return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-				})
-				.join('')
-		);
-
-		return JSON.parse(jsonPayload);
-	}
 </script>
 
 <svelte:head>
