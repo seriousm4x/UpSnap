@@ -105,8 +105,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 		logger.Error.Println(err)
 		return
 	}
-	for _, device := range devices {
-		dev := device
+	for _, dev := range devices {
 		wake_cron := dev.GetString("wake_cron")
 		wake_cron_enabled := dev.GetBool("wake_cron_enabled")
 		shutdown_cron := dev.GetString("shutdown_cron")
