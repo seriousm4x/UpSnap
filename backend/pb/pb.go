@@ -135,22 +135,30 @@ func StartPocketBase(distDirFS fs.FS) {
 				cronjobs.SetPingJobs(App)
 			} else if e.Model.TableName() == "devices" {
 				// only restart wake/shutdown cronjobs if new model's cron changed
-				newRecord := e.Model.(*models.Record)
+				record := e.Model.(*models.Record)
+				newRecord := record.CleanCopy()
+				oldRecord := record.OriginalCopy()
+
 				newWakeCron := newRecord.GetString("wake_cron")
+				newWakeCmd := newRecord.GetString("wake_cmd")
 				newWakeCronEnabled := newRecord.GetBool("wake_cron_enabled")
 				newShutdownCron := newRecord.GetString("shutdown_cron")
+				newShutdownCmd := newRecord.GetString("shutdown_cmd")
 				newShutdownCronEnabled := newRecord.GetBool("shutdown_cron_enabled")
 
-				oldRecord := newRecord.OriginalCopy()
 				oldWakeCron := oldRecord.GetString("wake_cron")
+				oldWakeCmd := oldRecord.GetString("wake_cmd")
 				oldWakeCronEnabled := oldRecord.GetBool("wake_cron_enabled")
 				oldShutdownCron := oldRecord.GetString("shutdown_cron")
+				oldShutdownCmd := oldRecord.GetString("shutdown_cmd")
 				oldShutdownCronEnabled := oldRecord.GetBool("shutdown_cron_enabled")
 
 				if newWakeCron != oldWakeCron ||
+					newWakeCmd != oldWakeCmd ||
 					newWakeCronEnabled != oldWakeCronEnabled ||
 					newShutdownCron != oldShutdownCron ||
-					newShutdownCronEnabled != oldShutdownCronEnabled {
+					newShutdownCronEnabled != oldShutdownCronEnabled ||
+					newShutdownCmd != oldShutdownCmd {
 					cronjobs.SetWakeShutdownJobs(App)
 				}
 			}
@@ -279,9 +287,8 @@ func resetDeviceStates() error {
 		return err
 	}
 	for _, device := range devices {
-		d := device
-		d.Set("status", "offline")
-		if err := App.Dao().SaveRecord(d); err != nil {
+		device.Set("status", "offline")
+		if err := App.Dao().SaveRecord(device); err != nil {
 			return err
 		}
 	}
