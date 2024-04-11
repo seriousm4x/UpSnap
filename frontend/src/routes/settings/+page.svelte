@@ -90,9 +90,9 @@
 {#if settingsPubClone === undefined || settingsPrivClone === undefined}
 	<PageLoading />
 {:else}
-	<h1 class="text-3xl font-bold mb-8">{$LL.settings.page_title()}</h1>
+	<h1 class="mb-8 text-3xl font-bold">{$LL.settings.page_title()}</h1>
 	<form on:submit|preventDefault={save}>
-		<div class="card w-full bg-base-300 shadow-xl mt-6">
+		<div class="card mt-6 w-full bg-base-300 shadow-xl">
 			<div class="card-body">
 				<h2 class="card-title">{$LL.settings.ping_interval_title()}</h2>
 				<p class="mt-2">
@@ -106,7 +106,7 @@
 					<!-- eslint-disable svelte/no-at-html-tags -->
 					{@html $LL.settings.ping_interval_desc2()}
 				</p>
-				<div class="form-control w-full mt-2">
+				<div class="form-control mt-2 w-full">
 					<input
 						type="text"
 						placeholder="e.g. '@every 5s' or '@every 1m'"
@@ -122,7 +122,7 @@
 					<label class="label cursor-pointer gap-2">
 						<input
 							type="checkbox"
-							class="checkbox checkbox-primary"
+							class="checkbox-primary checkbox"
 							bind:checked={settingsPrivClone.lazy_ping}
 						/>
 						<span class="label-text">{$LL.settings.lazy_ping_enable()}</span>
@@ -130,7 +130,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="card w-full bg-base-300 shadow-xl mt-6">
+		<div class="card mt-6 w-full bg-base-300 shadow-xl">
 			<div class="card-body">
 				<h2 class="card-title">{$LL.settings.website_title_title()}</h2>
 				<p class="my-2">{$LL.settings.website_title_desc()}</p>
@@ -144,7 +144,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="card w-full bg-base-300 shadow-xl mt-6">
+		<div class="card mt-6 w-full bg-base-300 shadow-xl">
 			<div class="card-body">
 				<h2 class="card-title">{$LL.settings.icon_title()}</h2>
 				<p class="my-2">
@@ -163,7 +163,7 @@
 						bind:this={faviconPreview}
 					/>
 				</div>
-				<div class="form-control w-full max-w-md flex flex-row gap-4">
+				<div class="form-control flex w-full max-w-md flex-row gap-4">
 					<input
 						type="file"
 						class="file-input w-full max-w-xs"
@@ -178,12 +178,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="card-actions justify-end mt-6">
+		<div class="card-actions mt-6 justify-end">
 			<button class="btn btn-success" type="submit"><Fa icon={faSave} />{$LL.buttons.save()}</button
 			>
 		</div>
 	</form>
-	<div class="container mx-auto text-center mt-6">
+	<div class="container mx-auto mt-6 text-center">
 		{#if PUBLIC_VERSION === ''}
 			{$LL.settings.upsnap_version()}: (untracked)
 		{:else}

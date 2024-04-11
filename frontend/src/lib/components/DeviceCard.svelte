@@ -121,16 +121,16 @@
 	}
 </script>
 
-<div class="card bg-base-300 shadow-md rounded-3xl" transition:scale={{ delay: 0, duration: 200 }}>
+<div class="card rounded-3xl bg-base-300 shadow-md" transition:scale={{ delay: 0, duration: 200 }}>
 	<div class="card-body p-6">
 		{#if device.link.toString() !== ''}
 			<a href={device.link.toString()} target="_blank">
-				<h1 class="card-title link">{device.name}</h1>
+				<h1 class="link card-title">{device.name}</h1>
 			</a>
 		{:else}
 			<h1 class="card-title">{device.name}</h1>
 		{/if}
-		<ul class="menu bg-base-200 rounded-box">
+		<ul class="menu rounded-box bg-base-200">
 			<!-- TODO: change to nic array once backend supports it -->
 			<DeviceCardNic {device} />
 		</ul>
@@ -171,14 +171,14 @@
 				{/if}
 			</span>
 			{#if moreButtons.filter((btn) => btn.requires).length > 0}
-				<div class="dropdown dropdown-top dropdown-end bg-base-300 ms-auto">
+				<div class="dropdown dropdown-end dropdown-top ms-auto bg-base-300">
 					<label tabindex="-1" class="btn btn-sm m-1" for="more-{device.id}"
 						>{$LL.device.card_btn_more()}</label
 					>
 					<ul
 						id="more-{device.id}"
 						tabindex="-1"
-						class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-fit"
+						class="menu dropdown-content z-[1] w-fit rounded-box bg-base-100 p-2 shadow"
 					>
 						{#each moreButtons as btn}
 							{#if btn.requires}

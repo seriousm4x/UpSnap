@@ -37,10 +37,10 @@
 {#await getDevice()}
 	<PageLoading />
 {:then device}
-	<h1 class="text-3xl font-bold mb-8 sm:break-all">{device.name}</h1>
+	<h1 class="mb-8 text-3xl font-bold sm:break-all">{device.name}</h1>
 	<DeviceForm {device} />
 {:catch err}
-	<div class="container max-w-lg mx-auto">
+	<div class="container mx-auto max-w-lg">
 		{err}
 	</div>
 {/await}

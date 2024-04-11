@@ -102,7 +102,7 @@
 <Toaster position="bottom-center" {toastOptions} />
 
 <Transition url={$page.url}>
-	<div class="container mx-auto p-2 mb-4">
+	<div class="container mx-auto mb-4 p-2">
 		<slot />
 	</div>
 </Transition>

@@ -181,10 +181,10 @@
 {#await Promise.all([getUsersPromise, getPermissionsPromise, getDevicesPromise])}
 	<PageLoading />
 {:then}
-	<h1 class="text-3xl font-bold mb-8">{$LL.users.page_title()}</h1>
+	<h1 class="mb-8 text-3xl font-bold">{$LL.users.page_title()}</h1>
 	{#each users as user, index}
 		<form on:submit|preventDefault={() => save(user)}>
-			<div class="card w-full bg-base-300 shadow-xl mt-6">
+			<div class="card mt-6 w-full bg-base-300 shadow-xl">
 				<div class="card-body gap-4">
 					<h2 class="card-title">
 						<label tabindex="-1" class="avatar" for="avatar{index}">
@@ -219,16 +219,16 @@
 									<a href="/device/new" class="link">{$LL.users.create_new_device()}</a>
 								</p>
 							{:else}
-								<div class="grid grid-cols-4 md:grid-cols-5 gap-4 justify-items-center">
+								<div class="grid grid-cols-4 justify-items-center gap-4 md:grid-cols-5">
 									<div class="font-bold md:col-start-2">{$LL.users.read()}</div>
 									<div class="font-bold">{$LL.users.update()}</div>
 									<div class="font-bold">{$LL.users.delete()}</div>
 									<div class="font-bold">{$LL.users.power()}</div>
 									{#each devices as device}
-										<hr class="col-span-full w-full border-b-1 opacity-30 border-neutral" />
+										<hr class="border-b-1 col-span-full w-full border-neutral opacity-30" />
 										{#each permissions.filter((perm) => perm.user === user.id) as permission}
 											<div
-												class="flex flex-row flex-wrap gap-2 place-self-start break-all col-span-full md:col-span-1"
+												class="col-span-full flex flex-row flex-wrap gap-2 place-self-start break-all md:col-span-1"
 											>
 												<span class="font-bold">{device.name}</span>
 												<span class="badge hidden md:block">{device.ip}</span>
@@ -260,7 +260,7 @@
 										{/each}
 									{/each}
 									<button
-										class="btn btn-sm btn-neutral md:col-start-2"
+										class="btn btn-neutral btn-sm md:col-start-2"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'read');
@@ -271,7 +271,7 @@
 										/></button
 									>
 									<button
-										class=" btn btn-sm btn-neutral"
+										class=" btn btn-neutral btn-sm"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'update');
@@ -282,7 +282,7 @@
 										/></button
 									>
 									<button
-										class=" btn btn-sm btn-neutral"
+										class=" btn btn-neutral btn-sm"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'delete');
@@ -293,7 +293,7 @@
 										/></button
 									>
 									<button
-										class=" btn btn-sm btn-neutral"
+										class=" btn btn-neutral btn-sm"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'power');
@@ -304,18 +304,18 @@
 										/></button
 									>
 								</div>
-								<div class="mt-4 flex flex-row flex-wrap gap-4 justify-end"></div>
+								<div class="mt-4 flex flex-row flex-wrap justify-end gap-4"></div>
 							{/if}
 						</div>
 					</div>
-					<div class="justify-end join">
+					<div class="join justify-end">
 						<button
-							class="join-item btn btn-error"
+							class="btn btn-error join-item"
 							type="button"
 							on:click={() => deleteModal[index].showModal()}
 							><Fa icon={faTrash} />{$LL.buttons.delete()}</button
 						>
-						<button class="join-item btn btn-success" type="submit"
+						<button class="btn btn-success join-item" type="submit"
 							><Fa icon={faSave} />{$LL.buttons.save()}</button
 						>
 					</div>
@@ -324,7 +324,7 @@
 		</form>
 		<dialog class="modal" bind:this={deleteModal[index]}>
 			<form method="dialog" class="modal-box">
-				<h3 class="font-bold text-lg">{$LL.users.confirm_delete_title()}</h3>
+				<h3 class="text-lg font-bold">{$LL.users.confirm_delete_title()}</h3>
 				<p class="py-4">{$LL.users.confirm_delete_desc({ username: user.username })}</p>
 				<div class="modal-action">
 					<button class="btn">{$LL.buttons.cancel()}</button>
@@ -335,7 +335,7 @@
 			</form>
 		</dialog>
 	{/each}
-	<div class="card w-full bg-base-300 shadow-xl mt-6">
+	<div class="card mt-6 w-full bg-base-300 shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.users.create_new_user()}</h2>
 			<form on:submit|preventDefault={createUser}>
@@ -393,7 +393,7 @@
 						/>
 					</div>
 				</div>
-				<span class="badge text-error mt-4 self-center">* {$LL.users.required_field()}</span>
+				<span class="badge mt-4 self-center text-error">* {$LL.users.required_field()}</span>
 				<div class="card-actions justify-end">
 					<button type="submit" class="btn btn-success mt-2"
 						><Fa icon={faPlus} />{$LL.buttons.add()}</button

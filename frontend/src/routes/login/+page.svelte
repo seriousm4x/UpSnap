@@ -56,10 +56,10 @@
 </script>
 
 <div class="mt-10 flex items-center justify-center">
-	<div class="card bg-base-300 shadow-xl w-full max-w-lg">
+	<div class="card w-full max-w-lg bg-base-300 shadow-xl">
 		<div class="card-body">
 			{#if $settingsPub?.website_title}
-				<h1 class="text-xl text-center font-bold">{$settingsPub?.website_title}</h1>
+				<h1 class="text-center text-xl font-bold">{$settingsPub?.website_title}</h1>
 			{/if}
 			<div class="flex flex-row gap-4">
 				<figure class="w-16"><img src="/gopher.svg" alt="Gopher" /></figure>
@@ -81,7 +81,7 @@
 				</label>
 				<label class="relative block">
 					<div
-						class="absolute top-1/2 -translate-y-1/2 right-4 cursor-pointer"
+						class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
 						role="none"
 						on:click={() => toggleVisibility(inputPassword)}
 						on:keydown={() => toggleVisibility(inputPassword)}
@@ -106,9 +106,9 @@
 						<ul
 							id="other-providers"
 							tabindex="-1"
-							class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-56"
+							class="menu dropdown-content z-[1] w-56 rounded-box bg-base-200 p-2 shadow"
 						>
-							<li class="menu-title flex flex-row gap-2 items-center">
+							<li class="menu-title flex flex-row items-center gap-2">
 								{$LL.login.menu_title_auth_providers()}
 								<a href="https://github.com/seriousm4x/UpSnap/wiki/Auth-providers" target="_blank"
 									><Fa icon={faQuestionCircle} /></a

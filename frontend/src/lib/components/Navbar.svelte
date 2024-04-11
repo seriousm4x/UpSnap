@@ -99,7 +99,7 @@
 			<ul
 				id="mobile-menu"
 				tabindex="-1"
-				class="menu dropdown-content mt-3 z-[1] p-2 gap-1 shadow bg-base-300 rounded-box w-max"
+				class="menu dropdown-content z-[1] mt-3 w-max gap-1 rounded-box bg-base-300 p-2 shadow"
 			>
 				{#if $settingsPub?.website_title}
 					<div class="menu-title">
@@ -140,14 +140,14 @@
 								{#each availableThemes as theme}
 									<li>
 										<button
-											class="outline-base-content overflow-hidden rounded-lg text-left"
+											class="overflow-hidden rounded-lg text-left outline-base-content"
 											data-set-theme={theme}
 											on:click={() => (activeTheme = theme)}
 											on:keydown={() => (activeTheme = theme)}
 										>
 											<div
 												data-theme={theme}
-												class="bg-base-100 text-base-content rounded w-full cursor-pointer font-sans"
+												class="w-full cursor-pointer rounded bg-base-100 font-sans text-base-content"
 											>
 												<div class="grid grid-cols-5 grid-rows-3">
 													<div
@@ -159,10 +159,10 @@
 														/>
 														<div class="flex-grow text-sm">{theme}</div>
 														<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
-															<div class="bg-primary w-2 rounded" />
-															<div class="bg-secondary w-2 rounded" />
-															<div class="bg-accent w-2 rounded" />
-															<div class="bg-neutral w-2 rounded" />
+															<div class="w-2 rounded bg-primary" />
+															<div class="w-2 rounded bg-secondary" />
+															<div class="w-2 rounded bg-accent" />
+															<div class="w-2 rounded bg-neutral" />
 														</div>
 													</div>
 												</div>
@@ -176,7 +176,7 @@
 				</li>
 			</ul>
 		</div>
-		<a class="btn btn-ghost normal-case text-xl px-2" href="/">
+		<a class="btn btn-ghost px-2 text-xl normal-case" href="/">
 			<img
 				src={$settingsPub?.id && $settingsPub?.favicon
 					? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
@@ -191,7 +191,7 @@
 		{#if $settingsPub?.website_title}
 			<span class="px-2">{$settingsPub?.website_title}</span>
 		{/if}
-		<ul class="menu menu-horizontal px-1 gap-1">
+		<ul class="menu menu-horizontal gap-1 px-1">
 			<li>
 				<a href="/" class="p-2" class:active={$page.url.pathname === '/'}
 					><Fa icon={faHome} />{$LL.home.page_title()}</a
@@ -211,35 +211,35 @@
 			{/if}
 		</ul>
 		<div class="dropdown dropdown-end">
-			<div tabindex="-1" class="btn normal-case btn-ghost">
+			<div tabindex="-1" class="btn btn-ghost normal-case">
 				<Fa icon={faSwatchbook} />
 				<span class="font-normal">{$LL.navbar.theme()}</span>
 				<Fa icon={faChevronDown} />
 			</div>
 			<div
-				class="dropdown-content bg-base-200 text-base-content rounded-box h-fit max-h-96 w-56 overflow-y-auto shadow mt-3 z-[1]"
+				class="dropdown-content z-[1] mt-3 h-fit max-h-96 w-56 overflow-y-auto rounded-box bg-base-200 text-base-content shadow"
 			>
 				<div class="grid grid-cols-1 gap-3 p-3" tabindex="-1">
 					{#each availableThemes as theme}
 						<button
-							class="outline-base-content overflow-hidden rounded-lg text-left"
+							class="overflow-hidden rounded-lg text-left outline-base-content"
 							data-set-theme={theme}
 							on:click={() => (activeTheme = theme)}
 							on:keydown={() => (activeTheme = theme)}
 						>
 							<div
 								data-theme={theme}
-								class="bg-base-100 text-base-content w-full cursor-pointer font-sans"
+								class="w-full cursor-pointer bg-base-100 font-sans text-base-content"
 							>
 								<div class="grid grid-cols-5 grid-rows-3">
 									<div class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3">
 										<Fa icon={faCheck} class={activeTheme === theme ? 'visible' : 'invisible'} />
 										<div class="flex-grow text-sm">{theme}</div>
 										<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
-											<div class="bg-primary w-2 rounded" />
-											<div class="bg-secondary w-2 rounded" />
-											<div class="bg-accent w-2 rounded" />
-											<div class="bg-neutral w-2 rounded" />
+											<div class="w-2 rounded bg-primary" />
+											<div class="w-2 rounded bg-secondary" />
+											<div class="w-2 rounded bg-accent" />
+											<div class="w-2 rounded bg-neutral" />
 										</div>
 									</div>
 								</div>
@@ -250,7 +250,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="justify-end ms-auto">
+	<div class="ms-auto justify-end">
 		{#if $pocketbase.authStore?.model !== null}
 			{#if $pocketbase.authStore.isAdmin || $permission.create}
 				<a class="btn btn-success me-4" href="/device/new">
@@ -259,14 +259,14 @@
 				</a>
 			{/if}
 			<div class="dropdown dropdown-end">
-				<label tabindex="-1" class="btn btn-ghost btn-circle avatar" for="avatar">
+				<label tabindex="-1" class="avatar btn btn-circle btn-ghost" for="avatar">
 					<div class="w-10 rounded-full" id="avatar">
 						<img src="{backendUrl}_/images/avatars/avatar{avatar}.svg" alt="Avatar {avatar}" />
 					</div>
 				</label>
 				<ul
 					tabindex="-1"
-					class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box"
+					class="menu dropdown-content z-[1] mt-3 rounded-box bg-base-300 p-2 shadow"
 				>
 					<li class="menu-title">
 						{$pocketbase.authStore.isAdmin

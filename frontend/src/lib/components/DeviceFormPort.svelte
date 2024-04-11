@@ -74,7 +74,7 @@
 			</div>
 			<div class="card-actions justify-end">
 				<button
-					class="btn btn-xs btn-outline btn-error"
+					class="btn btn-outline btn-error btn-xs"
 					on:click={() => deletePort(device.expand.ports[index])}
 					type="button"><Fa icon={faTrash} />{$LL.buttons.delete()}</button
 				>

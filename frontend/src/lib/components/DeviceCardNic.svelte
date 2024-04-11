@@ -105,7 +105,7 @@
 
 <li class="tooltip" class:disabled data-tip={hoverText}>
 	<div
-		class="flex items-start p-2 gap-4"
+		class="flex items-start gap-4 p-2"
 		on:click={disabled ? null : handleClick}
 		on:keydown={disabled ? null : handleClick}
 		role="none"
@@ -161,7 +161,7 @@
 
 <dialog class="modal" bind:this={modalWake}>
 	<div class="modal-box">
-		<h3 class="font-bold text-lg">
+		<h3 class="text-lg font-bold">
 			{$LL.device.modal_confirm_wake_title({ device: device.name })}
 		</h3>
 		<p class="py-4">{$LL.device.modal_confirm_wake_desc({ device: device.name })}</p>
@@ -176,7 +176,7 @@
 
 <dialog class="modal" bind:this={modalShutdown}>
 	<div class="modal-box">
-		<h3 class="font-bold text-lg">
+		<h3 class="text-lg font-bold">
 			{$LL.device.modal_confirm_shutdown_title({ device: device.name })}
 		</h3>
 		<p class="py-4">{$LL.device.modal_confirm_shutdown_desc({ device: device.name })}</p>

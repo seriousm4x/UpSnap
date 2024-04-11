@@ -105,7 +105,7 @@
 				<div class="join-item">
 					<div class="join">
 						<button
-							class="join-item btn"
+							class="btn join-item"
 							type="button"
 							on:click={() => (orderByGroups = !orderByGroups)}
 							>{$LL.home.order_groups()}
@@ -118,7 +118,7 @@
 					</div>
 				</div>
 				<input
-					class="join-item btn"
+					class="btn join-item"
 					type="radio"
 					name="order"
 					aria-label={$LL.home.order_name()}
@@ -126,7 +126,7 @@
 					value="name"
 				/>
 				<input
-					class="join-item btn"
+					class="btn join-item"
 					type="radio"
 					name="order"
 					aria-label={$LL.home.order_ip()}
@@ -135,7 +135,7 @@
 				/>
 			{/if}
 			<div class="tooltip" data-tip={$LL.home.order_tooltip()}>
-				<button class="join-item btn" on:click={() => (orderExpanded = !orderExpanded)}>
+				<button class="btn join-item" on:click={() => (orderExpanded = !orderExpanded)}>
 					{#if orderExpanded}
 						<Fa icon={faChevronCircleRight} size="lg" />
 					{:else}
@@ -157,7 +157,7 @@
 			{#if Object.keys(devicesWithGroup).length > 0}
 				{#each Object.keys(devicesWithGroup).sort( (a, b) => a.localeCompare( b, undefined, { numeric: true, sensitivity: 'base' } ) ) as group}
 					<div>
-						<h1 class="text-2xl font-bold mb-3">{group}</h1>
+						<h1 class="mb-3 text-2xl font-bold">{group}</h1>
 						<div class={gridClass}>
 							{#each devicesWithGroup[group].sort( (a, b) => a[orderBy].localeCompare( b[orderBy], undefined, { numeric: true, sensitivity: 'base' } ) ) as device}
 								<DeviceCard {device} />
