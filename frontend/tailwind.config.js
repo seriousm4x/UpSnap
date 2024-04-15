@@ -36,6 +36,19 @@ export default {
 					'primary-content': '#ffffff'
 				}
 			},
+			{
+				colorful: {
+					primary: '#00bdf8',
+					secondary: '#009aff',
+					accent: '#00b3a2',
+					neutral: '#161200',
+					'base-100': '#ffffff',
+					info: '#00c5dc',
+					success: '#00d892',
+					warning: '#f77800',
+					error: '#f36165'
+				}
+			},
 			'bumblebee',
 			'emerald',
 			'corporate',
@@ -61,7 +74,11 @@ export default {
 			'lemonade',
 			'night',
 			'coffee',
-			'winter'
+			'winter',
+			'nord',
+			'dim',
+			'sunset',
+			'night'
 		],
 		darkTheme: 'dracula'
 	}
