@@ -17,6 +17,7 @@
 	import { onMount } from 'svelte';
 
 	let availableThemes = [
+		'colorful',
 		'light',
 		'dark',
 		'cupcake',
