@@ -20,6 +20,7 @@
 	import { themeChange } from 'theme-change';
 
 	let availableThemes = [
+		'colorful',
 		'light',
 		'dark',
 		'cupcake',
