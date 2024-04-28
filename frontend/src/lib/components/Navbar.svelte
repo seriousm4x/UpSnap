@@ -100,7 +100,7 @@
 			<ul
 				id="mobile-menu"
 				tabindex="-1"
-				class="menu dropdown-content rounded-box bg-base-300 z-[1] mt-3 w-max gap-1 p-2 shadow"
+				class="menu dropdown-content z-[1] mt-3 w-max gap-1 rounded-box bg-base-300 p-2 shadow"
 			>
 				{#if $settingsPub?.website_title}
 					<div class="menu-title">
@@ -141,14 +141,14 @@
 								{#each availableThemes as theme}
 									<li>
 										<button
-											class="outline-base-content overflow-hidden rounded-lg text-left"
+											class="overflow-hidden rounded-lg text-left outline-base-content"
 											data-set-theme={theme}
 											on:click={() => (activeTheme = theme)}
 											on:keydown={() => (activeTheme = theme)}
 										>
 											<div
 												data-theme={theme}
-												class="bg-base-100 text-base-content w-full cursor-pointer rounded font-sans"
+												class="w-full cursor-pointer rounded bg-base-100 font-sans text-base-content"
 											>
 												<div class="grid grid-cols-5 grid-rows-3">
 													<div
@@ -160,10 +160,10 @@
 														/>
 														<div class="flex-grow text-sm">{theme}</div>
 														<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
-															<div class="bg-primary w-2 rounded" />
-															<div class="bg-secondary w-2 rounded" />
-															<div class="bg-accent w-2 rounded" />
-															<div class="bg-neutral w-2 rounded" />
+															<div class="w-2 rounded bg-primary" />
+															<div class="w-2 rounded bg-secondary" />
+															<div class="w-2 rounded bg-accent" />
+															<div class="w-2 rounded bg-neutral" />
 														</div>
 													</div>
 												</div>
@@ -218,29 +218,29 @@
 				<Fa icon={faChevronDown} />
 			</div>
 			<div
-				class="dropdown-content rounded-box bg-base-200 text-base-content z-[1] mt-3 h-fit max-h-96 w-56 overflow-y-auto shadow"
+				class="dropdown-content z-[1] mt-3 h-fit max-h-96 w-56 overflow-y-auto rounded-box bg-base-200 text-base-content shadow"
 			>
 				<div class="grid grid-cols-1 gap-3 p-3" tabindex="-1">
 					{#each availableThemes as theme}
 						<button
-							class="outline-base-content overflow-hidden rounded-lg text-left"
+							class="overflow-hidden rounded-lg text-left outline-base-content"
 							data-set-theme={theme}
 							on:click={() => (activeTheme = theme)}
 							on:keydown={() => (activeTheme = theme)}
 						>
 							<div
 								data-theme={theme}
-								class="bg-base-100 text-base-content w-full cursor-pointer font-sans"
+								class="w-full cursor-pointer bg-base-100 font-sans text-base-content"
 							>
 								<div class="grid grid-cols-5 grid-rows-3">
 									<div class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3">
 										<Fa icon={faCheck} class={activeTheme === theme ? 'visible' : 'invisible'} />
 										<div class="flex-grow text-sm">{theme}</div>
 										<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
-											<div class="bg-primary w-2 rounded" />
-											<div class="bg-secondary w-2 rounded" />
-											<div class="bg-accent w-2 rounded" />
-											<div class="bg-neutral w-2 rounded" />
+											<div class="w-2 rounded bg-primary" />
+											<div class="w-2 rounded bg-secondary" />
+											<div class="w-2 rounded bg-accent" />
+											<div class="w-2 rounded bg-neutral" />
 										</div>
 									</div>
 								</div>
@@ -267,7 +267,7 @@
 				</label>
 				<ul
 					tabindex="-1"
-					class="menu dropdown-content rounded-box bg-base-300 z-[1] mt-3 p-2 shadow"
+					class="menu dropdown-content z-[1] mt-3 rounded-box bg-base-300 p-2 shadow"
 				>
 					<li class="menu-title">
 						{$pocketbase.authStore.isAdmin

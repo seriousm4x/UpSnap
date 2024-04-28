@@ -42,7 +42,7 @@ export default {
 					success: '#00d892',
 					warning: '#f77800',
 					error: '#f36165'
-				},
+				}
 			},
 			'bumblebee',
 			'emerald',
