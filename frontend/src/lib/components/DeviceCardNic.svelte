@@ -82,6 +82,7 @@
 			timeout = Math.round((end - Date.now()) / 1000);
 			if (timeout <= 0 || device.status !== 'pending') {
 				clearInterval(interval);
+				interval = 0;
 			}
 		}, 1000);
 	}
