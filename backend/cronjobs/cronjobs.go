@@ -113,6 +113,12 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 
 		if wake_cron_enabled && wake_cron != "" {
 			_, err := CronWakeShutdown.AddFunc(wake_cron, func() {
+				dev, err = app.Dao().FindRecordById("devices", dev.Id)
+				if err != nil {
+					logger.Error.Println(err)
+					return
+				}
+
 				status := dev.GetString("status")
 				if status == "pending" || status == "online" {
 					return
@@ -120,18 +126,16 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				dev.Set("status", "pending")
 				if err := app.Dao().SaveRecord(dev); err != nil {
 					logger.Error.Println("Failed to save record:", err)
+					return
 				}
 				if err := networking.WakeDevice(dev); err != nil {
 					logger.Error.Println(err)
 					dev.Set("status", "offline")
-					if err := app.Dao().SaveRecord(dev); err != nil {
-						logger.Error.Println("Failed to save record:", err)
-					}
 				} else {
 					dev.Set("status", "online")
-					if err := app.Dao().SaveRecord(dev); err != nil {
-						logger.Error.Println("Failed to save record:", err)
-					}
+				}
+				if err := app.Dao().SaveRecord(dev); err != nil {
+					logger.Error.Println("Failed to save record:", err)
 				}
 			})
 			if err != nil {
@@ -141,6 +145,12 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 
 		if shutdown_cron_enabled && shutdown_cron != "" {
 			_, err := CronWakeShutdown.AddFunc(shutdown_cron, func() {
+				dev, err = app.Dao().FindRecordById("devices", dev.Id)
+				if err != nil {
+					logger.Error.Println(err)
+					return
+				}
+
 				status := dev.GetString("status")
 				if status == "pending" || status == "offline" {
 					return
@@ -152,14 +162,11 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				if err := networking.ShutdownDevice(dev); err != nil {
 					logger.Error.Println(err)
 					dev.Set("status", "online")
-					if err := app.Dao().SaveRecord(dev); err != nil {
-						logger.Error.Println("Failed to save record:", err)
-					}
 				} else {
 					dev.Set("status", "offline")
-					if err := app.Dao().SaveRecord(dev); err != nil {
-						logger.Error.Println("Failed to save record:", err)
-					}
+				}
+				if err := app.Dao().SaveRecord(dev); err != nil {
+					logger.Error.Println("Failed to save record:", err)
 				}
 			})
 			if err != nil {
