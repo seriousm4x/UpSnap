@@ -19,6 +19,7 @@
 	import { fr } from 'date-fns/locale/fr';
 	import { pt } from 'date-fns/locale/pt';
 	import { zhCN } from 'date-fns/locale/zh-CN';
+	import { zhTW } from 'date-fns/locale/zh-TW';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 	import { scale } from 'svelte/transition';

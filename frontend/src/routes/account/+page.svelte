@@ -26,7 +26,8 @@
 		es: '🇪🇸',
 		'es-ES': '🇪🇸',
 		zh: '🇨🇳',
-		'zh-CN': '🇨🇳'
+		'zh-CN': '🇨🇳',
+		'zh-TW': '🇹🇼'
 	};
 	let localStorageLang: Locales | 'auto' = 'auto';
 	let selectedLanguage: Locales | 'auto' = localStorageLang;
