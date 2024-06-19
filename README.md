@@ -15,15 +15,15 @@
 
 ## ✨ Features
 
--   🚀 One-Click Device Wake-Up Dashboard
--   ⏰ Timed Events via Cron for Automation
--   🔌 Ping Any Port You Choose
--   🔍 Discover Devices with Network Scanning (nmap required)
--   👤 Secured User Management
--   🌐 i18n support for [these](https://github.com/seriousm4x/UpSnap/tree/master/frontend/src/lib/i18n) languages
--   🎨 29 Themes
--   🐳 [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7, arm/v6
--   🏠 Self-Hostable, No Cloud Bullshit!
+- 🚀 One-Click Device Wake-Up Dashboard
+- ⏰ Timed Events via Cron for Automation
+- 🔌 Ping Any Port You Choose
+- 🔍 Discover Devices with Network Scanning (nmap required)
+- 👤 Secured User Management
+- 🌐 i18n support for [these](https://github.com/seriousm4x/UpSnap/tree/master/frontend/src/lib/i18n) languages
+- 🎨 29 Themes
+- 🐳 [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7, arm/v6
+- 🏠 Self-Hostable
 
 ## 📸 Screenshots
 
@@ -84,7 +84,7 @@ If you want to change the port from 8090 to something else, change the following
 ```yml
 entrypoint: /bin/sh -c "./upsnap serve --http 0.0.0.0:5000"
 healthcheck:
-    test: curl -fs "http://localhost:5000/api/health" || exit 1
+  test: curl -fs "http://localhost:5000/api/health" || exit 1
 ```
 
 ### Install additional packages for shutdown cmd
@@ -121,12 +121,13 @@ Although UpSnap has user authorisation, it is **not recommended to expose it to 
 
 UpSnap is available in the following languages so far:
 
--   🇺🇸 **English** (en-US)
--   🇩🇪 **German** (de-DE)
--   🇪🇸 **Spanish** (es-ES)
--   🇫🇷 **French** (fr-FR)
--   🇵🇹 **Portuguese** (pt-PT)
--   🇨🇳 **Chinese** (zh-CN)
+- 🇺🇸 **English** (en-US)
+- 🇩🇪 **German** (de-DE)
+- 🇪🇸 **Spanish** (es-ES)
+- 🇫🇷 **French** (fr-FR)
+- 🇵🇹 **Portuguese** (pt-PT)
+- 🇨🇳 **Chinese** (zh-CN)
+- 🇹🇼 **Chinese (Taiwan)** (zh-TW)
 
 **If you want to contribute and help translating, check the wiki: [How to add languages](https://github.com/seriousm4x/UpSnap/wiki/How-to-add-languages)**
 
