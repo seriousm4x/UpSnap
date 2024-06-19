@@ -17,6 +17,7 @@ import pt from './pt';
 import pt_PT from './pt-PT';
 import zh from './zh';
 import zh_CN from './zh-CN';
+import zh_TW from './zh-TW';
 
 const localeTranslations = {
 	de,
@@ -30,7 +31,8 @@ const localeTranslations = {
 	pt,
 	'pt-PT': pt_PT,
 	zh,
-	'zh-CN': zh_CN
+	'zh-CN': zh_CN,
+	'zh-TW': zh_TW
 };
 
 export const loadLocale = (locale: Locales): void => {
