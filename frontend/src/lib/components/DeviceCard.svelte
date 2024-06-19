@@ -94,6 +94,9 @@
 				case 'zh-CN':
 					dateFnsLocale = zhCN;
 					break;
+				case 'zh-TW':
+					dateFnsLocale = zhTW;
+					break;
 				default:
 					dateFnsLocale = enUS;
 					break;
