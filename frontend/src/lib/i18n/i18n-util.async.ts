@@ -17,7 +17,8 @@ const localeTranslationLoaders = {
 	pt: () => import('./pt'),
 	'pt-PT': () => import('./pt-PT'),
 	zh: () => import('./zh'),
-	'zh-CN': () => import('./zh-CN')
+	'zh-CN': () => import('./zh-CN'),
+	'zh-TW': () => import('./zh-TW')
 };
 
 const updateDictionary = (locale: Locales, dictionary: Partial<Translations>): Translations =>

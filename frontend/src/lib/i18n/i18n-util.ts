@@ -26,7 +26,8 @@ export const locales: Locales[] = [
 	'pt',
 	'pt-PT',
 	'zh',
-	'zh-CN'
+	'zh-CN',
+	'zh-TW'
 ];
 
 export const isLocale = (locale: string): locale is Locales => locales.includes(locale as Locales);

@@ -21,7 +21,8 @@ export type Locales =
 	| 'pt'
 	| 'pt-PT'
 	| 'zh'
-	| 'zh-CN';
+	| 'zh-CN'
+	| 'zh-TW';
 
 export type Translation = RootTranslation;
 

@@ -2,6 +2,7 @@ import zh from '../zh';
 import type { Translation } from '../i18n-types';
 
 const zh_TW = {
+	...(zh as unknown as Translation),
 	home: {
 		page_title: '首頁',
 		order_groups: '群組',
