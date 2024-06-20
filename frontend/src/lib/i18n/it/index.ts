@@ -10,7 +10,7 @@ const it = {
 		no_devices: 'Nessun dispositivo qui.',
 		add_first_device: 'Aggiungi il tuo primo dispositivo',
 		grant_permissions:
-			'Per favore chiedi all\' amministratore di darti i permessi necessari per aggiungere un nuovo dispositivo.'
+			"Per favore chiedi all' amministratore di darti i permessi necessari per aggiungere un nuovo dispositivo."
 	},
 	account: {
 		page_title: 'Account',
@@ -40,9 +40,11 @@ const it = {
 		card_nic_tooltip_pending: 'In attesa',
 		card_nic_tooltip_shutdown: 'Spegni',
 		card_nic_tooltip_shutdown_no_cmd: 'Nessun comando di spegnimento impostato',
-		card_nic_tooltip_shutdown_no_permission: 'Non hai i permessi necessari per spegnere questo dispositivo',
+		card_nic_tooltip_shutdown_no_permission:
+			'Non hai i permessi necessari per spegnere questo dispositivo',
 		card_nic_tooltip_power: 'Accendi',
-		card_nic_tooltip_power_no_permission: 'Non hai i permessi necessari per accendere questo dispositivo',
+		card_nic_tooltip_power_no_permission:
+			'Non hai i permessi necessari per accendere questo dispositivo',
 		modal_confirm_wake_title: 'Accendere {device}?',
 		modal_confirm_wake_desc: 'Sicuro di voler accendere {device}.',
 		modal_confirm_shutdown_title: 'Spegnere {device}?',
@@ -55,7 +57,7 @@ const it = {
 		general_netmask: 'Maschera di rete',
 		general_required_field: 'Campo obbligatorio',
 		ports: 'Porte',
-		ports_desc: 'UpSnap puo\' anche controllare che le porte siano aperte.',
+		ports_desc: "UpSnap puo' anche controllare che le porte siano aperte.",
 		ports_add_new: 'Aggiungi nuova porta',
 		ports_name: 'Nome',
 		ports_number: 'Numero',
@@ -75,7 +77,7 @@ const it = {
 		sol_desc1:
 			'Puoi spegnere il tuo dispositivo usando lo strumento <a class="link" href="https://github.com/SR-G/sleep-on-lan" target="_blank">Sleep-On-LAN</a>. Sleep-On-LAN (SOL) e\' uno strumento esterno che opera sul dispositivo che vuoi spegnere, il quale rende disponibile un endpoint REST. Puoi riferirti al link <a href="https://github.com/SR-G/sleep-on-lan#usage" class="link" target="_blank">Uso</a> (in inglese) per le istruzioni.',
 		sol_desc2:
-			'Lo strumento SOL e\' configurato per mandare richieste con il protocollo HTTP invece che UDP per abilitare l\' autorizzazione e rendere le richieste piu\' affidabili',
+			"Lo strumento SOL e' configurato per mandare richieste con il protocollo HTTP invece che UDP per abilitare l' autorizzazione e rendere le richieste piu' affidabili",
 		sol_desc3:
 			'Pertanto, assicuratevi di includere <span class="badge">HTTP:&lt;LA-TUA-PORTA&gt;</span> nella sezione <span class="badge">Listeners</span> della <a href="https://github.com/SR-G/sleep-on-lan#configuration" class="link" target="_blank">configurazione di SOL</a>.',
 		sol_enable: 'Abilita Sleep-On-LAN',
@@ -98,7 +100,8 @@ const it = {
 		password_desc:
 			'Alcune schede di rete hanno una opzione per settare una password per i magic packets, chiamata anche <span class="badge">SecureON</span>. La lunghezza della password puo\' essere solo di 0, 4 o 6 caratteri.',
 		groups: 'Gruppi',
-		groups_desc: 'Puoi aggiungere un dispositivo ad un gruppo per averli raggruppati nel schermata principale.',
+		groups_desc:
+			'Puoi aggiungere un dispositivo ad un gruppo per averli raggruppati nel schermata principale.',
 		groups_placeholder: "per esempio 'Cantina' o 'Ufficio'",
 		network_scan_range_saved: 'Intervallo di scansione salvato',
 		network_scan_desc:
@@ -145,7 +148,8 @@ const it = {
 	},
 	users: {
 		page_title: 'Utenti',
-		allow_create_devices: 'Permetti a {username} di creare nuovo dispositivi e gestire i gruppi di dispositivi.',
+		allow_create_devices:
+			'Permetti a {username} di creare nuovo dispositivi e gestire i gruppi di dispositivi.',
 		device_permissions: 'Permessi dispositivo',
 		create_new_device: 'Crea un nuovo dispositivo',
 		read: 'Leggi',
@@ -172,7 +176,7 @@ const it = {
 	},
 	welcome: {
 		step1_page_title: 'Benvenuti ad UpSnap 🥳',
-		step1_setup_desc: 'Per favore, completate i seguenti passi per terminare l\'installazione.',
+		step1_setup_desc: "Per favore, completate i seguenti passi per terminare l'installazione.",
 		step1_setup_btn_next: 'Avanti',
 		step2_page_title: 'Creare un account amministratore',
 		step2_label_email: 'Email:',
@@ -183,8 +187,9 @@ const it = {
 		step3_page_title: 'Abbiamo finito! 🎉',
 		step3_page_desc: 'Prosegui adesso per aggiungere dispositivi alla tua lista.',
 		step3_btn_done: 'Andiamo!',
-		not_expected_title: "Non mi aspettavo di vederti qui! 🧐",
-		not_expected_desc: 'L\' installazione e\' gia\' terminata! Non ci sono operazioni da svolgere qui.',
+		not_expected_title: 'Non mi aspettavo di vederti qui! 🧐',
+		not_expected_desc:
+			"L' installazione e' gia' terminata! Non ci sono operazioni da svolgere qui.",
 		not_expected_back: 'Indietro',
 		progress_step1: 'Benvenuti',
 		progress_step2: 'Creare un account',
@@ -197,18 +202,18 @@ const it = {
 		user_deleted: 'Utente {username} cancellato',
 		settings_saved: 'Impostazioni salvate',
 		password_changed: 'Password cambiata. Per favore, effettuate di nuovo il login.',
-		passwords_missmatch: "Le password non corrispondono",
+		passwords_missmatch: 'Le password non corrispondono',
 		permissions_created: 'I permessi per {username} sono stati creati',
 		permissions_deleted: 'I permessi per {username} sono stati cancellati',
 		permissions_updated: 'I permessi per {username} sono stati aggiornati',
 		permissions_updated_personal: 'I tuoi permessi sono stati aggiornati',
-		no_permission: "Non hai i permessi necessari per visitare {url}",
+		no_permission: 'Non hai i permessi necessari per visitare {url}',
 		device_created: 'Creato dispositivo {device}',
 		devices_created_multiple: 'Creato/i {count|int} dispositivi',
 		device_updated: '{device} aggiornato',
 		device_deleted: '{device} cancellato',
 		group_created: 'Gruppo {group} creato',
-		group_deleted: 'Grupp {group} cancellato'
+		group_deleted: 'Gruppo {group} cancellato'
 	},
 	navbar: {
 		theme: 'Tema',
