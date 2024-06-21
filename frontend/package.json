@@ -29,7 +29,7 @@
 		"husky": "^9.0.11",
 		"postcss": "^8.4.38",
 		"prettier": "^3.3.2",
-		"prettier-plugin-svelte": "^3.2.4",
+		"prettier-plugin-svelte": "^3.2.5",
 		"prettier-plugin-tailwindcss": "^0.6.5",
 		"svelte": "^4.2.18",
 		"svelte-check": "^3.8.1",
