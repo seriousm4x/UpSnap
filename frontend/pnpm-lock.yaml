@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^9.1.0
     version: 9.1.0(eslint@8.57.0)
   eslint-plugin-svelte:
-    specifier: ^2.40.0
-    version: 2.40.0(eslint@8.57.0)(svelte@4.2.18)
+    specifier: ^2.41.0
+    version: 2.41.0(eslint@8.57.0)(svelte@4.2.18)
   husky:
     specifier: ^9.0.11
     version: 9.0.11
@@ -1426,8 +1426,8 @@ packages:
       eslint: 8.57.0
     dev: true
 
-  /eslint-plugin-svelte@2.40.0(eslint@8.57.0)(svelte@4.2.18):
-    resolution: {integrity: sha512-JuOzmfVaMeEkBASL7smHu3tIU4D9rWkHuRNV+zm/5zgAwiZVvxrXM7TcfIOS+U7VXOr4uCZuE+kZTVTzS0IE+Q==}
+  /eslint-plugin-svelte@2.41.0(eslint@8.57.0)(svelte@4.2.18):
+    resolution: {integrity: sha512-gjU9Q/psxbWG1VNwYbEb0Q6U4W5PBGaDpYmO2zlQ+zlAMVS3Qt0luAK0ACi/tMSwRK6JENiySvMyJbO0YWmXSg==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0-0 || ^9.0.0-0
@@ -1441,14 +1441,14 @@ packages:
       eslint: 8.57.0
       eslint-compat-utils: 0.5.1(eslint@8.57.0)
       esutils: 2.0.3
-      known-css-properties: 0.32.0
+      known-css-properties: 0.34.0
       postcss: 8.4.38
       postcss-load-config: 3.1.4(postcss@8.4.38)
       postcss-safe-parser: 6.0.0(postcss@8.4.38)
       postcss-selector-parser: 6.1.0
       semver: 7.6.2
       svelte: 4.2.18
-      svelte-eslint-parser: 0.39.1(svelte@4.2.18)
+      svelte-eslint-parser: 0.39.2(svelte@4.2.18)
     transitivePeerDependencies:
       - ts-node
     dev: true
@@ -2072,8 +2072,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /known-css-properties@0.32.0:
-    resolution: {integrity: sha512-PXuex21brpp7qENI143ZL5cWQcMR4IZVeeZv9ew6dg+bZX2xRUu/NzGKudZJY5DO4APiMkNPYIF8VGIdY08Tdw==}
+  /known-css-properties@0.34.0:
+    resolution: {integrity: sha512-tBECoUqNFbyAY4RrbqsBQqDFpGXAEbdD5QKr8kACx3+rnArmuuR22nKQWKazvp07N9yjTyDZaw/20UIH8tL9DQ==}
     dev: true
 
   /levn@0.4.1:
@@ -3029,8 +3029,8 @@ packages:
       - sugarss
     dev: true
 
-  /svelte-eslint-parser@0.39.1(svelte@4.2.18):
-    resolution: {integrity: sha512-0VR9gq2TOdSrJW94Qf2F3XrzXRQomXQtRZGFS3FEUr3G4J8DcpqXfBF1HJyOa3dACyGsKiBbOPF56pBgYaqXBA==}
+  /svelte-eslint-parser@0.39.2(svelte@4.2.18):
+    resolution: {integrity: sha512-87UwLuWTtDIuzWOhOi1zBL5wYVd07M5BK1qZ57YmXJB5/UmjUNJqGy3XSOhPqjckY1dATNV9y+mx+nI0WH6HPA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       svelte: ^3.37.0 || ^4.0.0 || ^5.0.0-next.115
