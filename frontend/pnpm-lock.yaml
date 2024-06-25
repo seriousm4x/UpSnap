@@ -83,8 +83,8 @@ devDependencies:
     specifier: ^4.2.18
     version: 4.2.18
   svelte-check:
-    specifier: ^3.8.1
-    version: 3.8.1(postcss@8.4.38)(svelte@4.2.18)
+    specifier: ^3.8.2
+    version: 3.8.2(postcss@8.4.38)(svelte@4.2.18)
   tailwindcss:
     specifier: ^3.4.4
     version: 3.4.4
@@ -3002,16 +3002,14 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /svelte-check@3.8.1(postcss@8.4.38)(svelte@4.2.18):
-    resolution: {integrity: sha512-KlQ0TRVe01mdvh49Ylkr9FQxO/UWbQOtaIrccl3gjgkvby1TxY41VkT7ijCl6i29FjaJPE4m6YGmhdqov0MfkA==}
+  /svelte-check@3.8.2(postcss@8.4.38)(svelte@4.2.18):
+    resolution: {integrity: sha512-n6bVsE71RPuMXZz1CalD2fXO0RIyEDHn1YdGhcFEwZrwc/HoS5wWoEvEe+mcL9tivCTRtQIdbxLLStfIHFOX+Q==}
     hasBin: true
     peerDependencies:
       svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       chokidar: 3.6.0
-      fast-glob: 3.3.2
-      import-fresh: 3.3.0
       picocolors: 1.0.1
       sade: 1.8.1
       svelte: 4.2.18
