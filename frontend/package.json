@@ -37,7 +37,7 @@
 		"tslib": "^2.6.3",
 		"typescript": "^5.4.5",
 		"typescript-eslint": "^7.14.1",
-		"vite": "^5.3.1"
+		"vite": "^5.3.2"
 	},
 	"type": "module",
 	"lint-staged": {
