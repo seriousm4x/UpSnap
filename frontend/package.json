@@ -36,7 +36,7 @@
 		"tailwindcss": "^3.4.4",
 		"tslib": "^2.6.3",
 		"typescript": "^5.5.3",
-		"typescript-eslint": "^7.16.0",
+		"typescript-eslint": "^7.16.1",
 		"vite": "^5.3.3"
 	},
 	"type": "module",
