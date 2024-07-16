@@ -19,7 +19,7 @@
 		"@sveltejs/adapter-static": "^3.0.2",
 		"@sveltejs/kit": "^2.5.18",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
-		"@typescript-eslint/eslint-plugin": "^7.16.0",
+		"@typescript-eslint/eslint-plugin": "^7.16.1",
 		"@typescript-eslint/parser": "^7.16.1",
 		"autoprefixer": "^10.4.19",
 		"daisyui": "^4.12.10",
