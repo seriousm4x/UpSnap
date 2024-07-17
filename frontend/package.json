@@ -45,7 +45,7 @@
 		"*.{js,css,md,svelte,scss}": "prettier --write --cache --cache-strategy content --ignore-path ../.gitignore ."
 	},
 	"dependencies": {
-		"@fortawesome/free-solid-svg-icons": "^6.5.2",
+		"@fortawesome/free-solid-svg-icons": "^6.6.0",
 		"date-fns": "^3.6.0",
 		"npm-run-all": "^4.1.5",
 		"pocketbase": "^0.21.3",
