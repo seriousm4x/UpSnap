@@ -67,8 +67,8 @@ importers:
         specifier: ^2.42.0
         version: 2.42.0(eslint@8.57.0)(svelte@4.2.18)
       husky:
-        specifier: ^9.1.0
-        version: 9.1.0
+        specifier: ^9.1.1
+        version: 9.1.1
       postcss:
         specifier: ^8.4.39
         version: 8.4.39
@@ -1032,8 +1032,8 @@ packages:
   hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
 
-  husky@9.1.0:
-    resolution: {integrity: sha512-8XCjbomYTGdNF2h50dio3T3zghmZ9f/ZNzr99YwSkvDdhEjJGs5qzy8tbFx+SG8yCx2wn9nMVfZxVrr/yT8gNQ==}
+  husky@9.1.1:
+    resolution: {integrity: sha512-fCqlqLXcBnXa/TJXmT93/A36tJsjdJkibQ1MuIiFyCCYUlpYpIaj2mv1w+3KR6Rzu1IC3slFTje5f6DUp2A2rg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -3003,7 +3003,7 @@ snapshots:
 
   hosted-git-info@2.8.9: {}
 
-  husky@9.1.0: {}
+  husky@9.1.1: {}
 
   ignore@5.3.1: {}
 
