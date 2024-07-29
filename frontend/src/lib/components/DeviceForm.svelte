@@ -35,6 +35,9 @@
 				}
 			})
 		);
+		device.ip = device.ip.replaceAll(' ', '');
+		device.mac = device.mac.replaceAll(' ', '');
+		device.netmask = device.netmask.replaceAll(' ', '');
 		device.ports = portIds;
 		device.id ? updateDevice(device) : createDevice(device);
 	}
@@ -53,7 +56,9 @@
 	}
 
 	async function createDevice(device: Device) {
-		device.created_by = $pocketbase.authStore.isAdmin ? '' : $pocketbase.authStore.model?.id ?? '';
+		device.created_by = $pocketbase.authStore.isAdmin
+			? ''
+			: ($pocketbase.authStore.model?.id ?? '');
 		$pocketbase
 			.collection('devices')
 			.create(device)
