@@ -18,8 +18,8 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
       pocketbase:
-        specifier: ^0.21.3
-        version: 0.21.3
+        specifier: ^0.21.4
+        version: 0.21.4
       svelte-fa:
         specifier: ^4.0.2
         version: 4.0.2(svelte@4.2.18)
@@ -1412,8 +1412,8 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
 
-  pocketbase@0.21.3:
-    resolution: {integrity: sha512-bsQRZ1mj4dhPJ4P5iSrDqWQtBX2NtuBkf6IOZwTv27zZOw6zrISgo963i5JD/99qKKD5aMSMDPGk1BE9ZyI7Cg==}
+  pocketbase@0.21.4:
+    resolution: {integrity: sha512-WJHyaqdAt95JgZ1OCRD099+DST4IIG0M/jMrCckWYDSN/6ocp61qsz7m6h0xI0J2N79ScBljceEC0fFAaQrrAw==}
 
   possible-typed-array-names@1.0.0:
     resolution: {integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q==}
@@ -3332,7 +3332,7 @@ snapshots:
 
   pirates@4.0.6: {}
 
-  pocketbase@0.21.3: {}
+  pocketbase@0.21.4: {}
 
   possible-typed-array-names@1.0.0: {}
 
