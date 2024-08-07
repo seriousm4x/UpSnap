@@ -4,6 +4,7 @@
 	import LL from '$lib/i18n/i18n-svelte';
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
+	import type { SettingsPublic } from '$lib/types/settings';
 	import { faArrowRight, faEye } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
@@ -32,6 +33,12 @@
 				passwordConfirm: form.confirm
 			})
 			.then(() => {
+				$pocketbase
+					.collection('settings_public')
+					.getFirstListItem('')
+					.then((data) => {
+						settingsPub.set(data as SettingsPublic);
+					});
 				$pocketbase.admins
 					.authWithPassword(form.email, form.password)
 					.then(() => {
