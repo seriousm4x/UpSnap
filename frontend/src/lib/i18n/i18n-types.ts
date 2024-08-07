@@ -18,6 +18,8 @@ export type Locales =
 	| 'es-ES'
 	| 'fr'
 	| 'fr-FR'
+	| 'it'
+	| 'it-IT'
 	| 'pt'
 	| 'pt-PT'
 	| 'zh'

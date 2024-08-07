@@ -13,6 +13,8 @@ import es from './es';
 import es_ES from './es-ES';
 import fr from './fr';
 import fr_FR from './fr-FR';
+import it from './it';
+import it_IT from './it-IT';
 import pt from './pt';
 import pt_PT from './pt-PT';
 import zh from './zh';
@@ -28,6 +30,8 @@ const localeTranslations = {
 	'es-ES': es_ES,
 	fr,
 	'fr-FR': fr_FR,
+	it,
+	'it-IT': it_IT,
 	pt,
 	'pt-PT': pt_PT,
 	zh,
