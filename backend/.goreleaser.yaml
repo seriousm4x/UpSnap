@@ -1,6 +1,6 @@
 version: 2
 release:
-  draft: true
+  draft: false
   prerelease: auto
 before:
   hooks:
