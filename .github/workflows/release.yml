@@ -46,6 +46,7 @@ jobs:
           pnpm --prefix=./frontend i
           PUBLIC_VERSION=${GITHUB_REF##*/} pnpm --prefix=./frontend run build
           cp -r ./frontend/build/* ./backend/pb_public/
+          git reset --hard
 
       # setup go
       - name: Set up Go
