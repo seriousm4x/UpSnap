@@ -32,7 +32,7 @@ archives:
 checksum:
   name_template: "checksums.txt"
 snapshot:
-  name_template: "{{ .Version }}"
+  version_template: "{{ .Version }}"
 changelog:
   use: github
   sort: asc
