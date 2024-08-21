@@ -114,36 +114,36 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 		if wake_cron_enabled && wake_cron != "" {
 			_, err := CronWakeShutdown.AddFunc(wake_cron, func() {
 				logger.Debug.Printf("[CRON1 \"%s\"]: cron func started", dev.GetString("name"))
-				dev, err = app.Dao().FindRecordById("devices", dev.Id)
+				d, err := app.Dao().FindRecordById("devices", dev.Id)
 				if err != nil {
 					logger.Error.Println(err)
 					return
 				}
-				logger.Debug.Printf("[CRON2 \"%s\"]: got record from db", dev.GetString("name"))
+				logger.Debug.Printf("[CRON2 \"%s\"]: got record from db", d.GetString("name"))
 
-				status := dev.GetString("status")
-				logger.Debug.Printf("[CRON3 \"%s\"]: status is %s", dev.GetString("name"), status)
-				if status == "pending" || status == "online" {
-					logger.Debug.Printf("[CRON3.5 \"%s\"]: skipping run because already pending", dev.GetString("name"))
+				status := d.GetString("status")
+				logger.Debug.Printf("[CRON3 \"%s\"]: status is %s", d.GetString("name"), status)
+				if status != "offline" {
+					logger.Debug.Printf("[CRON3.5 \"%s\"]: skipping run because device is not offline", d.GetString("name"))
 					return
 				}
-				dev.Set("status", "pending")
-				if err := app.Dao().SaveRecord(dev); err != nil {
+				d.Set("status", "pending")
+				if err := app.Dao().SaveRecord(d); err != nil {
 					logger.Error.Println("Failed to save record:", err)
 					return
 				}
-				logger.Debug.Printf("[CRON4 \"%s\"]: saved status pending", dev.GetString("name"))
-				if err := networking.WakeDevice(dev); err != nil {
+				logger.Debug.Printf("[CRON4 \"%s\"]: saved status pending", d.GetString("name"))
+				if err := networking.WakeDevice(d); err != nil {
 					logger.Error.Println(err)
-					dev.Set("status", "offline")
+					d.Set("status", "offline")
 				} else {
-					dev.Set("status", "online")
+					d.Set("status", "online")
 				}
-				logger.Debug.Printf("[CRON5 \"%s\"]: wake device done", dev.GetString("name"))
-				if err := app.Dao().SaveRecord(dev); err != nil {
+				logger.Debug.Printf("[CRON5 \"%s\"]: wake device done", d.GetString("name"))
+				if err := app.Dao().SaveRecord(d); err != nil {
 					logger.Error.Println("Failed to save record:", err)
 				}
-				logger.Debug.Printf("[CRON6 \"%s\"]: saved device", dev.GetString("name"))
+				logger.Debug.Printf("[CRON6 \"%s\"]: saved device", d.GetString("name"))
 			})
 			if err != nil {
 				logger.Error.Println(err)
@@ -152,27 +152,27 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 
 		if shutdown_cron_enabled && shutdown_cron != "" {
 			_, err := CronWakeShutdown.AddFunc(shutdown_cron, func() {
-				dev, err = app.Dao().FindRecordById("devices", dev.Id)
+				d, err := app.Dao().FindRecordById("devices", dev.Id)
 				if err != nil {
 					logger.Error.Println(err)
 					return
 				}
 
-				status := dev.GetString("status")
-				if status == "pending" || status == "offline" {
+				status := d.GetString("status")
+				if status != "online" {
 					return
 				}
-				dev.Set("status", "pending")
-				if err := app.Dao().SaveRecord(dev); err != nil {
+				d.Set("status", "pending")
+				if err := app.Dao().SaveRecord(d); err != nil {
 					logger.Error.Println("Failed to save record:", err)
 				}
-				if err := networking.ShutdownDevice(dev); err != nil {
+				if err := networking.ShutdownDevice(d); err != nil {
 					logger.Error.Println(err)
-					dev.Set("status", "online")
+					d.Set("status", "online")
 				} else {
-					dev.Set("status", "offline")
+					d.Set("status", "offline")
 				}
-				if err := app.Dao().SaveRecord(dev); err != nil {
+				if err := app.Dao().SaveRecord(d); err != nil {
 					logger.Error.Println("Failed to save record:", err)
 				}
 			})
