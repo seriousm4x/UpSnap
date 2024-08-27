@@ -106,15 +106,17 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 		return
 	}
 	for _, dev := range devices {
-		wake_cron := dev.GetString("wake_cron")
-		wake_cron_enabled := dev.GetBool("wake_cron_enabled")
-		shutdown_cron := dev.GetString("shutdown_cron")
-		shutdown_cron_enabled := dev.GetBool("shutdown_cron_enabled")
+		devCopy := dev
+
+		wake_cron := devCopy.GetString("wake_cron")
+		wake_cron_enabled := devCopy.GetBool("wake_cron_enabled")
+		shutdown_cron := devCopy.GetString("shutdown_cron")
+		shutdown_cron_enabled := devCopy.GetBool("shutdown_cron_enabled")
 
 		if wake_cron_enabled && wake_cron != "" {
 			_, err := CronWakeShutdown.AddFunc(wake_cron, func() {
-				logger.Debug.Printf("[CRON1 \"%s\"]: cron func started", dev.GetString("name"))
-				d, err := app.Dao().FindRecordById("devices", dev.Id)
+				logger.Debug.Printf("[CRON1 \"%s\"]: cron func started", devCopy.GetString("name"))
+				d, err := app.Dao().FindRecordById("devices", devCopy.Id)
 				if err != nil {
 					logger.Error.Println(err)
 					return
@@ -152,7 +154,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 
 		if shutdown_cron_enabled && shutdown_cron != "" {
 			_, err := CronWakeShutdown.AddFunc(shutdown_cron, func() {
-				d, err := app.Dao().FindRecordById("devices", dev.Id)
+				d, err := app.Dao().FindRecordById("devices", devCopy.Id)
 				if err != nil {
 					logger.Error.Println(err)
 					return
