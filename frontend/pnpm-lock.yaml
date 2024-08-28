@@ -34,8 +34,8 @@ importers:
         version: 5.26.2(typescript@5.5.4)
     devDependencies:
       '@eslint/js':
-        specifier: ^9.9.0
-        version: 9.9.0
+        specifier: ^9.9.1
+        version: 9.9.1
       '@sveltejs/adapter-static':
         specifier: ^3.0.4
         version: 3.0.4(@sveltejs/kit@2.5.25(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.2))(svelte@4.2.19)(vite@5.4.2))
@@ -269,8 +269,8 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@eslint/js@9.9.0':
-    resolution: {integrity: sha512-hhetes6ZHP3BlXLxmd8K2SNgkhNSi+UcecbnwWKwpP7kyi/uC75DJ1lOOBO3xrC4jyojtGE3YxKZPHfk4yrgug==}
+  '@eslint/js@9.9.1':
+    resolution: {integrity: sha512-xIDQRsfg5hNBqHz04H1R3scSVwmI+KUbqjsQKHKQ1DAUSaUjYPReZZmS/5PNiKu1fUvzDd6H7DEDKACSEhu+TQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@fortawesome/fontawesome-common-types@6.6.0':
@@ -2175,7 +2175,7 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@eslint/js@9.9.0': {}
+  '@eslint/js@9.9.1': {}
 
   '@fortawesome/fontawesome-common-types@6.6.0': {}
 

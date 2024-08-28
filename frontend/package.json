@@ -15,7 +15,7 @@
 		"typesafe-i18n": "typesafe-i18n"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.9.0",
+		"@eslint/js": "^9.9.1",
 		"@sveltejs/adapter-static": "^3.0.4",
 		"@sveltejs/kit": "^2.5.25",
 		"@sveltejs/vite-plugin-svelte": "^3.1.2",
