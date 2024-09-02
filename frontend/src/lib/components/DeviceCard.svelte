@@ -11,8 +11,9 @@
 		faPen,
 		faRotateLeft
 	} from '@fortawesome/free-solid-svg-icons';
+	import cronParser from 'cron-parser';
 	import type { Locale } from 'date-fns';
-	import { formatDistance, parseISO } from 'date-fns';
+	import { formatDistance, formatRelative, parseISO } from 'date-fns';
 	import { de } from 'date-fns/locale/de';
 	import { enUS } from 'date-fns/locale/en-US';
 	import { es } from 'date-fns/locale/es';
@@ -128,6 +129,13 @@
 			toast.error(err.message);
 		});
 	}
+
+	function getNextCronRelativeTime(expression: string) {
+		const cron = cronParser.parseExpression(expression);
+		return formatRelative(cron.next().toISOString(), now, {
+			locale: dateFnsLocale
+		});
+	}
 </script>
 
 <div class="card rounded-3xl bg-base-300 shadow-md" transition:scale={{ delay: 0, duration: 200 }}>
@@ -144,18 +152,18 @@
 			<DeviceCardNic {device} />
 		</ul>
 		{#if device.wake_cron_enabled || device.shutdown_cron_enabled || device.password}
-			<div class="flex flex-row flex-wrap gap-2">
+			<div class="mt-1 flex flex-row flex-wrap gap-2">
 				{#if device.wake_cron_enabled}
 					<div class="tooltip" data-tip={$LL.device.card_tooltip_wake_cron()}>
 						<span class="badge badge-success gap-1 p-3"
-							><Fa icon={faCircleArrowUp} />{device.wake_cron}</span
+							><Fa icon={faCircleArrowUp} />{getNextCronRelativeTime(device.wake_cron)}</span
 						>
 					</div>
 				{/if}
 				{#if device.shutdown_cron_enabled}
 					<div class="tooltip" data-tip={$LL.device.card_tooltip_shutdown_cron()}>
 						<span class="badge badge-error gap-1 p-3"
-							><Fa icon={faCircleArrowDown} />{device.shutdown_cron}</span
+							><Fa icon={faCircleArrowDown} />{getNextCronRelativeTime(device.shutdown_cron)}</span
 						>
 					</div>
 				{/if}
