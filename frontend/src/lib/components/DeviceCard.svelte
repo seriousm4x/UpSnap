@@ -130,7 +130,7 @@
 		});
 	}
 
-	function getNextCronRelativeTime(expression: string) {
+	function getNextCronRelativeTime(expression: string, now: number) {
 		const cron = cronParser.parseExpression(expression);
 		return formatRelative(cron.next().toISOString(), now, {
 			locale: dateFnsLocale
@@ -156,14 +156,17 @@
 				{#if device.wake_cron_enabled}
 					<div class="tooltip" data-tip={$LL.device.card_tooltip_wake_cron()}>
 						<span class="badge badge-success gap-1 p-3"
-							><Fa icon={faCircleArrowUp} />{getNextCronRelativeTime(device.wake_cron)}</span
+							><Fa icon={faCircleArrowUp} />{getNextCronRelativeTime(device.wake_cron, now)}</span
 						>
 					</div>
 				{/if}
 				{#if device.shutdown_cron_enabled}
 					<div class="tooltip" data-tip={$LL.device.card_tooltip_shutdown_cron()}>
 						<span class="badge badge-error gap-1 p-3"
-							><Fa icon={faCircleArrowDown} />{getNextCronRelativeTime(device.shutdown_cron)}</span
+							><Fa icon={faCircleArrowDown} />{getNextCronRelativeTime(
+								device.shutdown_cron,
+								now
+							)}</span
 						>
 					</div>
 				{/if}
