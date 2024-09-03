@@ -1,7 +1,7 @@
 services:
   upsnap:
     container_name: upsnap
-    image: ghcr.io/seriousm4x/upsnap:4
+    image: ghcr.io/seriousm4x/upsnap:4 # images are also available on docker hub: seriousm4x/upsnap:4
     network_mode: host
     restart: unless-stopped
     volumes:
