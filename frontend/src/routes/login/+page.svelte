@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { toggleVisibility } from '$lib/helpers/forms';
 	import LL from '$lib/i18n/i18n-svelte';
-	import { pocketbase } from '$lib/stores/pocketbase';
+	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import { faEye, faLockOpen, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 	import type { AuthProviderInfo } from 'pocketbase';
@@ -62,7 +62,14 @@
 				<h1 class="text-center text-xl font-bold">{$settingsPub?.website_title}</h1>
 			{/if}
 			<div class="flex flex-row gap-4">
-				<figure class="w-16"><img src="/gopher.svg" alt="Gopher" /></figure>
+				<figure class="w-16">
+					<img
+						src={$settingsPub?.id && $settingsPub?.favicon
+							? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
+							: '/gopher.svg'}
+						alt={$settingsPub?.website_title ? $settingsPub?.website_title : 'Gopher'}
+					/>
+				</figure>
 				<h2 class="card-title">{$LL.login.welcome()}</h2>
 			</div>
 			<form class="form-control w-full" on:submit|preventDefault={tryAdminThenUser}>
