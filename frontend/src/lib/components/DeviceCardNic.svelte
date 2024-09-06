@@ -51,9 +51,10 @@
 				Authorization: $pocketbase.authStore.token
 			}
 		})
-			.then(async (data) => {
-				const dev = (await data.json()) as Device;
-				countdown(Date.parse(dev.updated));
+			.then((resp) => resp.json())
+			.then((data) => {
+				device = data as Device;
+				countdown(Date.parse(device.updated));
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -66,9 +67,10 @@
 				Authorization: $pocketbase.authStore.token
 			}
 		})
-			.then(async (data) => {
-				const dev = (await data.json()) as Device;
-				countdown(Date.parse(dev.updated));
+			.then((resp) => resp.json())
+			.then((data) => {
+				device = data as Device;
+				countdown(Date.parse(device.updated));
 			})
 			.catch((err) => {
 				toast.error(err.message);
