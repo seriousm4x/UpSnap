@@ -39,7 +39,11 @@
 		device.mac = device.mac.replaceAll(' ', '');
 		device.netmask = device.netmask.replaceAll(' ', '');
 		device.ports = portIds;
-		device.id ? updateDevice(device) : createDevice(device);
+		if (device.id) {
+			updateDevice(device);
+		} else {
+			createDevice(device);
+		}
 	}
 
 	async function updateDevice(device: Device) {

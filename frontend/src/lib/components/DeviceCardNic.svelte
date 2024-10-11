@@ -91,9 +91,17 @@
 
 	function handleClick() {
 		if (device.status === 'offline') {
-			device.wake_confirm ? askConfirmation('wake') : wake();
+			if (device.wake_confirm) {
+				askConfirmation('wake');
+			} else {
+				wake();
+			}
 		} else if (device.status === 'online') {
-			device.shutdown_confirm ? askConfirmation('shutdown') : shutdown();
+			if (device.shutdown_confirm) {
+				askConfirmation('shutdown');
+			} else {
+				shutdown();
+			}
 		}
 	}
 
