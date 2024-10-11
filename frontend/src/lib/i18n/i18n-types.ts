@@ -20,6 +20,8 @@ export type Locales =
 	| 'fr-FR'
 	| 'it'
 	| 'it-IT'
+	| 'nl'
+	| 'nl-NL'
 	| 'pt'
 	| 'pt-PT'
 	| 'zh'

@@ -19,6 +19,7 @@
 	import { es } from 'date-fns/locale/es';
 	import { fr } from 'date-fns/locale/fr';
 	import { it } from 'date-fns/locale/it';
+	import { nl } from 'date-fns/locale/nl';
 	import { pt } from 'date-fns/locale/pt';
 	import { zhCN } from 'date-fns/locale/zh-CN';
 	import { zhTW } from 'date-fns/locale/zh-TW';
@@ -91,6 +92,10 @@
 				case 'es':
 				case 'es-ES':
 					dateFnsLocale = es;
+					break;
+				case 'nl':
+				case 'nl-NL':
+					dateFnsLocale = nl;
 					break;
 				case 'pt':
 				case 'pt-PT':
