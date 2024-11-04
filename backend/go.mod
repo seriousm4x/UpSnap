@@ -6,7 +6,7 @@ require (
 	github.com/labstack/echo/v5 v5.0.0-20230722203903-ec5b858dab61
 	github.com/mdlayher/wol v0.0.0-20220221231636-b763a792253a
 	github.com/pocketbase/dbx v1.10.1
-	github.com/pocketbase/pocketbase v0.22.22
+	github.com/pocketbase/pocketbase v0.22.23
 	github.com/prometheus-community/pro-bing v0.4.1
 	github.com/robfig/cron/v3 v3.0.1
 	golang.org/x/sys v0.26.0
@@ -15,7 +15,7 @@ require (
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
-	github.com/aws/aws-sdk-go-v2 v1.32.0 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.32.2 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.6.6 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.27.41 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.17.39 // indirect
