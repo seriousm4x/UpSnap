@@ -9,7 +9,7 @@ require (
 	github.com/pocketbase/pocketbase v0.22.23
 	github.com/prometheus-community/pro-bing v0.4.1
 	github.com/robfig/cron/v3 v3.0.1
-	golang.org/x/sys v0.26.0
+	golang.org/x/sys v0.27.0
 )
 
 require (
