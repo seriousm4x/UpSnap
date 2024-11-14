@@ -224,3 +224,13 @@ package
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/go,node,svelte,visualstudiocode,macos
+
+build
+data
+
+backend/pb_data
+backend/pb_public/*
+!backend/pb_public/.gitkeep
+
+dist/
+vite.config.js.timestamp*
