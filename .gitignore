@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,svelte,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=go,visualstudiocode,svelte,node
+# Created by https://www.toptal.com/developers/gitignore/api/go,node,svelte,visualstudiocode,macos
+# Edit at https://www.toptal.com/developers/gitignore?templates=go,node,svelte,visualstudiocode,macos
 
 ### Go ###
 # If you prefer the allow list template instead of the deny list, see community template:
@@ -23,6 +23,39 @@
 
 # Go workspace file
 go.work
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### macOS Patch ###
+# iCloud generated files
+*.icloud
 
 ### Node ###
 # Logs
@@ -100,7 +133,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-#.env
+.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -190,14 +223,4 @@ package
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,svelte,node
-
-build
-data
-
-backend/pb_data
-backend/pb_public/*
-!backend/pb_public/.gitkeep
-
-dist/
-vite.config.js.timestamp*
+# End of https://www.toptal.com/developers/gitignore/api/go,node,svelte,visualstudiocode,macos
