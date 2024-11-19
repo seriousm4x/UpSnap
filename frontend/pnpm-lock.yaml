@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@fortawesome/free-solid-svg-icons':
-        specifier: ^6.6.0
-        version: 6.6.0
+        specifier: ^6.7.0
+        version: 6.7.0
       cron-parser:
         specifier: ^4.9.0
         version: 4.9.0
@@ -297,12 +297,12 @@ packages:
     resolution: {integrity: sha512-2b/g5hRmpbb1o4GnTZax9N9m0FXzz9OV42ZzI4rDDMDuHUqigAiQCEWChBWCY4ztAGVRjoWT19v0yMmc5/L5kA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@fortawesome/fontawesome-common-types@6.6.0':
-    resolution: {integrity: sha512-xyX0X9mc0kyz9plIyryrRbl7ngsA9jz77mCZJsUkLl+ZKs0KWObgaEBoSgQiYWAsSmjz/yjl0F++Got0Mdp4Rw==}
+  '@fortawesome/fontawesome-common-types@6.7.0':
+    resolution: {integrity: sha512-AUetZXU6cQdAe21p8j3mg2aD40MMDKfFNUNgq/G7gR3HMDp0BsQskAudLDSgq6d0SbCY0QKP0g4s5Y02S1kkhw==}
     engines: {node: '>=6'}
 
-  '@fortawesome/free-solid-svg-icons@6.6.0':
-    resolution: {integrity: sha512-IYv/2skhEDFc2WGUcqvFJkeK39Q+HyPf5GHUrT/l2pKbtgEIv1al1TKd6qStR5OIwQdN1GZP54ci3y4mroJWjA==}
+  '@fortawesome/free-solid-svg-icons@6.7.0':
+    resolution: {integrity: sha512-9ww5hQ3OzEehUrSXAlPTJ73xDub73fnxr+se5PU0MFQor2nZBO0m7HNm5Q4KD9XMYjwRqh2BnBNR2/9EFbGqmg==}
     engines: {node: '>=6'}
 
   '@humanfs/core@0.19.1':
@@ -2088,11 +2088,11 @@ snapshots:
     dependencies:
       levn: 0.4.1
 
-  '@fortawesome/fontawesome-common-types@6.6.0': {}
+  '@fortawesome/fontawesome-common-types@6.7.0': {}
 
-  '@fortawesome/free-solid-svg-icons@6.6.0':
+  '@fortawesome/free-solid-svg-icons@6.7.0':
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.6.0
+      '@fortawesome/fontawesome-common-types': 6.7.0
 
   '@humanfs/core@0.19.1': {}
 
