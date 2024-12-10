@@ -18,7 +18,7 @@
 		"@eslint/compat": "^1.2.4",
 		"@eslint/js": "^9.16.0",
 		"@sveltejs/adapter-static": "^3.0.6",
-		"@sveltejs/kit": "^2.9.0",
+		"@sveltejs/kit": "^2.9.1",
 		"@sveltejs/vite-plugin-svelte": "^3.1.2",
 		"autoprefixer": "^10.4.20",
 		"daisyui": "^4.12.20",
