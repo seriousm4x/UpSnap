@@ -40,8 +40,8 @@ importers:
         specifier: ^1.2.4
         version: 1.2.4(eslint@9.16.0(jiti@1.21.6))
       '@eslint/js':
-        specifier: ^9.16.0
-        version: 9.16.0
+        specifier: ^9.17.0
+        version: 9.17.0
       '@sveltejs/adapter-static':
         specifier: ^3.0.6
         version: 3.0.6(@sveltejs/kit@2.11.1(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.11))(svelte@4.2.19)(vite@5.4.11))
@@ -287,6 +287,10 @@ packages:
 
   '@eslint/js@9.16.0':
     resolution: {integrity: sha512-tw2HxzQkrbeuvyj1tG2Yqq+0H9wGoI2IMk4EOsQeX+vmd75FtJAzf+gTA69WF+baUKRYQ3x2kbLE08js5OsTVg==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/js@9.17.0':
+    resolution: {integrity: sha512-Sxc4hqcs1kTu0iID3kcZDW3JHq2a77HO9P8CP6YEA/FpH3Ll8UXE2r/86Rz9YJLKme39S9vU5OWNjC6Xl0Cr3w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/object-schema@2.1.4':
@@ -2061,6 +2065,8 @@ snapshots:
       - supports-color
 
   '@eslint/js@9.16.0': {}
+
+  '@eslint/js@9.17.0': {}
 
   '@eslint/object-schema@2.1.4': {}
 
