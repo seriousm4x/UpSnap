@@ -12,7 +12,7 @@ import (
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 	"github.com/seriousm4x/upsnap/cronjobs"
 	"github.com/seriousm4x/upsnap/logger"
-	// _ "github.com/seriousm4x/upsnap/migrations"
+	_ "github.com/seriousm4x/upsnap/migrations"
 )
 
 var App *pocketbase.PocketBase
