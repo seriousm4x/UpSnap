@@ -30,7 +30,7 @@
 
 	export let device: Device;
 
-	let moreButtons = [
+	$: moreButtons = [
 		{
 			text: $LL.device.card_btn_more_edit(),
 			icon: faPen,
