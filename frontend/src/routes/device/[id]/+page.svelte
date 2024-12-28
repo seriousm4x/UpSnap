@@ -9,7 +9,7 @@
 	import toast from 'svelte-french-toast';
 
 	$: if (Object.hasOwn($permission, 'update')) {
-		if (!$pocketbase.authStore.isAdmin && !$permission.update.includes($page.params.id)) {
+		if (!$pocketbase.authStore.isSuperuser && !$permission.update.includes($page.params.id)) {
 			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});

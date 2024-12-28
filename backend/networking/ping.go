@@ -8,12 +8,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/pocketbase/pocketbase/models"
+	"github.com/pocketbase/pocketbase/core"
 	probing "github.com/prometheus-community/pro-bing"
 	"github.com/seriousm4x/upsnap/logger"
 )
 
-func PingDevice(device *models.Record) bool {
+func PingDevice(device *core.Record) bool {
 	ping_cmd := device.GetString("ping_cmd")
 	if ping_cmd == "" {
 		pinger, err := probing.NewPinger(device.GetString("ip"))

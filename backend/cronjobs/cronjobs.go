@@ -2,7 +2,7 @@ package cronjobs
 
 import (
 	"github.com/pocketbase/pocketbase"
-	"github.com/pocketbase/pocketbase/models"
+	"github.com/pocketbase/pocketbase/core"
 	"github.com/robfig/cron/v3"
 	"github.com/seriousm4x/upsnap/logger"
 	"github.com/seriousm4x/upsnap/networking"
@@ -21,7 +21,7 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 		CronPing.Remove(job.ID)
 	}
 
-	settingsPrivateRecords, err := app.Dao().FindRecordsByExpr("settings_private")
+	settingsPrivateRecords, err := app.FindAllRecords("settings_private")
 	if err != nil {
 		logger.Error.Println(err)
 	}
@@ -33,24 +33,24 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 			return
 		}
 
-		devices, err := app.Dao().FindRecordsByExpr("devices")
+		devices, err := app.FindAllRecords("devices")
 		if err != nil {
 			logger.Error.Println(err)
 			return
 		}
 
 		// expand ports field
-		expandFetchFunc := func(c *models.Collection, ids []string) ([]*models.Record, error) {
-			return app.Dao().FindRecordsByIds(c.Id, ids, nil)
+		expandFetchFunc := func(c *core.Collection, ids []string) ([]*core.Record, error) {
+			return app.FindRecordsByIds(c.Id, ids, nil)
 		}
-		merr := app.Dao().ExpandRecords(devices, []string{"ports"}, expandFetchFunc)
+		merr := app.ExpandRecords(devices, []string{"ports"}, expandFetchFunc)
 		if len(merr) > 0 {
 			return
 		}
 
 		for _, device := range devices {
 			// ping device
-			go func(d *models.Record) {
+			go func(d *core.Record) {
 				status := d.GetString("status")
 				if status == "pending" {
 					return
@@ -60,7 +60,7 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 						return
 					}
 					d.Set("status", "online")
-					if err := app.Dao().SaveRecord(d); err != nil {
+					if err := app.Save(d); err != nil {
 						logger.Error.Println("Failed to save record:", err)
 					}
 				} else {
@@ -68,15 +68,15 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 						return
 					}
 					d.Set("status", "offline")
-					if err := app.Dao().SaveRecord(d); err != nil {
+					if err := app.Save(d); err != nil {
 						logger.Error.Println("Failed to save record:", err)
 					}
 				}
 			}(device)
 
 			// ping ports
-			go func(d *models.Record) {
-				ports, err := app.Dao().FindRecordsByIds("ports", d.GetStringSlice("ports"))
+			go func(d *core.Record) {
+				ports, err := app.FindRecordsByIds("ports", d.GetStringSlice("ports"))
 				if err != nil {
 					logger.Error.Println(err)
 				}
@@ -84,7 +84,7 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 					isUp := networking.CheckPort(d.GetString("ip"), port.GetString("number"))
 					if isUp != port.GetBool("status") {
 						port.Set("status", isUp)
-						if err := app.Dao().SaveRecord(port); err != nil {
+						if err := app.Save(port); err != nil {
 							logger.Error.Println("Failed to save record:", err)
 						}
 					}
@@ -100,7 +100,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 		CronWakeShutdown.Remove(job.ID)
 	}
 
-	devices, err := app.Dao().FindRecordsByExpr("devices")
+	devices, err := app.FindAllRecords("devices")
 	if err != nil {
 		logger.Error.Println(err)
 		return
@@ -117,13 +117,13 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				if isOnline {
 					return
 				}
-				d, err := app.Dao().FindRecordById("devices", dev.Id)
+				d, err := app.FindRecordById("devices", dev.Id)
 				if err != nil {
 					logger.Error.Println(err)
 					return
 				}
 				d.Set("status", "pending")
-				if err := app.Dao().SaveRecord(d); err != nil {
+				if err := app.Save(d); err != nil {
 					logger.Error.Println("Failed to save record:", err)
 					return
 				}
@@ -133,7 +133,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				} else {
 					d.Set("status", "online")
 				}
-				if err := app.Dao().SaveRecord(d); err != nil {
+				if err := app.Save(d); err != nil {
 					logger.Error.Println("Failed to save record:", err)
 				}
 			})
@@ -148,7 +148,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				if !isOnline {
 					return
 				}
-				d, err := app.Dao().FindRecordById("devices", dev.Id)
+				d, err := app.FindRecordById("devices", dev.Id)
 				if err != nil {
 					logger.Error.Println(err)
 					return
@@ -158,7 +158,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 					return
 				}
 				d.Set("status", "pending")
-				if err := app.Dao().SaveRecord(d); err != nil {
+				if err := app.Save(d); err != nil {
 					logger.Error.Println("Failed to save record:", err)
 				}
 				if err := networking.ShutdownDevice(d); err != nil {
@@ -167,7 +167,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				} else {
 					d.Set("status", "offline")
 				}
-				if err := app.Dao().SaveRecord(d); err != nil {
+				if err := app.Save(d); err != nil {
 					logger.Error.Println("Failed to save record:", err)
 				}
 			})

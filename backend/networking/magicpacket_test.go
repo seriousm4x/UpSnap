@@ -5,7 +5,7 @@ import (
 	"net"
 	"testing"
 
-	"github.com/pocketbase/pocketbase/models"
+	"github.com/pocketbase/pocketbase/core"
 )
 
 type Device struct {
@@ -17,7 +17,7 @@ type Device struct {
 }
 
 func TestSendMagicPacket(t *testing.T) {
-	collection := &models.Collection{}
+	collection := &core.Collection{}
 	devices_success := []Device{
 		{
 			IP:       "8.8.8.8",
@@ -49,7 +49,7 @@ func TestSendMagicPacket(t *testing.T) {
 	}
 
 	for _, v := range devices_success {
-		device := models.NewRecord(collection)
+		device := core.NewRecord(collection)
 		device.Set("ip", v.IP)
 		device.Set("mac", v.MAC)
 		device.Set("netmask", v.Netmask)
@@ -60,7 +60,7 @@ func TestSendMagicPacket(t *testing.T) {
 		}
 	}
 	for _, v := range devices_fail {
-		device := models.NewRecord(collection)
+		device := core.NewRecord(collection)
 		device.Set("ip", v.IP)
 		device.Set("mac", v.MAC)
 		device.Set("netmask", v.Netmask)

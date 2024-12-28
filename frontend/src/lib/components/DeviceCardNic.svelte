@@ -27,7 +27,7 @@
 		if (device.shutdown_cmd === '') {
 			disabled = true;
 			hoverText = $LL.device.card_nic_tooltip_shutdown_no_cmd();
-		} else if (!$pocketbase.authStore.isAdmin && !$permission.power?.includes(device.id)) {
+		} else if (!$pocketbase.authStore.isSuperuser && !$permission.power?.includes(device.id)) {
 			disabled = true;
 			hoverText = $LL.device.card_nic_tooltip_shutdown_no_permission();
 		} else {
@@ -35,7 +35,7 @@
 			hoverText = $LL.device.card_nic_tooltip_shutdown();
 		}
 	} else if (device.status === 'offline') {
-		if (!$pocketbase.authStore.isAdmin && !$permission.power?.includes(device.id)) {
+		if (!$pocketbase.authStore.isSuperuser && !$permission.power?.includes(device.id)) {
 			disabled = true;
 			hoverText = $LL.device.card_nic_tooltip_power_no_permission();
 		} else {

@@ -3,19 +3,16 @@ package pb
 import (
 	"fmt"
 	"io/fs"
-	"net/http"
 	"os"
 	"path"
 
-	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
-	"github.com/pocketbase/pocketbase/models"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 	"github.com/seriousm4x/upsnap/cronjobs"
 	"github.com/seriousm4x/upsnap/logger"
-	_ "github.com/seriousm4x/upsnap/migrations"
+	// _ "github.com/seriousm4x/upsnap/migrations"
 )
 
 var App *pocketbase.PocketBase
@@ -61,58 +58,14 @@ func StartPocketBase(distDirFS fs.FS) {
 	})
 
 	// event hooks
-	App.OnBeforeServe().Add(func(e *core.ServeEvent) error {
-		e.Router.GET("/*", apis.StaticDirectoryHandler(distDirFS, true))
+	App.OnServe().BindFunc(func(se *core.ServeEvent) error {
+		se.Router.GET("/{path...}", apis.Static(distDirFS, true))
 
-		e.Router.AddRoute(echo.Route{
-			Method:  http.MethodGet,
-			Path:    "/api/upsnap/wake/:id",
-			Handler: HandlerWake,
-			Middlewares: []echo.MiddlewareFunc{
-				apis.ActivityLogger(App),
-				RequireUpSnapPermission(),
-			},
-		})
-
-		e.Router.AddRoute(echo.Route{
-			Method:  http.MethodGet,
-			Path:    "/api/upsnap/sleep/:id",
-			Handler: HandlerSleep,
-			Middlewares: []echo.MiddlewareFunc{
-				apis.ActivityLogger(App),
-				RequireUpSnapPermission(),
-			},
-		})
-
-		e.Router.AddRoute(echo.Route{
-			Method:  http.MethodGet,
-			Path:    "/api/upsnap/reboot/:id",
-			Handler: HandlerReboot,
-			Middlewares: []echo.MiddlewareFunc{
-				apis.ActivityLogger(App),
-				RequireUpSnapPermission(),
-			},
-		})
-
-		e.Router.AddRoute(echo.Route{
-			Method:  http.MethodGet,
-			Path:    "/api/upsnap/shutdown/:id",
-			Handler: HandlerShutdown,
-			Middlewares: []echo.MiddlewareFunc{
-				apis.ActivityLogger(App),
-				RequireUpSnapPermission(),
-			},
-		})
-
-		e.Router.AddRoute(echo.Route{
-			Method:  http.MethodGet,
-			Path:    "/api/upsnap/scan",
-			Handler: HandlerScan,
-			Middlewares: []echo.MiddlewareFunc{
-				apis.ActivityLogger(App),
-				apis.RequireAdminAuth(),
-			},
-		})
+		se.Router.GET("/api/upsnap/wake/{id}", HandlerWake).Bind(RequireUpSnapPermission())
+		se.Router.GET("/api/upsnap/sleep/{id}", HandlerSleep).Bind(RequireUpSnapPermission())
+		se.Router.GET("/api/upsnap/reboot/{id}", HandlerReboot).Bind(RequireUpSnapPermission())
+		se.Router.GET("/api/upsnap/shutdown/{id}", HandlerShutdown).Bind(RequireUpSnapPermission())
+		se.Router.GET("/api/upsnap/scan", HandlerScan).Bind(apis.RequireSuperuserAuth())
 
 		if err := importSettings(); err != nil {
 			return err
@@ -130,14 +83,14 @@ func StartPocketBase(distDirFS fs.FS) {
 		// restart ping cronjobs or wake/shutdown cronjobs on model update
 		// add event hook before starting server.
 		// using this outside App.OnBeforeServe() would not work
-		App.OnModelAfterUpdate("settings_private", "devices").Add(func(e *core.ModelEvent) error {
+		App.OnModelAfterUpdateSuccess("settings_private", "devices").BindFunc(func(e *core.ModelEvent) error {
 			if e.Model.TableName() == "settings_private" {
 				cronjobs.SetPingJobs(App)
 			} else if e.Model.TableName() == "devices" {
 				// only restart wake/shutdown cronjobs if new model's cron changed
-				record := e.Model.(*models.Record)
-				newRecord := record.CleanCopy()
-				oldRecord := record.OriginalCopy()
+				record := e.Model.(*core.Record)
+				newRecord := record.Fresh()
+				oldRecord := record.Original()
 
 				newWakeCron := newRecord.GetString("wake_cron")
 				newWakeCmd := newRecord.GetString("wake_cmd")
@@ -164,10 +117,10 @@ func StartPocketBase(distDirFS fs.FS) {
 			}
 			return nil
 		})
-		return nil
+		return se.Next()
 	})
 
-	App.OnModelAfterCreate().Add(func(e *core.ModelEvent) error {
+	App.OnModelAfterCreateSuccess().BindFunc(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_admins" {
 			if err := setSetupCompleted(); err != nil {
 				logger.Error.Println(err)
@@ -176,11 +129,11 @@ func StartPocketBase(distDirFS fs.FS) {
 			return nil
 		} else if e.Model.TableName() == "devices" {
 			// when a device is created, give the user all rights to the device he just created
-			deviceRec := e.Model.(*models.Record)
+			deviceRec := e.Model.(*core.Record)
 			userId := deviceRec.GetString("created_by")
 
-			var permissionRec *models.Record
-			permissionRec, err := App.Dao().FindFirstRecordByFilter("permissions",
+			var permissionRec *core.Record
+			permissionRec, err := App.FindFirstRecordByFilter("permissions",
 				fmt.Sprintf("user.id = '%s'", userId))
 			if err != nil && err.Error() != "sql: no rows in result set" {
 				logger.Error.Println(err)
@@ -190,7 +143,7 @@ func StartPocketBase(distDirFS fs.FS) {
 				permissionRec.Set("update", append(permissionRec.GetStringSlice("update"), deviceRec.Id))
 				permissionRec.Set("delete", append(permissionRec.GetStringSlice("delete"), deviceRec.Id))
 				permissionRec.Set("power", append(permissionRec.GetStringSlice("power"), deviceRec.Id))
-				if err := App.Dao().SaveRecord(permissionRec); err != nil {
+				if err := App.Save(permissionRec); err != nil {
 					logger.Error.Println(err)
 					return err
 				}
@@ -198,7 +151,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		}
 		return nil
 	})
-	App.OnModelAfterDelete().Add(func(e *core.ModelEvent) error {
+	App.OnModelAfterDeleteSuccess().BindFunc(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_admins" {
 			if err := setSetupCompleted(); err != nil {
 				logger.Error.Println(err)
@@ -208,7 +161,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		return nil
 	})
 
-	App.OnTerminate().Add(func(e *core.TerminateEvent) error {
+	App.OnTerminate().BindFunc(func(e *core.TerminateEvent) error {
 		cronjobs.StopAll()
 		return nil
 	})
@@ -219,28 +172,28 @@ func StartPocketBase(distDirFS fs.FS) {
 }
 
 func importSettings() error {
-	settingsPrivateRecords, err := App.Dao().FindRecordsByExpr("settings_private")
+	settingsPrivateRecords, err := App.FindAllRecords("settings_private")
 	if err != nil {
 		return err
 	}
-	settingsPrivateCollection, err := App.Dao().FindCollectionByNameOrId("settings_private")
+	settingsPrivateCollection, err := App.FindCollectionByNameOrId("settings_private")
 	if err != nil {
 		return err
 	}
-	settingsPrivate := models.NewRecord(settingsPrivateCollection)
+	settingsPrivate := core.NewRecord(settingsPrivateCollection)
 	if len(settingsPrivateRecords) > 0 {
 		settingsPrivate = settingsPrivateRecords[0]
 	}
 
-	settingsPublicRecords, err := App.Dao().FindRecordsByExpr("settings_public")
+	settingsPublicRecords, err := App.FindAllRecords("settings_public")
 	if err != nil {
 		return err
 	}
-	settingsPublicCollection, err := App.Dao().FindCollectionByNameOrId("settings_public")
+	settingsPublicCollection, err := App.FindCollectionByNameOrId("settings_public")
 	if err != nil {
 		return err
 	}
-	settingsPublic := models.NewRecord(settingsPublicCollection)
+	settingsPublic := core.NewRecord(settingsPublicCollection)
 	if len(settingsPublicRecords) > 0 {
 		settingsPublic = settingsPublicRecords[0]
 	}
@@ -266,10 +219,10 @@ func importSettings() error {
 		settingsPublic.Set("website_title", websiteTitle)
 	}
 
-	if err := App.Dao().SaveRecord(settingsPrivate); err != nil {
+	if err := App.Save(settingsPrivate); err != nil {
 		return err
 	}
-	if err := App.Dao().SaveRecord(settingsPublic); err != nil {
+	if err := App.Save(settingsPublic); err != nil {
 		return err
 	}
 	if err := setSetupCompleted(); err != nil {
@@ -282,13 +235,13 @@ func importSettings() error {
 }
 
 func resetDeviceStates() error {
-	devices, err := App.Dao().FindRecordsByExpr("devices")
+	devices, err := App.FindAllRecords("devices")
 	if err != nil {
 		return err
 	}
 	for _, device := range devices {
 		device.Set("status", "offline")
-		if err := App.Dao().SaveRecord(device); err != nil {
+		if err := App.Save(device); err != nil {
 			return err
 		}
 	}
@@ -296,11 +249,11 @@ func resetDeviceStates() error {
 }
 
 func setSetupCompleted() error {
-	totalAdmins, err := App.Dao().TotalAdmins()
+	totalAdmins, err := App.CountRecords(core.CollectionNameSuperusers)
 	if err != nil {
 		return err
 	}
-	settingsPublicRecords, err := App.Dao().FindRecordsByExpr("settings_public")
+	settingsPublicRecords, err := App.FindAllRecords("settings_public")
 	if err != nil {
 		return err
 	}
@@ -309,7 +262,7 @@ func setSetupCompleted() error {
 	} else {
 		settingsPublicRecords[0].Set("setup_completed", false)
 	}
-	if err := App.Dao().SaveRecord(settingsPublicRecords[0]); err != nil {
+	if err := App.Save(settingsPublicRecords[0]); err != nil {
 		return err
 	}
 	return nil

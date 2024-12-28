@@ -60,9 +60,9 @@
 	}
 
 	async function createDevice(device: Device) {
-		device.created_by = $pocketbase.authStore.isAdmin
+		device.created_by = $pocketbase.authStore.isSuperuser
 			? ''
-			: ($pocketbase.authStore.model?.id ?? '');
+			: ($pocketbase.authStore.record?.id ?? '');
 		$pocketbase
 			.collection('devices')
 			.create(device)
@@ -628,7 +628,7 @@
 		</div>
 	</div>
 	<div class="card-actions mt-6 justify-end gap-4">
-		{#if $pocketbase.authStore.isAdmin || $permission.delete?.includes(device.id)}
+		{#if $pocketbase.authStore.isSuperuser || $permission.delete?.includes(device.id)}
 			<button class="btn btn-error" type="button" on:click={() => deleteModal.showModal()}
 				><Fa icon={faTrash} />{$LL.buttons.delete()}</button
 			>

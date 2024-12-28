@@ -8,11 +8,11 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/pocketbase/pocketbase/models"
+	"github.com/pocketbase/pocketbase/core"
 	"github.com/seriousm4x/upsnap/logger"
 )
 
-func ShutdownDevice(device *models.Record) error {
+func ShutdownDevice(device *core.Record) error {
 	logger.Info.Println("Shutdown triggered for", device.GetString("name"))
 	shutdown_cmd := device.GetString("shutdown_cmd")
 	if shutdown_cmd == "" {

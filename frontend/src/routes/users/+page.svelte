@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import LL from '$lib/i18n/i18n-svelte';
-	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
+	import { pocketbase } from '$lib/stores/pocketbase';
 	import type { Device } from '$lib/types/device';
 	import type { Permission } from '$lib/types/permission';
 	import type { User } from '$lib/types/user';
@@ -33,7 +33,7 @@
 	});
 
 	onMount(() => {
-		if (!$pocketbase.authStore.isAdmin) {
+		if (!$pocketbase.authStore.isSuperuser) {
 			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});
@@ -189,10 +189,7 @@
 					<h2 class="card-title">
 						<label tabindex="-1" class="avatar" for="avatar{index}">
 							<div class="w-10 rounded-full" id="avatar{index}">
-								<img
-									src="{backendUrl}_/images/avatars/avatar{user.avatar}.svg"
-									alt="Avatar {user.avatar}"
-								/>
+								<img src="/avatars/avatar{user.avatar}.svg" alt="Avatar {user.avatar}" />
 							</div>
 						</label>
 						{user.username}

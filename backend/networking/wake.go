@@ -8,11 +8,11 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/pocketbase/pocketbase/models"
+	"github.com/pocketbase/pocketbase/core"
 	"github.com/seriousm4x/upsnap/logger"
 )
 
-func WakeDevice(device *models.Record) error {
+func WakeDevice(device *core.Record) error {
 	logger.Info.Println("Wake triggered for", device.GetString("name"))
 
 	wake_cmd := device.GetString("wake_cmd")

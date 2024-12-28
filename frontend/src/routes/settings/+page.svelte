@@ -18,7 +18,7 @@
 	let faviconInputElement: HTMLInputElement;
 
 	onMount(() => {
-		if (!$pocketbase.authStore.isAdmin) {
+		if (!$pocketbase.authStore.isSuperuser) {
 			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});

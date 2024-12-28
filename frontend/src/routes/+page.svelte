@@ -177,7 +177,7 @@
 {:else}
 	<div class="container text-center">
 		<p>{$LL.home.no_devices()}</p>
-		{#if $pocketbase.authStore.isAdmin || $permission.create}
+		{#if $pocketbase.authStore.isSuperuser || $permission.create}
 			<p>
 				<a href="/device/new" class="btn btn-ghost"
 					><Fa icon={faPlus} class="ms-2" />{$LL.home.add_first_device()}

@@ -18,7 +18,7 @@
 	} as Device;
 
 	$: if (Object.hasOwn($permission, 'create')) {
-		if (!$pocketbase.authStore.isAdmin && !$permission.create) {
+		if (!$pocketbase.authStore.isSuperuser && !$permission.create) {
 			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});
@@ -37,7 +37,7 @@
 			name: 'scan',
 			ll_name: $LL.device.tabs[1](),
 			icon: faBinoculars,
-			show: $pocketbase.authStore.isAdmin
+			show: $pocketbase.authStore.isSuperuser
 		}
 	];
 	let activeTab = 'manual';

@@ -32,10 +32,10 @@
 
 		$pocketbase.authStore.onChange(() => {
 			// load user permissions
-			if ($pocketbase.authStore.model?.collectionName === 'users') {
+			if ($pocketbase.authStore.record?.collectionName === 'users') {
 				$pocketbase
 					.collection('permissions')
-					.getFirstListItem(`user.id = '${$pocketbase.authStore.model.id}'`)
+					.getFirstListItem(`user.id = '${$pocketbase.authStore.record.id}'`)
 					.then((data) => {
 						permission.set(data as Permission);
 					})
@@ -64,7 +64,7 @@
 		}
 
 		// refresh auth token
-		if ($pocketbase.authStore.isAdmin) {
+		if ($pocketbase.authStore.isSuperuser) {
 			await $pocketbase.admins.authRefresh().catch(() => {
 				$pocketbase.authStore.clear();
 				goto('/login');

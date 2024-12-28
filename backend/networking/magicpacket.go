@@ -6,10 +6,10 @@ import (
 	"net"
 
 	"github.com/mdlayher/wol"
-	"github.com/pocketbase/pocketbase/models"
+	"github.com/pocketbase/pocketbase/core"
 )
 
-func SendMagicPacket(device *models.Record) error {
+func SendMagicPacket(device *core.Record) error {
 	ip := device.GetString("ip")
 	mac := device.GetString("mac")
 	netmask := device.GetString("netmask")

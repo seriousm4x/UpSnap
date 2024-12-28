@@ -55,14 +55,14 @@
 		'colorful'
 	];
 	let activeTheme: string | null = '';
-	let avatar = $pocketbase.authStore.model?.avatar;
+	let avatar = $pocketbase.authStore.record?.avatar;
 
 	onMount(() => {
 		themeChange(false);
 		activeTheme = document.documentElement.getAttribute('data-theme');
 
 		$pocketbase.authStore.onChange(() => {
-			avatar = $pocketbase.authStore.model?.avatar;
+			avatar = $pocketbase.authStore.record?.avatar;
 		});
 	});
 
@@ -112,7 +112,7 @@
 						><Fa icon={faHome} />{$LL.home.page_title()}</a
 					>
 				</li>
-				{#if $pocketbase.authStore.isAdmin}
+				{#if $pocketbase.authStore.isSuperuser}
 					<li>
 						<a
 							href="/users"
@@ -198,7 +198,7 @@
 					><Fa icon={faHome} />{$LL.home.page_title()}</a
 				>
 			</li>
-			{#if $pocketbase.authStore.isAdmin}
+			{#if $pocketbase.authStore.isSuperuser}
 				<li>
 					<a href="/users" class="p-2" class:active={$page.url.pathname.startsWith('/users')}
 						><Fa icon={faUsersGear} />{$LL.users.page_title()}</a
@@ -253,7 +253,7 @@
 	</div>
 	<div class="ms-auto justify-end">
 		{#if $pocketbase.authStore?.model !== null}
-			{#if $pocketbase.authStore.isAdmin || $permission.create}
+			{#if $pocketbase.authStore.isSuperuser || $permission.create}
 				<a class="btn btn-success me-4" href="/device/new">
 					<Fa icon={faPlus} />
 					{$LL.navbar.new()}
@@ -262,7 +262,7 @@
 			<div class="dropdown dropdown-end">
 				<label tabindex="-1" class="avatar btn btn-circle btn-ghost" for="avatar">
 					<div class="w-10 rounded-full" id="avatar">
-						<img src="{backendUrl}_/images/avatars/avatar{avatar}.svg" alt="Avatar {avatar}" />
+						<img src="/avatars/avatar{avatar}.svg" alt="Avatar {avatar}" />
 					</div>
 				</label>
 				<ul
@@ -270,9 +270,9 @@
 					class="menu dropdown-content z-[1] mt-3 rounded-box bg-base-300 p-2 shadow"
 				>
 					<li class="menu-title">
-						{$pocketbase.authStore.isAdmin
-							? $pocketbase.authStore.model.email
-							: $pocketbase.authStore.model.username}
+						{$pocketbase.authStore.isSuperuser
+							? $pocketbase.authStore.record?.email
+							: $pocketbase.authStore.record?.username}
 					</li>
 					<li>
 						<a href="/account"><Fa icon={faUserGear} />{$LL.navbar.edit_account()}</a>

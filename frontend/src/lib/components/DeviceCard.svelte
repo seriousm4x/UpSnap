@@ -35,14 +35,14 @@
 			text: $LL.device.card_btn_more_edit(),
 			icon: faPen,
 			onClick: () => goto(`/device/${device.id}`),
-			requires: $pocketbase.authStore.isAdmin || $permission.update?.includes(device.id)
+			requires: $pocketbase.authStore.isSuperuser || $permission.update?.includes(device.id)
 		},
 		{
 			text: $LL.device.card_btn_more_sleep(),
 			icon: faBed,
 			onClick: () => sleep(),
 			requires:
-				($pocketbase.authStore.isAdmin || $permission.power?.includes(device.id)) &&
+				($pocketbase.authStore.isSuperuser || $permission.power?.includes(device.id)) &&
 				device.status === 'online' &&
 				device.sol_enabled
 		},
@@ -51,7 +51,7 @@
 			icon: faRotateLeft,
 			onClick: () => reboot(),
 			requires:
-				($pocketbase.authStore.isAdmin || $permission.power?.includes(device.id)) &&
+				($pocketbase.authStore.isSuperuser || $permission.power?.includes(device.id)) &&
 				device.status === 'online' &&
 				device.shutdown_cmd !== ''
 		}

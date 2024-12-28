@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/pocketbase/pocketbase/models"
+	"github.com/pocketbase/pocketbase/core"
 	"github.com/seriousm4x/upsnap/logger"
 )
 
@@ -15,7 +15,7 @@ type SolResponse struct {
 	Message string `json:"message"`
 }
 
-func SleepDevice(device *models.Record) (SolResponse, error) {
+func SleepDevice(device *core.Record) (SolResponse, error) {
 	logger.Info.Println("Sleep triggered for", device.GetString("name"))
 
 	var solResp SolResponse
