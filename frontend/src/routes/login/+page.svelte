@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { toggleVisibility } from '$lib/helpers/forms';
 	import LL from '$lib/i18n/i18n-svelte';
-	import { pocketbase, backendUrl } from '$lib/stores/pocketbase';
+	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import { faEye, faLockOpen, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 	import type { AuthProviderInfo } from 'pocketbase';
@@ -122,8 +122,8 @@
 								>
 							</li>
 							{#await $pocketbase.collection('users').listAuthMethods() then authMethods}
-								{#if authMethods.authProviders.length > 0}
-									{#each authMethods.authProviders as provider}
+								{#if authMethods.oauth2.enabled && authMethods.oauth2.providers.length > 0}
+									{#each authMethods.oauth2.providers as provider}
 										<li>
 											<button type="button" on:click={() => loginWithProvider(provider)}
 												>{provider.displayName}</button

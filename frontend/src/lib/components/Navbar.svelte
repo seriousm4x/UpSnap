@@ -55,7 +55,7 @@
 		'colorful'
 	];
 	let activeTheme: string | null = '';
-	let avatar = $pocketbase.authStore.record?.avatar;
+	$: avatar = $pocketbase.authStore.record?.avatar;
 
 	onMount(() => {
 		themeChange(false);
@@ -252,7 +252,7 @@
 		</div>
 	</div>
 	<div class="ms-auto justify-end">
-		{#if $pocketbase.authStore?.model !== null}
+		{#if $pocketbase.authStore?.record !== null}
 			{#if $pocketbase.authStore.isSuperuser || $permission.create}
 				<a class="btn btn-success me-4" href="/device/new">
 					<Fa icon={faPlus} />
