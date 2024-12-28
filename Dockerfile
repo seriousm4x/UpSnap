@@ -1,4 +1,4 @@
-FROM alpine:3 as downloader
+FROM alpine:3 AS downloader
 ARG TARGETOS
 ARG TARGETARCH
 ARG TARGETVARIANT

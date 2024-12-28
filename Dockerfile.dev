@@ -1,11 +1,11 @@
-FROM node:alpine as node
+FROM node:alpine AS node
 WORKDIR /app
 COPY frontend/ .
 RUN npm i -g pnpm &&\
     pnpm i &&\
     pnpm run build
 
-FROM golang:alpine as go
+FROM golang:alpine AS go
 WORKDIR /app
 COPY backend/ .
 COPY --from=node /app/build ./pb_public
