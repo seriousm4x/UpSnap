@@ -1,8 +1,7 @@
 package pb
 
 import (
-	"fmt"
-
+	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/tools/hook"
@@ -24,8 +23,10 @@ func RequireUpSnapPermission() *hook.Handler[*core.RequestEvent] {
 			deviceId := e.Request.PathValue("id")
 
 			// find record where user has device with power permission
-			res, err := App.FindFirstRecordByFilter("permissions",
-				fmt.Sprintf("user.id = '%s' && power.id ?= '%s'", user.Id, deviceId))
+			res, err := e.App.FindFirstRecordByFilter("permissions", "user.id = {:userId} && power.id ?= {:deviceId}", dbx.Params{
+				"userId":   user.Id,
+				"deviceId": deviceId,
+			})
 			if res == nil || err != nil {
 				return apis.NewForbiddenError("You are not allowed to perform this request.", nil)
 			}
