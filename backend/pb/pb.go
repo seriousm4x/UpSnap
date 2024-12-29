@@ -1,6 +1,7 @@
 package pb
 
 import (
+	"errors"
 	"fmt"
 	"io/fs"
 	"os"
@@ -66,6 +67,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		se.Router.GET("/api/upsnap/reboot/{id}", HandlerReboot).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/shutdown/{id}", HandlerShutdown).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/scan", HandlerScan).Bind(apis.RequireSuperuserAuth())
+		se.Router.POST("/api/upsnap/init-superuser", HandlerInitSuperuser) // https://github.com/pocketbase/pocketbase/discussions/6198
 
 		if err := importSettings(); err != nil {
 			return err
@@ -115,18 +117,18 @@ func StartPocketBase(distDirFS fs.FS) {
 					cronjobs.SetWakeShutdownJobs(App)
 				}
 			}
-			return nil
+			return e.Next()
 		})
 		return se.Next()
 	})
 
 	App.OnModelAfterCreateSuccess().BindFunc(func(e *core.ModelEvent) error {
-		if e.Model.TableName() == "_admins" {
+		if e.Model.TableName() == "_superusers" {
 			if err := setSetupCompleted(); err != nil {
 				logger.Error.Println(err)
 				return err
 			}
-			return nil
+			return e.Next()
 		} else if e.Model.TableName() == "devices" {
 			// when a device is created, give the user all rights to the device he just created
 			deviceRec := e.Model.(*core.Record)
@@ -149,21 +151,30 @@ func StartPocketBase(distDirFS fs.FS) {
 				}
 			}
 		}
-		return nil
+		return e.Next()
 	})
+
 	App.OnModelAfterDeleteSuccess().BindFunc(func(e *core.ModelEvent) error {
-		if e.Model.TableName() == "_admins" {
+		if e.Model.TableName() == "_superusers" {
 			if err := setSetupCompleted(); err != nil {
 				logger.Error.Println(err)
 				return err
 			}
 		}
-		return nil
+		return e.Next()
+	})
+
+	// prevent new superuser bahavior introduced in pocketbase 0.23
+	App.OnRecordCreate(core.CollectionNameSuperusers).BindFunc(func(e *core.RecordEvent) error {
+		if e.Record.Email() == core.DefaultInstallerEmail {
+			return errors.New("skip default PocketBase installer")
+		}
+		return e.Next()
 	})
 
 	App.OnTerminate().BindFunc(func(e *core.TerminateEvent) error {
 		cronjobs.StopAll()
-		return nil
+		return e.Next()
 	})
 
 	if err := App.Start(); err != nil {

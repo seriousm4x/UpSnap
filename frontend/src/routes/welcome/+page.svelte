@@ -26,11 +26,14 @@
 	});
 
 	async function register() {
-		$pocketbase.admins
-			.create({
-				email: form.email,
-				password: form.password,
-				passwordConfirm: form.confirm
+		$pocketbase
+			.send('/api/upsnap/init-superuser', {
+				method: 'POST',
+				body: {
+					email: form.email,
+					password: form.password,
+					password_confirm: form.confirm
+				}
 			})
 			.then(() => {
 				$pocketbase
@@ -39,7 +42,8 @@
 					.then((data) => {
 						settingsPub.set(data as SettingsPublic);
 					});
-				$pocketbase.admins
+				$pocketbase
+					.collection('_superusers')
 					.authWithPassword(form.email, form.password)
 					.then(() => {
 						stepsCompleted = 2;

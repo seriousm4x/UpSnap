@@ -23,7 +23,8 @@
 	});
 
 	function tryAdminThenUser() {
-		$pocketbase.admins
+		$pocketbase
+			.collection('_superusers')
 			.authWithPassword(form.email, form.password)
 			.then(() => {
 				goto('/');

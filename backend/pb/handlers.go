@@ -216,3 +216,43 @@ func HandlerScan(e *core.RequestEvent) error {
 
 	return e.JSON(http.StatusOK, res)
 }
+
+func HandlerInitSuperuser(e *core.RequestEvent) error {
+	superusersCollection, err := e.App.FindCollectionByNameOrId(core.CollectionNameSuperusers)
+	if err != nil {
+		return e.NotFoundError("Failed to retrieve superusers collection", err)
+	}
+
+	totalSuperusers, err := e.App.CountRecords(superusersCollection)
+	if err != nil {
+		return e.InternalServerError("Failed to retrieve superusers count", err)
+	}
+
+	if totalSuperusers > 0 {
+		return e.BadRequestError("An initial superuser already exists", nil)
+	}
+
+	data := struct {
+		Email           string `json:"email" form:"email"`
+		Password        string `json:"password" form:"password"`
+		PasswordConfirm string `json:"password_confirm" form:"password-confirm"`
+	}{}
+	err = e.BindBody(&data)
+	if err != nil {
+		return e.BadRequestError("Failed to read request data", err)
+	}
+
+	if data.Password != data.PasswordConfirm {
+		return e.BadRequestError("Password don't match", err)
+	}
+
+	record := core.NewRecord(superusersCollection)
+	record.SetEmail(data.Email)
+	record.SetPassword(data.Password)
+	err = App.Save(record)
+	if err != nil {
+		return e.BadRequestError("Failed to create initial superuser", err)
+	}
+
+	return apis.RecordAuthResponse(e, record, "", nil)
+}

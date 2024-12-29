@@ -95,9 +95,9 @@
 
 	function changePassword() {
 		fetch(
-			`${backendUrl}api/${$pocketbase.authStore.isSuperuser ? 'admins' : `collections/users/records`}/${
-				$pocketbase.authStore.record?.id
-			}`,
+			`${backendUrl}api/collections/${
+				$pocketbase.authStore.isSuperuser ? '_superusers' : `users`
+			}/records/${$pocketbase.authStore.record?.id}`,
 			{
 				method: 'PATCH',
 				headers: {

@@ -65,10 +65,13 @@
 
 		// refresh auth token
 		if ($pocketbase.authStore.isSuperuser) {
-			await $pocketbase.admins.authRefresh().catch(() => {
-				$pocketbase.authStore.clear();
-				goto('/login');
-			});
+			await $pocketbase
+				.collection('_superusers')
+				.authRefresh()
+				.catch(() => {
+					$pocketbase.authStore.clear();
+					goto('/login');
+				});
 		} else {
 			await $pocketbase
 				.collection('users')
