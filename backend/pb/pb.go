@@ -123,7 +123,7 @@ func StartPocketBase(distDirFS fs.FS) {
 
 	app.OnModelAfterCreateSuccess().BindFunc(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_superusers" {
-			if err := setSetupCompleted(); err != nil {
+			if err := setSetupCompleted(e.App); err != nil {
 				logger.Error.Println(err)
 				return err
 			}
@@ -155,7 +155,7 @@ func StartPocketBase(distDirFS fs.FS) {
 
 	app.OnModelAfterDeleteSuccess().BindFunc(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_superusers" {
-			if err := setSetupCompleted(); err != nil {
+			if err := setSetupCompleted(e.App); err != nil {
 				logger.Error.Println(err)
 				return err
 			}
@@ -258,7 +258,7 @@ func resetDeviceStates(app *pocketbase.PocketBase) error {
 	return nil
 }
 
-func setSetupCompleted(app *pocketbase.PocketBase) error {
+func setSetupCompleted(app core.App) error {
 	totalAdmins, err := app.CountRecords(core.CollectionNameSuperusers)
 	if err != nil {
 		return err
