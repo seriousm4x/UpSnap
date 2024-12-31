@@ -32,23 +32,62 @@ func SendMagicPacket(device *core.Record) error {
 	if err != nil {
 		return err
 	}
-	targetAddr := fmt.Sprintf("%s:%d", broadcastIp, 9)
 
 	// send wake via udp port 9
-	if err := wakeUDP(targetAddr, parsedMac, bytePassword); err != nil {
+	if err := wakeUDP(broadcastIp, parsedMac, bytePassword); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func wakeUDP(addr string, target net.HardwareAddr, password []byte) error {
+func wakeUDP(broadcastIp string, target net.HardwareAddr, password []byte) error {
 	c, err := wol.NewClient()
 	if err != nil {
 		return err
 	}
 	defer c.Close()
-	return c.WakePassword(addr, target, password)
+
+	// send 4 magic packets to different addresses to enhance change of waking up
+	destinations := []struct {
+		Addr     string
+		Target   net.HardwareAddr
+		Password []byte
+	}{
+		{
+			// default user-calculated broadcast to port 9
+			Addr:     fmt.Sprintf("%s:%d", broadcastIp, 9),
+			Target:   target,
+			Password: password,
+		},
+		{
+			// user-calculated broadcast to port alternative port 7
+			Addr:     fmt.Sprintf("%s:%d", broadcastIp, 7),
+			Target:   target,
+			Password: password,
+		},
+		{
+			// broadcast to port 9
+			Addr:     "255.255.255.255:9",
+			Target:   target,
+			Password: password,
+		},
+		{
+			// broadcast to alternative port 7
+			Addr:     "255.255.255.255:7",
+			Target:   target,
+			Password: password,
+		},
+	}
+
+	for _, dest := range destinations {
+		if err := c.WakePassword(dest.Addr, dest.Target, dest.Password); err != nil {
+			return err
+		}
+	}
+
+	// send packet to default broadcast address
+	return c.WakePassword("255.255.255.255:9", target, password)
 }
 
 func getBroadcastIp(ipStr, maskStr string) (string, error) {
