@@ -16,7 +16,6 @@ import (
 	_ "github.com/seriousm4x/upsnap/migrations"
 )
 
-var App *pocketbase.PocketBase
 var Version = "(untracked)"
 
 func StartPocketBase(distDirFS fs.FS) {
@@ -47,19 +46,19 @@ func StartPocketBase(distDirFS fs.FS) {
 	}
 
 	// create app
-	App = pocketbase.NewWithConfig(pocketbase.Config{
+	app := pocketbase.NewWithConfig(pocketbase.Config{
 		DefaultDataDir: dataDir,
 	})
-	App.RootCmd.Short = "UpSnap CLI"
-	App.RootCmd.Version = Version
+	app.RootCmd.Short = "UpSnap CLI"
+	app.RootCmd.Version = Version
 
 	// auto migrate db
-	migratecmd.MustRegister(App, App.RootCmd, migratecmd.Config{
+	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
 		Automigrate: true,
 	})
 
 	// event hooks
-	App.OnServe().BindFunc(func(se *core.ServeEvent) error {
+	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 		se.Router.GET("/{path...}", apis.Static(distDirFS, true))
 
 		se.Router.GET("/api/upsnap/wake/{id}", HandlerWake).Bind(RequireUpSnapPermission())
@@ -69,25 +68,25 @@ func StartPocketBase(distDirFS fs.FS) {
 		se.Router.GET("/api/upsnap/scan", HandlerScan).Bind(apis.RequireSuperuserAuth())
 		se.Router.POST("/api/upsnap/init-superuser", HandlerInitSuperuser) // https://github.com/pocketbase/pocketbase/discussions/6198
 
-		if err := importSettings(); err != nil {
+		if err := importSettings(app); err != nil {
 			return err
 		}
 
-		if err := resetDeviceStates(); err != nil {
+		if err := resetDeviceStates(app); err != nil {
 			return err
 		}
 
-		cronjobs.SetPingJobs(App)
+		cronjobs.SetPingJobs(app)
 		cronjobs.StartPing()
-		cronjobs.SetWakeShutdownJobs(App)
+		cronjobs.SetWakeShutdownJobs(app)
 		cronjobs.StartWakeShutdown()
 
 		// restart ping cronjobs or wake/shutdown cronjobs on model update
 		// add event hook before starting server.
 		// using this outside App.OnBeforeServe() would not work
-		App.OnModelAfterUpdateSuccess("settings_private", "devices").BindFunc(func(e *core.ModelEvent) error {
+		app.OnModelAfterUpdateSuccess("settings_private", "devices").BindFunc(func(e *core.ModelEvent) error {
 			if e.Model.TableName() == "settings_private" {
-				cronjobs.SetPingJobs(App)
+				cronjobs.SetPingJobs(app)
 			} else if e.Model.TableName() == "devices" {
 				// only restart wake/shutdown cronjobs if new model's cron changed
 				record := e.Model.(*core.Record)
@@ -114,7 +113,7 @@ func StartPocketBase(distDirFS fs.FS) {
 					newShutdownCron != oldShutdownCron ||
 					newShutdownCronEnabled != oldShutdownCronEnabled ||
 					newShutdownCmd != oldShutdownCmd {
-					cronjobs.SetWakeShutdownJobs(App)
+					cronjobs.SetWakeShutdownJobs(app)
 				}
 			}
 			return e.Next()
@@ -122,7 +121,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		return se.Next()
 	})
 
-	App.OnModelAfterCreateSuccess().BindFunc(func(e *core.ModelEvent) error {
+	app.OnModelAfterCreateSuccess().BindFunc(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_superusers" {
 			if err := setSetupCompleted(); err != nil {
 				logger.Error.Println(err)
@@ -135,7 +134,7 @@ func StartPocketBase(distDirFS fs.FS) {
 			userId := deviceRec.GetString("created_by")
 
 			var permissionRec *core.Record
-			permissionRec, err := App.FindFirstRecordByFilter("permissions",
+			permissionRec, err := app.FindFirstRecordByFilter("permissions",
 				fmt.Sprintf("user.id = '%s'", userId))
 			if err != nil && err.Error() != "sql: no rows in result set" {
 				logger.Error.Println(err)
@@ -145,7 +144,7 @@ func StartPocketBase(distDirFS fs.FS) {
 				permissionRec.Set("update", append(permissionRec.GetStringSlice("update"), deviceRec.Id))
 				permissionRec.Set("delete", append(permissionRec.GetStringSlice("delete"), deviceRec.Id))
 				permissionRec.Set("power", append(permissionRec.GetStringSlice("power"), deviceRec.Id))
-				if err := App.Save(permissionRec); err != nil {
+				if err := app.Save(permissionRec); err != nil {
 					logger.Error.Println(err)
 					return err
 				}
@@ -154,7 +153,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		return e.Next()
 	})
 
-	App.OnModelAfterDeleteSuccess().BindFunc(func(e *core.ModelEvent) error {
+	app.OnModelAfterDeleteSuccess().BindFunc(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_superusers" {
 			if err := setSetupCompleted(); err != nil {
 				logger.Error.Println(err)
@@ -165,29 +164,29 @@ func StartPocketBase(distDirFS fs.FS) {
 	})
 
 	// prevent new superuser bahavior introduced in pocketbase 0.23
-	App.OnRecordCreate(core.CollectionNameSuperusers).BindFunc(func(e *core.RecordEvent) error {
+	app.OnRecordCreate(core.CollectionNameSuperusers).BindFunc(func(e *core.RecordEvent) error {
 		if e.Record.Email() == core.DefaultInstallerEmail {
 			return errors.New("skip default PocketBase installer")
 		}
 		return e.Next()
 	})
 
-	App.OnTerminate().BindFunc(func(e *core.TerminateEvent) error {
+	app.OnTerminate().BindFunc(func(e *core.TerminateEvent) error {
 		cronjobs.StopAll()
 		return e.Next()
 	})
 
-	if err := App.Start(); err != nil {
+	if err := app.Start(); err != nil {
 		logger.Error.Fatalln(err)
 	}
 }
 
-func importSettings() error {
-	settingsPrivateRecords, err := App.FindAllRecords("settings_private")
+func importSettings(app *pocketbase.PocketBase) error {
+	settingsPrivateRecords, err := app.FindAllRecords("settings_private")
 	if err != nil {
 		return err
 	}
-	settingsPrivateCollection, err := App.FindCollectionByNameOrId("settings_private")
+	settingsPrivateCollection, err := app.FindCollectionByNameOrId("settings_private")
 	if err != nil {
 		return err
 	}
@@ -196,11 +195,11 @@ func importSettings() error {
 		settingsPrivate = settingsPrivateRecords[0]
 	}
 
-	settingsPublicRecords, err := App.FindAllRecords("settings_public")
+	settingsPublicRecords, err := app.FindAllRecords("settings_public")
 	if err != nil {
 		return err
 	}
-	settingsPublicCollection, err := App.FindCollectionByNameOrId("settings_public")
+	settingsPublicCollection, err := app.FindCollectionByNameOrId("settings_public")
 	if err != nil {
 		return err
 	}
@@ -230,13 +229,13 @@ func importSettings() error {
 		settingsPublic.Set("website_title", websiteTitle)
 	}
 
-	if err := App.Save(settingsPrivate); err != nil {
+	if err := app.Save(settingsPrivate); err != nil {
 		return err
 	}
-	if err := App.Save(settingsPublic); err != nil {
+	if err := app.Save(settingsPublic); err != nil {
 		return err
 	}
-	if err := setSetupCompleted(); err != nil {
+	if err := setSetupCompleted(app); err != nil {
 		logger.Error.Println(err)
 		return err
 	}
@@ -245,26 +244,26 @@ func importSettings() error {
 	return nil
 }
 
-func resetDeviceStates() error {
-	devices, err := App.FindAllRecords("devices")
+func resetDeviceStates(app *pocketbase.PocketBase) error {
+	devices, err := app.FindAllRecords("devices")
 	if err != nil {
 		return err
 	}
 	for _, device := range devices {
 		device.Set("status", "offline")
-		if err := App.Save(device); err != nil {
+		if err := app.Save(device); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func setSetupCompleted() error {
-	totalAdmins, err := App.CountRecords(core.CollectionNameSuperusers)
+func setSetupCompleted(app *pocketbase.PocketBase) error {
+	totalAdmins, err := app.CountRecords(core.CollectionNameSuperusers)
 	if err != nil {
 		return err
 	}
-	settingsPublicRecords, err := App.FindAllRecords("settings_public")
+	settingsPublicRecords, err := app.FindAllRecords("settings_public")
 	if err != nil {
 		return err
 	}
@@ -273,7 +272,7 @@ func setSetupCompleted() error {
 	} else {
 		settingsPublicRecords[0].Set("setup_completed", false)
 	}
-	if err := App.Save(settingsPublicRecords[0]); err != nil {
+	if err := app.Save(settingsPublicRecords[0]); err != nil {
 		return err
 	}
 	return nil

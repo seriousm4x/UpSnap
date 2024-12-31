@@ -17,12 +17,12 @@ import (
 )
 
 func HandlerWake(e *core.RequestEvent) error {
-	record, err := App.FindFirstRecordByData("devices", "id", e.Request.PathValue("id"))
+	record, err := e.App.FindFirstRecordByData("devices", "id", e.Request.PathValue("id"))
 	if err != nil {
 		return apis.NewNotFoundError("The device does not exist.", err)
 	}
 	record.Set("status", "pending")
-	if err := App.Save(record); err != nil {
+	if err := e.App.Save(record); err != nil {
 		logger.Error.Println("Failed to save record:", err)
 	}
 	go func(r *core.Record) {
@@ -32,7 +32,7 @@ func HandlerWake(e *core.RequestEvent) error {
 		} else {
 			r.Set("status", "online")
 		}
-		if err := App.Save(r); err != nil {
+		if err := e.App.Save(r); err != nil {
 			logger.Error.Println("Failed to save record:", err)
 		}
 	}(record)
@@ -40,37 +40,37 @@ func HandlerWake(e *core.RequestEvent) error {
 }
 
 func HandlerSleep(e *core.RequestEvent) error {
-	record, err := App.FindFirstRecordByData("devices", "id", e.Request.PathValue("id"))
+	record, err := e.App.FindFirstRecordByData("devices", "id", e.Request.PathValue("id"))
 	if err != nil {
 		return apis.NewNotFoundError("The device does not exist.", err)
 	}
 	record.Set("status", "pending")
-	if err := App.Save(record); err != nil {
+	if err := e.App.Save(record); err != nil {
 		logger.Error.Println("Failed to save record:", err)
 	}
 	resp, err := networking.SleepDevice(record)
 	if err != nil {
 		logger.Error.Println(err)
 		record.Set("status", "online")
-		if err := App.Save(record); err != nil {
+		if err := e.App.Save(record); err != nil {
 			logger.Error.Println("Failed to save record:", err)
 		}
 		return apis.NewBadRequestError(resp.Message, nil)
 	}
 	record.Set("status", "offline")
-	if err := App.Save(record); err != nil {
+	if err := e.App.Save(record); err != nil {
 		logger.Error.Println("Failed to save record:", err)
 	}
 	return e.JSON(http.StatusOK, nil)
 }
 
 func HandlerReboot(e *core.RequestEvent) error {
-	record, err := App.FindFirstRecordByData("devices", "id", e.Request.PathValue("id"))
+	record, err := e.App.FindFirstRecordByData("devices", "id", e.Request.PathValue("id"))
 	if err != nil {
 		return apis.NewNotFoundError("The device does not exist.", err)
 	}
 	record.Set("status", "pending")
-	if err := App.Save(record); err != nil {
+	if err := e.App.Save(record); err != nil {
 		logger.Error.Println("Failed to save record:", err)
 	}
 	go func(r *core.Record) {
@@ -86,7 +86,7 @@ func HandlerReboot(e *core.RequestEvent) error {
 				r.Set("status", "online")
 			}
 		}
-		if err := App.Save(r); err != nil {
+		if err := e.App.Save(r); err != nil {
 			logger.Error.Println("Failed to save record:", err)
 		}
 	}(record)
@@ -94,12 +94,12 @@ func HandlerReboot(e *core.RequestEvent) error {
 }
 
 func HandlerShutdown(e *core.RequestEvent) error {
-	record, err := App.FindFirstRecordByData("devices", "id", e.Request.PathValue("id"))
+	record, err := e.App.FindFirstRecordByData("devices", "id", e.Request.PathValue("id"))
 	if err != nil {
 		return apis.NewNotFoundError("The device does not exist.", err)
 	}
 	record.Set("status", "pending")
-	if err := App.Save(record); err != nil {
+	if err := e.App.Save(record); err != nil {
 		logger.Error.Println("Failed to save record:", err)
 	}
 	go func(r *core.Record) {
@@ -109,7 +109,7 @@ func HandlerShutdown(e *core.RequestEvent) error {
 		} else {
 			r.Set("status", "offline")
 		}
-		if err := App.Save(r); err != nil {
+		if err := e.App.Save(r); err != nil {
 			logger.Error.Println("Failed to save record:", err)
 		}
 	}(record)
@@ -134,7 +134,7 @@ func HandlerScan(e *core.RequestEvent) error {
 	}
 
 	// check if scan range is valid
-	allPrivateSettings, err := App.FindAllRecords("settings_private")
+	allPrivateSettings, err := e.App.FindAllRecords("settings_private")
 	if err != nil {
 		return err
 	}
@@ -249,7 +249,7 @@ func HandlerInitSuperuser(e *core.RequestEvent) error {
 	record := core.NewRecord(superusersCollection)
 	record.SetEmail(data.Email)
 	record.SetPassword(data.Password)
-	err = App.Save(record)
+	err = e.App.Save(record)
 	if err != nil {
 		return e.BadRequestError("Failed to create initial superuser", err)
 	}
