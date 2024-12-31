@@ -1,7 +1,6 @@
 package networking
 
 import (
-	"fmt"
 	"net"
 	"testing"
 
@@ -121,10 +120,9 @@ func TestWakeUDP(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		targetAddr := fmt.Sprintf("%s:%d", broadcastIp, 9)
 
-		if err := wakeUDP(targetAddr, parsedMac, bytePassword); err != nil {
-			t.Fatalf(`%v (targetAddr "%v", parsedMac "%v", bytePassword "%v")`, err, targetAddr, parsedMac, bytePassword)
+		if err := wakeUDP(broadcastIp, parsedMac, bytePassword); err != nil {
+			t.Fatalf(`%v (broadcastIp "%v", parsedMac "%v", bytePassword "%v")`, err, broadcastIp, parsedMac, bytePassword)
 		}
 	}
 }
