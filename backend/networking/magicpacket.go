@@ -49,45 +49,24 @@ func wakeUDP(broadcastIp string, target net.HardwareAddr, password []byte) error
 	defer c.Close()
 
 	// send 4 magic packets to different addresses to enhance change of waking up
-	destinations := []struct {
-		Addr     string
-		Target   net.HardwareAddr
-		Password []byte
-	}{
-		{
-			// default user-calculated broadcast to port 9
-			Addr:     fmt.Sprintf("%s:%d", broadcastIp, 9),
-			Target:   target,
-			Password: password,
-		},
-		{
-			// user-calculated broadcast to port alternative port 7
-			Addr:     fmt.Sprintf("%s:%d", broadcastIp, 7),
-			Target:   target,
-			Password: password,
-		},
-		{
-			// broadcast to port 9
-			Addr:     "255.255.255.255:9",
-			Target:   target,
-			Password: password,
-		},
-		{
-			// broadcast to alternative port 7
-			Addr:     "255.255.255.255:7",
-			Target:   target,
-			Password: password,
-		},
+	destinations := []string{
+		// default user-calculated broadcast to port 9
+		fmt.Sprintf("%s:9", broadcastIp),
+		// user-calculated broadcast to port alternative port 7
+		fmt.Sprintf("%s:7", broadcastIp),
+		// broadcast to port 9
+		"255.255.255.255:9",
+		// broadcast to alternative port 7
+		"255.255.255.255:7",
 	}
 
 	for _, dest := range destinations {
-		if err := c.WakePassword(dest.Addr, dest.Target, dest.Password); err != nil {
+		if err := c.WakePassword(dest, target, password); err != nil {
 			return err
 		}
 	}
 
-	// send packet to default broadcast address
-	return c.WakePassword("255.255.255.255:9", target, password)
+	return nil
 }
 
 func getBroadcastIp(ipStr, maskStr string) (string, error) {
