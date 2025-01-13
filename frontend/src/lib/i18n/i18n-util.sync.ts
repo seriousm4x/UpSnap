@@ -14,6 +14,7 @@ import fr from './fr';
 import fr_FR from './fr-FR';
 import it from './it';
 import it_IT from './it-IT';
+import ja from './ja';
 import nl from './nl';
 import nl_NL from './nl-NL';
 import pt from './pt';
@@ -33,6 +34,7 @@ const localeTranslations = {
 	'fr-FR': fr_FR,
 	it,
 	'it-IT': it_IT,
+	ja,
 	nl,
 	'nl-NL': nl_NL,
 	pt,
