@@ -132,6 +132,7 @@ UpSnap is available in the following languages so far:
 - 🇪🇸 **Spanish** (es-ES)
 - 🇫🇷 **French** (fr-FR)
 - 🇮🇹 **Italian** (it-IT)
+- 🇯🇵 **Japanese** (ja-JP)
 - 🇳🇱 **Dutch** (nl-NL)
 - 🇵🇹 **Portuguese** (pt-PT)
 - 🇨🇳 **Chinese** (zh-CN)
