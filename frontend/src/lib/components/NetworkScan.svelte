@@ -28,8 +28,9 @@
 				.collection('settings_private')
 				.getFirstListItem('')
 				.then((res) => {
-					settingsPriv.set(res as SettingsPrivate);
-					scanRange = $settingsPriv.scan_range;
+					const settings = res as SettingsPrivate;
+					settingsPriv.set(settings);
+					scanRange = settings.scan_range;
 				})
 				.catch((err) => {
 					toast.error(err.message);
