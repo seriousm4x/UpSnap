@@ -5,7 +5,7 @@ go 1.23.4
 require (
 	github.com/mdlayher/wol v0.0.0-20220221231636-b763a792253a
 	github.com/pocketbase/dbx v1.11.0
-	github.com/pocketbase/pocketbase v0.24.3
+	github.com/pocketbase/pocketbase v0.24.4
 	github.com/prometheus-community/pro-bing v0.5.0
 	github.com/robfig/cron/v3 v3.0.1
 	golang.org/x/sys v0.29.0
