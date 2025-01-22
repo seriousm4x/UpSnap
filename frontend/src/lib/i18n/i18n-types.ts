@@ -275,6 +275,22 @@ type RootTranslation = {
 		 */
 		link_desc: string;
 		/**
+		 * A​u​t​o​m​a​t​i​c​a​l​l​y​ ​o​p​e​n​ ​l​i​n​k
+		 */
+		link_open: string;
+		/**
+		 * N​o
+		 */
+		link_open_no: string;
+		/**
+		 * S​a​m​e​ ​t​a​b
+		 */
+		link_open_same_tab: string;
+		/**
+		 * N​e​w​ ​t​a​b
+		 */
+		link_open_new_tab: string;
+		/**
 		 * P​i​n​g
 		 */
 		ping: string;
@@ -1053,6 +1069,22 @@ export type TranslationFunctions = {
 		 * Makes your device name a clickable link, perfect for linking a dashboard for example.
 		 */
 		link_desc: () => LocalizedString;
+		/**
+		 * Automatically open link
+		 */
+		link_open: () => LocalizedString;
+		/**
+		 * No
+		 */
+		link_open_no: () => LocalizedString;
+		/**
+		 * Same tab
+		 */
+		link_open_same_tab: () => LocalizedString;
+		/**
+		 * New tab
+		 */
+		link_open_new_tab: () => LocalizedString;
 		/**
 		 * Ping
 		 */

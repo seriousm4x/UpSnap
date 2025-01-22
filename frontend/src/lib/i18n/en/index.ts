@@ -64,6 +64,10 @@ const en = {
 		link: 'Link',
 		link_desc:
 			'Makes your device name a clickable link, perfect for linking a dashboard for example.',
+		link_open: 'Automatically open link',
+		link_open_no: 'No',
+		link_open_same_tab: 'Same tab',
+		link_open_new_tab: 'New tab',
 		ping: 'Ping',
 		ping_desc:
 			'You can use a custom shell command to see if the device is powered on. The command should return an exit code of <span class="badge">0</span> to indicate that the device is powered on, any other exit code will mark the device as powered off.',

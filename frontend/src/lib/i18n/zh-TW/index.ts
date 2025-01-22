@@ -64,6 +64,10 @@ const zh_TW = {
 		ports_number: '通訊埠編號',
 		link: '連結',
 		link_desc: '讓您的裝置名稱成為可點擊的連結，非常適合用來連結儀表板等。',
+		link_open: '自動開啟連結',
+		link_open_no: '毋',
+		link_open_same_tab: '同一個標籤',
+		link_open_new_tab: '新標籤',
 		ping: 'Ping',
 		ping_desc:
 			'你可以使用自定義的指令來檢查裝置是否開機。該指令應返回退出碼 <span class="badge">0</span> 以表示裝置已開機，任何其他退出碼將標記裝置為關機。',

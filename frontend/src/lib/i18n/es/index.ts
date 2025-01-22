@@ -66,6 +66,10 @@ const es = {
 		link: 'Link',
 		link_desc:
 			'Permite que el nombre de su dispositivo sea un enlace. Perfecto para dashboard, por ejemplo.',
+		link_open: 'Abrir enlace automáticamente',
+		link_open_no: 'No',
+		link_open_same_tab: 'Misma pestaña',
+		link_open_new_tab: 'Nueva pestaña',
 		ping: 'Ping',
 		ping_desc:
 			'Puede utilizar un comando de shell personalizado para ver si el dispositivo está conectado. El comando debe devolver un código de salida de <span class="badge">0</span> para indicar que el dispositivo está encendido; cualquier otro código de salida marcará el dispositivo como apagado.',

@@ -62,6 +62,10 @@ const zh = {
 		ports_number: '端口号',
 		link: '链接',
 		link_desc: '为您的设备名设置一个可点击的链接.',
+		link_open: '自动打开链接',
+		link_open_no: '没有',
+		link_open_same_tab: '同一标签',
+		link_open_new_tab: '新标签',
 		ping: 'Ping',
 		ping_desc:
 			'您可以使用自定义 shell 命令来查看设备是否已接通电源。该命令应返回 <span class="badge">0</span> 的退出代码，表示设备电源已打开，任何其他退出代码都将标记设备电源已关闭。',

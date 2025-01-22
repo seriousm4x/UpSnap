@@ -66,6 +66,10 @@ const nl = {
 		link: 'Link',
 		link_desc:
 			'Maakt de apparaatsnaam een klikbare link, ideaal om bijvoorbeeld een dashboard te linken.',
+		link_open: 'Link automatisch openen',
+		link_open_no: 'Nee',
+		link_open_same_tab: 'Zelfde tab',
+		link_open_new_tab: 'Nieuw tabblad',
 		ping: 'Ping',
 		ping_desc:
 			'Je kunt een aangepaste shell-opdracht gebruiken om te zien of het apparaat aan staat. De opdracht moet een exitcode van <span class="badge">0</span> retourneren om aan te geven dat het apparaat aan is, elke andere exitcode markeert het apparaat als uitgeschakeld.',

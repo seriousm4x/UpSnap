@@ -290,13 +290,33 @@
 			<p class="my-2">
 				{$LL.device.link_desc()}
 			</p>
-			<div class="form-control w-full">
-				<input
-					type="url"
-					placeholder="https:// ..."
-					class="input w-full max-w-xs"
-					bind:value={device.link}
-				/>
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+				<div class="form-control w-full">
+					<label class="label" for="device-link">
+						<div class="label-text">{$LL.device.link()}</div>
+					</label>
+					<input
+						id="device-link"
+						type="url"
+						placeholder="https:// ..."
+						class="input w-full max-w-xs"
+						bind:value={device.link}
+					/>
+				</div>
+				<label class="form-control w-full max-w-xs">
+					<label class="label" for="device-link-open">
+						<div class="label-text">{$LL.device.link_open()}</div>
+					</label>
+					<select
+						id="device-link-open"
+						class="select select-bordered"
+						bind:value={device.link_open}
+					>
+						<option value="">{$LL.device.link_open_no()}</option>
+						<option value="same_tab">{$LL.device.link_open_same_tab()}</option>
+						<option value="new_tab">{$LL.device.link_open_new_tab()}</option>
+					</select>
+				</label>
 			</div>
 		</div>
 	</div>

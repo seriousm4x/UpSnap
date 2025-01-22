@@ -44,7 +44,6 @@
 		}
 	}
 
-	// TODO: change wake and shutdown to nic based routes, not device based
 	function wake() {
 		fetch(`${backendUrl}api/upsnap/wake/${device.id}`, {
 			headers: {
@@ -52,9 +51,17 @@
 			}
 		})
 			.then((resp) => resp.json())
-			.then((data) => {
+			.then(async (data) => {
 				device = data as Device;
-				countdown(Date.parse(device.updated));
+				await countdown(Date.parse(device.updated));
+				if (device.status === 'online' && device.link && device.link_open !== '') {
+					console.log('here');
+					if (device.link_open === 'new_tab') {
+						window.open(device.link, '_blank');
+					} else {
+						window.open(device.link, '_self');
+					}
+				}
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -78,15 +85,29 @@
 	}
 
 	function countdown(updated: number) {
-		timeout = 120;
-		const end = updated + 2 * 60 * 1000;
-		interval = setInterval(() => {
-			timeout = Math.round((end - Date.now()) / 1000);
-			if (timeout <= 0 || device.status !== 'pending') {
-				clearInterval(interval);
-				interval = 0;
+		return new Promise((resolve, reject) => {
+			try {
+				timeout = 120;
+				const end = updated + 2 * 60 * 1000;
+
+				if (interval) {
+					clearInterval(interval);
+					interval = 0;
+				}
+
+				interval = setInterval(() => {
+					timeout = Math.round((end - Date.now()) / 1000);
+
+					if (timeout <= 0 || device.status !== 'pending') {
+						clearInterval(interval);
+						interval = 0;
+						resolve(interval);
+					}
+				}, 1000);
+			} catch (error) {
+				reject(error);
 			}
-		}, 1000);
+		});
 	}
 
 	function handleClick() {

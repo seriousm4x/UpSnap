@@ -161,7 +161,6 @@
 			<p>{device.description}</p>
 		{/if}
 		<ul class="menu rounded-box bg-base-200">
-			<!-- TODO: change to nic array once backend supports it -->
 			<DeviceCardNic {device} />
 		</ul>
 		{#if device.wake_cron_enabled || device.shutdown_cron_enabled || device.password}

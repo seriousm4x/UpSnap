@@ -66,6 +66,10 @@ const it = {
 		link: 'Collegamento',
 		link_desc:
 			'Rende il nome del tuo dispositivo un collegamento, perfetto per collegare ad esempio un sito.',
+		link_open: 'Aprire automaticamente il link',
+		link_open_no: 'No',
+		link_open_same_tab: 'Stessa scheda',
+		link_open_new_tab: 'Nuova scheda',
 		ping: 'Ping',
 		ping_desc:
 			'Puoi usare un comando personalizzato per controllare che il dispositivo sia acceso. Il comando deve ritornare un codice uguale a <span class="badge">0</span> per confermare che il dispositivo sia acceso, mentre qualunque altro codice indica che il dispositivo e\' spento.',

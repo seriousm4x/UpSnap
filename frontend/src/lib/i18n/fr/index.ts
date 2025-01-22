@@ -67,6 +67,10 @@ const fr = {
 		link: 'Lien',
 		link_desc:
 			'Rend le nom de votre appareil cliquable, parfait pour y lier un tableau de bord par exemple.',
+		link_open: 'Ouvrir automatiquement un lien',
+		link_open_no: 'No',
+		link_open_same_tab: 'Même onglet',
+		link_open_new_tab: 'Nouvel onglet',
 		ping: 'Ping',
 		ping_desc:
 			"Vous pouvez utiliser une commande shell personnalisée pour vérifier si l'appareil est sous tension. La commande doit renvoyer un code de sortie de <span class='badge'>0</span> pour indiquer que l'appareil est sous tension, tout autre code de sortie indiquera que l'appareil est hors tension.",

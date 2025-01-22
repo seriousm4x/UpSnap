@@ -66,6 +66,10 @@ const de = {
 		link: 'Link',
 		link_desc:
 			'Macht Ihren Gerätenamen zu einem anklickbaren Link, ideal zum Beispiel für die Verknüpfung eines Dashboards.',
+		link_open: 'Automatisch Link öffnen',
+		link_open_no: 'Nein',
+		link_open_same_tab: 'Selber Tab',
+		link_open_new_tab: 'Neuer Tab',
 		ping: 'Ping',
 		ping_desc:
 			'Du kannst einen benutzerdefinierten Shell-Befehl verwenden, um festzustellen, ob das Gerät eingeschaltet ist. Der Befehl sollte einen Exit-Code von <span class="badge">0</span> zurückgeben, um anzuzeigen, dass das Gerät eingeschaltet ist. Jeder andere Exit-Code setzt den Status auf offline.',

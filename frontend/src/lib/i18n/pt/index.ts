@@ -66,6 +66,10 @@ const pt = {
 		link: 'Link',
 		link_desc:
 			'Permite que o nome do seu dispositivo seja um link. Perfeito para dashboard, por exemplo.',
+		link_open: 'Abrir automaticamente a ligação',
+		link_open_no: 'Não',
+		link_open_same_tab: 'O mesmo separador',
+		link_open_new_tab: 'Novo separador',
 		ping: 'Ping',
 		ping_desc:
 			'Pode utilizar um comando shell personalizado para ver se o dispositivo está ligado. O comando deve devolver um código de saída de <span class="badge">0</span> para indicar que o dispositivo está ligado, qualquer outro código de saída marcará o dispositivo como desligado.',
