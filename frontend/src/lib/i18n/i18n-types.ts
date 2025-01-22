@@ -338,7 +338,7 @@ type RootTranslation = {
 		 */
 		shutdown: string;
 		/**
-		 * T​h​i​s​ ​<​s​t​r​o​n​g​>​s​h​e​l​l​ ​c​o​m​m​a​n​d​<​/​s​t​r​o​n​g​>​ ​w​i​l​l​ ​r​u​n​ ​i​n​s​i​d​e​ ​y​o​u​r​ ​c​o​n​t​a​i​n​e​r​ ​(​i​f​ ​y​o​u​ ​u​s​e​ ​d​o​c​k​e​r​)​ ​o​r​ ​o​n​ ​y​o​u​r​ ​h​o​s​t​ ​(​i​f​ ​y​o​u​ ​u​s​e​ ​t​h​e​ ​b​i​n​a​r​y​)​.​ ​T​o​ ​v​e​r​i​f​y​ ​t​h​a​t​ ​w​o​r​k​s​ ​y​o​u​ ​c​a​n​ ​r​u​n​ ​t​h​e​ ​c​o​m​m​a​n​d​ ​i​n​s​i​d​e​ ​t​h​e​ ​c​o​n​t​a​i​n​e​r​ ​o​r​ ​o​n​ ​y​o​u​r​ ​h​o​s​t​ ​s​h​e​l​l​ ​f​i​r​s​t​.​ ​C​o​m​m​o​n​ ​c​o​m​m​a​n​d​s​ ​a​r​e​ ​<​s​p​a​n​ ​c​l​a​s​s​=​"​b​a​d​g​e​"​>​n​e​t​ ​r​p​c​<​/​s​p​a​n​>​ ​f​o​r​ ​w​i​n​d​o​w​s​,​ ​<​s​p​a​n​ ​c​l​a​s​s​=​"​b​a​d​g​e​"​>​s​s​h​p​a​s​s​<​/​s​p​a​n​>​ ​f​o​r​ ​l​i​n​u​x​ ​o​r​ ​<​s​p​a​n​ ​c​l​a​s​s​=​"​b​a​d​g​e​"​>​c​u​r​l​<​/​s​p​a​n​>​ ​i​n​ ​g​e​n​e​r​a​l​ ​t​o​ ​m​a​k​e​ ​w​e​b​ ​r​e​q​u​e​s​t​s​.
+		 * T​h​i​s​ ​<​s​t​r​o​n​g​>​s​h​e​l​l​ ​c​o​m​m​a​n​d​<​/​s​t​r​o​n​g​>​ ​w​i​l​l​ ​r​u​n​ ​i​n​s​i​d​e​ ​y​o​u​r​ ​c​o​n​t​a​i​n​e​r​ ​(​i​f​ ​y​o​u​ ​u​s​e​ ​d​o​c​k​e​r​)​ ​o​r​ ​o​n​ ​y​o​u​r​ ​h​o​s​t​ ​(​i​f​ ​y​o​u​ ​u​s​e​ ​t​h​e​ ​b​i​n​a​r​y​)​.​ ​T​o​ ​v​e​r​i​f​y​ ​t​h​a​t​ ​i​t​ ​w​o​r​k​s​,​ ​y​o​u​ ​c​a​n​ ​r​u​n​ ​t​h​e​ ​c​o​m​m​a​n​d​ ​i​n​s​i​d​e​ ​t​h​e​ ​c​o​n​t​a​i​n​e​r​ ​o​r​ ​o​n​ ​y​o​u​r​ ​h​o​s​t​ ​s​h​e​l​l​ ​f​i​r​s​t​.​ ​C​o​m​m​o​n​ ​c​o​m​m​a​n​d​s​ ​a​r​e​ ​<​s​p​a​n​ ​c​l​a​s​s​=​"​b​a​d​g​e​"​>​n​e​t​ ​r​p​c​<​/​s​p​a​n​>​ ​f​o​r​ ​w​i​n​d​o​w​s​,​ ​<​s​p​a​n​ ​c​l​a​s​s​=​"​b​a​d​g​e​"​>​s​s​h​p​a​s​s​<​/​s​p​a​n​>​ ​f​o​r​ ​l​i​n​u​x​ ​o​r​ ​<​s​p​a​n​ ​c​l​a​s​s​=​"​b​a​d​g​e​"​>​c​u​r​l​<​/​s​p​a​n​>​ ​i​n​ ​g​e​n​e​r​a​l​ ​t​o​ ​m​a​k​e​ ​w​e​b​ ​r​e​q​u​e​s​t​s​.
 		 */
 		shutdown_desc: string;
 		/**
@@ -1109,7 +1109,7 @@ export type TranslationFunctions = {
 		 */
 		shutdown: () => LocalizedString;
 		/**
-		 * This <strong>shell command</strong> will run inside your container (if you use docker) or on your host (if you use the binary). To verify that works you can run the command inside the container or on your host shell first. Common commands are <span class="badge">net rpc</span> for windows, <span class="badge">sshpass</span> for linux or <span class="badge">curl</span> in general to make web requests.
+		 * This <strong>shell command</strong> will run inside your container (if you use docker) or on your host (if you use the binary). To verify that it works, you can run the command inside the container or on your host shell first. Common commands are <span class="badge">net rpc</span> for windows, <span class="badge">sshpass</span> for linux or <span class="badge">curl</span> in general to make web requests.
 		 */
 		shutdown_desc: () => LocalizedString;
 		/**
