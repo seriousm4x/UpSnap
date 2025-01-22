@@ -85,7 +85,7 @@ const en = {
 		sol_password: 'SOL Password',
 		shutdown: 'Shutdown',
 		shutdown_desc:
-			'This <strong>shell command</strong> will run inside your container (if you use docker) or on your host (if you use the binary). To verify that works you can run the command inside the container or on your host shell first. Common commands are <span class="badge">net rpc</span> for windows, <span class="badge">sshpass</span> for linux or <span class="badge">curl</span> in general to make web requests.',
+			'This <strong>shell command</strong> will run inside your container (if you use docker) or on your host (if you use the binary). To verify that it works, you can run the command inside the container or on your host shell first. Common commands are <span class="badge">net rpc</span> for windows, <span class="badge">sshpass</span> for linux or <span class="badge">curl</span> in general to make web requests.',
 		shutdown_examples: 'Examples:',
 		shutdown_examples_windows: 'Shutdown remote windows machine:',
 		shutdown_examples_linux: 'Shutdown remote linux machine:',
