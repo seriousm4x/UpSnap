@@ -1,5 +1,5 @@
-import zh from '../zh';
 import type { Translation } from '../i18n-types';
+import zh from '../zh';
 
 const zh_TW = {
 	...(zh as unknown as Translation),
@@ -54,6 +54,8 @@ const zh_TW = {
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: '子網域遮罩',
+		general_description: '描述',
+		general_description_placeholder: '關於這个裝置的描述',
 		general_required_field: '必填',
 		ports: '埠',
 		ports_desc: 'UpSnap 可以檢查指定的埠是否開啟',

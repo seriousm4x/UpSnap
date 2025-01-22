@@ -56,6 +56,8 @@ const fr = {
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Masque réseau',
+		general_description: 'Description',
+		general_description_placeholder: "Description de l'appareil",
 		general_required_field: 'champ requis',
 		ports: 'Ports',
 		ports_desc: 'UpSnap peut aussi vérifier si certains ports sont ouverts.',

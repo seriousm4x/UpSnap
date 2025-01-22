@@ -246,6 +246,21 @@
 						required
 					/>
 				</div>
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for="device-description">
+						<div class="label-text">
+							<span>{$LL.device.general_description()}</span>
+						</div>
+					</label>
+					<input
+						id="device-description"
+						type="text"
+						placeholder={$LL.device.general_description_placeholder()}
+						class="input w-full max-w-xs"
+						bind:value={device.description}
+					/>
+				</div>
+
 				<span class="badge self-center text-error">* {$LL.device.general_required_field()}</span>
 			</div>
 		</div>

@@ -55,6 +55,8 @@ const nl = {
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Subnetmask',
+		general_description: 'Beschrijving',
+		general_description_placeholder: 'Enige beschrijving van het apparaat',
 		general_required_field: 'vereist veld',
 		ports: 'Poorten',
 		ports_desc: 'UpSnap kan ook controleren of gegeven poorten open zijn.',

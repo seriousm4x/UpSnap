@@ -157,6 +157,9 @@
 		{:else}
 			<h1 class="card-title">{device.name}</h1>
 		{/if}
+		{#if device.description}
+			<p>{device.description}</p>
+		{/if}
 		<ul class="menu rounded-box bg-base-200">
 			<!-- TODO: change to nic array once backend supports it -->
 			<DeviceCardNic {device} />

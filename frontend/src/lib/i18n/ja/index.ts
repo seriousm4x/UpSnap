@@ -53,6 +53,8 @@ const ja = {
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'ネットマスク',
+		general_description: '説明',
+		general_description_placeholder: '装置の説明',
 		general_required_field: '必須項目',
 		ports: 'ポート',
 		ports_desc: 'UpSnap は指定されたポートが開いているか確認することもできます。',

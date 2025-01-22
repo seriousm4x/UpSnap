@@ -21,6 +21,7 @@ export type Locales =
 	| 'it'
 	| 'it-IT'
 	| 'ja'
+	| 'ja-JP'
 	| 'nl'
 	| 'nl-NL'
 	| 'pt'
@@ -233,6 +234,14 @@ type RootTranslation = {
 		 * N​e​t​m​a​s​k
 		 */
 		general_netmask: string;
+		/**
+		 * D​e​s​c​r​i​p​t​i​o​n
+		 */
+		general_description: string;
+		/**
+		 * S​o​m​e​ ​d​e​s​c​r​i​p​t​i​o​n​ ​o​f​ ​t​h​e​ ​d​e​v​i​c​e
+		 */
+		general_description_placeholder: string;
 		/**
 		 * r​e​q​u​i​r​e​d​ ​f​i​e​l​d
 		 */
@@ -1004,6 +1013,14 @@ export type TranslationFunctions = {
 		 * Netmask
 		 */
 		general_netmask: () => LocalizedString;
+		/**
+		 * Description
+		 */
+		general_description: () => LocalizedString;
+		/**
+		 * Some description of the device
+		 */
+		general_description_placeholder: () => LocalizedString;
 		/**
 		 * required field
 		 */

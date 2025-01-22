@@ -52,6 +52,8 @@ const zh = {
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: '子网掩码',
+		general_description: '说明',
+		general_description_placeholder: '设备的一些说明',
 		general_required_field: '必填字段',
 		ports: '端口',
 		ports_desc: 'UpSnap 可以检查设备端口是否正常.',
