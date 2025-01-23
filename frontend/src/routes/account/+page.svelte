@@ -139,7 +139,7 @@
 </script>
 
 <h1 class="mb-8 text-3xl font-bold">{$LL.account.page_title()}</h1>
-<div class="card w-full bg-base-300 shadow-xl">
+<div class="card bg-base-300 w-full shadow-xl">
 	<div class="card-body">
 		<div class="flex flex-row items-center gap-4">
 			<div class="avatar">
@@ -166,7 +166,7 @@
 			</div>
 		</div>
 		<form on:submit|preventDefault={saveUser}>
-			<h2 class="card-title mb-2 mt-4">{$LL.account.avatar_title()}</h2>
+			<h2 class="card-title mt-4 mb-2">{$LL.account.avatar_title()}</h2>
 			<div class="flex flex-row flex-wrap gap-4">
 				{#each [...Array(10).keys()] as i}
 					<div class="avatar btn btn-circle btn-ghost">
@@ -194,7 +194,7 @@
 					</div>
 				{/each}
 			</div>
-			<h2 class="card-title mb-2 mt-4">{$LL.account.language_title()}</h2>
+			<h2 class="card-title mt-4 mb-2">{$LL.account.language_title()}</h2>
 			<select class="select select-bordered w-full max-w-xs" bind:value={selectedLanguage}>
 				<option value="auto" selected={localStorageLang === null}
 					>🌐 {$LL.account.language_option_auto()}</option
@@ -214,7 +214,7 @@
 		</form>
 	</div>
 </div>
-<div class="card mt-6 w-full bg-base-300 shadow-xl">
+<div class="card bg-base-300 mt-6 w-full shadow-xl">
 	<div class="card-body">
 		<h2 class="card-title">{$LL.account.change_password_title()}</h2>
 		<p>{$LL.account.change_password_body()}</p>

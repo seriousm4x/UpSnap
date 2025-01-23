@@ -117,7 +117,7 @@
 </script>
 
 {#if $settingsPriv}
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 mt-6 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.tabs[1]()}</h2>
 			<p class="my-2">
@@ -167,7 +167,7 @@
 			</div>
 			{#if scanResponse.devices?.length > 0}
 				{#each scanResponse.devices.sort( (a, b) => a.ip.localeCompare( b.ip, undefined, { numeric: true } ) ) as device, index}
-					<div class="collapse collapse-arrow bg-base-200">
+					<div class="collapse-arrow bg-base-200 collapse">
 						<input type="radio" name="scanned-devices" checked={index === 0} />
 						<div class="collapse-title font-bold">
 							{device.name} <span class="badge">{device.ip}</span>

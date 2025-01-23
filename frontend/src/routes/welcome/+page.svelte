@@ -115,7 +115,7 @@
 						</label>
 						<label class="relative block">
 							<div
-								class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
+								class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
 								role="none"
 								on:click={() => toggleVisibility(inputPassword)}
 								on:keydown={() => toggleVisibility(inputPassword)}
@@ -138,7 +138,7 @@
 						</label>
 						<label class="relative block">
 							<div
-								class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
+								class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
 								role="none"
 								on:click={() => toggleVisibility(inputConfirm)}
 								on:keydown={() => toggleVisibility(inputConfirm)}

@@ -148,7 +148,7 @@
 	}
 </script>
 
-<div class="card rounded-3xl bg-base-300 shadow-md" transition:scale={{ delay: 0, duration: 200 }}>
+<div class="card bg-base-300 rounded-3xl shadow-md" transition:scale={{ delay: 0, duration: 200 }}>
 	<div class="card-body p-6">
 		{#if device.link.toString() !== ''}
 			<a href={device.link.toString()} target="_blank">
@@ -203,14 +203,14 @@
 				{/if}
 			</span>
 			{#if moreButtons.filter((btn) => btn.requires).length > 0}
-				<div class="dropdown dropdown-end dropdown-top ms-auto bg-base-300">
+				<div class="dropdown dropdown-end dropdown-top bg-base-300 ms-auto">
 					<label tabindex="-1" class="btn btn-sm m-1" for="more-{device.id}"
 						>{$LL.device.card_btn_more()}</label
 					>
 					<ul
 						id="more-{device.id}"
 						tabindex="-1"
-						class="menu dropdown-content z-[1] w-fit rounded-box bg-base-100 p-2 shadow"
+						class="menu dropdown-content rounded-box bg-base-100 z-[1] w-fit p-2 shadow"
 					>
 						{#each moreButtons as btn}
 							{#if btn.requires}

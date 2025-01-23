@@ -178,7 +178,7 @@
 </script>
 
 <form on:submit|preventDefault={save}>
-	<div class="card w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.general()}</h2>
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -261,11 +261,11 @@
 					/>
 				</div>
 
-				<span class="badge self-center text-error">* {$LL.device.general_required_field()}</span>
+				<span class="badge text-error self-center">* {$LL.device.general_required_field()}</span>
 			</div>
 		</div>
 	</div>
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 mt-6 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.ports()}</h2>
 			<p class="my-2">{$LL.device.ports_desc()}</p>
@@ -284,7 +284,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 mt-6 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.link()}</h2>
 			<p class="my-2">
@@ -320,7 +320,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 mt-6 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.ping()}</h2>
 			<p class="my-2">
@@ -341,7 +341,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 mt-6 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.wake()}</h2>
 			<p class="my-2">
@@ -409,7 +409,7 @@
 		</div>
 	</div>
 
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 mt-6 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">Sleep-On-LAN</h2>
 			<p class="mt-2">
@@ -518,7 +518,7 @@
 		</div>
 	</div>
 
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 mt-6 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.shutdown()}</h2>
 			<p class="my-2">
@@ -526,13 +526,13 @@
 				{@html $LL.device.shutdown_desc()}
 			</p>
 			<p class="my-2 font-bold">{$LL.device.shutdown_examples()}</p>
-			<div class="mockup-code min-w-0 max-w-fit text-sm">
+			<div class="mockup-code max-w-fit min-w-0 text-sm">
 				<pre data-prefix="#"><code>{$LL.device.shutdown_examples_windows()}</code></pre>
 				<pre data-prefix="$" class="text-warning"><code
 						>net rpc shutdown -I 192.168.1.13 -U "user%password"</code
 					></pre>
 			</div>
-			<div class="mockup-code min-w-0 max-w-fit text-sm">
+			<div class="mockup-code max-w-fit min-w-0 text-sm">
 				<pre data-prefix="#"><code>{$LL.device.shutdown_examples_linux()}</code></pre>
 				<pre data-prefix="$" class="text-warning"><code
 						>sshpass -p password ssh -o "StrictHostKeyChecking=no" user@192.168.1.13 "sudo poweroff"</code
@@ -600,7 +600,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 mt-6 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.password()}</h2>
 			<p class="my-2">
@@ -618,7 +618,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-300 mt-6 w-full shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.groups()}</h2>
 			<p class="my-2">
