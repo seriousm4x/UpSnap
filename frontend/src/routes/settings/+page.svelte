@@ -92,7 +92,7 @@
 {:else}
 	<h1 class="mb-8 text-3xl font-bold">{$LL.settings.page_title()}</h1>
 	<form on:submit|preventDefault={save}>
-		<div class="card bg-base-300 mt-6 w-full shadow-xl">
+		<div class="card mt-6 w-full bg-base-300 shadow-xl">
 			<div class="card-body">
 				<h2 class="card-title">{$LL.settings.ping_interval_title()}</h2>
 				<p class="mt-2">
@@ -130,7 +130,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="card bg-base-300 mt-6 w-full shadow-xl">
+		<div class="card mt-6 w-full bg-base-300 shadow-xl">
 			<div class="card-body">
 				<h2 class="card-title">{$LL.settings.website_title_title()}</h2>
 				<p class="my-2">{$LL.settings.website_title_desc()}</p>
@@ -144,7 +144,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="card bg-base-300 mt-6 w-full shadow-xl">
+		<div class="card mt-6 w-full bg-base-300 shadow-xl">
 			<div class="card-body">
 				<h2 class="card-title">{$LL.settings.icon_title()}</h2>
 				<p class="my-2">

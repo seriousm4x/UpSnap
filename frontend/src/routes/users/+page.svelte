@@ -184,7 +184,7 @@
 	<h1 class="mb-8 text-3xl font-bold">{$LL.users.page_title()}</h1>
 	{#each users as user, index}
 		<form on:submit|preventDefault={() => save(user)}>
-			<div class="card bg-base-300 mt-6 w-full shadow-xl">
+			<div class="card mt-6 w-full bg-base-300 shadow-xl">
 				<div class="card-body gap-4">
 					<h2 class="card-title">
 						<label tabindex="-1" class="avatar" for="avatar{index}">
@@ -206,7 +206,7 @@
 							</label>
 						</div>
 					{/each}
-					<div class="collapse-arrow bg-base-200 collapse">
+					<div class="collapse collapse-arrow bg-base-200">
 						<input type="checkbox" />
 						<div class="collapse-title text-xl font-medium">{$LL.users.device_permissions()}</div>
 						<div class="collapse-content">
@@ -222,7 +222,7 @@
 									<div class="font-bold">{$LL.users.delete()}</div>
 									<div class="font-bold">{$LL.users.power()}</div>
 									{#each devices as device}
-										<hr class="border-neutral col-span-full w-full border-b-1 opacity-30" />
+										<hr class="border-b-1 col-span-full w-full border-neutral opacity-30" />
 										{#each permissions.filter((perm) => perm.user === user.id) as permission}
 											<div
 												class="col-span-full flex flex-row flex-wrap gap-2 place-self-start break-all md:col-span-1"
@@ -332,7 +332,7 @@
 			</form>
 		</dialog>
 	{/each}
-	<div class="card bg-base-300 mt-6 w-full shadow-xl">
+	<div class="card mt-6 w-full bg-base-300 shadow-xl">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.users.create_new_user()}</h2>
 			<form on:submit|preventDefault={createUser}>
@@ -390,7 +390,7 @@
 						/>
 					</div>
 				</div>
-				<span class="badge text-error mt-4 self-center">* {$LL.users.required_field()}</span>
+				<span class="badge mt-4 self-center text-error">* {$LL.users.required_field()}</span>
 				<div class="card-actions justify-end">
 					<button type="submit" class="btn btn-success mt-2"
 						><Fa icon={faPlus} />{$LL.buttons.add()}</button

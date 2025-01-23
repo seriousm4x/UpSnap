@@ -45,7 +45,7 @@
 
 <h1 class="mb-8 text-3xl font-bold">{$LL.device.page_title()}</h1>
 <div class="mb-6 flex justify-center">
-	<ul class="menu menu-horizontal rounded-box bg-base-300 gap-1">
+	<ul class="menu menu-horizontal gap-1 rounded-box bg-base-300">
 		{#each tabs as tab}
 			{#if tab.show}
 				<li>

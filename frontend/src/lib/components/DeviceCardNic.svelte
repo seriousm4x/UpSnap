@@ -162,7 +162,7 @@
 			</button>
 		{/if}
 		<div class="grow">
-			<div class="text-lg leading-4 font-bold">{device.ip}</div>
+			<div class="text-lg font-bold leading-4">{device.ip}</div>
 			<div>{device.mac}</div>
 			<div class="flex flex-wrap gap-x-4">
 				{#if device?.expand?.ports}
