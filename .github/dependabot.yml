@@ -8,6 +8,9 @@ updates:
   open-pull-requests-limit: 10
   commit-message:
     prefix: go-dep
+  ignore:
+    - dependency-name: "*"
+      update-types: ["version-update:semver-major"]
 - package-ecosystem: npm
   directory: "/frontend"
   schedule:
@@ -15,6 +18,9 @@ updates:
   open-pull-requests-limit: 10
   commit-message:
     prefix: npm-dep
+  ignore:
+    - dependency-name: "*"
+      update-types: ["version-update:semver-major"]
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
