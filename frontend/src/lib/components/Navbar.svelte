@@ -52,7 +52,9 @@
 		'dim',
 		'nord',
 		'sunset',
-		'colorful'
+		'caramellatte',
+		'abyss',
+		'silk'
 	];
 	let activeTheme: string | null = '';
 	$: avatar = $pocketbase.authStore.record?.avatar;
@@ -100,7 +102,7 @@
 			<ul
 				id="mobile-menu"
 				tabindex="-1"
-				class="menu dropdown-content z-[1] mt-3 w-max gap-1 rounded-box bg-base-300 p-2 shadow"
+				class="menu dropdown-content rounded-box bg-base-200 z-[1] mt-3 w-max gap-1 p-2 shadow-sm"
 			>
 				{#if $settingsPub?.website_title}
 					<div class="menu-title">
@@ -139,35 +141,24 @@
 						<ul>
 							<div class="h-fit max-h-72 overflow-scroll">
 								{#each availableThemes as theme}
-									<li>
+									<li class="w-full">
 										<button
-											class="overflow-hidden rounded-lg text-left outline-base-content"
+											class="gap-3 px-2"
 											data-set-theme={theme}
 											on:click={() => (activeTheme = theme)}
 											on:keydown={() => (activeTheme = theme)}
 										>
 											<div
 												data-theme={theme}
-												class="w-full cursor-pointer rounded bg-base-100 font-sans text-base-content"
+												class="bg-base-100 grid shrink-0 grid-cols-2 gap-0.5 rounded-md p-1 shadow-sm"
 											>
-												<div class="grid grid-cols-5 grid-rows-3">
-													<div
-														class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3"
-													>
-														<Fa
-															icon={faCheck}
-															class={activeTheme === theme ? 'visible' : 'invisible'}
-														/>
-														<div class="flex-grow text-sm">{theme}</div>
-														<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
-															<div class="w-2 rounded bg-primary" />
-															<div class="w-2 rounded bg-secondary" />
-															<div class="w-2 rounded bg-accent" />
-															<div class="w-2 rounded bg-neutral" />
-														</div>
-													</div>
-												</div>
+												<div class="bg-base-content size-1 rounded-full"></div>
+												<div class="bg-primary size-1 rounded-full"></div>
+												<div class="bg-secondary size-1 rounded-full"></div>
+												<div class="bg-accent size-1 rounded-full"></div>
 											</div>
+											<div class="truncate">{theme}</div>
+											<Fa icon={faCheck} class={activeTheme === theme ? 'visible' : 'invisible'} />
 										</button>
 									</li>
 								{/each}
@@ -177,7 +168,7 @@
 				</li>
 			</ul>
 		</div>
-		<a class="btn btn-ghost px-2 text-xl normal-case" href="/">
+		<a class="btn btn-ghost h-full border-0 px-2 text-xl" href="/">
 			<img
 				src={$settingsPub?.id && $settingsPub?.favicon
 					? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
@@ -192,64 +183,61 @@
 		{#if $settingsPub?.website_title}
 			<span class="px-2">{$settingsPub?.website_title}</span>
 		{/if}
-		<ul class="menu menu-horizontal gap-1 px-1">
-			<li>
-				<a href="/" class="p-2" class:active={$page.url.pathname === '/'}
+		<ul class="menu menu-horizontal h-full gap-1 px-1">
+			<li class="h-full">
+				<a href="/" class="p-2" class:menu-active={$page.url.pathname === '/'}
 					><Fa icon={faHome} />{$LL.home.page_title()}</a
 				>
 			</li>
 			{#if $pocketbase.authStore.isSuperuser}
-				<li>
-					<a href="/users" class="p-2" class:active={$page.url.pathname.startsWith('/users')}
+				<li class="h-full">
+					<a href="/users" class="p-2" class:menu-active={$page.url.pathname.startsWith('/users')}
 						><Fa icon={faUsersGear} />{$LL.users.page_title()}</a
 					>
 				</li>
-				<li>
-					<a href="/settings/" class="p-2" class:active={$page.url.pathname.startsWith('/settings')}
+				<li class="h-full">
+					<a
+						href="/settings/"
+						class="p-2"
+						class:menu-active={$page.url.pathname.startsWith('/settings')}
 						><Fa icon={faCog} />{$LL.settings.page_title()}</a
 					>
 				</li>
 			{/if}
-		</ul>
-		<div class="dropdown dropdown-end">
-			<div tabindex="-1" class="btn btn-ghost normal-case">
-				<Fa icon={faSwatchbook} />
-				<span class="font-normal">{$LL.navbar.theme()}</span>
-				<Fa icon={faChevronDown} />
-			</div>
-			<div
-				class="dropdown-content z-[1] mt-3 h-fit max-h-96 w-56 overflow-y-auto rounded-box bg-base-200 text-base-content shadow"
-			>
-				<div class="grid grid-cols-1 gap-3 p-3" tabindex="-1">
-					{#each availableThemes as theme}
-						<button
-							class="overflow-hidden rounded-lg text-left outline-base-content"
-							data-set-theme={theme}
-							on:click={() => (activeTheme = theme)}
-							on:keydown={() => (activeTheme = theme)}
-						>
-							<div
-								data-theme={theme}
-								class="w-full cursor-pointer bg-base-100 font-sans text-base-content"
-							>
-								<div class="grid grid-cols-5 grid-rows-3">
-									<div class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3">
-										<Fa icon={faCheck} class={activeTheme === theme ? 'visible' : 'invisible'} />
-										<div class="flex-grow text-sm">{theme}</div>
-										<div class="flex h-full flex-shrink-0 flex-wrap gap-1">
-											<div class="w-2 rounded bg-primary" />
-											<div class="w-2 rounded bg-secondary" />
-											<div class="w-2 rounded bg-accent" />
-											<div class="w-2 rounded bg-neutral" />
-										</div>
+			<div class="dropdown dropdown-end">
+				<button class="btn btn-ghost hover:bg-base-content/10 h-full border-0 p-2">
+					<Fa icon={faSwatchbook} />
+					<span class="font-normal">{$LL.navbar.theme()}</span>
+					<Fa icon={faChevronDown} />
+				</button>
+				<div class="dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 shadow-sm">
+					<ul class="menu menu-horizontal h-fit max-h-96 overflow-y-auto">
+						{#each availableThemes as theme}
+							<li class="w-full">
+								<button
+									class="gap-3 px-2"
+									data-set-theme={theme}
+									on:click={() => (activeTheme = theme)}
+									on:keydown={() => (activeTheme = theme)}
+								>
+									<div
+										data-theme={theme}
+										class="bg-base-100 grid shrink-0 grid-cols-2 gap-0.5 rounded-md p-1 shadow-sm"
+									>
+										<div class="bg-base-content size-1 rounded-full"></div>
+										<div class="bg-primary size-1 rounded-full"></div>
+										<div class="bg-secondary size-1 rounded-full"></div>
+										<div class="bg-accent size-1 rounded-full"></div>
 									</div>
-								</div>
-							</div>
-						</button>
-					{/each}
+									<div class="truncate">{theme}</div>
+									<Fa icon={faCheck} class={activeTheme === theme ? 'visible' : 'invisible'} />
+								</button>
+							</li>
+						{/each}
+					</ul>
 				</div>
 			</div>
-		</div>
+		</ul>
 	</div>
 	<div class="ms-auto justify-end">
 		{#if $pocketbase.authStore?.record !== null}
@@ -267,7 +255,7 @@
 				</label>
 				<ul
 					tabindex="-1"
-					class="menu dropdown-content z-[1] mt-3 rounded-box bg-base-300 p-2 shadow"
+					class="menu dropdown-content rounded-box bg-base-200 z-[1] mt-3 w-52 p-2 shadow"
 				>
 					<li class="menu-title">
 						{$pocketbase.authStore.isSuperuser

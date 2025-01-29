@@ -31,13 +31,9 @@
 
 	export let device: Device;
 
+	let modalReboot: HTMLDialogElement;
+
 	$: moreButtons = [
-		{
-			text: $LL.device.card_btn_more_edit(),
-			icon: faPen,
-			onClick: () => goto(`/device/${device.id}`),
-			requires: $pocketbase.authStore.isSuperuser || $permission.update?.includes(device.id)
-		},
 		{
 			text: $LL.device.card_btn_more_sleep(),
 			icon: faBed,
@@ -50,11 +46,17 @@
 		{
 			text: $LL.device.card_btn_more_reboot(),
 			icon: faRotateLeft,
-			onClick: () => reboot(),
+			onClick: () => askRebootConfirmation(),
 			requires:
 				($pocketbase.authStore.isSuperuser || $permission.power?.includes(device.id)) &&
 				device.status === 'online' &&
 				device.shutdown_cmd !== ''
+		},
+		{
+			text: $LL.device.card_btn_more_edit(),
+			icon: faPen,
+			onClick: () => goto(`/device/${device.id}`),
+			requires: $pocketbase.authStore.isSuperuser || $permission.update?.includes(device.id)
 		}
 	];
 
@@ -146,9 +148,17 @@
 			locale: dateFnsLocale
 		});
 	}
+
+	function askRebootConfirmation() {
+		if (device.shutdown_confirm) {
+			modalReboot.showModal();
+		} else {
+			reboot();
+		}
+	}
 </script>
 
-<div class="card rounded-3xl bg-base-300 shadow-md" transition:scale={{ delay: 0, duration: 200 }}>
+<div class="card bg-base-200 shadow-sm" transition:scale={{ delay: 0, duration: 200 }}>
 	<div class="card-body p-6">
 		{#if device.link.toString() !== ''}
 			<a href={device.link.toString()} target="_blank">
@@ -160,9 +170,9 @@
 		{#if device.description}
 			<p>{device.description}</p>
 		{/if}
-		<ul class="menu rounded-box bg-base-200">
+		<div class="card rounded-box w-full">
 			<DeviceCardNic {device} />
-		</ul>
+		</div>
 		{#if device.wake_cron_enabled || device.shutdown_cron_enabled || device.password}
 			<div class="mt-1 flex flex-row flex-wrap gap-2">
 				{#if device.wake_cron_enabled}
@@ -203,27 +213,33 @@
 				{/if}
 			</span>
 			{#if moreButtons.filter((btn) => btn.requires).length > 0}
-				<div class="dropdown dropdown-end dropdown-top ms-auto bg-base-300">
-					<label tabindex="-1" class="btn btn-sm m-1" for="more-{device.id}"
-						>{$LL.device.card_btn_more()}</label
-					>
-					<ul
-						id="more-{device.id}"
-						tabindex="-1"
-						class="menu dropdown-content z-[1] w-fit rounded-box bg-base-100 p-2 shadow"
-					>
-						{#each moreButtons as btn}
-							{#if btn.requires}
-								<li>
-									<button on:click={btn.onClick}>
-										<Fa icon={btn.icon} />{btn.text}
-									</button>
-								</li>
-							{/if}
-						{/each}
-					</ul>
+				<div class="ms-auto flex flex-row flex-wrap gap-1">
+					{#each moreButtons as btn}
+						{#if btn.requires}
+							<div class="tooltip" data-tip={btn.text}>
+								<button class="btn btn-sm btn-circle" on:click={btn.onClick}>
+									<Fa icon={btn.icon} />
+								</button>
+							</div>
+						{/if}
+					{/each}
 				</div>
 			{/if}
 		</div>
 	</div>
 </div>
+
+<dialog class="modal" bind:this={modalReboot}>
+	<div class="modal-box">
+		<h3 class="text-lg font-bold">
+			{$LL.device.modal_confirm_shutdown_title({ device: device.name })}
+		</h3>
+		<p class="py-4">{$LL.device.modal_confirm_shutdown_desc({ device: device.name })}</p>
+		<div class="modal-action">
+			<form method="dialog" class="flex flex-row flex-wrap gap-2">
+				<button class="btn">{$LL.buttons.cancel()}</button>
+				<button class="btn btn-success" on:click={reboot}>{$LL.buttons.confirm()}</button>
+			</form>
+		</div>
+	</div>
+</dialog>

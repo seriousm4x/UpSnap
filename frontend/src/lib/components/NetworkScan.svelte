@@ -117,7 +117,7 @@
 </script>
 
 {#if $settingsPriv}
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.tabs[1]()}</h2>
 			<p class="my-2">
@@ -136,7 +136,7 @@
 							placeholder="192.168.1.0/24"
 							bind:value={scanRange}
 						/>
-						<button class="btn btn-primary join-item" type="submit">{$LL.buttons.save()}</button>
+						<button class="btn btn-neutral join-item" type="submit">{$LL.buttons.save()}</button>
 					</div>
 				</form>
 				<div>
@@ -153,7 +153,7 @@
 							</button>
 						{:else if scanRunning}
 							<button class="btn no-animation">
-								<span class="loading loading-spinner" />
+								<span class="loading loading-spinner"></span>
 								{$LL.device.network_scan_running()}
 							</button>
 						{:else}
@@ -167,7 +167,7 @@
 			</div>
 			{#if scanResponse.devices?.length > 0}
 				{#each scanResponse.devices.sort( (a, b) => a.ip.localeCompare( b.ip, undefined, { numeric: true } ) ) as device, index}
-					<div class="collapse collapse-arrow bg-base-200">
+					<div class="collapse-arrow bg-base-100 collapse">
 						<input type="radio" name="scanned-devices" checked={index === 0} />
 						<div class="collapse-title font-bold">
 							{device.name} <span class="badge">{device.ip}</span>
@@ -208,7 +208,9 @@
 				<div class="form-control max-w-fit">
 					<label class="label cursor-pointer">
 						<input type="checkbox" class="checkbox" bind:checked={replaceNetmaskCheckbox} />
-						<span class="label-text ms-2">{$LL.device.network_scan_replace_netmask()}</span>
+						<span class="label-text ms-2 text-wrap break-words"
+							>{$LL.device.network_scan_replace_netmask()}</span
+						>
 					</label>
 				</div>
 				{#if replaceNetmaskCheckbox}
@@ -229,7 +231,9 @@
 					<div class="form-control max-w-fit">
 						<label class="label cursor-pointer">
 							<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
-							<span class="label-text ms-2">{$LL.device.network_scan_include_unknown()}</span>
+							<span class="label-text ms-2 text-wrap break-words"
+								>{$LL.device.network_scan_include_unknown()}</span
+							>
 						</label>
 						{#if addAllCheckbox}
 							<button

@@ -184,7 +184,7 @@
 	<h1 class="mb-8 text-3xl font-bold">{$LL.users.page_title()}</h1>
 	{#each users as user, index}
 		<form on:submit|preventDefault={() => save(user)}>
-			<div class="card mt-6 w-full bg-base-300 shadow-xl">
+			<div class="card bg-base-200 mt-6 w-full shadow-sm">
 				<div class="card-body gap-4">
 					<h2 class="card-title">
 						<label tabindex="-1" class="avatar" for="avatar{index}">
@@ -196,17 +196,13 @@
 					</h2>
 					{#each permissions.filter((perm) => perm.user === user.id) as permission}
 						<div class="form-control w-fit">
-							<label class="label cursor-pointer gap-2">
-								<input
-									type="checkbox"
-									bind:checked={permission.create}
-									class="checkbox checked:checkbox-primary"
-								/>
+							<label class="label cursor-pointer gap-2 text-wrap">
+								<input type="checkbox" bind:checked={permission.create} class="checkbox" />
 								{$LL.users.allow_create_devices({ username: user.username })}
 							</label>
 						</div>
 					{/each}
-					<div class="collapse collapse-arrow bg-base-200">
+					<div class="collapse-arrow bg-base-200 collapse">
 						<input type="checkbox" />
 						<div class="collapse-title text-xl font-medium">{$LL.users.device_permissions()}</div>
 						<div class="collapse-content">
@@ -222,7 +218,7 @@
 									<div class="font-bold">{$LL.users.delete()}</div>
 									<div class="font-bold">{$LL.users.power()}</div>
 									{#each devices as device}
-										<hr class="border-b-1 col-span-full w-full border-neutral opacity-30" />
+										<hr class="border-neutral col-span-full w-full border-b-1 opacity-30" />
 										{#each permissions.filter((perm) => perm.user === user.id) as permission}
 											<div
 												class="col-span-full flex flex-row flex-wrap gap-2 place-self-start break-all md:col-span-1"
@@ -232,32 +228,32 @@
 											</div>
 											<input
 												type="checkbox"
-												class="checkbox checked:checkbox-primary md:col-start-2"
+												class="checkbox md:col-start-2"
 												bind:group={permission.read}
 												value={device.id}
 											/>
 											<input
 												type="checkbox"
-												class="checkbox checked:checkbox-primary"
+												class="checkbox"
 												bind:group={permission.update}
 												value={device.id}
 											/>
 											<input
 												type="checkbox"
-												class="checkbox checked:checkbox-primary"
+												class="checkbox"
 												bind:group={permission.delete}
 												value={device.id}
 											/>
 											<input
 												type="checkbox"
-												class="checkbox checked:checkbox-primary"
+												class="checkbox"
 												bind:group={permission.power}
 												value={device.id}
 											/>
 										{/each}
 									{/each}
 									<button
-										class="btn btn-neutral btn-sm md:col-start-2"
+										class="btn btn-sm md:col-start-2"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'read');
@@ -268,7 +264,7 @@
 										/></button
 									>
 									<button
-										class=" btn btn-neutral btn-sm"
+										class=" btn btn-sm"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'update');
@@ -279,7 +275,7 @@
 										/></button
 									>
 									<button
-										class=" btn btn-neutral btn-sm"
+										class=" btn btn-sm"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'delete');
@@ -290,7 +286,7 @@
 										/></button
 									>
 									<button
-										class=" btn btn-neutral btn-sm"
+										class=" btn btn-sm"
 										type="button"
 										on:click={() => {
 											toggleAllPermissions(user, 'power');
@@ -332,7 +328,7 @@
 			</form>
 		</dialog>
 	{/each}
-	<div class="card mt-6 w-full bg-base-300 shadow-xl">
+	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.users.create_new_user()}</h2>
 			<form on:submit|preventDefault={createUser}>
@@ -390,7 +386,7 @@
 						/>
 					</div>
 				</div>
-				<span class="badge mt-4 self-center text-error">* {$LL.users.required_field()}</span>
+				<span class="badge text-error mt-4 self-center">* {$LL.users.required_field()}</span>
 				<div class="card-actions justify-end">
 					<button type="submit" class="btn btn-success mt-2"
 						><Fa icon={faPlus} />{$LL.buttons.add()}</button

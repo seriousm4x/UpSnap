@@ -57,7 +57,7 @@
 </script>
 
 <div class="mt-10 flex items-center justify-center">
-	<div class="card w-full max-w-lg bg-base-300 shadow-xl">
+	<div class="card bg-base-200 w-full max-w-lg shadow-sm">
 		<div class="card-body">
 			{#if $settingsPub?.website_title}
 				<h1 class="text-center text-xl font-bold">{$settingsPub?.website_title}</h1>
@@ -89,7 +89,7 @@
 				</label>
 				<label class="relative block">
 					<div
-						class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
+						class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
 						role="none"
 						on:click={() => toggleVisibility(inputPassword)}
 						on:keydown={() => toggleVisibility(inputPassword)}
@@ -108,13 +108,11 @@
 				</label>
 				<div class="card-actions mt-4">
 					<div class="dropdown">
-						<label tabindex="-1" class="btn btn-neutral" for="other-providers"
-							>{$LL.login.btn_more()}</label
-						>
+						<label tabindex="-1" class="btn" for="other-providers">{$LL.login.btn_more()}</label>
 						<ul
 							id="other-providers"
 							tabindex="-1"
-							class="menu dropdown-content z-[1] w-56 rounded-box bg-base-200 p-2 shadow"
+							class="menu dropdown-content rounded-box bg-base-200 z-1 w-56 p-2 shadow-sm"
 						>
 							<li class="menu-title flex flex-row items-center gap-2">
 								{$LL.login.menu_title_auth_providers()}
@@ -135,7 +133,7 @@
 							{/await}
 						</ul>
 					</div>
-					<button class="btn btn-primary ms-auto" type="submit"
+					<button class="btn btn-success ms-auto" type="submit"
 						>{$LL.login.btn_login()} <Fa icon={faLockOpen} /></button
 					>
 				</div>

@@ -109,11 +109,7 @@
 							type="button"
 							on:click={() => (orderByGroups = !orderByGroups)}
 							>{$LL.home.order_groups()}
-							<input
-								type="checkbox"
-								class="checkbox checked:checkbox-primary"
-								checked={orderByGroups}
-							/>
+							<input type="checkbox" class="checkbox" checked={orderByGroups} />
 						</button>
 					</div>
 				</div>
@@ -134,8 +130,11 @@
 					value="ip"
 				/>
 			{/if}
-			<div class="tooltip" data-tip={$LL.home.order_tooltip()}>
-				<button class="btn join-item" on:click={() => (orderExpanded = !orderExpanded)}>
+			<div class="tooltip join-item" data-tip={$LL.home.order_tooltip()}>
+				<button
+					class="btn {orderExpanded ? '' : 'rounded-field'}"
+					on:click={() => (orderExpanded = !orderExpanded)}
+				>
 					{#if orderExpanded}
 						<Fa icon={faChevronCircleRight} size="lg" />
 					{:else}
@@ -175,18 +174,34 @@
 		</div>
 	{/if}
 {:else}
-	<div class="container text-center">
-		<p>{$LL.home.no_devices()}</p>
-		{#if $pocketbase.authStore.isSuperuser || $permission.create}
-			<p>
-				<a href="/device/new" class="btn btn-ghost"
-					><Fa icon={faPlus} class="ms-2" />{$LL.home.add_first_device()}
-				</a>
-			</p>
-		{:else}
-			<p>
-				{$LL.home.grant_permissions()}
-			</p>
-		{/if}
+	<div class="flex justify-center">
+		<div role="alert" class="alert alert-horizontal w-fit">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="h-6 w-6 shrink-0 stroke-current"
+				fill="none"
+				viewBox="0 0 24 24"
+			>
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+				/>
+			</svg>
+			{#if $pocketbase.authStore.isSuperuser || $permission.create}
+				<div>
+					<h3 class="font-bold">{$LL.home.no_devices()}</h3>
+					<div class="text-xs">{$LL.home.add_first_device()}</div>
+				</div>
+				<a href="/device/new" class="btn btn-sm"
+					><Fa icon={faPlus} />{$LL.home.add_first_device()}</a
+				>
+			{:else}
+				<span>
+					Please ask the admin to grant you permissions to existing devices or to create new ones.
+				</span>
+			{/if}
+		</div>
 	</div>
 {/if}

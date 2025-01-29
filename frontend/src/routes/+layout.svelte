@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
 	import LL, { setLocale } from '$lib/i18n/i18n-svelte';
@@ -19,6 +19,8 @@
 		duration: 5000
 	};
 
+	let authIsValid = false;
+
 	onMount(async () => {
 		// load locale
 		const detectedLocale = detectLocale(
@@ -31,6 +33,8 @@
 		setLocale(detectedLocale);
 
 		$pocketbase.authStore.onChange(() => {
+			authIsValid = $pocketbase.authStore.isValid;
+
 			// load user permissions
 			if ($pocketbase.authStore.record?.collectionName === 'users') {
 				$pocketbase
@@ -57,7 +61,7 @@
 		}
 
 		// redirect to welcome page if setup is not completed
-		if ($settingsPub.setup_completed === false && $page.url.pathname !== '/welcome') {
+		if ($settingsPub.setup_completed === false && page.url.pathname !== '/welcome') {
 			$pocketbase.authStore.clear();
 			goto('/welcome');
 			return;
@@ -98,13 +102,13 @@
 	{/if}
 </svelte:head>
 
-{#if $pocketbase.authStore.isValid}
+{#if authIsValid}
 	<Navbar />
 {/if}
 
 <Toaster position="bottom-center" {toastOptions} />
 
-<Transition url={$page.url}>
+<Transition url={page.url}>
 	<div class="container mx-auto mb-4 p-2">
 		<slot />
 	</div>

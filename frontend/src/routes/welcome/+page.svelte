@@ -69,14 +69,14 @@
 
 <div class="mt-10 flex items-center justify-center">
 	<div class="my-4 flex w-screen max-w-lg flex-col gap-16">
-		<div class="card bg-base-300 shadow-xl">
+		<div class="card bg-base-200 shadow-sm">
 			{#if $settingsPub?.setup_completed}
 				<figure class="mx-auto w-72 pt-6"><img src="/gopher.svg" alt="Gopher" /></figure>
 				<div class="card-body">
 					<h2 class="card-title">{$LL.welcome.not_expected_title()}</h2>
 					<p>{$LL.welcome.not_expected_desc()}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-primary" on:click={() => goto('/')}
+						<button class="btn btn-success" on:click={() => goto('/')}
 							>{$LL.welcome.not_expected_back()}</button
 						>
 					</div>
@@ -87,7 +87,7 @@
 					<h2 class="card-title">{$LL.welcome.step1_page_title()}</h2>
 					<p>{$LL.welcome.step1_setup_desc()}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-primary" on:click={() => (stepsCompleted = 1)}
+						<button class="btn btn-success" on:click={() => (stepsCompleted = 1)}
 							>{$LL.welcome.step1_setup_btn_next()} <Fa icon={faArrowRight} /></button
 						>
 					</div>
@@ -115,7 +115,7 @@
 						</label>
 						<label class="relative block">
 							<div
-								class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
+								class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
 								role="none"
 								on:click={() => toggleVisibility(inputPassword)}
 								on:keydown={() => toggleVisibility(inputPassword)}
@@ -138,7 +138,7 @@
 						</label>
 						<label class="relative block">
 							<div
-								class="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
+								class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
 								role="none"
 								on:click={() => toggleVisibility(inputConfirm)}
 								on:keydown={() => toggleVisibility(inputConfirm)}
@@ -157,7 +157,7 @@
 							/>
 						</label>
 						<div class="card-actions mt-4 justify-end">
-							<button class="btn btn-primary" type="submit"
+							<button class="btn btn-success" type="submit"
 								>{$LL.welcome.step2_btn_create()} <Fa icon={faArrowRight} /></button
 							>
 						</div>
@@ -178,7 +178,7 @@
 		</div>
 		{#if !$settingsPub?.setup_completed}
 			<ul class="steps steps-horizontal">
-				<li class="step step-primary">{$LL.welcome.progress_step1()}</li>
+				<li class="step step-success">{$LL.welcome.progress_step1()}</li>
 				<li class="step" class:step-primary={stepsCompleted > 0}>{$LL.welcome.progress_step2()}</li>
 				<li class="step" class:step-primary={stepsCompleted > 1}>{$LL.welcome.progress_step3()}</li>
 			</ul>
