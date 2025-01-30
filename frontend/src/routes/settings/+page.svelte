@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { PUBLIC_VERSION } from '$env/static/public';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import LL from '$lib/i18n/i18n-svelte';
@@ -19,7 +19,7 @@
 
 	onMount(() => {
 		if (!$pocketbase.authStore.isSuperuser) {
-			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
+			toast($LL.toasts.no_permission({ url: page.url.pathname }), {
 				icon: '⛔'
 			});
 			goto('/');
