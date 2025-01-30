@@ -50,7 +50,6 @@ const zh_TW = {
 		modal_confirm_shutdown_desc: '你確定要關閉 {device} 嗎?',
 		general: '通用',
 		general_name: '名稱',
-		general_name_placeholder: '裝置名稱',
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: '子網域遮罩',

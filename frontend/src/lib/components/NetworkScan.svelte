@@ -126,12 +126,12 @@
 			<div class="flex flex-row flex-wrap items-end gap-4">
 				<form on:submit|preventDefault={saveSettings}>
 					<label class="label" for="scan-range">
-						<span class="label-text">{$LL.device.network_scan_ip_range()}</span>
+						<span>{$LL.device.network_scan_ip_range()}</span>
 					</label>
 					<div class="join max-w-xs">
 						<input
 							id="scan-range"
-							class="input join-item input-bordered w-full"
+							class="input join-item w-full"
 							type="text"
 							placeholder="192.168.1.0/24"
 							bind:value={scanRange}
@@ -205,22 +205,22 @@
 					</div>
 				{/each}
 				<h2 class="card-title mt-4">{$LL.device.network_scan_add_all()}</h2>
-				<div class="form-control max-w-fit">
+				<div class="max-w-fit">
 					<label class="label cursor-pointer">
 						<input type="checkbox" class="checkbox" bind:checked={replaceNetmaskCheckbox} />
-						<span class="label-text ms-2 text-wrap break-words"
+						<span class="ms-2 text-wrap break-words"
 							>{$LL.device.network_scan_replace_netmask()}</span
 						>
 					</label>
 				</div>
 				{#if replaceNetmaskCheckbox}
-					<div class="form-control max-w-fit">
+					<div class="max-w-fit">
 						<label class="label cursor-pointer" for="replaceNetmaskInput">
-							<span class="label-text ms-2">{$LL.device.network_scan_new_netmask()}</span>
+							<span class="ms-2">{$LL.device.network_scan_new_netmask()}</span>
 						</label>
 						<input
 							id="replaceNetmaskInput"
-							class="input input-bordered"
+							class="input"
 							type="text"
 							placeholder="255.255.255.0"
 							bind:value={replaceNetmask}
@@ -228,10 +228,10 @@
 					</div>
 				{/if}
 				{#if scanResponse.devices.find((dev) => dev.name === 'Unknown')}
-					<div class="form-control max-w-fit">
+					<div class="max-w-fit">
 						<label class="label cursor-pointer">
 							<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
-							<span class="label-text ms-2 text-wrap break-words"
+							<span class="ms-2 text-wrap break-words"
 								>{$LL.device.network_scan_include_unknown()}</span
 							>
 						</label>
@@ -258,7 +258,7 @@
 						{/if}
 					</div>
 				{:else}
-					<div class="form-control max-w-fit">
+					<div class="max-w-fit">
 						<button
 							class="btn btn-success"
 							on:click={() => addAll()}

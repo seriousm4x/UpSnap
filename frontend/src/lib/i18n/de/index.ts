@@ -51,7 +51,6 @@ const de = {
 		modal_confirm_shutdown_desc: 'Bitte bestätigen, um {device} herunterzufahren.',
 		general: 'Allgemein',
 		general_name: 'Name',
-		general_name_placeholder: 'Gerätename',
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Netmask',

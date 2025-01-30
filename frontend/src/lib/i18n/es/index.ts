@@ -51,7 +51,6 @@ const es = {
 		modal_confirm_shutdown_desc: 'Por favor confirme para apagar {device}.',
 		general: 'General',
 		general_name: 'Nombre',
-		general_name_placeholder: 'Nombre del dispositivo',
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Máscara de red',

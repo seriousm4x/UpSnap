@@ -195,7 +195,7 @@
 						{user.username}
 					</h2>
 					{#each permissions.filter((perm) => perm.user === user.id) as permission}
-						<div class="form-control w-fit">
+						<div class="w-fit">
 							<label class="label cursor-pointer gap-2 text-wrap">
 								<input type="checkbox" bind:checked={permission.create} class="checkbox" />
 								{$LL.users.allow_create_devices({ username: user.username })}
@@ -316,16 +316,18 @@
 			</div>
 		</form>
 		<dialog class="modal" bind:this={deleteModal[index]}>
-			<form method="dialog" class="modal-box">
+			<div class="modal-box">
 				<h3 class="text-lg font-bold">{$LL.users.confirm_delete_title()}</h3>
 				<p class="py-4">{$LL.users.confirm_delete_desc({ username: user.username })}</p>
 				<div class="modal-action">
-					<button class="btn">{$LL.buttons.cancel()}</button>
-					<button class="btn btn-error" on:click={() => deleteUser(user)}
-						>{$LL.buttons.delete()}</button
-					>
+					<form method="dialog">
+						<button class="btn">{$LL.buttons.cancel()}</button>
+						<button class="btn btn-error" on:click={() => deleteUser(user)}
+							>{$LL.buttons.delete()}</button
+						>
+					</form>
 				</div>
-			</form>
+			</div>
 		</dialog>
 	{/each}
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
@@ -333,9 +335,9 @@
 			<h2 class="card-title">{$LL.users.create_new_user()}</h2>
 			<form on:submit|preventDefault={createUser}>
 				<div class="flex flex-row flex-wrap gap-4">
-					<div class="form-control w-full max-w-xs">
+					<div class="w-full max-w-xs">
 						<label class="label" for="username">
-							<div class="label-text">
+							<div>
 								<span>{$LL.users.username()}</span>
 								<span class="text-error">*</span>
 							</div>
@@ -344,14 +346,14 @@
 							id="username"
 							type="text"
 							placeholder={$LL.users.username()}
-							class="input input-bordered w-full max-w-xs"
+							class="input w-full max-w-xs"
 							required
 							bind:value={newUser.username}
 						/>
 					</div>
-					<div class="form-control w-full max-w-xs">
+					<div class="w-full max-w-xs">
 						<label class="label" for="password">
-							<div class="label-text">
+							<div>
 								<span>{$LL.users.password()}</span>
 								<span class="text-error">*</span>
 							</div>
@@ -360,16 +362,16 @@
 							id="password"
 							type="password"
 							placeholder={$LL.users.password()}
-							class="input input-bordered w-full max-w-xs"
+							class="input w-full max-w-xs"
 							minlength="5"
 							maxlength="72"
 							required
 							bind:value={newUser.password}
 						/>
 					</div>
-					<div class="form-control w-full max-w-xs">
+					<div class="w-full max-w-xs">
 						<label class="label" for="passwordConfirm">
-							<div class="label-text">
+							<div>
 								<span>{$LL.users.password_confirm()}</span>
 								<span class="text-error">*</span>
 							</div>
@@ -378,7 +380,7 @@
 							id="passwordConfirm"
 							type="password"
 							placeholder={$LL.users.password_confirm()}
-							class="input input-bordered w-full max-w-xs"
+							class="input w-full max-w-xs"
 							minlength="5"
 							maxlength="72"
 							required

@@ -52,7 +52,6 @@ const fr = {
 		modal_confirm_shutdown_desc: "Veuillez confirmer l'arrêt du {device}.",
 		general: 'Général',
 		general_name: 'Nom',
-		general_name_placeholder: "Nom de l'appareil",
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Masque réseau',

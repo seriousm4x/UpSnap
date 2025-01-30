@@ -45,11 +45,11 @@
 
 <h1 class="mb-8 text-3xl font-bold">{$LL.device.page_title()}</h1>
 <div class="mb-6 flex justify-center">
-	<ul class="menu menu-horizontal rounded-box bg-base-200">
+	<ul class="menu menu-horizontal rounded-box bg-base-200 gap-1">
 		{#each tabs as tab}
 			{#if tab.show}
 				<li>
-					<button class:active={activeTab === tab.name} on:click={() => (activeTab = tab.name)}
+					<button class:menu-active={activeTab === tab.name} on:click={() => (activeTab = tab.name)}
 						>{tab.ll_name} <Fa icon={tab.icon} class="ms-2" /></button
 					>
 				</li>

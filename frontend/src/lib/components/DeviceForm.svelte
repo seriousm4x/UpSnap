@@ -182,85 +182,65 @@
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.general()}</h2>
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-				<div class="w-full max-w-xs">
-					<label class="label" for="device-name">
-						<div class="label-text">
-							<span>{$LL.device.general_name()}</span>
-							<span class="text-error">*</span>
-						</div>
+				<fieldset class="fieldset">
+					<label class="floating-label">
+						<span>{$LL.device.general_name()} <span class="text-error">*</span></span>
+						<input
+							type="text"
+							placeholder={$LL.device.general_name()}
+							class="input"
+							bind:value={device.name}
+							required
+						/>
 					</label>
-					<input
-						id="device-name"
-						type="text"
-						placeholder={$LL.device.general_name_placeholder()}
-						class="input w-full max-w-xs"
-						bind:value={device.name}
-						required
-					/>
-				</div>
-				<div class="w-full max-w-xs">
-					<label class="label" for="device-ip">
-						<div class="label-text">
-							<span>{$LL.device.general_ip()}</span>
-							<span class="text-error">*</span>
-						</div>
+				</fieldset>
+				<fieldset class="fieldset">
+					<label class="floating-label">
+						<span>{$LL.device.general_ip()} <span class="text-error">*</span></span>
+						<input
+							type="text"
+							placeholder={$LL.device.general_ip()}
+							class="input"
+							bind:value={device.ip}
+							required
+						/>
 					</label>
-					<input
-						id="device-ip"
-						type="text"
-						placeholder="192.168.0.5"
-						class="input w-full max-w-xs"
-						bind:value={device.ip}
-						required
-					/>
-				</div>
-				<div class="w-full max-w-xs">
-					<label class="label" for="device-mac">
-						<div class="label-text">
-							<span>{$LL.device.general_mac()}</span>
-							<span class="text-error">*</span>
-						</div>
+				</fieldset>
+				<fieldset class="fieldset">
+					<label class="floating-label">
+						<span>{$LL.device.general_mac()} <span class="text-error">*</span></span>
+						<input
+							type="text"
+							placeholder={$LL.device.general_mac()}
+							class="input"
+							bind:value={device.mac}
+							required
+						/>
 					</label>
-					<input
-						id="device-mac"
-						type="text"
-						placeholder="aa:bb:cc:dd:ee:ff"
-						class="input w-full max-w-xs"
-						bind:value={device.mac}
-						required
-					/>
-				</div>
-				<div class="w-full max-w-xs">
-					<label class="label" for="device-netmask">
-						<div class="label-text">
-							<span>{$LL.device.general_netmask()}</span>
-							<span class="text-error">*</span>
-						</div>
+				</fieldset>
+				<fieldset class="fieldset">
+					<label class="floating-label">
+						<span>{$LL.device.general_netmask()} <span class="text-error">*</span></span>
+						<input
+							type="text"
+							placeholder={$LL.device.general_netmask()}
+							class="input"
+							bind:value={device.netmask}
+							required
+						/>
 					</label>
-					<input
-						id="device-netmask"
-						type="text"
-						placeholder="255.255.255.0"
-						class="input w-full max-w-xs"
-						bind:value={device.netmask}
-						required
-					/>
-				</div>
-				<div class="w-full max-w-xs">
-					<label class="label" for="device-description">
-						<div class="label-text">
-							<span>{$LL.device.general_description()}</span>
-						</div>
+				</fieldset>
+				<fieldset class="fieldset">
+					<label class="floating-label">
+						<span>{$LL.device.general_description()}</span>
+						<input
+							type="text"
+							placeholder={$LL.device.general_description()}
+							class="input"
+							bind:value={device.description}
+						/>
 					</label>
-					<input
-						id="device-description"
-						type="text"
-						placeholder={$LL.device.general_description_placeholder()}
-						class="input w-full max-w-xs"
-						bind:value={device.description}
-					/>
-				</div>
-
+				</fieldset>
 				<span class="badge text-error self-center">* {$LL.device.general_required_field()}</span>
 			</div>
 		</div>
@@ -291,32 +271,27 @@
 				{$LL.device.link_desc()}
 			</p>
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-				<div class="w-full max-w-xs">
-					<label class="label" for="device-link">
-						<div class="label-text">{$LL.device.link()}</div>
+				<fieldset class="fieldset">
+					<label class="floating-label">
+						<span>{$LL.device.link()}</span>
+						<input
+							type="url"
+							placeholder={$LL.device.link()}
+							class="input"
+							bind:value={device.link}
+						/>
 					</label>
-					<input
-						id="device-link"
-						type="url"
-						placeholder="https:// ..."
-						class="input w-full max-w-xs"
-						bind:value={device.link}
-					/>
-				</div>
-				<div class="w-full max-w-xs">
-					<label class="label" for="device-link-open">
-						<div class="label-text">{$LL.device.link_open()}</div>
+				</fieldset>
+				<fieldset class="fieldset">
+					<label class="floating-label">
+						<span>{$LL.device.link_open()}</span>
+						<select class="select" bind:value={device.link_open}>
+							<option value="">{$LL.device.link_open_no()}</option>
+							<option value="same_tab">{$LL.device.link_open_same_tab()}</option>
+							<option value="new_tab">{$LL.device.link_open_new_tab()}</option>
+						</select>
 					</label>
-					<select
-						id="device-link-open"
-						class="select select-bordered"
-						bind:value={device.link_open}
-					>
-						<option value="">{$LL.device.link_open_no()}</option>
-						<option value="same_tab">{$LL.device.link_open_same_tab()}</option>
-						<option value="new_tab">{$LL.device.link_open_new_tab()}</option>
-					</select>
-				</div>
+				</fieldset>
 			</div>
 		</div>
 	</div>
@@ -327,18 +302,17 @@
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.device.ping_desc()}
 			</p>
-			<div class="w-full max-w-xs">
-				<label class="label cursor-pointer" for="ping-cmd">
-					<span class="label-text">{$LL.device.ping_cmd()}</span>
+			<fieldset class="fieldset">
+				<label class="floating-label">
+					<span>{$LL.device.ping_cmd()}</span>
+					<input
+						type="text"
+						placeholder={$LL.device.ping_cmd()}
+						class="input"
+						bind:value={device.ping_cmd}
+					/>
 				</label>
-				<input
-					id="ping-cmd"
-					type="text"
-					placeholder="$:"
-					class="input mb-2 w-full max-w-xs"
-					bind:value={device.ping_cmd}
-				/>
-			</div>
+			</fieldset>
 		</div>
 	</div>
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
@@ -349,60 +323,56 @@
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.settings.ping_interval_desc2()}
 			</p>
-			<div class="w-full max-w-xs">
-				<label class="label cursor-pointer" for="wake-cmd">
-					<span class="label-text">{$LL.device.wake_cmd()}</span>
-				</label>
-				<input
-					id="wake-cmd"
-					type="text"
-					placeholder="$:"
-					class="input mb-2 w-full max-w-xs"
-					bind:value={device.wake_cmd}
-				/>
-			</div>
-			<div class="flex flex-col">
-				<label class="label cursor-pointer" for="wake-confirm">
-					<span class="label-text">{$LL.device.require_confirmation()}</span>
-				</label>
-				<input
-					id="wake-confirm"
-					type="checkbox"
-					class="toggle toggle-success"
-					bind:checked={device.wake_confirm}
-				/>
-			</div>
-			<div class="flex flex-row flex-wrap gap-4">
-				<div class="flex flex-col">
-					<label class="label cursor-pointer" for="wake-cron-enable">
-						<span class="label-text">{$LL.device.wake_cron_enable()}</span>
-					</label>
+			<fieldset class="fieldset">
+				<label class="floating-label">
+					<span>{$LL.device.wake_cmd()}</span>
 					<input
-						id="wake-cron-enable"
-						type="checkbox"
-						class="toggle toggle-success"
-						bind:checked={device.wake_cron_enabled}
+						type="text"
+						placeholder={$LL.device.wake_cmd()}
+						class="input"
+						bind:value={device.wake_cmd}
 					/>
-				</div>
-				<div class="w-full max-w-xs">
-					<label class="label" for="wake-cron">
-						<span class="label-text"
-							>{$LL.device.shutdown_cron()}
+				</label>
+			</fieldset>
+			<div class="flex flex-row flex-wrap gap-4">
+				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+					<legend class="fieldset-legend">{$LL.device.wake_cron_enable()}</legend>
+					<label class="fieldset-label">
+						<input
+							type="checkbox"
+							bind:checked={device.wake_cron_enabled}
+							class="toggle toggle-success"
+						/>
+						{$LL.device.wake_cron_enable()}
+					</label>
+					<label class="floating-label mt-4">
+						<span
+							>{$LL.device.wake_cron()}
 							{#if device.wake_cron_enabled}
 								<span class="text-error">*</span>
 							{/if}
 						</span>
+						<input
+							type="text"
+							placeholder={$LL.device.wake_cron()}
+							class="input"
+							bind:value={device.wake_cron}
+							disabled={!device.wake_cron_enabled}
+							required={device.wake_cron_enabled}
+						/>
 					</label>
-					<input
-						id="wake-cron"
-						type="text"
-						placeholder="M H DoM M DoW"
-						class="input w-full max-w-xs"
-						bind:value={device.wake_cron}
-						disabled={!device.wake_cron_enabled}
-						required={device.wake_cron_enabled}
-					/>
-				</div>
+				</fieldset>
+				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+					<legend class="fieldset-legend">{$LL.device.require_confirmation()}</legend>
+					<label class="fieldset-label">
+						<input
+							type="checkbox"
+							bind:checked={device.wake_confirm}
+							class="toggle toggle-success"
+						/>
+						{$LL.device.require_confirmation()}
+					</label>
+				</fieldset>
 			</div>
 		</div>
 	</div>
@@ -421,93 +391,78 @@
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.device.sol_desc3()}
 			</p>
-
 			<div class="flex flex-row flex-wrap gap-4">
-				<div class="flex flex-col">
-					<label class="label cursor-pointer" for="sol-enable">
-						<span class="label-text">{$LL.device.sol_enable()}</span>
+				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+					<legend class="fieldset-legend">{$LL.device.sol_enable()}</legend>
+					<label class="fieldset-label">
+						<input
+							type="checkbox"
+							bind:checked={device.sol_enabled}
+							class="toggle toggle-success"
+						/>
+						{$LL.device.sol_enable()}
 					</label>
-					<input
-						id="sol-enable"
-						type="checkbox"
-						class="toggle toggle-success"
-						bind:checked={device.sol_enabled}
-					/>
-				</div>
-				<div class="flex flex-col">
-					<label class="label" for="sol-port">
-						<span class="label-text"
+					<label class="floating-label mt-4">
+						<span
 							>{$LL.device.sol_port()}
 							{#if device.sol_enabled}
 								<span class="text-error">*</span>
 							{/if}
 						</span>
-					</label>
-					<input
-						id="sol-port"
-						type="number"
-						min="1"
-						max="65535"
-						class="input"
-						bind:value={device.sol_port}
-						disabled={!device.sol_enabled}
-						required={device.sol_enabled}
-					/>
-				</div>
-			</div>
-			{#if device.sol_enabled}
-				<div class="flex flex-row flex-wrap gap-4">
-					<div class="flex flex-col">
-						<label class="label cursor-pointer" for="sol-auth">
-							<span class="label-text">{$LL.device.sol_authorization()}</span>
-						</label>
 						<input
-							id="sol-auth"
-							type="checkbox"
-							class="toggle toggle-success"
-							bind:checked={device.sol_auth}
+							class="input"
+							type="number"
+							min="1"
+							max="65535"
+							placeholder={$LL.device.sol_port()}
+							bind:value={device.sol_port}
+							disabled={!device.sol_enabled}
+							required={device.sol_enabled}
 						/>
-					</div>
-					<div class="flex flex-col">
-						<label class="label" for="sol-user">
-							<span class="label-text"
+					</label>
+				</fieldset>
+				{#if device.sol_enabled}
+					<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+						<legend class="fieldset-legend">{$LL.device.sol_authorization()}</legend>
+						<label class="fieldset-label">
+							<input type="checkbox" bind:checked={device.sol_auth} class="toggle toggle-success" />
+							{$LL.device.sol_authorization()}
+						</label>
+						<label class="floating-label mt-4">
+							<span
 								>{$LL.device.sol_user()}
 								{#if device.sol_auth}
 									<span class="text-error">*</span>
 								{/if}
 							</span>
+							<input
+								type="text"
+								placeholder={$LL.device.sol_user()}
+								class="input"
+								bind:value={device.sol_user}
+								disabled={!device.sol_auth}
+								required={device.sol_auth}
+							/>
 						</label>
-						<input
-							id="sol-user"
-							type="text"
-							placeholder={$LL.device.sol_user()}
-							class="input"
-							bind:value={device.sol_user}
-							disabled={!device.sol_auth}
-							required={device.sol_auth}
-						/>
-					</div>
-					<div class="flex flex-col">
-						<label class="label" for="sol-password">
-							<span class="label-text"
+						<label class="floating-label">
+							<span
 								>{$LL.device.sol_password()}
 								{#if device.sol_auth}
 									<span class="text-error">*</span>
 								{/if}
 							</span>
+							<input
+								type="password"
+								placeholder={$LL.device.sol_password()}
+								class="input"
+								bind:value={device.sol_passwort}
+								disabled={!device.sol_auth}
+								required={device.sol_auth}
+							/>
 						</label>
-						<input
-							id="sol-password"
-							type="password"
-							placeholder={$LL.device.sol_password()}
-							class="input"
-							bind:value={device.sol_password}
-							disabled={!device.sol_auth}
-							required={device.sol_auth}
-						/>
-					</div>
-				</div>
-			{/if}
+					</fieldset>
+				{/if}
+			</div>
 		</div>
 	</div>
 
@@ -518,81 +473,78 @@
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.device.shutdown_desc()}
 			</p>
+			<fieldset class="fieldset">
+				<label class="floating-label">
+					<span>{$LL.device.shutdown_cmd()}</span>
+					<input
+						type="text"
+						placeholder={$LL.device.shutdown_cmd()}
+						class="input"
+						bind:value={device.shutdown_cmd}
+					/>
+				</label>
+			</fieldset>
 			<p class="my-2 font-bold">{$LL.device.shutdown_examples()}</p>
 			<div class="mockup-code max-w-fit min-w-0 text-sm">
-				<pre data-prefix="#"><code>{$LL.device.shutdown_examples_windows()}</code></pre>
+				<pre data-prefix="#" class="italic"><code>{$LL.device.shutdown_examples_windows()}</code
+					></pre>
 				<pre data-prefix="$" class="text-warning"><code
 						>net rpc shutdown -I 192.168.1.13 -U "user%password"</code
 					></pre>
 			</div>
 			<div class="mockup-code max-w-fit min-w-0 text-sm">
-				<pre data-prefix="#"><code>{$LL.device.shutdown_examples_linux()}</code></pre>
+				<pre data-prefix="#" class="italic"><code>{$LL.device.shutdown_examples_linux()}</code
+					></pre>
 				<pre data-prefix="$" class="text-warning"><code
 						>sshpass -p password ssh -o "StrictHostKeyChecking=no" user@192.168.1.13 "sudo poweroff"</code
 					></pre>
 			</div>
-			<div class="w-full max-w-xs">
-				<label class="label cursor-pointer" for="shutdown-cmd">
-					<span class="label-text">{$LL.device.shutdown_cmd()}</span>
-				</label>
-				<input
-					id="shutdown-cmd"
-					type="text"
-					placeholder="$:"
-					class="input mb-2 w-full max-w-xs"
-					bind:value={device.shutdown_cmd}
-				/>
-			</div>
-			<div class="flex flex-row flex-wrap gap-4">
-				<div class="flex flex-col">
-					<label class="label cursor-pointer" for="shutdown-confirm">
-						<span class="label-text">{$LL.device.require_confirmation()}</span>
-					</label>
-					<input
-						id="shutdown-confirm"
-						type="checkbox"
-						class="toggle toggle-success"
-						bind:checked={device.shutdown_confirm}
-					/>
-				</div>
-			</div>
-			<p class="my-2">
+			<p class="mt-4">
 				{$LL.device.shutdown_cron_desc()}
 			</p>
 			<div class="flex flex-row flex-wrap gap-4">
-				<div class="flex flex-col">
-					<label class="label cursor-pointer" for="shutdown-cron-enable">
-						<span class="label-text">{$LL.device.shutdown_cron_enable()}</span>
+				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+					<legend class="fieldset-legend">{$LL.device.shutdown_cron_enable()}</legend>
+					<label class="fieldset-label">
+						<input
+							type="checkbox"
+							bind:checked={device.shutdown_cron_enabled}
+							class="toggle toggle-success"
+						/>
+						{$LL.device.shutdown_cron_enable()}
 					</label>
-					<input
-						id="shutdown-cron-enable"
-						type="checkbox"
-						class="toggle toggle-success"
-						bind:checked={device.shutdown_cron_enabled}
-					/>
-				</div>
-				<div class="w-full max-w-xs">
-					<label class="label" for="shutdown-cron">
-						<span class="label-text"
+					<label class="floating-label mt-4">
+						<span
 							>{$LL.device.shutdown_cron()}
 							{#if device.shutdown_cron_enabled}
 								<span class="text-error">*</span>
 							{/if}
 						</span>
+						<input
+							type="text"
+							placeholder={$LL.device.shutdown_cron()}
+							class="input"
+							bind:value={device.shutdown_cron}
+							disabled={!device.shutdown_cron_enabled}
+							required={device.shutdown_cron_enabled}
+						/>
 					</label>
-					<input
-						id="shutdown-cron"
-						type="text"
-						placeholder="M H DoM M DoW"
-						class="input w-full max-w-xs"
-						bind:value={device.shutdown_cron}
-						disabled={!device.shutdown_cron_enabled}
-						required={device.shutdown_cron_enabled}
-					/>
-				</div>
+				</fieldset>
+				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+					<legend class="fieldset-legend">{$LL.device.require_confirmation()}</legend>
+					<label class="fieldset-label">
+						<input
+							type="checkbox"
+							bind:checked={device.shutdown_confirm}
+							class="toggle toggle-success"
+						/>
+						{$LL.device.require_confirmation()}
+					</label>
+				</fieldset>
 			</div>
 		</div>
 	</div>
+
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.password()}</h2>
@@ -600,15 +552,18 @@
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.device.password_desc()}
 			</p>
-			<div class="w-full">
-				<input
-					type="password"
-					placeholder="123456"
-					class="input w-full max-w-xs"
-					maxlength="6"
-					bind:value={device.password}
-				/>
-			</div>
+			<fieldset class="fieldset">
+				<label class="floating-label">
+					<span>{$LL.device.password()}</span>
+					<input
+						type="text"
+						placeholder={$LL.device.password()}
+						class="input"
+						maxlength="6"
+						bind:value={device.password}
+					/>
+				</label>
+			</fieldset>
 		</div>
 	</div>
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
@@ -642,9 +597,9 @@
 					</div>
 				{/each}
 			</div>
-			<div class="join max-w-xs">
+			<div class="join">
 				<input
-					class="input join-item input-bordered w-full"
+					class="input join-item"
 					placeholder={$LL.device.groups_placeholder()}
 					type="text"
 					bind:value={newGroup}
@@ -665,12 +620,15 @@
 	</div>
 </form>
 <dialog class="modal" bind:this={deleteModal}>
-	<form method="dialog" class="modal-box">
+	<div class="modal-box">
 		<h3 class="text-lg font-bold">{$LL.users.confirm_delete_title()}</h3>
 		<p class="py-4">{$LL.users.confirm_delete_desc({ username: device.name })}</p>
 		<div class="modal-action">
-			<button class="btn">{$LL.buttons.cancel()}</button>
-			<button class="btn btn-error" on:click={() => deleteDevice()}>{$LL.buttons.delete()}</button>
+			<form method="dialog">
+				<button class="btn">{$LL.buttons.cancel()}</button>
+				<button class="btn btn-error" on:click={() => deleteDevice()}>{$LL.buttons.delete()}</button
+				>
+			</form>
 		</div>
-	</form>
+	</div>
 </dialog>

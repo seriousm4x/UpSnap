@@ -49,7 +49,6 @@ const en = {
 		modal_confirm_shutdown_desc: 'Please confirm to shutdown {device}.',
 		general: 'General',
 		general_name: 'Name',
-		general_name_placeholder: 'Device name',
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Netmask',

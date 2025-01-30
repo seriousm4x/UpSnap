@@ -49,7 +49,6 @@ const ja = {
 		modal_confirm_shutdown_desc: '{device} をシャットダウンすることを確認してください。',
 		general: '一般',
 		general_name: '名前',
-		general_name_placeholder: 'デバイス名',
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'ネットマスク',

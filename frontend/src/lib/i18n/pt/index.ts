@@ -51,7 +51,6 @@ const pt = {
 		modal_confirm_shutdown_desc: 'Confirme o encerramento do {device}.',
 		general: 'Geral',
 		general_name: 'Nome',
-		general_name_placeholder: 'Nome do dispositivo',
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Máscara de rede',

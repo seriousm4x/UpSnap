@@ -73,19 +73,13 @@
 				</figure>
 				<h2 class="card-title">{$LL.login.welcome()}</h2>
 			</div>
-			<form class="form-control w-full" on:submit|preventDefault={tryAdminThenUser}>
+			<form class="w-full" on:submit|preventDefault={tryAdminThenUser}>
 				<label class="label" for="email">
-					<span class="label-text">{$LL.login.email_label()}</span>
+					<span>{$LL.login.email_label()}</span>
 				</label>
-				<input
-					id="email"
-					type="text"
-					class="input input-bordered w-full"
-					required
-					bind:value={form.email}
-				/>
+				<input id="email" type="text" class="input w-full" required bind:value={form.email} />
 				<label class="label" for="password">
-					<span class="label-text">{$LL.login.password_label()}</span>
+					<span>{$LL.login.password_label()}</span>
 				</label>
 				<label class="relative block">
 					<div
@@ -99,7 +93,7 @@
 					<input
 						id="password"
 						type="password"
-						class="input input-bordered w-full"
+						class="input w-full"
 						maxlength="72"
 						required
 						bind:value={form.password}

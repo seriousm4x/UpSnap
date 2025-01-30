@@ -48,7 +48,6 @@ const zh = {
 		modal_confirm_shutdown_desc: '您确定要关闭 {device} 吗?',
 		general: '通用',
 		general_name: '名称',
-		general_name_placeholder: '设备名',
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: '子网掩码',

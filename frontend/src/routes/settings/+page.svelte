@@ -106,11 +106,11 @@
 					<!-- eslint-disable svelte/no-at-html-tags -->
 					{@html $LL.settings.ping_interval_desc2()}
 				</p>
-				<div class="form-control mt-2 w-full">
+				<div class="mt-2 w-full">
 					<input
 						type="text"
 						placeholder="e.g. '@every 5s' or '@every 1m'"
-						class="input w-full max-w-xs"
+						class="input"
 						bind:value={settingsPrivClone.interval}
 					/>
 				</div>
@@ -118,10 +118,10 @@
 				<p class="mt-2">
 					{$LL.settings.lazy_ping_desc()}
 				</p>
-				<div class="form-control w-fit">
+				<div class="w-fit">
 					<label class="label cursor-pointer gap-2">
 						<input type="checkbox" class="checkbox" bind:checked={settingsPrivClone.lazy_ping} />
-						<span class="label-text">{$LL.settings.lazy_ping_enable()}</span>
+						<span>{$LL.settings.lazy_ping_enable()}</span>
 					</label>
 				</div>
 			</div>
@@ -130,11 +130,11 @@
 			<div class="card-body">
 				<h2 class="card-title">{$LL.settings.website_title_title()}</h2>
 				<p class="my-2">{$LL.settings.website_title_desc()}</p>
-				<div class="form-control w-full">
+				<div class="w-full">
 					<input
 						type="text"
 						placeholder="e.g. 'UpSnap'"
-						class="input w-full max-w-xs"
+						class="input"
 						bind:value={settingsPubClone.website_title}
 					/>
 				</div>
@@ -159,10 +159,10 @@
 						bind:this={faviconPreview}
 					/>
 				</div>
-				<div class="form-control flex w-full max-w-md flex-row gap-4">
+				<div class="flex w-full max-w-md flex-row gap-4">
 					<input
 						type="file"
-						class="file-input w-full max-w-xs"
+						class="file-input"
 						accept=".ico,.png,.svg,.gif,.jpg,.jpeg"
 						bind:this={faviconInputElement}
 					/>

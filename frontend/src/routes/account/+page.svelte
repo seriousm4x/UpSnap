@@ -195,7 +195,7 @@
 				{/each}
 			</div>
 			<h2 class="card-title mt-4 mb-2">{$LL.account.language_title()}</h2>
-			<select class="select select-bordered w-full max-w-xs" bind:value={selectedLanguage}>
+			<select class="select w-full max-w-xs" bind:value={selectedLanguage}>
 				<option value="auto" selected={localStorageLang === null}
 					>🌐 {$LL.account.language_option_auto()}</option
 				>
@@ -219,16 +219,16 @@
 		<h2 class="card-title">{$LL.account.change_password_title()}</h2>
 		<p>{$LL.account.change_password_body()}</p>
 		<form on:submit|preventDefault={changePassword}>
-			<div class="form-control w-full max-w-xs">
+			<div class="w-full max-w-xs">
 				{#if !$pocketbase.authStore.isSuperuser}
 					<label class="label" for="password-old">
-						<span class="label-text">{$LL.account.change_password_label()}</span>
+						<span>{$LL.account.change_password_label()}</span>
 					</label>
 					<input
 						id="password-old"
 						type="password"
 						placeholder={$LL.account.change_password_label()}
-						class="input input-bordered w-full max-w-xs"
+						class="input w-full max-w-xs"
 						minlength="5"
 						maxlength="72"
 						bind:value={newPassword.old}
@@ -236,28 +236,28 @@
 					/>
 				{/if}
 				<label class="label" for="password-new">
-					<span class="label-text">{$LL.account.change_password_new()}</span>
+					<span>{$LL.account.change_password_new()}</span>
 				</label>
 				<input
 					id="password-new"
 					type="password"
 					placeholder={$LL.account.change_password_new()}
-					class="input input-bordered w-full max-w-xs"
+					class="input w-full max-w-xs"
 					minlength={$pocketbase.authStore.isSuperuser ? 10 : 5}
 					maxlength="72"
 					bind:value={newPassword.password}
 					required
 				/>
 			</div>
-			<div class="form-control w-full max-w-xs">
+			<div class="w-full max-w-xs">
 				<label class="label" for="password-confirm">
-					<span class="label-text">{$LL.account.change_password_confirm()}</span>
+					<span>{$LL.account.change_password_confirm()}</span>
 				</label>
 				<input
 					id="password-confirm"
 					type="password"
 					placeholder={$LL.account.change_password_confirm()}
-					class="input input-bordered w-full max-w-xs"
+					class="input w-full max-w-xs"
 					minlength={$pocketbase.authStore.isSuperuser ? 10 : 5}
 					maxlength="72"
 					bind:value={newPassword.confirm}

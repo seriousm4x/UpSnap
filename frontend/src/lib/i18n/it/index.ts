@@ -51,7 +51,6 @@ const it = {
 		modal_confirm_shutdown_desc: 'Sicuro di voler spegnere {device}.',
 		general: 'Generale',
 		general_name: 'Nome',
-		general_name_placeholder: 'Nome dispositivo',
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Maschera di rete',

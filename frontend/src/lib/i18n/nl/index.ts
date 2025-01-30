@@ -51,7 +51,6 @@ const nl = {
 		modal_confirm_shutdown_desc: 'Bevestig om {device} af te sluiten.',
 		general: 'Algemeen',
 		general_name: 'Naam',
-		general_name_placeholder: 'Apparaatnaam',
 		general_ip: 'IP',
 		general_mac: 'Mac',
 		general_netmask: 'Subnetmask',

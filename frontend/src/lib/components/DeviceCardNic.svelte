@@ -157,13 +157,13 @@
 			</span>
 		</button>
 	{:else}
-		<button class="btn btn-warning btn-circle size-12" aria-label="Unknown">
+		<div class="btn btn-warning btn-circle size-12">
 			<span class="loading loading-ring loading-sm"></span>
-		</button>
+		</div>
 	{/if}
 	<div class="grow">
 		<div class="text-lg leading-4 font-bold">{device.ip}</div>
-		<div class="">{device.mac}</div>
+		<div>{device.mac}</div>
 		<div class="flex flex-wrap gap-x-4">
 			{#if device?.expand?.ports}
 				{#each device?.expand?.ports.sort((a, b) => a.number - b.number) as port}
@@ -203,7 +203,7 @@
 		</h3>
 		<p class="py-4">{$LL.device.modal_confirm_wake_desc({ device: device.name })}</p>
 		<div class="modal-action">
-			<form method="dialog" class="flex flex-row flex-wrap gap-2">
+			<form method="dialog">
 				<button class="btn">{$LL.buttons.cancel()}</button>
 				<button class="btn btn-success" on:click={wake}>{$LL.buttons.confirm()}</button>
 			</form>
@@ -218,7 +218,7 @@
 		</h3>
 		<p class="py-4">{$LL.device.modal_confirm_shutdown_desc({ device: device.name })}</p>
 		<div class="modal-action">
-			<form method="dialog" class="flex flex-row flex-wrap gap-2">
+			<form method="dialog">
 				<button class="btn">{$LL.buttons.cancel()}</button>
 				<button class="btn btn-success" on:click={shutdown}>{$LL.buttons.confirm()}</button>
 			</form>

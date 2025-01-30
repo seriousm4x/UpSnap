@@ -98,20 +98,14 @@
 						<figure class="w-16"><img src="/gopher.svg" alt="Gopher" /></figure>
 						<h2 class="card-title">{$LL.welcome.step2_page_title()}</h2>
 					</div>
-					<form class="form-control w-full" on:submit|preventDefault={register}>
+					<form class="w-full" on:submit|preventDefault={register}>
 						<label class="label" for="email">
-							<span class="label-text">{$LL.welcome.step2_label_email()}</span>
+							<span>{$LL.welcome.step2_label_email()}</span>
 						</label>
-						<input
-							id="email"
-							type="email"
-							class="input input-bordered w-full"
-							required
-							bind:value={form.email}
-						/>
+						<input id="email" type="email" class="input w-full" required bind:value={form.email} />
 						<label class="label" for="password">
-							<span class="label-text">{$LL.welcome.step2_label_password()}</span>
-							<span class="label-text-alt">{$LL.welcome.step2_label_min_chars()}</span>
+							<span>{$LL.welcome.step2_label_password()}</span>
+							<span>{$LL.welcome.step2_label_min_chars()}</span>
 						</label>
 						<label class="relative block">
 							<div
@@ -125,7 +119,7 @@
 							<input
 								id="password"
 								type="password"
-								class="input input-bordered w-full"
+								class="input w-full"
 								minlength="10"
 								maxlength="72"
 								required
@@ -134,7 +128,7 @@
 							/>
 						</label>
 						<label class="label" for="passwordConfirm">
-							<span class="label-text">{$LL.welcome.step2_label_password_confirm()}</span>
+							<span>{$LL.welcome.step2_label_password_confirm()}</span>
 						</label>
 						<label class="relative block">
 							<div
@@ -148,7 +142,7 @@
 							<input
 								id="confirm"
 								type="password"
-								class="input input-bordered w-full"
+								class="input w-full"
 								minlength="10"
 								maxlength="72"
 								required

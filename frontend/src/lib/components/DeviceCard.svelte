@@ -236,7 +236,7 @@
 		</h3>
 		<p class="py-4">{$LL.device.modal_confirm_shutdown_desc({ device: device.name })}</p>
 		<div class="modal-action">
-			<form method="dialog" class="flex flex-row flex-wrap gap-2">
+			<form method="dialog">
 				<button class="btn">{$LL.buttons.cancel()}</button>
 				<button class="btn btn-success" on:click={reboot}>{$LL.buttons.confirm()}</button>
 			</form>
