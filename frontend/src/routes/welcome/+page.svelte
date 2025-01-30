@@ -20,7 +20,7 @@
 	};
 
 	onMount(() => {
-		if ($settingsPub && $settingsPub.setup_completed === false && $pocketbase.authStore.isValid) {
+		if ($settingsPub && !$settingsPub.setup_completed && $pocketbase.authStore.isValid) {
 			$pocketbase.authStore.clear();
 		}
 	});
@@ -70,7 +70,7 @@
 <div class="mt-10 flex items-center justify-center">
 	<div class="my-4 flex w-screen max-w-lg flex-col gap-16">
 		<div class="card bg-base-200 shadow-sm">
-			{#if $settingsPub?.setup_completed}
+			{#if stepsCompleted === 0 && $settingsPub?.setup_completed}
 				<figure class="mx-auto w-72 pt-6"><img src="/gopher.svg" alt="Gopher" /></figure>
 				<div class="card-body">
 					<h2 class="card-title">{$LL.welcome.not_expected_title()}</h2>
@@ -176,11 +176,11 @@
 				</div>
 			{/if}
 		</div>
-		{#if !$settingsPub?.setup_completed}
+		{#if $settingsPub && !$settingsPub.setup_completed}
 			<ul class="steps steps-horizontal">
 				<li class="step step-success">{$LL.welcome.progress_step1()}</li>
-				<li class="step" class:step-primary={stepsCompleted > 0}>{$LL.welcome.progress_step2()}</li>
-				<li class="step" class:step-primary={stepsCompleted > 1}>{$LL.welcome.progress_step3()}</li>
+				<li class="step" class:step-success={stepsCompleted > 0}>{$LL.welcome.progress_step2()}</li>
+				<li class="step" class:step-success={stepsCompleted > 1}>{$LL.welcome.progress_step3()}</li>
 			</ul>
 		{/if}
 	</div>

@@ -102,7 +102,7 @@
 	{/if}
 </svelte:head>
 
-{#if authIsValid}
+{#if authIsValid && !page.url.pathname.startsWith('/welcome')}
 	<Navbar />
 {/if}
 
