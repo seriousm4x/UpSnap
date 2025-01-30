@@ -130,18 +130,17 @@
 					value="ip"
 				/>
 			{/if}
-			<div class="tooltip join-item" data-tip={$LL.home.order_tooltip()}>
-				<button
-					class="btn {orderExpanded ? '' : 'rounded-field'}"
-					on:click={() => (orderExpanded = !orderExpanded)}
-				>
-					{#if orderExpanded}
-						<Fa icon={faChevronCircleRight} size="lg" />
-					{:else}
-						<Fa icon={faChevronCircleLeft} size="lg" />
-					{/if}
-				</button>
-			</div>
+			<button
+				class="btn join-item tooltip {orderExpanded ? '' : 'rounded-field'}"
+				data-tip={$LL.home.order_tooltip()}
+				on:click={() => (orderExpanded = !orderExpanded)}
+			>
+				{#if orderExpanded}
+					<Fa icon={faChevronCircleRight} size="lg" />
+				{:else}
+					<Fa icon={faChevronCircleLeft} size="lg" />
+				{/if}
+			</button>
 		</div>
 	</div>
 	{#if orderByGroups}
