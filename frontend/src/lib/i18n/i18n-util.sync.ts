@@ -19,6 +19,8 @@ import ja from './ja';
 import ja_JP from './ja-JP';
 import nl from './nl';
 import nl_NL from './nl-NL';
+import pl from './pl';
+import pl_PL from './pl-PL';
 import pt from './pt';
 import pt_PT from './pt-PT';
 import zh from './zh';
@@ -40,6 +42,8 @@ const localeTranslations = {
 	'ja-JP': ja_JP,
 	nl,
 	'nl-NL': nl_NL,
+	pl,
+	'pl-PL': pl_PL,
 	pt,
 	'pt-PT': pt_PT,
 	zh,
