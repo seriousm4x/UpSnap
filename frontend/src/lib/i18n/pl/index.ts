@@ -1,5 +1,5 @@
 import en from '../en';
-import type { BaseTranslation } from '../i18n-types';
+import type { Translation } from '../i18n-types';
 
 const pl = {
 	...(en as unknown as Translation),
@@ -12,7 +12,8 @@ const pl = {
 		no_devices: 'Brak urządzeń.',
 		add_first_device: 'Utwórz pierwsze urządzenie',
 		grant_permissions:
-			'Poproś administratora o przyznanie uprawnień do istniejących urządzeń lub do tworzenia nowych.'
+			'Poproś administratora o przyznanie uprawnień do istniejących urządzeń lub do tworzenia nowych.',
+		search_placeholder: 'Wyszukiwanie urządzeń'
 	},
 	account: {
 		page_title: 'Konto',
@@ -222,6 +223,6 @@ const pl = {
 		edit_account: 'Edytuj konto',
 		logout: 'Wyloguj'
 	}
-} satisfies BaseTranslation;
+} satisfies Translation;
 
 export default pl;
