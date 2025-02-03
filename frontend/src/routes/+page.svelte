@@ -98,6 +98,7 @@
 			{/if}
 			<button
 				class="btn join-item tooltip {orderExpanded ? '' : 'rounded-field'}"
+				data-tip={$LL.home.order_tooltip()}
 				on:click={() => (orderExpanded = !orderExpanded)}
 			>
 				<Fa icon={orderExpanded ? faChevronCircleRight : faChevronCircleLeft} size="lg" />
