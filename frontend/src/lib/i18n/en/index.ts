@@ -10,7 +10,8 @@ const en = {
 		no_devices: 'No devices here.',
 		add_first_device: 'Add your first device',
 		grant_permissions:
-			'Please ask the admin to grant you permissions to existing devices or to create new ones.'
+			'Please ask the admin to grant you permissions to existing devices or to create new ones.',
+		search_placeholder: 'Search for devices'
 	},
 	account: {
 		page_title: 'Account',

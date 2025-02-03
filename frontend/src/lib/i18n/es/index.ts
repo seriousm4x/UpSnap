@@ -12,7 +12,8 @@ const es = {
 		no_devices: 'Sin dispositivos.',
 		add_first_device: 'Añade tu primer dispositivo',
 		grant_permissions:
-			'Pídale al administrador que le otorgue permisos para los dispositivos existentes o que cree otros nuevos..'
+			'Pídale al administrador que le otorgue permisos para los dispositivos existentes o que cree otros nuevos..',
+		search_placeholder: 'Buscar dispositivos'
 	},
 	account: {
 		page_title: 'Cuenta',

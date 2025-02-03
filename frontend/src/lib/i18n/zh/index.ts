@@ -9,7 +9,8 @@ const zh = {
 		order_tooltip: '排序',
 		no_devices: '还没有任何设备',
 		add_first_device: '添加您的第一台设备',
-		grant_permissions: '请联系管理员授予您相应权限.'
+		grant_permissions: '请联系管理员授予您相应权限.',
+		search_placeholder: '搜索设备'
 	},
 	account: {
 		page_title: '账户信息',

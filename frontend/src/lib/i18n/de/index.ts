@@ -12,7 +12,8 @@ const de = {
 		no_devices: 'Keine Geräte.',
 		add_first_device: 'Füge dein erstes Gerät hinzu',
 		grant_permissions:
-			'Bitte frag den Administrator, dir Berechtigungen für bestehende Geräte zu erteilen oder neue Geräte zu erstellen.'
+			'Bitte frag den Administrator, dir Berechtigungen für bestehende Geräte zu erteilen oder neue Geräte zu erstellen.',
+		search_placeholder: 'Suche nach Geräten'
 	},
 	account: {
 		page_title: 'Account',

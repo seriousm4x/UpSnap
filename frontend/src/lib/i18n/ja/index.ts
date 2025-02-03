@@ -10,7 +10,8 @@ const ja = {
 		no_devices: 'デバイスがありません',
 		add_first_device: '最初のデバイスを追加してください',
 		grant_permissions:
-			'既存のデバイスへの権限を付与するか、新しいデバイスを作成するために管理者に依頼してください。'
+			'既存のデバイスへの権限を付与するか、新しいデバイスを作成するために管理者に依頼してください。',
+		search_placeholder: 'デバイスの検索'
 	},
 	account: {
 		page_title: 'アカウント',

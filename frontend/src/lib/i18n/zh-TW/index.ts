@@ -11,7 +11,8 @@ const zh_TW = {
 		order_tooltip: '排序',
 		no_devices: '尚無設備',
 		add_first_device: '添加你的第一台設備',
-		grant_permissions: '請聯絡系統管理員授權現有設備或創建新設備的權限'
+		grant_permissions: '請聯絡系統管理員授權現有設備或創建新設備的權限',
+		search_placeholder: '搜尋設備'
 	},
 	account: {
 		page_title: '帳號資訊',

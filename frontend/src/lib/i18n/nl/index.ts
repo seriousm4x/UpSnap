@@ -12,7 +12,8 @@ const nl = {
 		no_devices: 'Geen apparaten gevonden.',
 		add_first_device: 'Voeg je eerste apparaat toe',
 		grant_permissions:
-			'Vraag de admin om je toestemming te geven voor bestaande apparaten of om nieuwe te creëren.'
+			'Vraag de admin om je toestemming te geven voor bestaande apparaten of om nieuwe te creëren.',
+		search_placeholder: 'Apparaten zoeken'
 	},
 	account: {
 		page_title: 'Account',

@@ -12,7 +12,8 @@ const fr = {
 		no_devices: 'Aucun appareil ici.',
 		add_first_device: 'Ajoutez votre premier appareil',
 		grant_permissions:
-			'Veuillez demander à votre administrateur les permissions aux appareils existants ou créez-en de nouveaux.'
+			'Veuillez demander à votre administrateur les permissions aux appareils existants ou créez-en de nouveaux.',
+		search_placeholder: 'Recherche de dispositifs'
 	},
 	account: {
 		page_title: 'Compte',

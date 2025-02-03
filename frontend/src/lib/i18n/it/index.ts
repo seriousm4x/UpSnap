@@ -10,7 +10,8 @@ const it = {
 		no_devices: 'Nessun dispositivo qui.',
 		add_first_device: 'Aggiungi il tuo primo dispositivo',
 		grant_permissions:
-			"Per favore chiedi all' amministratore di darti i permessi necessari per aggiungere un nuovo dispositivo."
+			"Per favore chiedi all' amministratore di darti i permessi necessari per aggiungere un nuovo dispositivo.",
+		search_placeholder: 'Ricerca di dispositivi'
 	},
 	account: {
 		page_title: 'Account',

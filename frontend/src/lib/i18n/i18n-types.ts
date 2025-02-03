@@ -68,6 +68,10 @@ type RootTranslation = {
 		 * P​l​e​a​s​e​ ​a​s​k​ ​t​h​e​ ​a​d​m​i​n​ ​t​o​ ​g​r​a​n​t​ ​y​o​u​ ​p​e​r​m​i​s​s​i​o​n​s​ ​t​o​ ​e​x​i​s​t​i​n​g​ ​d​e​v​i​c​e​s​ ​o​r​ ​t​o​ ​c​r​e​a​t​e​ ​n​e​w​ ​o​n​e​s​.
 		 */
 		grant_permissions: string;
+		/**
+		 * S​e​a​r​c​h​ ​f​o​r​ ​d​e​v​i​c​e​s
+		 */
+		search_placeholder: string;
 	};
 	account: {
 		/**
@@ -863,6 +867,10 @@ export type TranslationFunctions = {
 		 * Please ask the admin to grant you permissions to existing devices or to create new ones.
 		 */
 		grant_permissions: () => LocalizedString;
+		/**
+		 * Search for devices
+		 */
+		search_placeholder: () => LocalizedString;
 	};
 	account: {
 		/**
