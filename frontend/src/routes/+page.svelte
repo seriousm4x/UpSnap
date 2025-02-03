@@ -68,12 +68,12 @@
 {#if loading}
 	<PageLoading />
 {:else if devices.length > 0}
-	<div class="mb-4 flex justify-between">
-		<label class="input">
+	<div class="mb-4 flex flex-col justify-between gap-4 md:flex-row">
+		<label class="input max-md:w-full">
 			<Fa icon={faMagnifyingGlass} size="sm" />
 			<input type="search" placeholder={$LL.home.search_placeholder()} bind:value={searchQuery} />
 		</label>
-		<div class="join">
+		<div class="join ms-auto">
 			{#if orderExpanded}
 				<button class="btn join-item" on:click={() => (orderByGroups = !orderByGroups)}>
 					{$LL.home.order_groups()}
