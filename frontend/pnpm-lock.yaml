@@ -58,8 +58,8 @@ importers:
         specifier: ^5.0.3
         version: 5.0.3(svelte@5.19.6)(vite@6.0.11(jiti@2.4.2)(lightningcss@1.29.1))
       daisyui:
-        specifier: 5.0.0-beta.5
-        version: 5.0.0-beta.5
+        specifier: 5.0.0-beta.6
+        version: 5.0.0-beta.6
       eslint:
         specifier: ^9.19.0
         version: 9.19.0(jiti@2.4.2)
@@ -761,8 +761,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  daisyui@5.0.0-beta.5:
-    resolution: {integrity: sha512-TTrOdPKf+ohXgPpOEvJ5f8iTWMwi5Fk/aMb66GxKZ1UUlujnVEOvQ4FTDQtoqp9pDGQ8jw0UwnUmmOTQ+kJynA==}
+  daisyui@5.0.0-beta.6:
+    resolution: {integrity: sha512-gwXHv6MApRBrvUayzg83vS6bfZ+y7/1VGLu0a8/cEAMviS4rXLCd4AndEdlVxhq+25wkAp0CZRkNQ7O4wIoFnQ==}
 
   data-view-buffer@1.0.2:
     resolution: {integrity: sha512-EmKO5V3OLXh1rtK2wgXRansaK1/mtVdTUEiEI0W8RkvgT05kfxaH29PliLnpLP73yYO6142Q72QNa8Wx/A5CqQ==}
@@ -1775,9 +1775,6 @@ packages:
     resolution: {integrity: sha512-6ydekB3qyqUal+UhfMjmVOjRGtxysR8vuiMhi2nwuBtPJWnctVlsGspjVFB05qmR+TXI1emuqtZt81c0XiFleA==}
     engines: {node: '>=18'}
 
-  tailwindcss@4.0.1:
-    resolution: {integrity: sha512-UK5Biiit/e+r3i0O223bisoS5+y7ZT1PM8Ojn0MxRHzXN1VPZ2KY6Lo6fhu1dOfCfyUAlK7Lt6wSxowRabATBw==}
-
   tailwindcss@4.0.3:
     resolution: {integrity: sha512-ImmZF0Lon5RrQpsEAKGxRvHwCvMgSC4XVlFRqmbzTEDb/3wvin9zfEZrMwgsa3yqBbPqahYcVI6lulM2S7IZAA==}
 
@@ -2508,7 +2505,7 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  daisyui@5.0.0-beta.5: {}
+  daisyui@5.0.0-beta.6: {}
 
   data-view-buffer@1.0.2:
     dependencies:
@@ -3592,8 +3589,6 @@ snapshots:
       locate-character: 3.0.0
       magic-string: 0.30.17
       zimmerframe: 1.1.2
-
-  tailwindcss@4.0.1: {}
 
   tailwindcss@4.0.3: {}
 
