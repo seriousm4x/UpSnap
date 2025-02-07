@@ -58,8 +58,8 @@ importers:
         specifier: ^5.0.3
         version: 5.0.3(svelte@5.19.8)(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1))
       daisyui:
-        specifier: 5.0.0-beta.6
-        version: 5.0.0-beta.6
+        specifier: 5.0.0-beta.7
+        version: 5.0.0-beta.7
       eslint:
         specifier: ^9.19.0
         version: 9.19.0(jiti@2.4.2)
@@ -761,8 +761,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  daisyui@5.0.0-beta.6:
-    resolution: {integrity: sha512-gwXHv6MApRBrvUayzg83vS6bfZ+y7/1VGLu0a8/cEAMviS4rXLCd4AndEdlVxhq+25wkAp0CZRkNQ7O4wIoFnQ==}
+  daisyui@5.0.0-beta.7:
+    resolution: {integrity: sha512-AW158KxukhyWwU9HTlfNkjAa9nPcfUZilITK7Taa3pqwVH/Suq31+1FHVcw7zLVRRw5jBUKrJ76xBQJOcRiKgQ==}
 
   data-view-buffer@1.0.2:
     resolution: {integrity: sha512-EmKO5V3OLXh1rtK2wgXRansaK1/mtVdTUEiEI0W8RkvgT05kfxaH29PliLnpLP73yYO6142Q72QNa8Wx/A5CqQ==}
@@ -2505,7 +2505,7 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  daisyui@5.0.0-beta.6: {}
+  daisyui@5.0.0-beta.7: {}
 
   data-view-buffer@1.0.2:
     dependencies:
