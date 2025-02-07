@@ -141,7 +141,7 @@ const de = {
 		ping_interval_desc1:
 			'Legt den Intervall fest, in dem Geräte gepingt werden. Leer lassen um den Standardwert von <span class="badge">@every 3s</span> zu verwenden.',
 		ping_interval_desc2:
-			'Lerne mehr über die korrekte Cron Syntax auf <a class="link" href="https://de.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> oder sieh dir die <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">Paketdokumentation</a> an.',
+			'Lerne mehr über die korrekte Cron Syntax auf <a class="link" href="https://de.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> oder sieh dir die <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">Paketdokumentation</a> an.',
 		lazy_ping_title: 'Lazy Ping',
 		lazy_ping_desc:
 			'Wenn Lazy Ping aktiviert ist, pingt UpSnap die Geräte nur an, wenn ein aktiver Benutzer die Website besucht. Wenn es ausgeschaltet ist, pingt UpSnap die Geräte immer an.',
@@ -150,7 +150,8 @@ const de = {
 		website_title_desc: 'Setzt den Seiten- und den Tabtitel.',
 		icon_title: 'Icon',
 		icon_desc: 'Eigenes Favicon nutzen. Unterstützte Dateitypen sind:',
-		upsnap_version: 'UpSnap Version'
+		upsnap_version: 'UpSnap Version',
+		invalid_cron: 'Ungültige cron Syntax'
 	},
 	users: {
 		page_title: 'Benutzer',

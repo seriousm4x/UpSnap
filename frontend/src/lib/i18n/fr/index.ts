@@ -142,7 +142,7 @@ const fr = {
 		ping_interval_desc1:
 			'Définit l\'intervalle dans lequel les appareils reçoivent une requête ping. Laissez vide pour utiliser la valeur par défaut de <span class="badge">@every 3s</span>.',
 		ping_interval_desc2:
-			'Pour écrire une syntaxe correcte pour l\'utilitaire cron, consultez <a class="link" href="https://fr.wikipedia.org/wiki/Cron" target="_blank">Wikipédia</a> ou référez-vous à la <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">documentation du paquet</a>.',
+			'Pour écrire une syntaxe correcte pour l\'utilitaire cron, consultez <a class="link" href="https://fr.wikipedia.org/wiki/Cron" target="_blank">Wikipédia</a> ou référez-vous à la <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">documentation du paquet</a>.',
 		lazy_ping_title: 'Ping fainéant',
 		lazy_ping_desc:
 			"Lorsque le mode ping fainéant est activé, UpSnap ne va effectuer des requêtes de ping sur les appareils que lorsqu'un utilisateur actif visite le site. Si vous désactivez cette fonction, UpSnap exécutera toujours ces requêtes.",
@@ -152,7 +152,8 @@ const fr = {
 			"Définit le titre du site ainsi que le texte affiché dans l'onglet du navigateur.",
 		icon_title: 'Icône',
 		icon_desc: 'Définit un favicon personnalisé. Les types de fichier compatibles sont :',
-		upsnap_version: 'Version de UpSnap '
+		upsnap_version: 'Version de UpSnap ',
+		invalid_cron: 'Syntaxe cron invalide'
 	},
 	users: {
 		page_title: 'Utilisateurs',

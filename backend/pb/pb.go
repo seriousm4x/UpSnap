@@ -11,6 +11,7 @@ import (
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
+	"github.com/robfig/cron/v3"
 	"github.com/seriousm4x/upsnap/cronjobs"
 	"github.com/seriousm4x/upsnap/logger"
 	_ "github.com/seriousm4x/upsnap/migrations"
@@ -212,12 +213,20 @@ func importSettings(app *pocketbase.PocketBase) error {
 	// 1st: env var
 	// 2nd: database entry
 	// 3rd: default values
-	interval := "@every 3s"
+	defaultInterval := "*/3 * * * * *"
+	interval := defaultInterval
 	if settingsPrivate.GetString("interval") != "" {
 		interval = settingsPrivate.GetString("interval")
 	}
 	if os.Getenv("UPSNAP_INTERVAL") != "" {
 		interval = os.Getenv("UPSNAP_INTERVAL")
+	}
+
+	// validate interval before saving
+	p := cron.NewParser(cron.Second | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)
+	if _, err := p.Parse(interval); err != nil {
+		interval = defaultInterval
+		logger.Warning.Println(errors.New("Ping interval is not valid."))
 	}
 
 	settingsPrivate.Set("interval", interval)

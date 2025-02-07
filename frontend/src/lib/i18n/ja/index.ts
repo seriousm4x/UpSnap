@@ -139,7 +139,7 @@ const ja = {
 		ping_interval_desc1:
 			'デバイスが ping される間隔を設定します。空白の場合、デフォルト値 <span class="badge">@every 3s</span> が使用されます。',
 		ping_interval_desc2:
-			'cron の正しい構文については、<a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> または <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">パッケージドキュメント</a> を参照してください。',
+			'cron の正しい構文については、<a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> または <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">パッケージドキュメント</a> を参照してください。',
 		lazy_ping_title: 'Lazy ping',
 		lazy_ping_desc:
 			'Lazy ping をオンにすると、UpSnap はアクティブなユーザーがウェブサイトを訪れている場合にのみデバイスを ping します。オフの場合、UpSnap は常にデバイスを ping します。',
@@ -148,7 +148,8 @@ const ja = {
 		website_title_desc: 'ウェブサイトおよびブラウザタブのタイトルを設定します。',
 		icon_title: 'アイコン',
 		icon_desc: 'カスタムファビコンを設定します。サポートされているファイルタイプ:',
-		upsnap_version: 'UpSnap バージョン'
+		upsnap_version: 'UpSnap バージョン',
+		invalid_cron: '無効なcron構文'
 	},
 	users: {
 		page_title: 'ユーザー',

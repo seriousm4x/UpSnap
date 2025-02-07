@@ -141,7 +141,7 @@ const it = {
 		ping_interval_desc1:
 			'Imposta l\'intervallo nel quale i dispositivi vengono testati con ping. Lasciare in bianco per lasciare il valore predefinito <span class="badge">@every 3s</span>.',
 		ping_interval_desc2:
-			'Per ulteriori dettagli circa la sintassi corretta di cron, fare riferimento a <a class="link" href="https://it.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> oppure a <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">questa documentazione</a> (in inglese).',
+			'Per ulteriori dettagli circa la sintassi corretta di cron, fare riferimento a <a class="link" href="https://it.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> oppure a <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">questa documentazione</a> (in inglese).',
 		lazy_ping_title: 'Ping pigro',
 		lazy_ping_desc:
 			"Quando il ping pigro e' abilitato, UpSnap effettuera' i ping verso di dispositivi solamente quando un utente effettivamente visita il sito. Se e' spento, allora UpSnap continuera' con il ping sempre.",
@@ -150,7 +150,8 @@ const it = {
 		website_title_desc: 'Imposta il nome del sito.',
 		icon_title: 'Icona',
 		icon_desc: 'Imposta una icona personalizzata. I tipi di file supportati sono:',
-		upsnap_version: 'Versione UpSnap'
+		upsnap_version: 'Versione UpSnap',
+		invalid_cron: 'Sintassi cron non valida'
 	},
 	users: {
 		page_title: 'Utenti',

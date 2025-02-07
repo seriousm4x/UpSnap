@@ -141,7 +141,7 @@ const nl = {
 		ping_interval_desc1:
 			'Stelt de interval in waarin de apparaten worden gepingt. Laat leeg om de standaardwaarde van <span class="badge">@every 3s</span> te gebruiken.',
 		ping_interval_desc2:
-			'Leer meer over de juiste syntax voor cron op <a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> of raadpleeg de <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">pakketdocumentatie</a>.',
+			'Leer meer over de juiste syntax voor cron op <a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> of raadpleeg de <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">pakketdocumentatie</a>.',
 		lazy_ping_title: 'Lazy ping',
 		lazy_ping_desc:
 			'Wanneer lazy ping is ingeschakeld, pingt UpSnap alleen apparaten als er een actieve gebruiker de website bezoekt. Als het is uitgeschakeld, pingt UpSnap altijd apparaten.',
@@ -150,7 +150,8 @@ const nl = {
 		website_title_desc: 'Stelt de titel van de website en in het browsertabblad in.',
 		icon_title: 'Icoon',
 		icon_desc: 'Stel een aangepast favicon in. Ondersteunde bestandstypen zijn:',
-		upsnap_version: 'UpSnap versie'
+		upsnap_version: 'UpSnap versie',
+		invalid_cron: 'Ongeldige cron syntaxis'
 	},
 	users: {
 		page_title: 'Gebruikers',

@@ -133,7 +133,7 @@ const zh = {
 		ping_interval_title: 'Ping 间隔',
 		ping_interval_desc1: '设置 ping 的间隔。为空时使用默认值 <span class="badge">@every 3s</span>.',
 		ping_interval_desc2:
-			'有关 cron 的更多信息, 请访问<a class="link" href="https://zh.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> 或参阅 <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">cron 文档</a>.',
+			'有关 cron 的更多信息, 请访问<a class="link" href="https://zh.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> 或参阅 <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">cron 文档</a>.',
 		lazy_ping_title: 'Lazy ping',
 		lazy_ping_desc: '当开关打开时, UpSnap 只会在用户访问网站期间进行 ping 操作.',
 		lazy_ping_enable: '启用',
@@ -141,7 +141,8 @@ const zh = {
 		website_title_desc: '设置在浏览器选项卡和网站中显示标题',
 		icon_title: '图标',
 		icon_desc: '设置一个自定义图标. 支持的文件类型:',
-		upsnap_version: 'UpSnap 版本'
+		upsnap_version: 'UpSnap 版本',
+		invalid_cron: '无效的 cron 语法'
 	},
 	users: {
 		page_title: '用户',

@@ -140,7 +140,7 @@ const pt = {
 		ping_interval_desc1:
 			'Define o intervalo em que o ping é executado. Deixe em branco para usar o valor por defeito de <span class="badge">@every 3s</span>.',
 		ping_interval_desc2:
-			'Poderá ver a sintaxe correta para cron em <a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> ou em <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">documentação cron</a>.',
+			'Poderá ver a sintaxe correta para cron em <a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> ou em <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">documentação cron</a>.',
 		lazy_ping_title: 'Lazy ping',
 		lazy_ping_desc:
 			'Quando o lazy ping está activo, o UpSnap irá apenas executar o ping se existir um utilizador ativo no website. Se desligado, o UpSnap irá executar sempre o ping.',
@@ -149,7 +149,8 @@ const pt = {
 		website_title_desc: 'Define o título do website.',
 		icon_title: 'Ícone',
 		icon_desc: 'Define um favicon personalizado. Tipos de ficheiros suportados são:',
-		upsnap_version: 'Versão UpSnap'
+		upsnap_version: 'Versão UpSnap',
+		invalid_cron: 'Sintaxe inválida do cron'
 	},
 	users: {
 		page_title: 'Utilizadores',

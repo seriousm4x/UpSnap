@@ -138,7 +138,7 @@ const en = {
 		ping_interval_desc1:
 			'Sets the interval in which the devices are pinged. Leave blank to use default value of <span class="badge">@every 3s</span>.',
 		ping_interval_desc2:
-			'Learn more about the correct syntax for cron on <a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> or refer to the <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">package documentation</a>.',
+			'Learn more about the correct syntax for cron on <a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> or refer to the <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">package documentation</a>.',
 		lazy_ping_title: 'Lazy ping',
 		lazy_ping_desc:
 			"When lazy ping is turned on, UpSnap will only ping devices if there is an active user visiting the website. If it's turned off, UpSnap will always ping devices.",
@@ -147,7 +147,8 @@ const en = {
 		website_title_desc: 'Sets the title of the website and in the browser tab.',
 		icon_title: 'Icon',
 		icon_desc: 'Set a custom favicon. Supported file types are:',
-		upsnap_version: 'UpSnap version'
+		upsnap_version: 'UpSnap version',
+		invalid_cron: 'Invalid cron syntax'
 	},
 	users: {
 		page_title: 'Users',

@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import LL, { locale } from '$lib/i18n/i18n-svelte';
+	import { parseCron } from '$lib/helpers/cron';
+	import LL from '$lib/i18n/i18n-svelte';
+	import { dateFnsLocale } from '$lib/stores/locale';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
-	import type { Device } from '$lib/types/device';
+	import { type Device } from '$lib/types/device';
 	import {
 		faBed,
 		faCircleArrowDown,
@@ -11,20 +13,7 @@
 		faPen,
 		faRotateLeft
 	} from '@fortawesome/free-solid-svg-icons';
-	import cronParser from 'cron-parser';
-	import type { Locale } from 'date-fns';
-	import { formatDistance, formatRelative, parseISO } from 'date-fns';
-	import { de } from 'date-fns/locale/de';
-	import { enUS } from 'date-fns/locale/en-US';
-	import { es } from 'date-fns/locale/es';
-	import { fr } from 'date-fns/locale/fr';
-	import { it } from 'date-fns/locale/it';
-	import { ja } from 'date-fns/locale/ja';
-	import { nl } from 'date-fns/locale/nl';
-	import { pl } from 'date-fns/locale/pl';
-	import { pt } from 'date-fns/locale/pt';
-	import { zhCN } from 'date-fns/locale/zh-CN';
-	import { zhTW } from 'date-fns/locale/zh-TW';
+	import { formatDistance, parseISO } from 'date-fns';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 	import { scale } from 'svelte/transition';
@@ -71,62 +60,6 @@
 		}, 1000);
 	}
 
-	// dynamically import locales
-	// it's ugly but the only working solution i found in ~ 3 hours
-	var dateFnsLocale: Locale;
-	$: if ($locale !== undefined) {
-		(async () => {
-			switch ($locale) {
-				case 'de':
-				case 'de-DE':
-					dateFnsLocale = de;
-					break;
-				case 'en':
-				case 'en-US':
-					dateFnsLocale = enUS;
-					break;
-				case 'fr':
-				case 'fr-FR':
-					dateFnsLocale = fr;
-					break;
-				case 'it':
-				case 'it-IT':
-					dateFnsLocale = it;
-					break;
-				case 'ja':
-				case 'ja-JP':
-					dateFnsLocale = ja;
-					break;
-				case 'es':
-				case 'es-ES':
-					dateFnsLocale = es;
-					break;
-				case 'nl':
-				case 'nl-NL':
-					dateFnsLocale = nl;
-					break;
-				case 'pl':
-				case 'pl-PL':
-					dateFnsLocale = pl;
-					break;
-				case 'pt':
-				case 'pt-PT':
-					dateFnsLocale = pt;
-					break;
-				case 'zh':
-				case 'zh-CN':
-					dateFnsLocale = zhCN;
-					break;
-				case 'zh-TW':
-					dateFnsLocale = zhTW;
-					break;
-				default:
-					dateFnsLocale = enUS;
-					break;
-			}
-		})();
-	}
-
 	function sleep() {
 		fetch(`${backendUrl}api/upsnap/sleep/${device.id}`, {
 			headers: {
@@ -144,13 +77,6 @@
 			}
 		}).catch((err) => {
 			toast.error(err.message);
-		});
-	}
-
-	function getNextCronRelativeTime(expression: string, now: number) {
-		const cron = cronParser.parseExpression(expression);
-		return formatRelative(cron.next().toISOString(), now, {
-			locale: dateFnsLocale
 		});
 	}
 
@@ -183,17 +109,14 @@
 				{#if device.wake_cron_enabled}
 					<div class="tooltip" data-tip={$LL.device.card_tooltip_wake_cron()}>
 						<span class="badge badge-success gap-1 p-3"
-							><Fa icon={faCircleArrowUp} />{getNextCronRelativeTime(device.wake_cron, now)}</span
+							><Fa icon={faCircleArrowUp} />{parseCron(device.wake_cron, now)}</span
 						>
 					</div>
 				{/if}
 				{#if device.shutdown_cron_enabled}
 					<div class="tooltip" data-tip={$LL.device.card_tooltip_shutdown_cron()}>
 						<span class="badge badge-error gap-1 p-3"
-							><Fa icon={faCircleArrowDown} />{getNextCronRelativeTime(
-								device.shutdown_cron,
-								now
-							)}</span
+							><Fa icon={faCircleArrowDown} />{parseCron(device.shutdown_cron, now)}</span
 						>
 					</div>
 				{/if}
@@ -209,13 +132,11 @@
 				class="tooltip"
 				data-tip="{$LL.device.card_tooltip_last_status_change()}: {device.updated}"
 			>
-				{#if dateFnsLocale !== undefined}
-					{formatDistance(parseISO(device.updated), now, {
-						includeSeconds: true,
-						addSuffix: true,
-						locale: dateFnsLocale
-					})}
-				{/if}
+				{formatDistance(parseISO(device.updated), now, {
+					includeSeconds: true,
+					addSuffix: true,
+					locale: $dateFnsLocale
+				})}
 			</span>
 			{#if moreButtons.filter((btn) => btn.requires).length > 0}
 				<div class="ms-auto flex flex-row flex-wrap gap-1">

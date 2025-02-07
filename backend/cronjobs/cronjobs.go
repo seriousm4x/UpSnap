@@ -11,8 +11,8 @@ import (
 var (
 	PingRunning         = false
 	WakeShutdownRunning = false
-	CronPing            = cron.New()
-	CronWakeShutdown    = cron.New()
+	CronPing            = cron.New(cron.WithSeconds())
+	CronWakeShutdown    = cron.New(cron.WithSeconds())
 )
 
 func SetPingJobs(app *pocketbase.PocketBase) {
@@ -113,13 +113,16 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 
 		if wake_cron_enabled && wake_cron != "" {
 			_, err := CronWakeShutdown.AddFunc(wake_cron, func() {
-				isOnline := networking.PingDevice(dev)
-				if isOnline {
-					return
-				}
 				d, err := app.FindRecordById("devices", dev.Id)
 				if err != nil {
 					logger.Error.Println(err)
+					return
+				}
+				if d.GetString("status") == "pending" {
+					return
+				}
+				isOnline := networking.PingDevice(dev)
+				if isOnline {
 					return
 				}
 				d.Set("status", "pending")
@@ -144,13 +147,16 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 
 		if shutdown_cron_enabled && shutdown_cron != "" {
 			_, err := CronWakeShutdown.AddFunc(shutdown_cron, func() {
-				isOnline := networking.PingDevice(dev)
-				if !isOnline {
-					return
-				}
 				d, err := app.FindRecordById("devices", dev.Id)
 				if err != nil {
 					logger.Error.Println(err)
+					return
+				}
+				if d.GetString("status") == "pending" {
+					return
+				}
+				isOnline := networking.PingDevice(dev)
+				if !isOnline {
 					return
 				}
 				status := d.GetString("status")
@@ -187,8 +193,7 @@ func StartWakeShutdown() {
 func StopWakeShutdown() {
 	if WakeShutdownRunning {
 		logger.Info.Println("Stopping wake/shutdown cronjob")
-		ctx := CronWakeShutdown.Stop()
-		<-ctx.Done()
+		CronWakeShutdown.Stop()
 	}
 	WakeShutdownRunning = false
 }
@@ -201,8 +206,7 @@ func StartPing() {
 func StopPing() {
 	if PingRunning {
 		logger.Info.Println("Stopping wake/shutdown cronjob")
-		ctx := CronPing.Stop()
-		<-ctx.Done()
+		CronPing.Stop()
 	}
 	PingRunning = false
 }

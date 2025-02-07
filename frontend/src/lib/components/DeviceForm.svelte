@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
+	import { cronRegex, parseCron } from '$lib/helpers/cron';
 	import LL from '$lib/i18n/i18n-svelte';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Group, Port } from '$lib/types/device';
 	import { faSave, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
+	import cronParser from 'cron-parser';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
@@ -20,6 +22,24 @@
 	});
 
 	async function save() {
+		// validate crons
+		if (
+			device.wake_cron_enabled &&
+			(!cronRegex.test(device.wake_cron) ||
+				Object.keys(cronParser.parseString(device.wake_cron).errors).length > 0)
+		) {
+			toast.error($LL.settings.invalid_cron());
+			throw new Error('wake_cron not valid');
+		}
+		if (
+			device.shutdown_cron_enabled &&
+			(!cronRegex.test(device.shutdown_cron) ||
+				Object.keys(cronParser.parseString(device.shutdown_cron).errors).length > 0)
+		) {
+			toast.error($LL.settings.invalid_cron());
+			throw new Error('shutdown_cron not valid');
+		}
+
 		// create/update all ports
 		let portIds: string[] = [];
 		await Promise.all(
@@ -183,7 +203,7 @@
 			<h2 class="card-title">{$LL.device.general()}</h2>
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
 				<fieldset class="fieldset">
-					<label class="floating-label">
+					<label class="floating-label mt-2">
 						<span>{$LL.device.general_name()} <span class="text-error">*</span></span>
 						<input
 							type="text"
@@ -195,7 +215,7 @@
 					</label>
 				</fieldset>
 				<fieldset class="fieldset">
-					<label class="floating-label">
+					<label class="floating-label mt-2">
 						<span>{$LL.device.general_ip()} <span class="text-error">*</span></span>
 						<input
 							type="text"
@@ -207,7 +227,7 @@
 					</label>
 				</fieldset>
 				<fieldset class="fieldset">
-					<label class="floating-label">
+					<label class="floating-label mt-2">
 						<span>{$LL.device.general_mac()} <span class="text-error">*</span></span>
 						<input
 							type="text"
@@ -219,7 +239,7 @@
 					</label>
 				</fieldset>
 				<fieldset class="fieldset">
-					<label class="floating-label">
+					<label class="floating-label mt-2">
 						<span>{$LL.device.general_netmask()} <span class="text-error">*</span></span>
 						<input
 							type="text"
@@ -231,7 +251,7 @@
 					</label>
 				</fieldset>
 				<fieldset class="fieldset">
-					<label class="floating-label">
+					<label class="floating-label mt-2">
 						<span>{$LL.device.general_description()}</span>
 						<input
 							type="text"
@@ -248,7 +268,7 @@
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.ports()}</h2>
-			<p class="my-2">{$LL.device.ports_desc()}</p>
+			<p>{$LL.device.ports_desc()}</p>
 			<div class="w-full">
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 					<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
@@ -267,12 +287,12 @@
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.link()}</h2>
-			<p class="my-2">
+			<p>
 				{$LL.device.link_desc()}
 			</p>
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 				<fieldset class="fieldset">
-					<label class="floating-label">
+					<label class="floating-label mt-2">
 						<span>{$LL.device.link()}</span>
 						<input
 							type="url"
@@ -283,7 +303,7 @@
 					</label>
 				</fieldset>
 				<fieldset class="fieldset">
-					<label class="floating-label">
+					<label class="floating-label mt-2">
 						<span>{$LL.device.link_open()}</span>
 						<select class="select" bind:value={device.link_open}>
 							<option value="">{$LL.device.link_open_no()}</option>
@@ -298,12 +318,12 @@
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.ping()}</h2>
-			<p class="my-2">
+			<p>
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.device.ping_desc()}
 			</p>
 			<fieldset class="fieldset">
-				<label class="floating-label">
+				<label class="floating-label mt-2">
 					<span>{$LL.device.ping_cmd()}</span>
 					<input
 						type="text"
@@ -318,13 +338,13 @@
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.wake()}</h2>
-			<p class="my-2">
+			<p>
 				{$LL.device.wake_desc()}
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.settings.ping_interval_desc2()}
 			</p>
 			<fieldset class="fieldset">
-				<label class="floating-label">
+				<label class="floating-label mt-2">
 					<span>{$LL.device.wake_cmd()}</span>
 					<input
 						type="text"
@@ -345,7 +365,7 @@
 						/>
 						{$LL.device.wake_cron_enable()}
 					</label>
-					<label class="floating-label mt-4">
+					<label class="floating-label mt-2">
 						<span
 							>{$LL.device.wake_cron()}
 							{#if device.wake_cron_enabled}
@@ -360,6 +380,9 @@
 							disabled={!device.wake_cron_enabled}
 							required={device.wake_cron_enabled}
 						/>
+						{#if device.wake_cron_enabled}
+							<p class="fieldset-label">{parseCron(device.wake_cron, Date.now())}</p>
+						{/if}
 					</label>
 				</fieldset>
 				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
@@ -380,7 +403,7 @@
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">Sleep-On-LAN</h2>
-			<p class="mt-2">
+			<p>
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.device.sol_desc1()}
 			</p>
@@ -402,7 +425,7 @@
 						/>
 						{$LL.device.sol_enable()}
 					</label>
-					<label class="floating-label mt-4">
+					<label class="floating-label mt-2">
 						<span
 							>{$LL.device.sol_port()}
 							{#if device.sol_enabled}
@@ -428,7 +451,7 @@
 							<input type="checkbox" bind:checked={device.sol_auth} class="toggle toggle-success" />
 							{$LL.device.sol_authorization()}
 						</label>
-						<label class="floating-label mt-4">
+						<label class="floating-label mt-2">
 							<span
 								>{$LL.device.sol_user()}
 								{#if device.sol_auth}
@@ -444,7 +467,7 @@
 								required={device.sol_auth}
 							/>
 						</label>
-						<label class="floating-label">
+						<label class="floating-label mt-2">
 							<span
 								>{$LL.device.sol_password()}
 								{#if device.sol_auth}
@@ -469,12 +492,12 @@
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.shutdown()}</h2>
-			<p class="my-2">
+			<p>
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.device.shutdown_desc()}
 			</p>
 			<fieldset class="fieldset">
-				<label class="floating-label">
+				<label class="floating-label mt-2">
 					<span>{$LL.device.shutdown_cmd()}</span>
 					<input
 						type="text"
@@ -484,7 +507,7 @@
 					/>
 				</label>
 			</fieldset>
-			<p class="my-2 font-bold">{$LL.device.shutdown_examples()}</p>
+			<p class="font-bold">{$LL.device.shutdown_examples()}</p>
 			<div class="mockup-code max-w-fit min-w-0 text-sm">
 				<pre data-prefix="#" class="italic"><code>{$LL.device.shutdown_examples_windows()}</code
 					></pre>
@@ -499,7 +522,7 @@
 						>sshpass -p password ssh -o "StrictHostKeyChecking=no" user@192.168.1.13 "sudo poweroff"</code
 					></pre>
 			</div>
-			<p class="mt-4">
+			<p>
 				{$LL.device.shutdown_cron_desc()}
 			</p>
 			<div class="flex flex-row flex-wrap gap-4">
@@ -513,7 +536,7 @@
 						/>
 						{$LL.device.shutdown_cron_enable()}
 					</label>
-					<label class="floating-label mt-4">
+					<label class="floating-label mt-2">
 						<span
 							>{$LL.device.shutdown_cron()}
 							{#if device.shutdown_cron_enabled}
@@ -523,11 +546,14 @@
 						<input
 							type="text"
 							placeholder={$LL.device.shutdown_cron()}
-							class="input"
+							class="input validator"
 							bind:value={device.shutdown_cron}
 							disabled={!device.shutdown_cron_enabled}
 							required={device.shutdown_cron_enabled}
 						/>
+						{#if device.shutdown_cron_enabled}
+							<p class="fieldset-label">{parseCron(device.shutdown_cron, Date.now())}</p>
+						{/if}
 					</label>
 				</fieldset>
 				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
@@ -548,12 +574,12 @@
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.password()}</h2>
-			<p class="my-2">
+			<p>
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html $LL.device.password_desc()}
 			</p>
 			<fieldset class="fieldset">
-				<label class="floating-label">
+				<label class="floating-label mt-2">
 					<span>{$LL.device.password()}</span>
 					<input
 						type="text"
@@ -569,7 +595,7 @@
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{$LL.device.groups()}</h2>
-			<p class="my-2">
+			<p>
 				{$LL.device.groups_desc()}
 			</p>
 			<div class="flex flex-row flex-wrap gap-2">

@@ -3,11 +3,13 @@
 	import { page } from '$app/state';
 	import { PUBLIC_VERSION } from '$env/static/public';
 	import PageLoading from '$lib/components/PageLoading.svelte';
+	import { cronRegex, parseCron } from '$lib/helpers/cron';
 	import LL from '$lib/i18n/i18n-svelte';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPriv, settingsPub } from '$lib/stores/settings';
 	import type { SettingsPrivate, SettingsPublic } from '$lib/types/settings';
 	import { faSave } from '@fortawesome/free-solid-svg-icons';
+	import cronParser from 'cron-parser';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
@@ -16,6 +18,15 @@
 	let settingsPrivClone: SettingsPrivate | undefined;
 	let faviconPreview: HTMLImageElement;
 	let faviconInputElement: HTMLInputElement;
+
+	let now = Date.now();
+	let interval: number;
+	$: {
+		clearInterval(interval);
+		interval = setInterval(() => {
+			now = Date.now();
+		}, 1000);
+	}
 
 	onMount(() => {
 		if (!$pocketbase.authStore.isSuperuser) {
@@ -57,6 +68,15 @@
 			faviconInputElement === undefined
 		)
 			return;
+
+		if (
+			settingsPrivClone.interval === '' ||
+			!cronRegex.test(settingsPrivClone.interval) ||
+			Object.keys(cronParser.parseString(settingsPrivClone.interval).errors).length > 0
+		) {
+			toast.error($LL.settings.invalid_cron());
+			throw new Error('ping_interval not valid');
+		}
 
 		if (faviconInputElement.files !== null && faviconInputElement.files?.length > 0) {
 			let form = new FormData();
@@ -114,6 +134,8 @@
 						bind:value={settingsPrivClone.interval}
 					/>
 				</div>
+				<p class="fieldset-label">{parseCron(settingsPrivClone.interval, now)}</p>
+
 				<h2 class="card-title mt-2">{$LL.settings.lazy_ping_title()}</h2>
 				<p class="mt-2">
 					{$LL.settings.lazy_ping_desc()}

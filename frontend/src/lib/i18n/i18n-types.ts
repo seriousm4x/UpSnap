@@ -521,7 +521,7 @@ type RootTranslation = {
 		 */
 		ping_interval_desc1: string;
 		/**
-		 * L​e​a​r​n​ ​m​o​r​e​ ​a​b​o​u​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​s​y​n​t​a​x​ ​f​o​r​ ​c​r​o​n​ ​o​n​ ​<​a​ ​c​l​a​s​s​=​"​l​i​n​k​"​ ​h​r​e​f​=​"​h​t​t​p​s​:​/​/​e​n​.​w​i​k​i​p​e​d​i​a​.​o​r​g​/​w​i​k​i​/​C​r​o​n​"​ ​t​a​r​g​e​t​=​"​_​b​l​a​n​k​"​>​W​i​k​i​p​e​d​i​a​<​/​a​>​ ​o​r​ ​r​e​f​e​r​ ​t​o​ ​t​h​e​ ​<​a​ ​c​l​a​s​s​=​"​l​i​n​k​"​ ​h​r​e​f​=​"​h​t​t​p​s​:​/​/​p​k​g​.​g​o​.​d​e​v​/​g​i​t​h​u​b​.​c​o​m​/​r​o​b​f​i​g​/​c​r​o​n​/​v​3​"​ ​t​a​r​g​e​t​=​"​_​b​l​a​n​k​"​>​p​a​c​k​a​g​e​ ​d​o​c​u​m​e​n​t​a​t​i​o​n​<​/​a​>​.
+		 * L​e​a​r​n​ ​m​o​r​e​ ​a​b​o​u​t​ ​t​h​e​ ​c​o​r​r​e​c​t​ ​s​y​n​t​a​x​ ​f​o​r​ ​c​r​o​n​ ​o​n​ ​<​a​ ​c​l​a​s​s​=​"​l​i​n​k​"​ ​h​r​e​f​=​"​h​t​t​p​s​:​/​/​e​n​.​w​i​k​i​p​e​d​i​a​.​o​r​g​/​w​i​k​i​/​C​r​o​n​"​ ​t​a​r​g​e​t​=​"​_​b​l​a​n​k​"​>​W​i​k​i​p​e​d​i​a​<​/​a​>​ ​o​r​ ​r​e​f​e​r​ ​t​o​ ​t​h​e​ ​<​a​ ​c​l​a​s​s​=​"​l​i​n​k​"​ ​h​r​e​f​=​"​h​t​t​p​s​:​/​/​g​i​t​h​u​b​.​c​o​m​/​h​a​r​r​i​s​i​i​r​a​k​/​c​r​o​n​-​p​a​r​s​e​r​"​ ​t​a​r​g​e​t​=​"​_​b​l​a​n​k​"​>​p​a​c​k​a​g​e​ ​d​o​c​u​m​e​n​t​a​t​i​o​n​<​/​a​>​.
 		 */
 		ping_interval_desc2: string;
 		/**
@@ -556,6 +556,10 @@ type RootTranslation = {
 		 * U​p​S​n​a​p​ ​v​e​r​s​i​o​n
 		 */
 		upsnap_version: string;
+		/**
+		 * I​n​v​a​l​i​d​ ​c​r​o​n​ ​s​y​n​t​a​x
+		 */
+		invalid_cron: string;
 	};
 	users: {
 		/**
@@ -1316,7 +1320,7 @@ export type TranslationFunctions = {
 		 */
 		ping_interval_desc1: () => LocalizedString;
 		/**
-		 * Learn more about the correct syntax for cron on <a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> or refer to the <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">package documentation</a>.
+		 * Learn more about the correct syntax for cron on <a class="link" href="https://en.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> or refer to the <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">package documentation</a>.
 		 */
 		ping_interval_desc2: () => LocalizedString;
 		/**
@@ -1351,6 +1355,10 @@ export type TranslationFunctions = {
 		 * UpSnap version
 		 */
 		upsnap_version: () => LocalizedString;
+		/**
+		 * Invalid cron syntax
+		 */
+		invalid_cron: () => LocalizedString;
 	};
 	users: {
 		/**

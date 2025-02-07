@@ -8,7 +8,7 @@ export type SettingsPublic = RecordModel & {
 };
 
 export type SettingsPrivate = RecordModel & {
-	interval: number;
+	interval: string;
 	lazy_ping: boolean;
 	scan_range: string;
 };

@@ -135,7 +135,7 @@ const zh_TW = {
 		ping_interval_title: 'Ping 間隔',
 		ping_interval_desc1: '設定 ping 的間隔。留空使用預設值 <span class="badge">@every 3s</span>.',
 		ping_interval_desc2:
-			'有關 cron 的更多資訊，請見<a class="link" href="https://zh.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> 或參閱 <a class="link" href="https://pkg.go.dev/github.com/robfig/cron/v3" target="_blank">cron 文檔</a>.',
+			'有關 cron 的更多資訊，請見<a class="link" href="https://zh.wikipedia.org/wiki/Cron" target="_blank">Wikipedia</a> 或參閱 <a class="link" href="https://github.com/harrisiirak/cron-parser" target="_blank">cron 文檔</a>.',
 		lazy_ping_title: 'Lazy ping',
 		lazy_ping_desc: '當開關打開時, UpSnap 只會在有訪問者訪問網站時才對設備進行 ping 測試',
 		lazy_ping_enable: '啟用',
@@ -143,7 +143,8 @@ const zh_TW = {
 		website_title_desc: '設置網站的標題，同時顯示在瀏覽器的標籤中。',
 		icon_title: '圖標',
 		icon_desc: '設定一個自訂義圖標。支援的檔案類型:',
-		upsnap_version: 'UpSnap 版本'
+		upsnap_version: 'UpSnap 版本',
+		invalid_cron: '「無效的 Cron 語法」'
 	},
 	users: {
 		page_title: '使用者',
