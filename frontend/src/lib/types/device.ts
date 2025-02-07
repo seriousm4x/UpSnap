@@ -42,3 +42,7 @@ export type Port = RecordModel & {
 export type Group = RecordModel & {
 	name: string;
 };
+
+export const cronRegex = new RegExp(
+	/(@(annually|yearly|monthly|weekly|daily|hourly))|((((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5,7})/
+);

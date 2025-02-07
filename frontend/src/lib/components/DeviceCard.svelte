@@ -3,6 +3,7 @@
 	import LL, { locale } from '$lib/i18n/i18n-svelte';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device } from '$lib/types/device';
+	import { cronRegex } from '$lib/types/device';
 	import {
 		faBed,
 		faCircleArrowDown,
@@ -141,10 +142,18 @@
 	}
 
 	function getNextCronRelativeTime(expression: string, now: number) {
-		const cron = cronParser.parseExpression(expression);
-		return formatRelative(cron.next().toISOString(), now, {
-			locale: dateFnsLocale
-		});
+		if (!cronRegex.test(expression)) {
+			return 'Invalid cron';
+		}
+
+		try {
+			const cron = cronParser.parseExpression(expression);
+			return formatRelative(cron.next().toISOString(), now, {
+				locale: dateFnsLocale
+			});
+		} catch {
+			return 'Invalid cron';
+		}
 	}
 </script>
 

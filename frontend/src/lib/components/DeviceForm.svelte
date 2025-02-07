@@ -4,6 +4,7 @@
 	import LL from '$lib/i18n/i18n-svelte';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Group, Port } from '$lib/types/device';
+	import { cronRegex } from '$lib/types/device';
 	import { faSave, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
@@ -392,6 +393,7 @@
 						bind:value={device.wake_cron}
 						disabled={!device.wake_cron_enabled}
 						required={device.wake_cron_enabled}
+						pattern={cronRegex.source}
 					/>
 				</div>
 				<div class="flex flex-col">
@@ -584,6 +586,7 @@
 						bind:value={device.shutdown_cron}
 						disabled={!device.shutdown_cron_enabled}
 						required={device.shutdown_cron_enabled}
+						pattern={cronRegex.source}
 					/>
 				</div>
 				<div class="flex flex-col">
