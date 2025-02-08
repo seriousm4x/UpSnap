@@ -55,7 +55,11 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 				if status == "pending" {
 					return
 				}
-				if networking.PingDevice(d) {
+				isUp, err := networking.PingDevice(d)
+				if err != nil {
+					logger.Error.Println(err)
+				}
+				if isUp {
 					if status == "online" {
 						return
 					}
@@ -81,7 +85,10 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 					logger.Error.Println(err)
 				}
 				for _, port := range ports {
-					isUp := networking.CheckPort(d.GetString("ip"), port.GetString("number"))
+					isUp, err := networking.CheckPort(d.GetString("ip"), port.GetString("number"))
+					if err != nil {
+						logger.Error.Println("Failed to check port:", err)
+					}
 					if isUp != port.GetBool("status") {
 						port.Set("status", isUp)
 						if err := app.Save(port); err != nil {
@@ -121,7 +128,11 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				if d.GetString("status") == "pending" {
 					return
 				}
-				isOnline := networking.PingDevice(dev)
+				isOnline, err := networking.PingDevice(dev)
+				if err != nil {
+					logger.Error.Println(err)
+					return
+				}
 				if isOnline {
 					return
 				}
@@ -155,7 +166,11 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				if d.GetString("status") == "pending" {
 					return
 				}
-				isOnline := networking.PingDevice(dev)
+				isOnline, err := networking.PingDevice(dev)
+				if err != nil {
+					logger.Error.Println(err)
+					return
+				}
 				if !isOnline {
 					return
 				}

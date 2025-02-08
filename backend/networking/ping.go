@@ -1,6 +1,7 @@
 package networking
 
 import (
+	"fmt"
 	"net"
 	"os"
 	"os/exec"
@@ -10,16 +11,14 @@ import (
 
 	"github.com/pocketbase/pocketbase/core"
 	probing "github.com/prometheus-community/pro-bing"
-	"github.com/seriousm4x/upsnap/logger"
 )
 
-func PingDevice(device *core.Record) bool {
+func PingDevice(device *core.Record) (bool, error) {
 	ping_cmd := device.GetString("ping_cmd")
 	if ping_cmd == "" {
 		pinger, err := probing.NewPinger(device.GetString("ip"))
 		if err != nil {
-			logger.Error.Println(err)
-			return false
+			return false, err
 		}
 		pinger.Count = 1
 		pinger.Timeout = 500 * time.Millisecond
@@ -30,14 +29,13 @@ func PingDevice(device *core.Record) bool {
 		pinger.SetPrivileged(privileged)
 		err = pinger.Run()
 		if err != nil {
-			logger.Error.Println(err)
-			return false
+			return false, err
 		}
 		stats := pinger.Statistics()
 		if stats.PacketLoss > 0 {
-			return false
+			return false, fmt.Errorf("packet loss is > 0: %v", stats.PacketLoss)
 		} else {
-			return true
+			return true, nil
 		}
 	} else {
 		var shell string
@@ -53,16 +51,16 @@ func PingDevice(device *core.Record) bool {
 		cmd := exec.Command(shell, shell_arg, ping_cmd)
 		err := cmd.Run()
 
-		return err == nil
+		return err == nil, err
 	}
 }
 
-func CheckPort(host string, port string) bool {
+func CheckPort(host string, port string) (bool, error) {
 	timeout := 500 * time.Millisecond
 	conn, err := net.DialTimeout("tcp", net.JoinHostPort(host, port), timeout)
 	if err != nil {
-		return false
+		return false, err
 	}
 	defer conn.Close()
-	return conn != nil
+	return conn != nil, nil
 }

@@ -57,7 +57,11 @@ func WakeDevice(device *core.Record) error {
 					}
 					return fmt.Errorf("%s not online after 2 minutes", device.GetString("name"))
 				}
-				isOnline := PingDevice(device)
+				isOnline, err := PingDevice(device)
+				if err != nil {
+					logger.Error.Println(err)
+					return err
+				}
 				if isOnline {
 					if err := KillProcess(cmd.Process); err != nil {
 						logger.Error.Println(err)
@@ -83,7 +87,11 @@ func WakeDevice(device *core.Record) error {
 		start := time.Now()
 		for {
 			time.Sleep(1 * time.Second)
-			isOnline := PingDevice(device)
+			isOnline, err := PingDevice(device)
+			if err != nil {
+				logger.Error.Println(err)
+				return err
+			}
 			if isOnline {
 				return nil
 			}

@@ -59,7 +59,11 @@ func ShutdownDevice(device *core.Record) error {
 				}
 				return fmt.Errorf("%s not offline after 2 minutes", device.GetString("name"))
 			}
-			isOnline := PingDevice(device)
+			isOnline, err := PingDevice(device)
+			if err != nil {
+				logger.Error.Println(err)
+				return err
+			}
 			if !isOnline {
 				if err := KillProcess(cmd.Process); err != nil {
 					logger.Error.Println(err)
