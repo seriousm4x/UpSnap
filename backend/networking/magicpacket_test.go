@@ -17,65 +17,65 @@ type Device struct {
 
 func TestSendMagicPacket(t *testing.T) {
 	testCases := []struct {
-		name       string
+		name      string
 		ip        string
-		mac      string
-		netmask  string
-		password string
+		mac       string
+		netmask   string
+		password  string
 		wantError bool
 	}{
 		// Valid case: all inputs correct
 		{
-			name: "Valid Case",
-			ip:   "192.168.1.100",
-			mac:  "00:11:22:33:44:55",
-			netmask: "255.255.255.0",
-			password: "secret",
+			name:      "Valid Case",
+			ip:        "192.168.1.100",
+			mac:       "00:11:22:33:44:55",
+			netmask:   "255.255.255.0",
+			password:  "secret",
 			wantError: false,
 		},
 		// Invalid MAC address
 		{
-			name: "Invalid MAC",
-			ip:   "192.168.1.100",
-			mac:  "invalid",
-			netmask: "255.255.255.0",
-			password: "secret",
+			name:      "Invalid MAC",
+			ip:        "192.168.1.100",
+			mac:       "invalid",
+			netmask:   "255.255.255.0",
+			password:  "secret",
 			wantError: true,
 		},
 		// Password too short
 		{
-			name: "Password Too Short",
-			ip:   "192.168.1.100",
-			mac:  "00:11:22:33:44:55",
-			netmask: "255.255.255.0",
-			password: "s", // length 1
+			name:      "Password Too Short",
+			ip:        "192.168.1.100",
+			mac:       "00:11:22:33:44:55",
+			netmask:   "255.255.255.0",
+			password:  "s", // length 1
 			wantError: true,
 		},
 		// Password too long
 		{
-			name: "Password Too Long",
-			ip:   "192.168.1.100",
-			mac:  "00:11:22:33:44:55",
-			netmask: "255.255.255.0",
-			password: "password", // length 9
+			name:      "Password Too Long",
+			ip:        "192.168.1.100",
+			mac:       "00:11:22:33:44:55",
+			netmask:   "255.255.255.0",
+			password:  "password", // length 9
 			wantError: true,
 		},
 		// Invalid IP address
 		{
-			name: "Invalid IP",
-			ip:   "256.1.1.1", // invalid
-			mac:  "00:11:22:33:44:55",
-			netmask: "255.255.255.0",
-			password: "secret",
+			name:      "Invalid IP",
+			ip:        "256.1.1.1", // invalid
+			mac:       "00:11:22:33:44:55",
+			netmask:   "255.255.255.0",
+			password:  "secret",
 			wantError: true,
 		},
 		// Invalid netmask
 		{
-			name: "Invalid Netmask",
-			ip:   "192.168.1.100",
-			mac:  "00:11:22:33:44:55",
-			netmask: "300.255.255.0", // invalid
-			password: "secret",
+			name:      "Invalid Netmask",
+			ip:        "192.168.1.100",
+			mac:       "00:11:22:33:44:55",
+			netmask:   "300.255.255.0", // invalid
+			password:  "secret",
 			wantError: true,
 		},
 	}
@@ -106,43 +106,43 @@ func TestSendMagicPacket(t *testing.T) {
 
 func TestWakeUDP(t *testing.T) {
 	testCases := []struct {
-		name       string
+		name        string
 		broadcastIp string
-		targetMac  string
-		password   string
-		wantError bool
+		targetMac   string
+		password    string
+		wantError   bool
 	}{
 		// Valid case: all inputs correct
 		{
-			name: "Valid Case",
+			name:        "Valid Case",
 			broadcastIp: "192.168.1.255",
-			targetMac:  "00:11:22:33:44:55",
-			password:   "secret",
-			wantError: false,
+			targetMac:   "00:11:22:33:44:55",
+			password:    "secret",
+			wantError:   false,
 		},
 		// Invalid MAC address
 		{
-			name: "Invalid MAC",
+			name:        "Invalid MAC",
 			broadcastIp: "192.168.1.255",
-			targetMac:  "invalid",
-			password:   "secret",
-			wantError: true,
+			targetMac:   "invalid",
+			password:    "secret",
+			wantError:   true,
 		},
 		// Password too short
 		{
-			name: "Password Too Short",
+			name:        "Password Too Short",
 			broadcastIp: "192.168.1.255",
-			targetMac:  "00:11:22:33:44:55",
-			password:   "s", // length 1
-			wantError: true,
+			targetMac:   "00:11:22:33:44:55",
+			password:    "s", // length 1
+			wantError:   true,
 		},
 		// Password too long
 		{
-			name: "Password Too Long",
+			name:        "Password Too Long",
 			broadcastIp: "192.168.1.255",
-			targetMac:  "00:11:22:33:44:55",
-			password:   "password", // length 9
-			wantError: true,
+			targetMac:   "00:11:22:33:44:55",
+			password:    "password", // length 9
+			wantError:   true,
 		},
 	}
 
@@ -168,34 +168,34 @@ func TestWakeUDP(t *testing.T) {
 
 func TestGetBroadcastIp(t *testing.T) {
 	testCases := []struct {
-		name       string
+		name      string
 		ip        string
-		netmask  string
-		wantIp   string
+		netmask   string
+		wantIp    string
 		wantError bool
 	}{
 		// Valid case: all inputs correct
 		{
-			name: "Valid Case",
-			ip:   "192.168.1.100",
-			netmask: "255.255.255.0",
-			wantIp:   "192.168.1.255",
+			name:      "Valid Case",
+			ip:        "192.168.1.100",
+			netmask:   "255.255.255.0",
+			wantIp:    "192.168.1.255",
 			wantError: false,
 		},
 		// Invalid IP address
 		{
-			name: "Invalid IP",
-			ip:   "256.1.1.1", // invalid
-			netmask: "255.255.255.0",
-			wantIp:   "",
+			name:      "Invalid IP",
+			ip:        "256.1.1.1", // invalid
+			netmask:   "255.255.255.0",
+			wantIp:    "",
 			wantError: true,
 		},
 		// Invalid netmask
 		{
-			name: "Invalid Netmask",
-			ip:   "192.168.1.100",
-			netmask: "300.255.255.0", // invalid
-			wantIp:   "",
+			name:      "Invalid Netmask",
+			ip:        "192.168.1.100",
+			netmask:   "300.255.255.0", // invalid
+			wantIp:    "",
 			wantError: true,
 		},
 	}
