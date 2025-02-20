@@ -5,7 +5,7 @@ go 1.23.4
 require (
 	github.com/mdlayher/wol v0.0.0-20220221231636-b763a792253a
 	github.com/pocketbase/dbx v1.11.0
-	github.com/pocketbase/pocketbase v0.25.4
+	github.com/pocketbase/pocketbase v0.25.5
 	github.com/prometheus-community/pro-bing v0.6.1
 	github.com/robfig/cron/v3 v3.0.1
 	golang.org/x/sys v0.30.0
@@ -58,6 +58,7 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	gocloud.dev v0.40.0 // indirect
 	golang.org/x/crypto v0.33.0 // indirect
+	golang.org/x/exp v0.0.0-20230315142452-642cacee5cc0 // indirect
 	golang.org/x/image v0.24.0 // indirect
 	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/oauth2 v0.26.0 // indirect
@@ -68,9 +69,8 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250207221924-e9438ea467c6 // indirect
 	google.golang.org/grpc v1.70.0 // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
-	modernc.org/libc v1.55.3 // indirect
+	modernc.org/libc v1.61.13 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.8.2 // indirect
-	modernc.org/sqlite v1.34.5 // indirect
-	modernc.org/strutil v1.2.1 // indirect
+	modernc.org/sqlite v1.35.0 // indirect
 )
