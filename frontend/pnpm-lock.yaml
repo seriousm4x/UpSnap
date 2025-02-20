@@ -91,8 +91,8 @@ importers:
         specifier: ^4.1.4
         version: 4.1.4(svelte@5.20.2)(typescript@5.7.3)
       tailwindcss:
-        specifier: ^4.0.6
-        version: 4.0.6
+        specifier: ^4.0.7
+        version: 4.0.7
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
@@ -541,6 +541,12 @@ packages:
     resolution: {integrity: sha512-WHYs3cpPEJb/ccyT20NOzopYQkl7JKncNBUbb77YFlwlXMVJLLV3nrXQKhr7DmZxz2ZXqjyUwsj2rdzd9stYdw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
+    os: [linux]
+
+  '@tailwindcss/oxide-linux-x64-gnu@4.0.7':
+    resolution: {integrity: sha512-7bP1UyuX9kFxbOwkeIJhBZNevKYPXB6xZI37v09fqi6rqRJR8elybwjMUHm54GVP+UTtJ14ueB1K54Dy1tIO6w==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
     os: [linux]
 
   '@tailwindcss/oxide-linux-x64-musl@4.0.7':
@@ -1778,9 +1784,6 @@ packages:
     resolution: {integrity: sha512-aYXJreNUiyTob0QOzRZeBXZMGeFZDch6SrSRV8QTncZb6zj0O3BEdUzPpojuHQ1pTvk+KX7I6rZCXPUf8pTPxA==}
     engines: {node: '>=18'}
 
-  tailwindcss@4.0.6:
-    resolution: {integrity: sha512-mysewHYJKaXgNOW6pp5xon/emCsfAMnO8WMaGKZZ35fomnR/T5gYnRg2/yRTTrtXiEl1tiVkeRt0eMO6HxEZqw==}
-
   tailwindcss@4.0.7:
     resolution: {integrity: sha512-yH5bPPyapavo7L+547h3c4jcBXcrKwybQRjwdEIVAd9iXRvy/3T1CC6XSQEgZtRySjKfqvo3Cc0ZF1DTheuIdA==}
 
@@ -2258,6 +2261,9 @@ snapshots:
   '@tailwindcss/oxide-linux-arm64-musl@4.0.7':
     optional: true
 
+  '@tailwindcss/oxide-linux-x64-gnu@4.0.7':
+    optional: true
+
   '@tailwindcss/oxide-linux-x64-musl@4.0.7':
     optional: true
 
@@ -2276,6 +2282,7 @@ snapshots:
       '@tailwindcss/oxide-linux-arm-gnueabihf': 4.0.7
       '@tailwindcss/oxide-linux-arm64-gnu': 4.0.7
       '@tailwindcss/oxide-linux-arm64-musl': 4.0.7
+      '@tailwindcss/oxide-linux-x64-gnu': 4.0.7
       '@tailwindcss/oxide-linux-x64-musl': 4.0.7
       '@tailwindcss/oxide-win32-arm64-msvc': 4.0.7
       '@tailwindcss/oxide-win32-x64-msvc': 4.0.7
@@ -3597,8 +3604,6 @@ snapshots:
       locate-character: 3.0.0
       magic-string: 0.30.17
       zimmerframe: 1.1.2
-
-  tailwindcss@4.0.6: {}
 
   tailwindcss@4.0.7: {}
 
