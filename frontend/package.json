@@ -22,7 +22,7 @@
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"daisyui": "5.0.0-beta.8",
 		"eslint": "^9.21.0",
-		"eslint-config-prettier": "^10.0.1",
+		"eslint-config-prettier": "^10.0.2",
 		"eslint-plugin-svelte": "^2.46.1",
 		"globals": "^15.15.0",
 		"husky": "^9.1.7",
@@ -51,8 +51,13 @@
 		"pocketbase": "^0.25.1",
 		"postcss": "^8.5.3",
 		"svelte-fa": "^4.0.3",
-		"svelte-french-toast": "^1.2.0",
+		"svelte-french-toast": "^2.0.0-alpha.0",
 		"theme-change": "^2.5.0",
 		"typesafe-i18n": "^5.26.2"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
 	}
 }
