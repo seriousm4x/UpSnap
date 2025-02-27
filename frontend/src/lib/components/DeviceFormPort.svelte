@@ -27,7 +27,7 @@
 </script>
 
 {#if device.expand.ports[index]}
-	<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-4">
+	<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-xs max-w-full border p-4">
 		<legend class="fieldset-legend"># {device.expand.ports.length}</legend>
 		<div class="flex flex-row gap-2">
 			<fieldset class="fieldset">
