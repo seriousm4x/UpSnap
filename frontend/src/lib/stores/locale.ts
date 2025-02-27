@@ -1,5 +1,6 @@
 import { locale } from '$lib/i18n/i18n-svelte';
 import type { Locale } from 'date-fns';
+import { id } from 'date-fns/locale';
 import { de } from 'date-fns/locale/de';
 import { enUS } from 'date-fns/locale/en-US';
 import { es } from 'date-fns/locale/es';
@@ -11,6 +12,7 @@ import { pl } from 'date-fns/locale/pl';
 import { pt } from 'date-fns/locale/pt';
 import { zhCN } from 'date-fns/locale/zh-CN';
 import { zhTW } from 'date-fns/locale/zh-TW';
+
 import { writable, type Writable } from 'svelte/store';
 
 // dynamically import locales
@@ -27,9 +29,17 @@ locale.subscribe((l) => {
 		case 'en-US':
 			dateFnsLocale.set(enUS);
 			break;
+		case 'es':
+		case 'es-ES':
+			dateFnsLocale.set(es);
+			break;
 		case 'fr':
 		case 'fr-FR':
 			dateFnsLocale.set(fr);
+			break;
+		case 'id':
+		case 'id-ID':
+			dateFnsLocale.set(id);
 			break;
 		case 'it':
 		case 'it-IT':
@@ -38,10 +48,6 @@ locale.subscribe((l) => {
 		case 'ja':
 		case 'ja-JP':
 			dateFnsLocale.set(ja);
-			break;
-		case 'es':
-		case 'es-ES':
-			dateFnsLocale.set(es);
 			break;
 		case 'nl':
 		case 'nl-NL':
