@@ -24,8 +24,8 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5
       pocketbase:
-        specifier: ^0.25.1
-        version: 0.25.1
+        specifier: ^0.25.2
+        version: 0.25.2
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
@@ -1454,8 +1454,8 @@ packages:
     resolution: {integrity: sha512-C3FsVNH1udSEX48gGX1xfvwTWfsYWj5U+8/uK15BGzIGrKoUpghX8hWZwa/OFnakBiiVNmBvemTJR5mcy7iPcg==}
     engines: {node: '>=4'}
 
-  pocketbase@0.25.1:
-    resolution: {integrity: sha512-2IH0KLI/qMNR/E17C7BGWX2FxW7Tead+igLHOWZ45P56v/NyVT18Jnmddeft+3qWWGL1Hog2F8bc4orWV/+Fcg==}
+  pocketbase@0.25.2:
+    resolution: {integrity: sha512-ONZl1+qHJMnhR2uacBlBJ90lm7njtL/zy0606+1ROfK9hSL4LRBRc8r89rMcNRzPzRqCNyoFTh2Qg/lYXdEC1w==}
 
   possible-typed-array-names@1.1.0:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
@@ -3263,7 +3263,7 @@ snapshots:
 
   pify@3.0.0: {}
 
-  pocketbase@0.25.1: {}
+  pocketbase@0.25.2: {}
 
   possible-typed-array-names@1.1.0: {}
 
