@@ -7,11 +7,10 @@
 	import {
 		faChevronCircleLeft,
 		faChevronCircleRight,
-		faMagnifyingGlass,
 		faPlus,
 		faWarning
 	} from '@fortawesome/free-solid-svg-icons';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 
@@ -21,9 +20,12 @@
 	let orderExpanded = false;
 	let orderByGroups = true;
 	let searchQuery = '';
+	let searchInput: HTMLInputElement;
+	let isMac = false;
 
 	const gridClass = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4';
 
+	onMount(() => {});
 	const filteredDevices = () =>
 		devices.filter(
 			(dev) =>
@@ -55,13 +57,27 @@
 			.finally(() => (loading = false));
 	}
 
+	function handleShortcut(event: KeyboardEvent) {
+		if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+			event.preventDefault();
+			searchInput.focus();
+		}
+	}
+
 	onMount(() => {
+		isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
+		document.addEventListener('keydown', handleShortcut);
+
 		orderBy = (localStorage.getItem('orderBy') as 'name' | 'ip') || 'name';
 		orderByGroups = localStorage.getItem('orderByGroups') !== 'false';
 		getAllDevices();
 		['devices', 'ports', 'permissions'].forEach((collection) =>
 			$pocketbase.collection(collection).subscribe('*', getAllDevices)
 		);
+	});
+
+	onDestroy(() => {
+		document.removeEventListener('keydown', handleShortcut);
 	});
 </script>
 
@@ -70,8 +86,25 @@
 {:else if devices.length > 0}
 	<div class="mb-4 flex flex-col justify-between gap-4 md:flex-row">
 		<label class="input max-md:w-full">
-			<Fa icon={faMagnifyingGlass} size="sm" />
-			<input type="search" placeholder={$LL.home.search_placeholder()} bind:value={searchQuery} />
+			<svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+				><g
+					stroke-linejoin="round"
+					stroke-linecap="round"
+					stroke-width="2.5"
+					fill="none"
+					stroke="currentColor"
+					><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></g
+				></svg
+			>
+			<input
+				type="search"
+				class="grow"
+				placeholder={$LL.home.search_placeholder()}
+				bind:value={searchQuery}
+				bind:this={searchInput}
+			/>
+			<kbd class="kbd kbd-sm">{isMac ? '⌘' : 'CTRL'}</kbd>
+			<kbd class="kbd kbd-sm">K</kbd>
 		</label>
 		<div class="join ms-auto">
 			{#if orderExpanded}
