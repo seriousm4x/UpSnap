@@ -3,18 +3,15 @@
 	import { page } from '$app/state';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
-	import LL, { setLocale } from '$lib/i18n/i18n-svelte';
-	import { baseLocale, locales } from '$lib/i18n/i18n-util';
-	import { loadLocaleAsync } from '$lib/i18n/i18n-util.async';
+	import { m } from '$lib/paraglide/messages.js';
+	import { locales, localizeHref } from '$lib/paraglide/runtime';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import type { Permission } from '$lib/types/permission';
 	import type { SettingsPublic } from '$lib/types/settings';
 	import { onMount } from 'svelte';
 	import toast, { Toaster, type ToastOptions } from 'svelte-french-toast';
-	import { detectLocale, localStorageDetector, navigatorDetector } from 'typesafe-i18n/detectors';
 	import '../app.css';
-
 	const toastOptions: ToastOptions = {
 		duration: 5000
 	};
@@ -22,16 +19,6 @@
 	let authIsValid = false;
 
 	onMount(async () => {
-		// load locale
-		const detectedLocale = detectLocale(
-			baseLocale,
-			locales,
-			localStorageDetector,
-			navigatorDetector
-		);
-		await loadLocaleAsync(detectedLocale);
-		setLocale(detectedLocale);
-
 		$pocketbase.authStore.onChange(() => {
 			authIsValid = $pocketbase.authStore.isValid;
 
@@ -49,7 +36,7 @@
 
 				$pocketbase.collection('permissions').subscribe('*', (event) => {
 					permission.set(event.record as Permission);
-					toast.success($LL.toasts.permissions_updated_personal());
+					toast.success(m.toasts_permissions_updated_personal());
 				});
 			}
 		});
@@ -113,3 +100,9 @@
 		<slot />
 	</div>
 </Transition>
+
+<div class="hidden">
+	{#each locales as locale}
+		<a href={localizeHref(page.url.pathname, { locale })}>{locale}</a>
+	{/each}
+</div>

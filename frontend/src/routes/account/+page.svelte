@@ -1,47 +1,34 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import LL, { setLocale } from '$lib/i18n/i18n-svelte';
-	import type { Locales } from '$lib/i18n/i18n-types';
-	import { baseLocale, locales } from '$lib/i18n/i18n-util';
-	import { loadLocaleAsync } from '$lib/i18n/i18n-util.async';
+	import { m } from '$lib/paraglide/messages';
+	import type { Locale } from '$lib/paraglide/runtime';
+	import { getLocale, locales, setLocale } from '$lib/paraglide/runtime';
+	import { localeStore } from '$lib/stores/locale';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import { faSave } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
-	import { detectLocale, navigatorDetector } from 'typesafe-i18n/detectors';
 
 	let newAvatar: number;
 
+	let selectedLang: Locale;
+
 	// locales
 	const languageEmojis = {
-		de: '🇩🇪',
-		'de-DE': '🇩🇪',
 		en: '🇺🇸',
-		'en-US': '🇺🇸',
+		de: '🇩🇪',
 		es: '🇪🇸',
-		'es-ES': '🇪🇸',
 		fr: '🇫🇷',
-		'fr-FR': '🇫🇷',
 		id: '🇮🇩',
-		'id-ID': '🇮🇩',
 		it: '🇮🇹',
-		'it-IT': '🇮🇹',
 		ja: '🇯🇵',
-		'ja-JP': '🇯🇵',
 		nl: '🇳🇱',
-		'nl-NL': '🇳🇱',
 		pl: '🇵🇱',
-		'pl-PL': '🇵🇱',
 		pt: '🇵🇹',
-		'pt-PT': '🇵🇹',
-		zh: '🇨🇳',
-		'zh-CN': '🇨🇳',
-		'zh-TW': '🇹🇼'
+		'zh-TW': '🇹🇼',
+		zh: '🇨🇳'
 	};
-	let localStorageLang: Locales | 'auto' = 'auto';
-	let selectedLanguage: Locales | 'auto' = localStorageLang;
-	$: selectedLanguage = localStorageLang as Locales;
 
 	// password change
 	let newPassword = {
@@ -60,19 +47,11 @@
 	});
 
 	onMount(() => {
-		localStorageLang = (localStorage.getItem('lang') as Locales) || 'auto';
+		selectedLang = getLocale();
 	});
 
 	async function saveUser() {
-		let newLang = selectedLanguage;
-		if (newLang === 'auto') {
-			localStorage.removeItem('lang');
-			newLang = detectLocale(baseLocale, locales, navigatorDetector);
-		} else {
-			localStorage.setItem('lang', newLang);
-		}
-		await loadLocaleAsync(newLang);
-		setLocale(newLang);
+		setLocale(selectedLang);
 
 		if ($pocketbase.authStore.isSuperuser) {
 			if (!$pocketbase.authStore.record?.id) return;
@@ -80,7 +59,7 @@
 				.collection('_superusers')
 				.update($pocketbase.authStore.record.id, { avatar: newAvatar })
 				.then(() => {
-					toast.success($LL.toasts.admin_saved());
+					toast.success(m.toasts_admin_saved());
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -91,7 +70,7 @@
 				.collection('users')
 				.update($pocketbase.authStore.record.id, { avatar: newAvatar })
 				.then(() => {
-					toast.success($LL.toasts.user_saved());
+					toast.success(m.toasts_user_saved());
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -115,7 +94,7 @@
 		)
 			.then(async (data) => {
 				if (data.ok) {
-					toast.success($LL.toasts.password_changed());
+					toast.success(m.toasts_password_changed());
 					$pocketbase.authStore.clear();
 					goto('/login');
 				} else {
@@ -123,7 +102,7 @@
 					if (j?.data?.password?.message) {
 						toast.error(j?.data?.password?.message);
 					} else if (j?.data?.passwordConfirm?.message) {
-						toast.error($LL.toasts.passwords_missmatch());
+						toast.error(m.toasts_passwords_missmatch());
 					} else if (j.data?.oldPassword?.message) {
 						toast.error(j.data.oldPassword.message);
 					} else {
@@ -136,13 +115,13 @@
 			});
 	}
 
-	function localeToFullName(lang: Locales) {
+	function localeToFullName(lang: Locale) {
 		const languageNames = new Intl.DisplayNames([lang], { type: 'language' });
 		return languageNames.of(lang) ?? '';
 	}
 </script>
 
-<h1 class="mb-8 text-3xl font-bold">{$LL.account.page_title()}</h1>
+<h1 class="mb-8 text-3xl font-bold">{m.account_page_title()}</h1>
 <div class="card bg-base-200 w-full shadow-sm">
 	<div class="card-body">
 		<div class="flex flex-row items-center gap-4">
@@ -164,13 +143,13 @@
 				</h2>
 				<h3>
 					{$pocketbase.authStore.isSuperuser
-						? $LL.account.account_type_admin()
-						: $LL.account.account_type_user()}
+						? m.account_account_type_admin()
+						: m.account_account_type_user()}
 				</h3>
 			</div>
 		</div>
 		<form on:submit|preventDefault={saveUser}>
-			<h2 class="card-title mt-4 mb-2">{$LL.account.avatar_title()}</h2>
+			<h2 class="card-title mt-4 mb-2">{m.account_avatar_title()}</h2>
 			<div class="flex flex-row flex-wrap gap-4">
 				{#each [...Array(10).keys()] as i}
 					<div class="avatar">
@@ -192,19 +171,16 @@
 							role="none"
 						>
 							{#if $pocketbase.authStore.record?.id}
-								<img src="/avatars/avatar{i}.svg" alt="{$LL.account.avatar_title()} {i}" />
+								<img src="/avatars/avatar{i}.svg" alt="{m.account_avatar_title()} {i}" />
 							{/if}
 						</div>
 					</div>
 				{/each}
 			</div>
-			<h2 class="card-title mt-4 mb-2">{$LL.account.language_title()}</h2>
-			<select class="select w-full max-w-xs" bind:value={selectedLanguage}>
-				<option value="auto" selected={localStorageLang === null}
-					>🌐 {$LL.account.language_option_auto()}</option
-				>
-				{#each locales.sort( (a, b) => a.localeCompare( b, undefined, { sensitivity: 'base' } ) ) as lang}
-					<option value={lang} selected={localStorageLang === lang}>
+			<h2 class="card-title mt-4 mb-2">{m.account_language_title()}</h2>
+			<select class="select w-full max-w-xs" bind:value={selectedLang}>
+				{#each [...locales].sort( (a, b) => a.localeCompare( b, undefined, { sensitivity: 'base' } ) ) as lang}
+					<option value={lang} selected={$localeStore === lang}>
 						{languageEmojis[lang]}
 						{localeToFullName(lang)} [{lang}]
 					</option>
@@ -212,7 +188,7 @@
 			</select>
 			<div class="mt-2">
 				<button type="submit" class="btn btn-success mt-2"
-					><Fa icon={faSave} />{$LL.buttons.save()}</button
+					><Fa icon={faSave} />{m.buttons_save()}</button
 				>
 			</div>
 		</form>
@@ -220,18 +196,18 @@
 </div>
 <div class="card bg-base-200 mt-6 w-full shadow-sm">
 	<div class="card-body">
-		<h2 class="card-title">{$LL.account.change_password_title()}</h2>
-		<p>{$LL.account.change_password_body()}</p>
+		<h2 class="card-title">{m.account_change_password_title()}</h2>
+		<p>{m.account_change_password_body()}</p>
 		<form on:submit|preventDefault={changePassword}>
 			<div class="w-full max-w-xs">
 				{#if !$pocketbase.authStore.isSuperuser}
 					<label class="label" for="password-old">
-						<span>{$LL.account.change_password_label()}</span>
+						<span>{m.account_change_password_label()}</span>
 					</label>
 					<input
 						id="password-old"
 						type="password"
-						placeholder={$LL.account.change_password_label()}
+						placeholder={m.account_change_password_label()}
 						class="input w-full max-w-xs"
 						minlength="5"
 						maxlength="72"
@@ -240,12 +216,12 @@
 					/>
 				{/if}
 				<label class="label" for="password-new">
-					<span>{$LL.account.change_password_new()}</span>
+					<span>{m.account_change_password_new()}</span>
 				</label>
 				<input
 					id="password-new"
 					type="password"
-					placeholder={$LL.account.change_password_new()}
+					placeholder={m.account_change_password_new()}
 					class="input w-full max-w-xs"
 					minlength={$pocketbase.authStore.isSuperuser ? 10 : 5}
 					maxlength="72"
@@ -255,12 +231,12 @@
 			</div>
 			<div class="w-full max-w-xs">
 				<label class="label" for="password-confirm">
-					<span>{$LL.account.change_password_confirm()}</span>
+					<span>{m.account_change_password_confirm()}</span>
 				</label>
 				<input
 					id="password-confirm"
 					type="password"
-					placeholder={$LL.account.change_password_confirm()}
+					placeholder={m.account_change_password_confirm()}
 					class="input w-full max-w-xs"
 					minlength={$pocketbase.authStore.isSuperuser ? 10 : 5}
 					maxlength="72"
@@ -270,7 +246,7 @@
 			</div>
 			<div class="mt-2">
 				<button type="submit" class="btn btn-success mt-2"
-					><Fa icon={faSave} />{$LL.buttons.change()}</button
+					><Fa icon={faSave} />{m.buttons_change()}</button
 				>
 			</div>
 		</form>

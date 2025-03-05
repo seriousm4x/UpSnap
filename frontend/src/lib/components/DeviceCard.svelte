@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { parseCron } from '$lib/helpers/cron';
-	import LL from '$lib/i18n/i18n-svelte';
+	import { m } from '$lib/paraglide/messages';
 	import { dateFnsLocale } from '$lib/stores/locale';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import { type Device } from '$lib/types/device';
@@ -25,7 +25,7 @@
 
 	$: moreButtons = [
 		{
-			text: $LL.device.card_btn_more_sleep(),
+			text: m.device_card_btn_more_sleep(),
 			icon: faBed,
 			onClick: () => sleep(),
 			requires:
@@ -34,7 +34,7 @@
 				device.sol_enabled
 		},
 		{
-			text: $LL.device.card_btn_more_reboot(),
+			text: m.device_card_btn_more_reboot(),
 			icon: faRotateLeft,
 			onClick: () => askRebootConfirmation(),
 			requires:
@@ -43,7 +43,7 @@
 				device.shutdown_cmd !== ''
 		},
 		{
-			text: $LL.device.card_btn_more_edit(),
+			text: m.device_card_btn_more_edit(),
 			icon: faPen,
 			onClick: () => goto(`/device/${device.id}`),
 			requires: $pocketbase.authStore.isSuperuser || $permission.update?.includes(device.id)
@@ -107,22 +107,22 @@
 		{#if device.wake_cron_enabled || device.shutdown_cron_enabled || device.password}
 			<div class="mt-1 flex flex-row flex-wrap gap-2">
 				{#if device.wake_cron_enabled}
-					<div class="tooltip" data-tip={$LL.device.card_tooltip_wake_cron()}>
+					<div class="tooltip" data-tip={m.device_card_tooltip_wake_cron()}>
 						<span class="badge badge-success gap-1 p-3"
 							><Fa icon={faCircleArrowUp} />{parseCron(device.wake_cron, now)}</span
 						>
 					</div>
 				{/if}
 				{#if device.shutdown_cron_enabled}
-					<div class="tooltip" data-tip={$LL.device.card_tooltip_shutdown_cron()}>
+					<div class="tooltip" data-tip={m.device_card_tooltip_shutdown_cron()}>
 						<span class="badge badge-error gap-1 p-3"
 							><Fa icon={faCircleArrowDown} />{parseCron(device.shutdown_cron, now)}</span
 						>
 					</div>
 				{/if}
 				{#if device.password}
-					<div class="tooltip" data-tip={$LL.device.card_tooltip_wake_password()}>
-						<span class="badge gap-1 p-3"><Fa icon={faLock} />{$LL.device.card_password()}</span>
+					<div class="tooltip" data-tip={m.device_card_tooltip_wake_password()}>
+						<span class="badge gap-1 p-3"><Fa icon={faLock} />{m.device_card_password()}</span>
 					</div>
 				{/if}
 			</div>
@@ -130,7 +130,7 @@
 		<div class="card-actions mt-auto items-center">
 			<span
 				class="tooltip"
-				data-tip="{$LL.device.card_tooltip_last_status_change()}: {device.updated}"
+				data-tip="{m.device_card_tooltip_last_status_change()}: {device.updated}"
 			>
 				{formatDistance(parseISO(device.updated), now, {
 					includeSeconds: true,
@@ -158,13 +158,13 @@
 <dialog class="modal" bind:this={modalReboot}>
 	<div class="modal-box">
 		<h3 class="text-lg font-bold">
-			{$LL.device.modal_confirm_shutdown_title({ device: device.name })}
+			{m.device_modal_confirm_shutdown_title({ device: device.name })}
 		</h3>
-		<p class="py-4">{$LL.device.modal_confirm_shutdown_desc({ device: device.name })}</p>
+		<p class="py-4">{m.device_modal_confirm_shutdown_desc({ device: device.name })}</p>
 		<div class="modal-action">
 			<form method="dialog">
-				<button class="btn">{$LL.buttons.cancel()}</button>
-				<button class="btn btn-success" on:click={reboot}>{$LL.buttons.confirm()}</button>
+				<button class="btn">{m.buttons_cancel()}</button>
+				<button class="btn btn-success" on:click={reboot}>{m.buttons_confirm()}</button>
 			</form>
 		</div>
 	</div>

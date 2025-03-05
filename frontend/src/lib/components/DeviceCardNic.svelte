@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LL from '$lib/i18n/i18n-svelte';
+	import { m } from '$lib/paraglide/messages';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device } from '$lib/types/device';
 	import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
@@ -22,25 +22,25 @@
 	$: seconds = timeout % 60;
 	$: if (device.status === 'pending' || device.status === '') {
 		disabled = true;
-		hoverText = $LL.device.card_nic_tooltip_pending();
+		hoverText = m.device_card_nic_tooltip_pending();
 	} else if (device.status === 'online') {
 		if (device.shutdown_cmd === '') {
 			disabled = true;
-			hoverText = $LL.device.card_nic_tooltip_shutdown_no_cmd();
+			hoverText = m.device_card_nic_tooltip_shutdown_no_cmd();
 		} else if (!$pocketbase.authStore.isSuperuser && !$permission.power?.includes(device.id)) {
 			disabled = true;
-			hoverText = $LL.device.card_nic_tooltip_shutdown_no_permission();
+			hoverText = m.device_card_nic_tooltip_shutdown_no_permission();
 		} else {
 			disabled = false;
-			hoverText = $LL.device.card_nic_tooltip_shutdown();
+			hoverText = m.device_card_nic_tooltip_shutdown();
 		}
 	} else if (device.status === 'offline') {
 		if (!$pocketbase.authStore.isSuperuser && !$permission.power?.includes(device.id)) {
 			disabled = true;
-			hoverText = $LL.device.card_nic_tooltip_power_no_permission();
+			hoverText = m.device_card_nic_tooltip_power_no_permission();
 		} else {
 			disabled = false;
-			hoverText = $LL.device.card_nic_tooltip_power();
+			hoverText = m.device_card_nic_tooltip_power();
 		}
 	}
 
@@ -55,7 +55,6 @@
 				device = data as Device;
 				await countdown(Date.parse(device.updated));
 				if (device.status === 'online' && device.link && device.link_open !== '') {
-					console.log('here');
 					if (device.link_open === 'new_tab') {
 						window.open(device.link, '_blank');
 					} else {
@@ -199,13 +198,13 @@
 <dialog class="modal" bind:this={modalWake}>
 	<div class="modal-box">
 		<h3 class="text-lg font-bold">
-			{$LL.device.modal_confirm_wake_title({ device: device.name })}
+			{m.device_modal_confirm_wake_title({ device: device.name })}
 		</h3>
-		<p class="py-4">{$LL.device.modal_confirm_wake_desc({ device: device.name })}</p>
+		<p class="py-4">{m.device_modal_confirm_wake_desc({ device: device.name })}</p>
 		<div class="modal-action">
 			<form method="dialog">
-				<button class="btn">{$LL.buttons.cancel()}</button>
-				<button class="btn btn-success" on:click={wake}>{$LL.buttons.confirm()}</button>
+				<button class="btn">{m.buttons_cancel()}</button>
+				<button class="btn btn-success" on:click={wake}>{m.buttons_confirm()}</button>
 			</form>
 		</div>
 	</div>
@@ -214,13 +213,13 @@
 <dialog class="modal" bind:this={modalShutdown}>
 	<div class="modal-box">
 		<h3 class="text-lg font-bold">
-			{$LL.device.modal_confirm_shutdown_title({ device: device.name })}
+			{m.device_modal_confirm_shutdown_title({ device: device.name })}
 		</h3>
-		<p class="py-4">{$LL.device.modal_confirm_shutdown_desc({ device: device.name })}</p>
+		<p class="py-4">{m.device_modal_confirm_shutdown_desc({ device: device.name })}</p>
 		<div class="modal-action">
 			<form method="dialog">
-				<button class="btn">{$LL.buttons.cancel()}</button>
-				<button class="btn btn-success" on:click={shutdown}>{$LL.buttons.confirm()}</button>
+				<button class="btn">{m.buttons_cancel()}</button>
+				<button class="btn btn-success" on:click={shutdown}>{m.buttons_confirm()}</button>
 			</form>
 		</div>
 	</div>

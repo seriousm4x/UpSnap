@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { toggleVisibility } from '$lib/helpers/forms';
-	import LL from '$lib/i18n/i18n-svelte';
+	import { m } from '$lib/paraglide/messages';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import { faEye, faLockOpen, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
@@ -71,15 +71,15 @@
 						alt={$settingsPub?.website_title ? $settingsPub?.website_title : 'Gopher'}
 					/>
 				</figure>
-				<h2 class="card-title">{$LL.login.welcome()}</h2>
+				<h2 class="card-title">{m.login_welcome()}</h2>
 			</div>
 			<form class="w-full" on:submit|preventDefault={tryAdminThenUser}>
 				<label class="label" for="email">
-					<span>{$LL.login.email_label()}</span>
+					<span>{m.login_email_label()}</span>
 				</label>
 				<input id="email" type="text" class="input w-full" required bind:value={form.email} />
 				<label class="label" for="password">
-					<span>{$LL.login.password_label()}</span>
+					<span>{m.login_password_label()}</span>
 				</label>
 				<label class="relative block">
 					<div
@@ -102,14 +102,14 @@
 				</label>
 				<div class="card-actions mt-4">
 					<div class="dropdown">
-						<label tabindex="-1" class="btn" for="other-providers">{$LL.login.btn_more()}</label>
+						<label tabindex="-1" class="btn" for="other-providers">{m.login_btn_more()}</label>
 						<ul
 							id="other-providers"
 							tabindex="-1"
 							class="menu dropdown-content rounded-box bg-base-200 z-1 w-56 p-2 shadow-sm"
 						>
 							<li class="menu-title flex flex-row items-center gap-2">
-								{$LL.login.menu_title_auth_providers()}
+								{m.login_menu_title_auth_providers()}
 								<a href="https://github.com/seriousm4x/UpSnap/wiki/Auth-providers" target="_blank"
 									><Fa icon={faQuestionCircle} /></a
 								>
@@ -128,7 +128,7 @@
 						</ul>
 					</div>
 					<button class="btn btn-success ms-auto" type="submit"
-						>{$LL.login.btn_login()} <Fa icon={faLockOpen} /></button
+						>{m.login_btn_login()} <Fa icon={faLockOpen} /></button
 					>
 				</div>
 			</form>

@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
 	import NetworkScan from '$lib/components/NetworkScan.svelte';
-	import LL from '$lib/i18n/i18n-svelte';
+	import { m } from '$lib/paraglide/messages';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Port } from '$lib/types/device';
 	import { faBinoculars, faWrench } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@
 
 	$: if (Object.hasOwn($permission, 'create')) {
 		if (!$pocketbase.authStore.isSuperuser && !$permission.create) {
-			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
+			toast(m.toasts_no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});
 			goto('/');
@@ -29,13 +29,13 @@
 	let tabs = [
 		{
 			name: 'manual',
-			ll_name: $LL.device.tabs[0](),
+			ll_name: m['device_tabs.0'](),
 			icon: faWrench,
 			show: true
 		},
 		{
 			name: 'scan',
-			ll_name: $LL.device.tabs[1](),
+			ll_name: m['device_tabs.1'](),
 			icon: faBinoculars,
 			show: $pocketbase.authStore.isSuperuser
 		}
@@ -43,7 +43,7 @@
 	let activeTab = 'manual';
 </script>
 
-<h1 class="mb-8 text-3xl font-bold">{$LL.device.page_title()}</h1>
+<h1 class="mb-8 text-3xl font-bold">{m.device_page_title()}</h1>
 <div class="mb-6 flex justify-center">
 	<ul class="menu menu-horizontal rounded-box bg-base-200 gap-1">
 		{#each tabs as tab}

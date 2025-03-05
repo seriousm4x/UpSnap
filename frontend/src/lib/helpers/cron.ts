@@ -1,7 +1,7 @@
-import LL from '$lib/i18n/i18n-svelte';
+import { m } from '$lib/paraglide/messages';
 import { dateFnsLocale } from '$lib/stores/locale';
 import cronParser from 'cron-parser';
-import { formatDistanceStrict } from 'date-fns';
+import { formatDistanceStrict, type Locale } from 'date-fns';
 import { get } from 'svelte/store';
 
 export const cronRegex = new RegExp(/((((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){6})/);
@@ -19,10 +19,10 @@ export function parseCron(expression: string, now: number) {
 		const cron = cronParser.parseExpression(expression, {});
 
 		return formatDistanceStrict(cron.next().toISOString(), new Date(now), {
-			locale: get(dateFnsLocale),
+			locale: get(dateFnsLocale) as unknown as Locale,
 			addSuffix: true
 		});
 	} catch {
-		return get(LL).settings.invalid_cron();
+		return m.settings_invalid_cron();
 	}
 }

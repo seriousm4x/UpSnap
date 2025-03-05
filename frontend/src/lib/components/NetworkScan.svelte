@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import PageLoading from '$lib/components/PageLoading.svelte';
-	import LL from '$lib/i18n/i18n-svelte';
+	import { m } from '$lib/paraglide/messages';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPriv } from '$lib/stores/settings';
 	import type { Device } from '$lib/types/device';
@@ -48,7 +48,7 @@
 			})
 			.then((res) => {
 				settingsPriv.set(res as SettingsPrivate);
-				toast.success($LL.device.network_scan_range_saved());
+				toast.success(m.device_network_scan_range_saved());
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -90,7 +90,7 @@
 	async function addSingle(device: ScannedDevice) {
 		await createDevice(device)
 			.then(() => {
-				toast.success($LL.toasts.device_created({ device: device.name }));
+				toast.success(m.toasts_device_created({ device: device.name }));
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -111,7 +111,7 @@
 					});
 			})
 		);
-		toast.success($LL.toasts.devices_created_multiple({ count: count }));
+		toast.success(m.toasts_devices_created_multiple({ count: count }));
 		goto('/');
 	}
 </script>
@@ -119,14 +119,14 @@
 {#if $settingsPriv}
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
-			<h2 class="card-title">{$LL.device.tabs[1]()}</h2>
+			<h2 class="card-title">{m['device_tabs.1']()}</h2>
 			<p class="my-2">
-				{$LL.device.network_scan_desc()}
+				{m.device_network_scan_desc()}
 			</p>
 			<div class="flex flex-row flex-wrap items-end gap-4">
 				<form on:submit|preventDefault={saveSettings}>
 					<label class="label" for="scan-range">
-						<span>{$LL.device.network_scan_ip_range()}</span>
+						<span>{m.device_network_scan_ip_range()}</span>
 					</label>
 					<div class="join max-w-xs">
 						<input
@@ -136,7 +136,7 @@
 							placeholder="192.168.1.0/24"
 							bind:value={scanRange}
 						/>
-						<button class="btn btn-neutral join-item" type="submit">{$LL.buttons.save()}</button>
+						<button class="btn btn-neutral join-item" type="submit">{m.buttons_save()}</button>
 					</div>
 				</form>
 				<div>
@@ -144,22 +144,22 @@
 						{#if !$settingsPriv.scan_range}
 							<button class="btn btn-error" disabled>
 								<Fa icon={faX} />
-								{$LL.device.network_scan_no_range()}
+								{m.device_network_scan_no_range()}
 							</button>
 						{:else if scanRange !== $settingsPriv.scan_range}
 							<button class="btn btn-error" disabled>
 								<Fa icon={faX} />
-								{$LL.device.network_scan_unsaved_changes()}
+								{m.device_network_scan_unsaved_changes()}
 							</button>
 						{:else if scanRunning}
 							<button class="btn no-animation">
 								<span class="loading loading-spinner"></span>
-								{$LL.device.network_scan_running()}
+								{m.device_network_scan_running()}
 							</button>
 						{:else}
 							<button class="btn btn-success" on:click={() => scan()}>
 								<Fa icon={faMagnifyingGlass} />
-								{$LL.device.network_scan()}
+								{m.device_network_scan()}
 							</button>
 						{/if}
 					</div>
@@ -175,20 +175,20 @@
 						<div class="collapse-content">
 							<div class="flex flex-row flex-wrap gap-4">
 								<div>
-									<strong>{$LL.device.network_scan_ip()}</strong><br />
+									<strong>{m.device_network_scan_ip()}</strong><br />
 									{device.ip}
 								</div>
 								<div>
-									<strong>{$LL.device.network_scan_mac()}</strong><br />
+									<strong>{m.device_network_scan_mac()}</strong><br />
 									{device.mac}
 								</div>
 								<div>
-									<strong>{$LL.device.network_scan_mac_vendor()}</strong><br />
+									<strong>{m.device_network_scan_mac_vendor()}</strong><br />
 									{device.mac_vendor}
 								</div>
 
 								<div>
-									<strong>{$LL.device.network_scan_netmask()}</strong><br />
+									<strong>{m.device_network_scan_netmask()}</strong><br />
 									{scanResponse.netmask}
 								</div>
 								<div class="ms-auto">
@@ -197,26 +197,25 @@
 										on:click={(e) => {
 											addSingle(device);
 											e.currentTarget.disabled = true;
-										}}><Fa icon={faPlus} />{$LL.buttons.add()}</button
+										}}><Fa icon={faPlus} />{m.buttons_add()}</button
 									>
 								</div>
 							</div>
 						</div>
 					</div>
 				{/each}
-				<h2 class="card-title mt-4">{$LL.device.network_scan_add_all()}</h2>
+				<h2 class="card-title mt-4">{m.device_network_scan_add_all()}</h2>
 				<div class="max-w-fit">
 					<label class="label cursor-pointer">
 						<input type="checkbox" class="checkbox" bind:checked={replaceNetmaskCheckbox} />
-						<span class="ms-2 text-wrap break-words"
-							>{$LL.device.network_scan_replace_netmask()}</span
+						<span class="ms-2 text-wrap break-words">{m.device_network_scan_replace_netmask()}</span
 						>
 					</label>
 				</div>
 				{#if replaceNetmaskCheckbox}
 					<div class="max-w-fit">
 						<label class="label cursor-pointer" for="replaceNetmaskInput">
-							<span class="ms-2">{$LL.device.network_scan_new_netmask()}</span>
+							<span class="ms-2">{m.device_network_scan_new_netmask()}</span>
 						</label>
 						<input
 							id="replaceNetmaskInput"
@@ -232,7 +231,7 @@
 						<label class="label cursor-pointer">
 							<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
 							<span class="ms-2 text-wrap break-words"
-								>{$LL.device.network_scan_include_unknown()}</span
+								>{m.device_network_scan_include_unknown()}</span
 							>
 						</label>
 						{#if addAllCheckbox}
@@ -242,7 +241,7 @@
 								disabled={scanResponse.devices.length === 0}
 							>
 								<Fa icon={faPlus} />
-								{$LL.device.network_scan_add_all()} ({scanResponse.devices.length})
+								{m.device_network_scan_add_all()} ({scanResponse.devices.length})
 							</button>
 						{:else}
 							<button
@@ -251,7 +250,7 @@
 								disabled={scanResponse.devices.filter((dev) => dev.name !== 'Unknown').length === 0}
 							>
 								<Fa icon={faPlus} />
-								{$LL.device.network_scan_add_all()} ({scanResponse.devices.filter(
+								{m.device_network_scan_add_all()} ({scanResponse.devices.filter(
 									(dev) => dev.name !== 'Unknown'
 								).length})
 							</button>
@@ -265,7 +264,7 @@
 							disabled={scanResponse.devices.length === 0}
 						>
 							<Fa icon={faPlus} />
-							{$LL.device.network_scan_add_all()} ({scanResponse.devices.length})
+							{m.device_network_scan_add_all()} ({scanResponse.devices.length})
 						</button>
 					</div>
 				{/if}

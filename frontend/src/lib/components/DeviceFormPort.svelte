@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LL from '$lib/i18n/i18n-svelte';
+	import { m } from '$lib/paraglide/messages';
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Port } from '$lib/types/device';
 	import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -32,10 +32,10 @@
 		<div class="flex flex-row gap-2">
 			<fieldset class="fieldset">
 				<label class="floating-label">
-					<span>{$LL.device.ports_name()} <span class="text-error">*</span></span>
+					<span>{m.device_ports_name()} <span class="text-error">*</span></span>
 					<input
 						type="text"
-						placeholder={$LL.device.ports_name()}
+						placeholder={m.device_ports_name()}
 						class="input"
 						required
 						bind:value={device.expand.ports[index].name}
@@ -44,10 +44,10 @@
 			</fieldset>
 			<fieldset class="fieldset">
 				<label class="floating-label">
-					<span>{$LL.device.ports_number()} <span class="text-error">*</span></span>
+					<span>{m.device_ports_number()} <span class="text-error">*</span></span>
 					<input
 						type="number"
-						placeholder={$LL.device.ports_number()}
+						placeholder={m.device_ports_number()}
 						class="input"
 						min="1"
 						max="65535"
@@ -59,10 +59,10 @@
 		</div>
 		<fieldset class="fieldset">
 			<label class="floating-label">
-				<span>{$LL.device.link()}</span>
+				<span>{m.device_link()}</span>
 				<input
 					type="text"
-					placeholder={$LL.device.link()}
+					placeholder={m.device_link()}
 					class="input"
 					bind:value={device.expand.ports[index].link}
 				/>
@@ -71,7 +71,7 @@
 		<button
 			class="btn btn-error btn-xs btn-soft ms-auto"
 			on:click={() => deletePort(device.expand.ports[index])}
-			type="button"><Fa icon={faTrash} />{$LL.buttons.delete()}</button
+			type="button"><Fa icon={faTrash} />{m.buttons_delete()}</button
 		>
 	</fieldset>
 {/if}

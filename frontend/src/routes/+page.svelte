@@ -1,7 +1,7 @@
 <script lang="ts">
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import PageLoading from '$lib/components/PageLoading.svelte';
-	import LL from '$lib/i18n/i18n-svelte';
+	import { m } from '$lib/paraglide/messages';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Group } from '$lib/types/device';
 	import {
@@ -10,7 +10,7 @@
 		faPlus,
 		faWarning
 	} from '@fortawesome/free-solid-svg-icons';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 
@@ -21,7 +21,7 @@
 	let orderByGroups = true;
 	let searchQuery = '';
 	let searchInput: HTMLInputElement;
-	let isMac = false;
+	let isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
 
 	const gridClass = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4';
 
@@ -65,9 +65,6 @@
 	}
 
 	onMount(() => {
-		isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
-		document.addEventListener('keydown', handleShortcut);
-
 		orderBy = (localStorage.getItem('orderBy') as 'name' | 'ip') || 'name';
 		orderByGroups = localStorage.getItem('orderByGroups') !== 'false';
 		getAllDevices();
@@ -75,11 +72,9 @@
 			$pocketbase.collection(collection).subscribe('*', getAllDevices)
 		);
 	});
-
-	onDestroy(() => {
-		document.removeEventListener('keydown', handleShortcut);
-	});
 </script>
+
+<svelte:document on:keydown={handleShortcut} />
 
 {#if loading}
 	<PageLoading />
@@ -99,7 +94,7 @@
 			<input
 				type="search"
 				class="grow"
-				placeholder={$LL.home.search_placeholder()}
+				placeholder={m.home_search_placeholder()}
 				bind:value={searchQuery}
 				bind:this={searchInput}
 			/>
@@ -109,14 +104,14 @@
 		<div class="join ms-auto">
 			{#if orderExpanded}
 				<button class="btn join-item" on:click={() => (orderByGroups = !orderByGroups)}>
-					{$LL.home.order_groups()}
+					{m.home_order_groups()}
 					<input type="checkbox" class="checkbox" checked={orderByGroups} />
 				</button>
 				<input
 					class="btn join-item"
 					type="radio"
 					name="order"
-					aria-label={$LL.home.order_name()}
+					aria-label={m.home_order_name()}
 					bind:group={orderBy}
 					value="name"
 				/>
@@ -124,14 +119,14 @@
 					class="btn join-item"
 					type="radio"
 					name="order"
-					aria-label={$LL.home.order_ip()}
+					aria-label={m.home_order_ip()}
 					bind:group={orderBy}
 					value="ip"
 				/>
 			{/if}
 			<button
 				class="btn join-item tooltip {orderExpanded ? '' : 'rounded-field'}"
-				data-tip={$LL.home.order_tooltip()}
+				data-tip={m.home_order_tooltip()}
 				on:click={() => (orderExpanded = !orderExpanded)}
 			>
 				<Fa icon={orderExpanded ? faChevronCircleRight : faChevronCircleLeft} size="lg" />
@@ -172,15 +167,13 @@
 			<Fa icon={faWarning} size="lg" />
 			{#if $pocketbase.authStore.isSuperuser || $permission.create}
 				<div>
-					<h3 class="font-bold">{$LL.home.no_devices()}</h3>
-					<div class="text-xs">{$LL.home.add_first_device()}</div>
+					<h3 class="font-bold">{m.home_no_devices()}</h3>
+					<div class="text-xs">{m.home_add_first_device()}</div>
 				</div>
-				<a href="/device/new" class="btn btn-sm"
-					><Fa icon={faPlus} />{$LL.home.add_first_device()}</a
-				>
+				<a href="/device/new" class="btn btn-sm"><Fa icon={faPlus} />{m.home_add_first_device()}</a>
 			{:else}
 				<span>
-					{$LL.home.grant_permissions()}
+					{m.home_grant_permissions()}
 				</span>
 			{/if}
 		</div>

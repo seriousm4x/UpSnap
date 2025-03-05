@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import LL from '$lib/i18n/i18n-svelte';
+	import { m } from '$lib/paraglide/messages';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import {
@@ -111,7 +111,7 @@
 				{/if}
 				<li>
 					<a href="/" class="px-4 py-2" class:active={$page.url.pathname === '/'}
-						><Fa icon={faHome} />{$LL.home.page_title()}</a
+						><Fa icon={faHome} />{m.home_page_title()}</a
 					>
 				</li>
 				{#if $pocketbase.authStore.isSuperuser}
@@ -120,7 +120,7 @@
 							href="/users"
 							class="px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/users')}
-							><Fa icon={faUsersGear} />{$LL.users.page_title()}</a
+							><Fa icon={faUsersGear} />{m.users_page_title()}</a
 						>
 					</li>
 					<li>
@@ -128,7 +128,7 @@
 							href="/settings/"
 							class="px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/settings')}
-							><Fa icon={faCog} />{$LL.settings.page_title()}</a
+							><Fa icon={faCog} />{m.settings_page_title()}</a
 						>
 					</li>
 				{/if}
@@ -186,13 +186,13 @@
 		<ul class="menu menu-horizontal h-full gap-1 px-1">
 			<li class="h-full">
 				<a href="/" class="p-2" class:menu-active={$page.url.pathname === '/'}
-					><Fa icon={faHome} />{$LL.home.page_title()}</a
+					><Fa icon={faHome} />{m.home_page_title()}</a
 				>
 			</li>
 			{#if $pocketbase.authStore.isSuperuser}
 				<li class="h-full">
 					<a href="/users" class="p-2" class:menu-active={$page.url.pathname.startsWith('/users')}
-						><Fa icon={faUsersGear} />{$LL.users.page_title()}</a
+						><Fa icon={faUsersGear} />{m.users_page_title()}</a
 					>
 				</li>
 				<li class="h-full">
@@ -200,14 +200,14 @@
 						href="/settings/"
 						class="p-2"
 						class:menu-active={$page.url.pathname.startsWith('/settings')}
-						><Fa icon={faCog} />{$LL.settings.page_title()}</a
+						><Fa icon={faCog} />{m.settings_page_title()}</a
 					>
 				</li>
 			{/if}
 			<div class="dropdown dropdown-end">
 				<button class="btn btn-ghost hover:bg-base-content/10 h-full border-0 p-2">
 					<Fa icon={faSwatchbook} />
-					<span class="font-normal">{$LL.navbar.theme()}</span>
+					<span class="font-normal">{m.navbar_theme()}</span>
 					<Fa icon={faChevronDown} />
 				</button>
 				<div class="dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 shadow-sm">
@@ -244,7 +244,7 @@
 			{#if $pocketbase.authStore.isSuperuser || $permission.create}
 				<a class="btn btn-success me-4" href="/device/new">
 					<Fa icon={faPlus} />
-					{$LL.navbar.new()}
+					{m.navbar_new()}
 				</a>
 			{/if}
 			<div class="dropdown dropdown-end">
@@ -263,11 +263,11 @@
 							: $pocketbase.authStore.record?.username}
 					</li>
 					<li>
-						<a href="/account"><Fa icon={faUserGear} />{$LL.navbar.edit_account()}</a>
+						<a href="/account"><Fa icon={faUserGear} />{m.navbar_edit_account()}</a>
 					</li>
 					<li>
 						<div on:click={async () => logout()} on:keydown={async () => logout()} role="none">
-							<Fa icon={faDoorOpen} />{$LL.navbar.logout()}
+							<Fa icon={faDoorOpen} />{m.navbar_logout()}
 						</div>
 					</li>
 				</ul>

@@ -234,3 +234,5 @@ backend/pb_public/*
 
 dist/
 vite.config.js.timestamp*
+
+frontend/src/lib/paraglide

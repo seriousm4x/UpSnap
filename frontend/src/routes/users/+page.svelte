@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import PageLoading from '$lib/components/PageLoading.svelte';
-	import LL from '$lib/i18n/i18n-svelte';
+	import { m } from '$lib/paraglide/messages';
 	import { pocketbase } from '$lib/stores/pocketbase';
 	import type { Device } from '$lib/types/device';
 	import type { Permission } from '$lib/types/permission';
@@ -34,7 +34,7 @@
 
 	onMount(() => {
 		if (!$pocketbase.authStore.isSuperuser) {
-			toast($LL.toasts.no_permission({ url: $page.url.pathname }), {
+			toast(m.toasts_no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});
 			goto('/');
@@ -59,7 +59,7 @@
 			.collection('users')
 			.create(newUser)
 			.then((data) => {
-				toast.success($LL.toasts.user_created({ username: data.username }));
+				toast.success(m.toasts_user_created({ username: data.username }));
 				newUser.username = '';
 				newUser.password = '';
 				newUser.passwordConfirm = '';
@@ -77,7 +77,7 @@
 				.collection('permissions')
 				.delete(permission.id)
 				.then(() => {
-					toast.success($LL.toasts.permissions_deleted({ username: user.username }));
+					toast.success(m.toasts_permissions_deleted({ username: user.username }));
 				})
 				.catch((err) => {
 					toast.error(err.message);
@@ -88,7 +88,7 @@
 			.collection('users')
 			.delete(user.id)
 			.then(async () => {
-				toast.success($LL.toasts.user_deleted({ username: user.username }));
+				toast.success(m.toasts_user_deleted({ username: user.username }));
 				reload();
 			})
 			.catch((err) => {
@@ -132,7 +132,7 @@
 					// if (i > -1) {
 					// 	permissions[i] = data as Permission;
 					// }
-					toast.success($LL.toasts.permissions_created({ username: user.username }));
+					toast.success(m.toasts_permissions_created({ username: user.username }));
 					reload();
 				})
 				.catch((err) => {
@@ -144,7 +144,7 @@
 				.collection('permissions')
 				.update(permission.id, permission)
 				.then(() => {
-					toast.success($LL.toasts.permissions_updated({ username: user.username }));
+					toast.success(m.toasts_permissions_updated({ username: user.username }));
 					reload();
 				})
 				.catch((err) => {
@@ -181,7 +181,7 @@
 {#await Promise.all([getUsersPromise, getPermissionsPromise, getDevicesPromise])}
 	<PageLoading />
 {:then}
-	<h1 class="mb-8 text-3xl font-bold">{$LL.users.page_title()}</h1>
+	<h1 class="mb-8 text-3xl font-bold">{m.users_page_title()}</h1>
 	{#each users as user, index}
 		<form on:submit|preventDefault={() => save(user)}>
 			<div class="card bg-base-200 mt-6 w-full shadow-sm">
@@ -198,25 +198,25 @@
 						<div class="w-fit">
 							<label class="label cursor-pointer gap-2 text-wrap">
 								<input type="checkbox" bind:checked={permission.create} class="checkbox" />
-								{$LL.users.allow_create_devices({ username: user.username })}
+								{m.users_allow_create_devices({ username: user.username })}
 							</label>
 						</div>
 					{/each}
 					<div class="collapse-arrow bg-base-200 collapse">
 						<input type="checkbox" />
-						<div class="collapse-title text-xl font-medium">{$LL.users.device_permissions()}</div>
+						<div class="collapse-title text-xl font-medium">{m.users_device_permissions()}</div>
 						<div class="collapse-content">
 							{#if devices.length === 0}
 								<p>
-									{$LL.home.no_devices()}
-									<a href="/device/new" class="link">{$LL.users.create_new_device()}</a>
+									{m.home_no_devices()}
+									<a href="/device/new" class="link">{m.users_create_new_device()}</a>
 								</p>
 							{:else}
 								<div class="grid grid-cols-4 justify-items-center gap-4 md:grid-cols-5">
-									<div class="font-bold md:col-start-2">{$LL.users.read()}</div>
-									<div class="font-bold">{$LL.users.update()}</div>
-									<div class="font-bold">{$LL.users.delete()}</div>
-									<div class="font-bold">{$LL.users.power()}</div>
+									<div class="font-bold md:col-start-2">{m.users_read()}</div>
+									<div class="font-bold">{m.users_update()}</div>
+									<div class="font-bold">{m.users_delete()}</div>
+									<div class="font-bold">{m.users_power()}</div>
 									{#each devices as device}
 										<hr class="border-neutral col-span-full w-full border-b-1 opacity-30" />
 										{#each permissions.filter((perm) => perm.user === user.id) as permission}
@@ -258,7 +258,7 @@
 										on:click={() => {
 											toggleAllPermissions(user, 'read');
 										}}
-										><span class="hidden md:block">{$LL.users.toggle()}</span><Fa
+										><span class="hidden md:block">{m.users_toggle()}</span><Fa
 											icon={faRetweet}
 											size="1.5x"
 										/></button
@@ -269,7 +269,7 @@
 										on:click={() => {
 											toggleAllPermissions(user, 'update');
 										}}
-										><span class="hidden md:block">{$LL.users.toggle()}</span><Fa
+										><span class="hidden md:block">{m.users_toggle()}</span><Fa
 											icon={faRetweet}
 											size="1.5x"
 										/></button
@@ -280,7 +280,7 @@
 										on:click={() => {
 											toggleAllPermissions(user, 'delete');
 										}}
-										><span class="hidden md:block">{$LL.users.toggle()}</span><Fa
+										><span class="hidden md:block">{m.users_toggle()}</span><Fa
 											icon={faRetweet}
 											size="1.5x"
 										/></button
@@ -291,7 +291,7 @@
 										on:click={() => {
 											toggleAllPermissions(user, 'power');
 										}}
-										><span class="hidden md:block">{$LL.users.toggle()}</span><Fa
+										><span class="hidden md:block">{m.users_toggle()}</span><Fa
 											icon={faRetweet}
 											size="1.5x"
 										/></button
@@ -306,10 +306,10 @@
 							class="btn btn-error join-item"
 							type="button"
 							on:click={() => deleteModal[index].showModal()}
-							><Fa icon={faTrash} />{$LL.buttons.delete()}</button
+							><Fa icon={faTrash} />{m.buttons_delete()}</button
 						>
 						<button class="btn btn-success join-item" type="submit"
-							><Fa icon={faSave} />{$LL.buttons.save()}</button
+							><Fa icon={faSave} />{m.buttons_save()}</button
 						>
 					</div>
 				</div>
@@ -317,13 +317,13 @@
 		</form>
 		<dialog class="modal" bind:this={deleteModal[index]}>
 			<div class="modal-box">
-				<h3 class="text-lg font-bold">{$LL.users.confirm_delete_title()}</h3>
-				<p class="py-4">{$LL.users.confirm_delete_desc({ username: user.username })}</p>
+				<h3 class="text-lg font-bold">{m.users_confirm_delete_title()}</h3>
+				<p class="py-4">{m.users_confirm_delete_desc({ username: user.username })}</p>
 				<div class="modal-action">
 					<form method="dialog">
-						<button class="btn">{$LL.buttons.cancel()}</button>
+						<button class="btn">{m.buttons_cancel()}</button>
 						<button class="btn btn-error" on:click={() => deleteUser(user)}
-							>{$LL.buttons.delete()}</button
+							>{m.buttons_delete()}</button
 						>
 					</form>
 				</div>
@@ -332,20 +332,20 @@
 	{/each}
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
-			<h2 class="card-title">{$LL.users.create_new_user()}</h2>
+			<h2 class="card-title">{m.users_create_new_user()}</h2>
 			<form on:submit|preventDefault={createUser}>
 				<div class="flex flex-row flex-wrap gap-4">
 					<div class="w-full max-w-xs">
 						<label class="label" for="username">
 							<div>
-								<span>{$LL.users.username()}</span>
+								<span>{m.users_username()}</span>
 								<span class="text-error">*</span>
 							</div>
 						</label>
 						<input
 							id="username"
 							type="text"
-							placeholder={$LL.users.username()}
+							placeholder={m.users_username()}
 							class="input w-full max-w-xs"
 							required
 							bind:value={newUser.username}
@@ -354,14 +354,14 @@
 					<div class="w-full max-w-xs">
 						<label class="label" for="password">
 							<div>
-								<span>{$LL.users.password()}</span>
+								<span>{m.users_password()}</span>
 								<span class="text-error">*</span>
 							</div>
 						</label>
 						<input
 							id="password"
 							type="password"
-							placeholder={$LL.users.password()}
+							placeholder={m.users_password()}
 							class="input w-full max-w-xs"
 							minlength="5"
 							maxlength="72"
@@ -372,14 +372,14 @@
 					<div class="w-full max-w-xs">
 						<label class="label" for="passwordConfirm">
 							<div>
-								<span>{$LL.users.password_confirm()}</span>
+								<span>{m.users_password_confirm()}</span>
 								<span class="text-error">*</span>
 							</div>
 						</label>
 						<input
 							id="passwordConfirm"
 							type="password"
-							placeholder={$LL.users.password_confirm()}
+							placeholder={m.users_password_confirm()}
 							class="input w-full max-w-xs"
 							minlength="5"
 							maxlength="72"
@@ -388,10 +388,10 @@
 						/>
 					</div>
 				</div>
-				<span class="badge text-error mt-4 self-center">* {$LL.users.required_field()}</span>
+				<span class="badge text-error mt-4 self-center">* {m.users_required_field()}</span>
 				<div class="card-actions justify-end">
 					<button type="submit" class="btn btn-success mt-2"
-						><Fa icon={faPlus} />{$LL.buttons.add()}</button
+						><Fa icon={faPlus} />{m.buttons_add()}</button
 					>
 				</div>
 			</form>
