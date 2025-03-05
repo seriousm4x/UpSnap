@@ -323,12 +323,12 @@
 				{@html m.device_ping_desc()}
 			</p>
 			<fieldset class="fieldset">
-				<label class="floating-label mt-2">
-					<span>{m.device_ping_cmd()}</span>
+				<label class="input mt-2">
+					<span>$:</span>
 					<input
 						type="text"
 						placeholder={m.device_ping_cmd()}
-						class="input"
+						class="grow"
 						bind:value={device.ping_cmd}
 					/>
 				</label>
@@ -343,17 +343,31 @@
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html m.settings_ping_interval_desc2()}
 			</p>
-			<fieldset class="fieldset">
-				<label class="floating-label mt-2">
-					<span>{m.device_wake_cmd()}</span>
-					<input
-						type="text"
-						placeholder={m.device_wake_cmd()}
-						class="input"
-						bind:value={device.wake_cmd}
-					/>
-				</label>
-			</fieldset>
+			<div class="flex flex-row flex-wrap gap-4">
+				<fieldset class="fieldset">
+					<label class="floating-label mt-2">
+						<span>{m.device_wake_timeout()}</span>
+						<input
+							type="number"
+							min="0"
+							placeholder={m.device_wake_timeout()}
+							class="input"
+							bind:value={device.wake_timeout}
+						/>
+					</label>
+				</fieldset>
+				<fieldset class="fieldset">
+					<label class="input mt-2">
+						<span>$:</span>
+						<input
+							type="text"
+							placeholder={m.device_wake_cmd()}
+							class="grow"
+							bind:value={device.wake_cmd}
+						/>
+					</label>
+				</fieldset>
+			</div>
 			<div class="flex flex-row flex-wrap gap-4">
 				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
 					<legend class="fieldset-legend">{m.device_wake_cron_enable()}</legend>
@@ -399,7 +413,100 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="card bg-base-200 mt-6 w-full shadow-sm">
+		<div class="card-body">
+			<h2 class="card-title">{m.device_shutdown()}</h2>
+			<p>
+				<!-- eslint-disable svelte/no-at-html-tags -->
+				{@html m.device_shutdown_desc()}
+			</p>
+			<div class="flex flex-row flex-wrap gap-4">
+				<fieldset class="fieldset">
+					<label class="floating-label mt-2">
+						<span>{m.device_shutdown_timeout()}</span>
+						<input
+							type="number"
+							min="0"
+							placeholder={m.device_shutdown_timeout()}
+							class="input"
+							bind:value={device.shutdown_timeout}
+						/>
+					</label>
+				</fieldset>
+				<fieldset class="fieldset">
+					<label class="input mt-2">
+						<span>$:</span>
+						<input
+							type="text"
+							placeholder={m.device_shutdown_cmd()}
+							class="grow"
+							bind:value={device.shutdown_cmd}
+						/>
+					</label>
+				</fieldset>
+			</div>
+			<p class="font-bold">{m.device_shutdown_examples()}</p>
+			<div class="mockup-code max-w-fit min-w-0 text-sm">
+				<pre data-prefix="#" class="italic"><code>{m.device_shutdown_examples_windows()}</code
+					></pre>
+				<pre data-prefix="$" class="text-warning"><code
+						>net rpc shutdown -I 192.168.1.13 -U "user%password"</code
+					></pre>
+			</div>
+			<div class="mockup-code max-w-fit min-w-0 text-sm">
+				<pre data-prefix="#" class="italic"><code>{m.device_shutdown_examples_linux()}</code></pre>
+				<pre data-prefix="$" class="text-warning"><code
+						>sshpass -p password ssh -o "StrictHostKeyChecking=no" user@192.168.1.13 "sudo poweroff"</code
+					></pre>
+			</div>
+			<p>
+				{m.device_shutdown_cron_desc()}
+			</p>
+			<div class="flex flex-row flex-wrap gap-4">
+				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+					<legend class="fieldset-legend">{m.device_shutdown_cron_enable()}</legend>
+					<label class="fieldset-label">
+						<input
+							type="checkbox"
+							bind:checked={device.shutdown_cron_enabled}
+							class="toggle toggle-success"
+						/>
+						{m.device_shutdown_cron_enable()}
+					</label>
+					<label class="floating-label mt-2">
+						<span
+							>{m.device_shutdown_cron()}
+							{#if device.shutdown_cron_enabled}
+								<span class="text-error">*</span>
+							{/if}
+						</span>
+						<input
+							type="text"
+							placeholder={m.device_shutdown_cron()}
+							class="input validator"
+							bind:value={device.shutdown_cron}
+							disabled={!device.shutdown_cron_enabled}
+							required={device.shutdown_cron_enabled}
+						/>
+						{#if device.shutdown_cron_enabled}
+							<p class="fieldset-label">{parseCron(device.shutdown_cron, Date.now())}</p>
+						{/if}
+					</label>
+				</fieldset>
+				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+					<legend class="fieldset-legend">{m.device_require_confirmation()}</legend>
+					<label class="fieldset-label">
+						<input
+							type="checkbox"
+							bind:checked={device.shutdown_confirm}
+							class="toggle toggle-success"
+						/>
+						{m.device_require_confirmation()}
+					</label>
+				</fieldset>
+			</div>
+		</div>
+	</div>
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">Sleep-On-LAN</h2>
@@ -488,88 +595,6 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="card bg-base-200 mt-6 w-full shadow-sm">
-		<div class="card-body">
-			<h2 class="card-title">{m.device_shutdown()}</h2>
-			<p>
-				<!-- eslint-disable svelte/no-at-html-tags -->
-				{@html m.device_shutdown_desc()}
-			</p>
-			<fieldset class="fieldset">
-				<label class="floating-label mt-2">
-					<span>{m.device_shutdown_cmd()}</span>
-					<input
-						type="text"
-						placeholder={m.device_shutdown_cmd()}
-						class="input"
-						bind:value={device.shutdown_cmd}
-					/>
-				</label>
-			</fieldset>
-			<p class="font-bold">{m.device_shutdown_examples()}</p>
-			<div class="mockup-code max-w-fit min-w-0 text-sm">
-				<pre data-prefix="#" class="italic"><code>{m.device_shutdown_examples_windows()}</code
-					></pre>
-				<pre data-prefix="$" class="text-warning"><code
-						>net rpc shutdown -I 192.168.1.13 -U "user%password"</code
-					></pre>
-			</div>
-			<div class="mockup-code max-w-fit min-w-0 text-sm">
-				<pre data-prefix="#" class="italic"><code>{m.device_shutdown_examples_linux()}</code></pre>
-				<pre data-prefix="$" class="text-warning"><code
-						>sshpass -p password ssh -o "StrictHostKeyChecking=no" user@192.168.1.13 "sudo poweroff"</code
-					></pre>
-			</div>
-			<p>
-				{m.device_shutdown_cron_desc()}
-			</p>
-			<div class="flex flex-row flex-wrap gap-4">
-				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
-					<legend class="fieldset-legend">{m.device_shutdown_cron_enable()}</legend>
-					<label class="fieldset-label">
-						<input
-							type="checkbox"
-							bind:checked={device.shutdown_cron_enabled}
-							class="toggle toggle-success"
-						/>
-						{m.device_shutdown_cron_enable()}
-					</label>
-					<label class="floating-label mt-2">
-						<span
-							>{m.device_shutdown_cron()}
-							{#if device.shutdown_cron_enabled}
-								<span class="text-error">*</span>
-							{/if}
-						</span>
-						<input
-							type="text"
-							placeholder={m.device_shutdown_cron()}
-							class="input validator"
-							bind:value={device.shutdown_cron}
-							disabled={!device.shutdown_cron_enabled}
-							required={device.shutdown_cron_enabled}
-						/>
-						{#if device.shutdown_cron_enabled}
-							<p class="fieldset-label">{parseCron(device.shutdown_cron, Date.now())}</p>
-						{/if}
-					</label>
-				</fieldset>
-				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
-					<legend class="fieldset-legend">{m.device_require_confirmation()}</legend>
-					<label class="fieldset-label">
-						<input
-							type="checkbox"
-							bind:checked={device.shutdown_confirm}
-							class="toggle toggle-success"
-						/>
-						{m.device_require_confirmation()}
-					</label>
-				</fieldset>
-			</div>
-		</div>
-	</div>
-
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{m.device_password()}</h2>

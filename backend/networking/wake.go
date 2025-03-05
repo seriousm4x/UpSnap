@@ -15,6 +15,11 @@ import (
 func WakeDevice(device *core.Record) error {
 	logger.Info.Println("Wake triggered for", device.GetString("name"))
 
+	wakeTimeout := device.GetInt("wake_timeout")
+	if wakeTimeout <= 0 {
+		wakeTimeout = 120
+	}
+
 	wake_cmd := device.GetString("wake_cmd")
 	if wake_cmd != "" {
 		var shell string
@@ -46,16 +51,16 @@ func WakeDevice(device *core.Record) error {
 			done <- cmd.Wait()
 		}()
 
-		// check state every seconds for 2 min
 		start := time.Now()
+
 		for {
 			select {
 			case <-time.After(1 * time.Second):
-				if time.Since(start) >= 2*time.Minute {
+				if time.Since(start) >= time.Duration(wakeTimeout)*time.Second {
 					if err := KillProcess(cmd.Process); err != nil {
 						logger.Error.Println(err)
 					}
-					return fmt.Errorf("%s not online after 2 minutes", device.GetString("name"))
+					return fmt.Errorf("%s not online after %d seconds", device.GetString("name"), wakeTimeout)
 				}
 				isOnline, err := PingDevice(device)
 				if err != nil {
@@ -83,10 +88,10 @@ func WakeDevice(device *core.Record) error {
 			return err
 		}
 
-		// check state every seconds for 2 min
 		start := time.Now()
 		for {
 			time.Sleep(1 * time.Second)
+			fmt.Println("here")
 			isOnline, err := PingDevice(device)
 			if err != nil {
 				logger.Error.Println(err)
@@ -95,10 +100,11 @@ func WakeDevice(device *core.Record) error {
 			if isOnline {
 				return nil
 			}
-			if time.Since(start) >= 2*time.Minute {
+			if time.Since(start) >= time.Duration(wakeTimeout)*time.Second {
+				fmt.Println("over")
 				break
 			}
 		}
-		return fmt.Errorf(device.GetString("name"), "not online after 2 min")
+		return fmt.Errorf(device.GetString("name"), "not online after %d seconds", wakeTimeout)
 	}
 }

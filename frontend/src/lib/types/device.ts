@@ -15,10 +15,12 @@ export type Device = RecordModel & {
 	wake_cron_enabled: boolean;
 	wake_cmd: string;
 	wake_confirm: boolean;
+	wake_timeout: number;
 	shutdown_cron: string;
 	shutdown_cron_enabled: boolean;
 	shutdown_cmd: string;
 	shutdown_confirm: boolean;
+	shutdown_timeout: number;
 	password: string;
 	groups: string[];
 	expand: {

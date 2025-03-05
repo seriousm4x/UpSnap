@@ -16,7 +16,7 @@
 	let modalShutdown: HTMLDialogElement;
 
 	$: if (device.status === 'pending' && !interval) {
-		countdown(Date.parse(device.updated));
+		countdown(Date.parse(device.updated), 'wake');
 	}
 	$: minutes = Math.floor(timeout / 60);
 	$: seconds = timeout % 60;
@@ -53,7 +53,7 @@
 			.then((resp) => resp.json())
 			.then(async (data) => {
 				device = data as Device;
-				await countdown(Date.parse(device.updated));
+				await countdown(Date.parse(device.updated), 'wake');
 				if (device.status === 'online' && device.link && device.link_open !== '') {
 					if (device.link_open === 'new_tab') {
 						window.open(device.link, '_blank');
@@ -76,18 +76,22 @@
 			.then((resp) => resp.json())
 			.then((data) => {
 				device = data as Device;
-				countdown(Date.parse(device.updated));
+				countdown(Date.parse(device.updated), 'shutdown');
 			})
 			.catch((err) => {
 				toast.error(err.message);
 			});
 	}
 
-	function countdown(updated: number) {
+	function countdown(updated: number, action: 'wake' | 'shutdown') {
 		return new Promise((resolve, reject) => {
 			try {
-				timeout = 120;
-				const end = updated + 2 * 60 * 1000;
+				timeout = action === 'wake' ? device.wake_timeout : device.shutdown_timeout;
+				if (timeout <= 0) {
+					timeout = 120;
+				}
+
+				const end = updated + timeout * 1000;
 
 				if (interval) {
 					clearInterval(interval);

@@ -48,16 +48,21 @@ func ShutdownDevice(device *core.Record) error {
 		done <- cmd.Wait()
 	}()
 
-	// check state every seconds for 2 min
+	shutdownTimeout := device.GetInt("shutdown_timeout")
+	if shutdownTimeout <= 0 {
+		shutdownTimeout = 120
+	}
+
 	start := time.Now()
+
 	for {
 		select {
 		case <-time.After(1 * time.Second):
-			if time.Since(start) >= 2*time.Minute {
+			if time.Since(start) >= time.Duration(shutdownTimeout)*time.Second {
 				if err := KillProcess(cmd.Process); err != nil {
 					logger.Error.Println(err)
 				}
-				return fmt.Errorf("%s not offline after 2 minutes", device.GetString("name"))
+				return fmt.Errorf("%s not offline after %d seconds", device.GetString("name"), shutdownTimeout)
 			}
 			isOnline, err := PingDevice(device)
 			if err != nil {
