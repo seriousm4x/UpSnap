@@ -8,7 +8,7 @@ require (
 	github.com/pocketbase/pocketbase v0.25.9
 	github.com/prometheus-community/pro-bing v0.6.1
 	github.com/robfig/cron/v3 v3.0.1
-	golang.org/x/sys v0.30.0
+	golang.org/x/sys v0.31.0
 )
 
 require (
