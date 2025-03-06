@@ -91,7 +91,6 @@ func WakeDevice(device *core.Record) error {
 		start := time.Now()
 		for {
 			time.Sleep(1 * time.Second)
-			fmt.Println("here")
 			isOnline, err := PingDevice(device)
 			if err != nil {
 				logger.Error.Println(err)
@@ -101,7 +100,6 @@ func WakeDevice(device *core.Record) error {
 				return nil
 			}
 			if time.Since(start) >= time.Duration(wakeTimeout)*time.Second {
-				fmt.Println("over")
 				break
 			}
 		}
