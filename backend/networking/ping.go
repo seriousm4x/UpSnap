@@ -1,17 +1,29 @@
 package networking
 
 import (
-	"fmt"
 	"net"
 	"os"
 	"os/exec"
 	"runtime"
 	"strconv"
+	"syscall"
 	"time"
 
 	"github.com/pocketbase/pocketbase/core"
 	probing "github.com/prometheus-community/pro-bing"
 )
+
+func isNoRouteOrDownError(err error) bool {
+	opErr, ok := err.(*net.OpError)
+	if !ok {
+		return false
+	}
+	syscallErr, ok := opErr.Err.(*os.SyscallError)
+	if !ok {
+		return false
+	}
+	return syscallErr.Err == syscall.EHOSTUNREACH || syscallErr.Err == syscall.EHOSTDOWN
+}
 
 func PingDevice(device *core.Record) (bool, error) {
 	ping_cmd := device.GetString("ping_cmd")
@@ -22,21 +34,26 @@ func PingDevice(device *core.Record) (bool, error) {
 		}
 		pinger.Count = 1
 		pinger.Timeout = 500 * time.Millisecond
-		privileged, err := strconv.ParseBool(os.Getenv("UPSNAP_PING_PRIVILEGED"))
-		if err != nil {
-			privileged = true
+
+		privileged := isRoot()
+		privilegedEnv := os.Getenv("UPSNAP_PING_PRIVILEGED")
+		if privilegedEnv != "" {
+			privileged, err = strconv.ParseBool(privilegedEnv)
+			if err != nil {
+				privileged = false
+			}
 		}
 		pinger.SetPrivileged(privileged)
+
 		err = pinger.Run()
 		if err != nil {
+			if isNoRouteOrDownError(err) {
+				return false, nil
+			}
 			return false, err
 		}
 		stats := pinger.Statistics()
-		if stats.PacketLoss > 0 {
-			return false, fmt.Errorf("packet loss is > 0: %v", stats.PacketLoss)
-		} else {
-			return true, nil
-		}
+		return stats.PacketLoss == 0, nil
 	} else {
 		var shell string
 		var shell_arg string
