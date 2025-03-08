@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { parseCron } from '$lib/helpers/cron';
+	import { nextCronDate } from '$lib/helpers/cron';
 	import { m } from '$lib/paraglide/messages';
 	import { dateFnsLocale } from '$lib/stores/locale';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
@@ -109,15 +109,17 @@
 				{#if device.wake_cron_enabled}
 					<div class="tooltip" data-tip={m.device_card_tooltip_wake_cron()}>
 						<span class="badge badge-success gap-1 p-3"
-							><Fa icon={faCircleArrowUp} />{parseCron(device.wake_cron, now)}</span
-						>
+							><Fa icon={faCircleArrowUp} />
+							{nextCronDate(device.wake_cron)}
+						</span>
 					</div>
 				{/if}
 				{#if device.shutdown_cron_enabled}
 					<div class="tooltip" data-tip={m.device_card_tooltip_shutdown_cron()}>
 						<span class="badge badge-error gap-1 p-3"
-							><Fa icon={faCircleArrowDown} />{parseCron(device.shutdown_cron, now)}</span
-						>
+							><Fa icon={faCircleArrowDown} />
+							{nextCronDate(device.shutdown_cron)}
+						</span>
 					</div>
 				{/if}
 				{#if device.password}

@@ -68,6 +68,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		se.Router.GET("/api/upsnap/shutdown/{id}", HandlerShutdown).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/scan", HandlerScan).Bind(apis.RequireSuperuserAuth())
 		se.Router.POST("/api/upsnap/init-superuser", HandlerInitSuperuser) // https://github.com/pocketbase/pocketbase/discussions/6198
+		se.Router.POST("/api/upsnap/validate-cron", HandlerValidateCron)
 
 		if err := importSettings(app); err != nil {
 			return err
@@ -223,10 +224,19 @@ func importSettings(app *pocketbase.PocketBase) error {
 	}
 
 	// validate interval before saving
-	p := cron.NewParser(cron.Second | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)
+	p := cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)
 	if _, err := p.Parse(interval); err != nil {
+		if interval == "*/3 * * * *" || interval == "@every 3s" {
+			settingsPrivate.Set("interval", defaultInterval)
+			if e := app.Save(settingsPrivate); e != nil {
+				logger.Error.Println(e)
+			}
+		} else {
+			logger.Error.Printf("'%s' ping interval is not valid.\n", interval)
+			logger.Error.Println("Please go to '/settings/' and change your ping interval.")
+			logger.Error.Println("Falling back to default interval: " + defaultInterval)
+		}
 		interval = defaultInterval
-		logger.Warning.Println(errors.New("Ping interval is not valid."))
 	}
 
 	settingsPrivate.Set("interval", interval)

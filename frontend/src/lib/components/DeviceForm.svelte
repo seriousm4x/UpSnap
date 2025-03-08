@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
-	import { cronRegex, parseCron } from '$lib/helpers/cron';
+	import { nextCronDate, parseCron as validateCron } from '$lib/helpers/cron';
 	import { m } from '$lib/paraglide/messages';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Group, Port } from '$lib/types/device';
 	import { faSave, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
-	import cronParser from 'cron-parser';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
@@ -23,19 +22,11 @@
 
 	async function save() {
 		// validate crons
-		if (
-			device.wake_cron_enabled &&
-			(!cronRegex.test(device.wake_cron) ||
-				Object.keys(cronParser.parseString(device.wake_cron).errors).length > 0)
-		) {
+		if (device.wake_cron_enabled && !(await validateCron(device.wake_cron))) {
 			toast.error(m.settings_invalid_cron());
 			throw new Error('wake_cron not valid');
 		}
-		if (
-			device.shutdown_cron_enabled &&
-			(!cronRegex.test(device.shutdown_cron) ||
-				Object.keys(cronParser.parseString(device.shutdown_cron).errors).length > 0)
-		) {
+		if (device.shutdown_cron_enabled && !(await validateCron(device.shutdown_cron))) {
 			toast.error(m.settings_invalid_cron());
 			throw new Error('shutdown_cron not valid');
 		}
@@ -395,7 +386,13 @@
 							required={device.wake_cron_enabled}
 						/>
 						{#if device.wake_cron_enabled}
-							<p class="fieldset-label">{parseCron(device.wake_cron, Date.now())}</p>
+							<p class="fieldset-label">
+								{#await validateCron(device.wake_cron)}
+									<span class="loading loading-spinner loading-xs"></span>
+								{:then valid}
+									{valid ? '✅ ' + nextCronDate(device.wake_cron) : m.settings_invalid_cron()}
+								{/await}
+							</p>
 						{/if}
 					</label>
 				</fieldset>
@@ -489,7 +486,13 @@
 							required={device.shutdown_cron_enabled}
 						/>
 						{#if device.shutdown_cron_enabled}
-							<p class="fieldset-label">{parseCron(device.shutdown_cron, Date.now())}</p>
+							<p class="fieldset-label">
+								{#await validateCron(device.wake_cron)}
+									<span class="loading loading-spinner loading-xs"></span>
+								{:then valid}
+									{valid ? '✅ ' + nextCronDate(device.shutdown_cron) : m.settings_invalid_cron()}
+								{/await}
+							</p>
 						{/if}
 					</label>
 				</fieldset>

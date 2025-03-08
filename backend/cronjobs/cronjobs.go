@@ -152,7 +152,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				}
 			})
 			if err != nil {
-				logger.Error.Println(err)
+				logger.Error.Printf("device %s: %+v", dev.GetString("name"), err)
 			}
 		}
 
@@ -193,7 +193,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				}
 			})
 			if err != nil {
-				logger.Error.Println(err)
+				logger.Error.Printf("device %s: %+v", dev.GetString("name"), err)
 			}
 		}
 	}

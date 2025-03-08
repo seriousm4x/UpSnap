@@ -1,12 +1,13 @@
 import { m } from '$lib/paraglide/messages';
 import { dateFnsLocale } from '$lib/stores/locale';
+import { backendUrl } from '$lib/stores/pocketbase';
 import cronParser from 'cron-parser';
-import { formatDistanceStrict, type Locale } from 'date-fns';
+import { formatDate, type Locale } from 'date-fns';
 import { get } from 'svelte/store';
 
-export const cronRegex = new RegExp(/((((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){6})/);
+export const cronRegex = new RegExp(/((((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5,6})/);
 
-export function parseCron(expression: string, now: number) {
+export function nextCronDate(expression: string) {
 	try {
 		if (
 			expression === '' ||
@@ -18,11 +19,28 @@ export function parseCron(expression: string, now: number) {
 
 		const cron = cronParser.parseExpression(expression, {});
 
-		return formatDistanceStrict(cron.next().toISOString(), new Date(now), {
-			locale: get(dateFnsLocale) as unknown as Locale,
-			addSuffix: true
+		return formatDate(cron.next().toISOString(), 'PPpp', {
+			locale: get(dateFnsLocale) as unknown as Locale
 		});
 	} catch {
 		return m.settings_invalid_cron();
 	}
+}
+
+export function parseCron(expression: string): Promise<boolean> {
+	return fetch(backendUrl + 'api/upsnap/validate-cron', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			cron: expression
+		})
+	})
+		.then((response) => {
+			return response.ok;
+		})
+		.catch(() => {
+			return false;
+		});
 }

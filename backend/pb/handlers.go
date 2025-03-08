@@ -12,6 +12,7 @@ import (
 
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
+	"github.com/robfig/cron/v3"
 	"github.com/seriousm4x/upsnap/logger"
 	"github.com/seriousm4x/upsnap/networking"
 )
@@ -255,4 +256,24 @@ func HandlerInitSuperuser(e *core.RequestEvent) error {
 	}
 
 	return apis.RecordAuthResponse(e, record, "", nil)
+}
+
+type ValidateCronRequest struct {
+	Cron string `json:"cron"`
+}
+
+func HandlerValidateCron(e *core.RequestEvent) error {
+	var body ValidateCronRequest
+
+	if err := e.BindBody(&body); err != nil {
+		logger.Error.Println(err)
+		return e.BadRequestError("invalid request", err)
+	}
+
+	p := cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow)
+	if _, err := p.Parse(body.Cron); err != nil {
+		return e.BadRequestError("failed to parse cron expression", err)
+	}
+
+	return e.JSON(200, "valid")
 }

@@ -3,7 +3,7 @@
 	import { page } from '$app/state';
 	import { PUBLIC_VERSION } from '$env/static/public';
 	import PageLoading from '$lib/components/PageLoading.svelte';
-	import { cronRegex, parseCron } from '$lib/helpers/cron';
+	import { nextCronDate, parseCron } from '$lib/helpers/cron';
 	import { m } from '$lib/paraglide/messages';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPriv, settingsPub } from '$lib/stores/settings';
@@ -18,15 +18,6 @@
 	let settingsPrivClone: SettingsPrivate | undefined;
 	let faviconPreview: HTMLImageElement;
 	let faviconInputElement: HTMLInputElement;
-
-	let now = Date.now();
-	let interval: number;
-	$: {
-		clearInterval(interval);
-		interval = setInterval(() => {
-			now = Date.now();
-		}, 1000);
-	}
 
 	onMount(() => {
 		if (!$pocketbase.authStore.isSuperuser) {
@@ -71,7 +62,7 @@
 
 		if (
 			settingsPrivClone.interval === '' ||
-			!cronRegex.test(settingsPrivClone.interval) ||
+			!(await parseCron(settingsPrivClone.interval)) ||
 			Object.keys(cronParser.parseString(settingsPrivClone.interval).errors).length > 0
 		) {
 			toast.error(m.settings_invalid_cron());
@@ -126,15 +117,29 @@
 					<!-- eslint-disable svelte/no-at-html-tags -->
 					{@html m.settings_ping_interval_desc2()}
 				</p>
+				<p>
+					<span class="badge">Second (Optional)</span>
+					<span class="badge">Minute</span>
+					<span class="badge">Hour</span>
+					<span class="badge">DoM</span>
+					<span class="badge">Month</span>
+					<span class="badge">DoW</span>
+				</p>
 				<div class="mt-2 w-full">
 					<input
 						type="text"
-						placeholder="e.g. '@every 5s' or '@every 1m'"
+						placeholder="e.g. '*/5 * * * * *' or '* */1 * * * *'"
 						class="input"
 						bind:value={settingsPrivClone.interval}
 					/>
 				</div>
-				<p class="fieldset-label">{parseCron(settingsPrivClone.interval, now)}</p>
+				<p class="fieldset-label">
+					{#await parseCron(settingsPrivClone.interval)}
+						<span class="loading loading-spinner loading-xs"></span>
+					{:then valid}
+						{valid ? '✅ ' + nextCronDate(settingsPrivClone.interval) : m.settings_invalid_cron()}
+					{/await}
+				</p>
 
 				<h2 class="card-title mt-2">{m.settings_lazy_ping_title()}</h2>
 				<p class="mt-2">
