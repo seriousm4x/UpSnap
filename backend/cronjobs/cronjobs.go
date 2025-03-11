@@ -11,8 +11,12 @@ import (
 var (
 	PingRunning         = false
 	WakeShutdownRunning = false
-	CronPing            = cron.New(cron.WithSeconds())
-	CronWakeShutdown    = cron.New(cron.WithSeconds())
+	CronPing            = cron.New(cron.WithParser(cron.NewParser(
+		cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow,
+	)))
+	CronWakeShutdown = cron.New(cron.WithParser(cron.NewParser(
+		cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow,
+	)))
 )
 
 func SetPingJobs(app *pocketbase.PocketBase) {
