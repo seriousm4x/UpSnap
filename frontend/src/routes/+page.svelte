@@ -21,16 +21,16 @@
 	let orderByGroups = true;
 	let searchQuery = '';
 	let searchInput: HTMLInputElement;
-	let isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
-
+	const isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
 	const gridClass = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4';
 
 	onMount(() => {});
 	const filteredDevices = () =>
 		devices.filter(
 			(dev) =>
-				dev.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
 				dev.ip.includes(searchQuery.toLowerCase()) ||
+				dev.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+				dev.mac.toLowerCase().includes(searchQuery.toLowerCase()) ||
 				dev.description.toLowerCase().includes(searchQuery.toLowerCase())
 		);
 
