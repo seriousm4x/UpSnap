@@ -103,6 +103,6 @@ func WakeDevice(device *core.Record) error {
 				break
 			}
 		}
-		return fmt.Errorf(device.GetString("name"), "not online after %d seconds", wakeTimeout)
+		return fmt.Errorf("%s not online after %d seconds", device.GetString("name"), wakeTimeout)
 	}
 }
