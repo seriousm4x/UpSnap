@@ -18,7 +18,7 @@ func SetProcessAttributes(cmd *exec.Cmd) {
 
 // Kills child processes on Linux. Windows doesn't provide a direct way to kill child processes, so we kill just the main process.
 func KillProcess(process *os.Process) error {
-	logger.Warning.Println("Your shutdown cmd didn't finish in time. It will be killed.")
+	logger.Warning.Println("Your command didn't finish in time. It will be killed.")
 	pgid, err := unix.Getpgid(process.Pid)
 	if err != nil {
 		return err
