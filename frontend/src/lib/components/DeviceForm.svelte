@@ -49,6 +49,10 @@
 		device.ip = device.ip.replaceAll(' ', '');
 		device.mac = device.mac.replaceAll(' ', '');
 		device.netmask = device.netmask.replaceAll(' ', '');
+		device.wake_cmd = device.wake_cmd.trim();
+		device.shutdown_cmd = device.wake_cmd.trim();
+		device.wake_cron = device.wake_cron.trim();
+		device.shutdown_cron = device.shutdown_cron.trim();
 		device.ports = portIds;
 		if (device.id) {
 			updateDevice(device);
