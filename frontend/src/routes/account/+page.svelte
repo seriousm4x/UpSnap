@@ -51,30 +51,34 @@
 	});
 
 	async function saveUser() {
-		setLocale(selectedLang);
+		if (newAvatar !== undefined) {
+			if ($pocketbase.authStore.isSuperuser) {
+				if (!$pocketbase.authStore.record?.id) return;
+				await $pocketbase
+					.collection('_superusers')
+					.update($pocketbase.authStore.record.id, { avatar: newAvatar })
+					.then(() => {
+						toast.success(m.toasts_admin_saved());
+					})
+					.catch((err) => {
+						toast.error(err.message);
+					});
+			} else {
+				if (!$pocketbase.authStore.record?.id) return;
+				await $pocketbase
+					.collection('users')
+					.update($pocketbase.authStore.record.id, { avatar: newAvatar })
+					.then(() => {
+						toast.success(m.toasts_user_saved());
+					})
+					.catch((err) => {
+						toast.error(err.message);
+					});
+			}
+		}
 
-		if ($pocketbase.authStore.isSuperuser) {
-			if (!$pocketbase.authStore.record?.id) return;
-			$pocketbase
-				.collection('_superusers')
-				.update($pocketbase.authStore.record.id, { avatar: newAvatar })
-				.then(() => {
-					toast.success(m.toasts_admin_saved());
-				})
-				.catch((err) => {
-					toast.error(err.message);
-				});
-		} else {
-			if (!$pocketbase.authStore.record?.id) return;
-			$pocketbase
-				.collection('users')
-				.update($pocketbase.authStore.record.id, { avatar: newAvatar })
-				.then(() => {
-					toast.success(m.toasts_user_saved());
-				})
-				.catch((err) => {
-					toast.error(err.message);
-				});
+		if ($localeStore !== selectedLang) {
+			setLocale(selectedLang);
 		}
 	}
 
