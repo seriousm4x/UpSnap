@@ -117,14 +117,6 @@
 					<!-- eslint-disable svelte/no-at-html-tags -->
 					{@html m.settings_ping_interval_desc2()}
 				</p>
-				<p>
-					<span class="badge">Second (Optional)</span>
-					<span class="badge">Minute</span>
-					<span class="badge">Hour</span>
-					<span class="badge">DoM</span>
-					<span class="badge">Month</span>
-					<span class="badge">DoW</span>
-				</p>
 				<div class="mt-2 w-full">
 					<input
 						type="text"
@@ -140,7 +132,16 @@
 						{valid ? '✅ ' + nextCronDate(settingsPrivClone.interval) : m.settings_invalid_cron()}
 					{/await}
 				</p>
-
+				<pre class="bg-base-100 text-base-content/80 w-fit rounded p-2"><code
+						>* * * * * *
+| | | | | |
+| | | | | day of the week (0–6)
+| | | | month (1–12)
+| | | day of the month (1–31)
+| | hour (0–23)
+| minute (0–59)
+second (0–59, optional)
+</code></pre>
 				<h2 class="card-title mt-2">{m.settings_lazy_ping_title()}</h2>
 				<p class="mt-2">
 					{m.settings_lazy_ping_desc()}

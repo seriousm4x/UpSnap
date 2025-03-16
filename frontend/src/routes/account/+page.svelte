@@ -205,48 +205,51 @@
 		<form on:submit|preventDefault={changePassword}>
 			<div class="w-full max-w-xs">
 				{#if !$pocketbase.authStore.isSuperuser}
-					<label class="label" for="password-old">
-						<span>{m.account_change_password_label()}</span>
-					</label>
-					<input
-						id="password-old"
-						type="password"
-						placeholder={m.account_change_password_label()}
-						class="input w-full max-w-xs"
-						minlength="5"
-						maxlength="72"
-						bind:value={newPassword.old}
-						required
-					/>
+					<fieldset class="fieldset">
+						<label class="floating-label mt-2">
+							<span>{m.account_change_password_label()} <span class="text-error">*</span></span>
+							<input
+								type="password"
+								placeholder={m.account_change_password_label()}
+								class="input"
+								minlength="5"
+								maxlength="72"
+								bind:value={newPassword.old}
+								required
+							/>
+						</label>
+					</fieldset>
 				{/if}
-				<label class="label" for="password-new">
-					<span>{m.account_change_password_new()}</span>
-				</label>
-				<input
-					id="password-new"
-					type="password"
-					placeholder={m.account_change_password_new()}
-					class="input w-full max-w-xs"
-					minlength={$pocketbase.authStore.isSuperuser ? 10 : 5}
-					maxlength="72"
-					bind:value={newPassword.password}
-					required
-				/>
+				<fieldset class="fieldset">
+					<label class="floating-label mt-2">
+						<span>{m.account_change_password_new()} <span class="text-error">*</span></span>
+						<input
+							type="password"
+							placeholder={m.account_change_password_new()}
+							class="input"
+							minlength={$pocketbase.authStore.isSuperuser ? 10 : 5}
+							maxlength="72"
+							bind:value={newPassword.password}
+							required
+						/>
+					</label>
+				</fieldset>
 			</div>
 			<div class="w-full max-w-xs">
-				<label class="label" for="password-confirm">
-					<span>{m.account_change_password_confirm()}</span>
-				</label>
-				<input
-					id="password-confirm"
-					type="password"
-					placeholder={m.account_change_password_confirm()}
-					class="input w-full max-w-xs"
-					minlength={$pocketbase.authStore.isSuperuser ? 10 : 5}
-					maxlength="72"
-					bind:value={newPassword.confirm}
-					required
-				/>
+				<fieldset class="fieldset">
+					<label class="floating-label mt-2">
+						<span>{m.account_change_password_confirm()} <span class="text-error">*</span></span>
+						<input
+							type="password"
+							placeholder={m.account_change_password_confirm()}
+							class="input"
+							minlength={$pocketbase.authStore.isSuperuser ? 10 : 5}
+							maxlength="72"
+							bind:value={newPassword.confirm}
+							required
+						/>
+					</label>
+				</fieldset>
 			</div>
 			<div class="mt-2">
 				<button type="submit" class="btn btn-success mt-2"

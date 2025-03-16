@@ -365,7 +365,9 @@
 				</fieldset>
 			</div>
 			<div class="flex flex-row flex-wrap gap-4">
-				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+				<fieldset
+					class="fieldset bg-base-100 border-base-300 rounded-box w-fit min-w-64 border p-4"
+				>
 					<legend class="fieldset-legend">{m.device_wake_cron_enable()}</legend>
 					<label class="fieldset-label">
 						<input
@@ -400,6 +402,18 @@
 							</p>
 						{/if}
 					</label>
+					{#if device.wake_cron_enabled}
+						<pre class="bg-base-100 text-base-content/80 w-fit rounded p-2"><code
+								>* * * * * *
+| | | | | |
+| | | | | day of the week (0–6)
+| | | | month (1–12)
+| | | day of the month (1–31)
+| | hour (0–23)
+| minute (0–59)
+second (0–59, optional)
+</code></pre>
+					{/if}
 				</fieldset>
 				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
 					<legend class="fieldset-legend">{m.device_require_confirmation()}</legend>
@@ -465,7 +479,9 @@
 				{m.device_shutdown_cron_desc()}
 			</p>
 			<div class="flex flex-row flex-wrap gap-4">
-				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+				<fieldset
+					class="fieldset bg-base-100 border-base-300 rounded-box w-fit min-w-64 border p-4"
+				>
 					<legend class="fieldset-legend">{m.device_shutdown_cron_enable()}</legend>
 					<label class="fieldset-label">
 						<input
@@ -492,7 +508,7 @@
 						/>
 						{#if device.shutdown_cron_enabled}
 							<p class="fieldset-label">
-								{#await validateCron(device.wake_cron)}
+								{#await validateCron(device.shutdown_cron)}
 									<span class="loading loading-spinner loading-xs"></span>
 								{:then valid}
 									{valid ? '✅ ' + nextCronDate(device.shutdown_cron) : m.settings_invalid_cron()}
@@ -500,6 +516,18 @@
 							</p>
 						{/if}
 					</label>
+					{#if device.shutdown_cron_enabled}
+						<pre class="bg-base-100 text-base-content/80 w-fit rounded p-2"><code
+								>* * * * * *
+| | | | | |
+| | | | | day of the week (0–6)
+| | | | month (1–12)
+| | | day of the month (1–31)
+| | hour (0–23)
+| minute (0–59)
+second (0–59, optional)
+</code></pre>
+					{/if}
 				</fieldset>
 				<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
 					<legend class="fieldset-legend">{m.device_require_confirmation()}</legend>
