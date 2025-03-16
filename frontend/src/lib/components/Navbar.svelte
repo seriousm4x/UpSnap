@@ -205,7 +205,7 @@
 				</li>
 			{/if}
 			<div class="dropdown dropdown-end">
-				<button class="btn btn-ghost hover:bg-base-content/10 h-full border-0 p-2">
+				<button class="btn btn-ghost hover:bg-base-content/10 h-full border-0 p-2" tabindex="0">
 					<Fa icon={faSwatchbook} />
 					<span class="font-normal">{m.navbar_theme()}</span>
 					<Fa icon={faChevronDown} />
