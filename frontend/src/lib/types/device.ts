@@ -31,7 +31,7 @@ export type Device = RecordModel & {
 	sol_enabled: boolean;
 	sol_auth: boolean;
 	sol_user: string;
-	sol_passwort: string;
+	sol_password: string;
 	sol_port: number;
 };
 
