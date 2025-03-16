@@ -26,27 +26,21 @@
 - 🔌 Ping Any Port You Choose
 - 🔍 Discover Devices with Network Scanning (nmap required)
 - 👤 Secured User Management
-- 🌐 i18n support for [these](https://github.com/seriousm4x/UpSnap/tree/master/frontend/messages) languages
-- 🎨 29 Themes
+- 🌐 i18n support for [these](/frontend/translations) languages
+- 🎨 35 Themes
 - 🐳 [Docker images](https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap) for amd64, arm64, arm/v7, arm/v6
 - 🏠 Self-Hostable
 
 ## 📸 Screenshots
 
-| Dark                              | Light                              |
-| --------------------------------- | ---------------------------------- |
-| ![](/assets/home-dark.webp)       | ![](/assets/home-light.webp)       |
-| ![](/assets/account-dark.webp)    | ![](/assets/account-light.webp)    |
-| ![](/assets/new-manual-dark.webp) | ![](/assets/new-manual-light.webp) |
-| ![](/assets/new-scan-dark.webp)   | ![](/assets/new-scan-light.webp)   |
-| ![](/assets/settings-dark.webp)   | ![](/assets/settings-light.webp)   |
-| ![](/assets/users-dark.webp)      | ![](/assets/users-light.webp)      |
-
-## 🐧 Install from the [AUR](https://aur.archlinux.org/packages/upsnap-bin)
-
-```bash
-yay -Sy upsnap-bin
-```
+| Silk                               | Dim                               |
+| ---------------------------------- | --------------------------------- |
+| ![](/assets/home-light.webp)       | ![](/assets/home-dark.webp)       |
+| ![](/assets/account-light.webp)    | ![](/assets/account-dark.webp)    |
+| ![](/assets/new-manual-light.webp) | ![](/assets/new-manual-dark.webp) |
+| ![](/assets/new-scan-light.webp)   | ![](/assets/new-scan-dark.webp)   |
+| ![](/assets/settings-light.webp)   | ![](/assets/settings-dark.webp)   |
+| ![](/assets/users-light.webp)      | ![](/assets/users-dark.webp)      |
 
 ## 🚀 Run the binary
 
@@ -74,6 +68,8 @@ If you want to use network discovery, make sure to have `nmap` installed and run
 You can use the [docker-compose](docker-compose.yml) example. See the comments in the file for customization.
 
 ### Non-root docker user:
+
+You will loose the ability to add network devices via the scan page.
 
 Create the mount point first:
 
@@ -111,6 +107,12 @@ upsnap.example.com {
 }
 ```
 
+## 🐧 Install from the [AUR](https://aur.archlinux.org/packages/upsnap-bin)
+
+```bash
+yay -Sy upsnap-bin
+```
+
 ## 🔒 User permissions
 
 UpSnap offers unique access for each user, per device. While admins have all permissions, they can assign specific rights to users such as displaying/hiding a device, accessing device editing, deleting and powering devices on/off. See the last screenshot in the [📸 Screenshots section](#-screenshots).
@@ -127,8 +129,8 @@ Although UpSnap has user authorisation, it is **not recommended to expose it to 
 
 UpSnap is available in the following languages so far:
 
-- 🇺🇸 **English** (en-US)
 - 🇩🇪 **German** (de-DE)
+- 🇺🇸 **English** (en-US)
 - 🇪🇸 **Spanish** (es-ES)
 - 🇫🇷 **French** (fr-FR)
 - 🇮🇩 **Bahasa Indonesia** (id-ID)
