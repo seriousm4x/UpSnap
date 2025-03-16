@@ -126,19 +126,21 @@
 			</p>
 			<div class="flex flex-row flex-wrap items-end gap-4">
 				<form on:submit|preventDefault={saveSettings}>
-					<label class="label" for="scan-range">
-						<span>{m.device_network_scan_ip_range()}</span>
-					</label>
-					<div class="join max-w-xs">
-						<input
-							id="scan-range"
-							class="input join-item w-full"
-							type="text"
-							placeholder="192.168.1.0/24"
-							bind:value={scanRange}
-						/>
-						<button class="btn btn-neutral join-item" type="submit">{m.buttons_save()}</button>
-					</div>
+					<fieldset class="fieldset p-0">
+						<label class="floating-label mt-2">
+							<span>{m.device_network_scan_ip_range()}</span>
+							<div class="join max-w-xs">
+								<input
+									id="scan-range"
+									class="input join-item w-full"
+									type="text"
+									placeholder="192.168.1.0/24"
+									bind:value={scanRange}
+								/>
+								<button class="btn btn-neutral join-item" type="submit">{m.buttons_save()}</button>
+							</div>
+						</label>
+					</fieldset>
 				</form>
 				<div>
 					<div>
