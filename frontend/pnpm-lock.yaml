@@ -29,8 +29,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3(svelte@5.23.0)
       svelte-french-toast:
-        specifier: github:seriousm4x/svelte-french-toast#fix-72-build
-        version: git+https://git@github.com:seriousm4x/svelte-french-toast.git#fbf89b9952cf11e15174b1841a6eb1ad23770349(svelte@5.23.0)
+        specifier: https://github.com/seriousm4x/svelte-french-toast.git#fix-72-build
+        version: https://codeload.github.com/seriousm4x/svelte-french-toast/tar.gz/fbf89b9952cf11e15174b1841a6eb1ad23770349(svelte@5.23.0)
       theme-change:
         specifier: ^2.5.0
         version: 2.5.0
@@ -2237,12 +2237,10 @@ packages:
     peerDependencies:
       svelte: ^4.0.0 || ^5.0.0
 
-  svelte-french-toast@git+https://git@github.com:seriousm4x/svelte-french-toast.git#fbf89b9952cf11e15174b1841a6eb1ad23770349:
+  svelte-french-toast@https://codeload.github.com/seriousm4x/svelte-french-toast/tar.gz/fbf89b9952cf11e15174b1841a6eb1ad23770349:
     resolution:
       {
-        commit: fbf89b9952cf11e15174b1841a6eb1ad23770349,
-        repo: git@github.com:seriousm4x/svelte-french-toast.git,
-        type: git
+        tarball: https://codeload.github.com/seriousm4x/svelte-french-toast/tar.gz/fbf89b9952cf11e15174b1841a6eb1ad23770349
       }
     version: 2.0.0-alpha.0
     peerDependencies:
@@ -3585,7 +3583,7 @@ snapshots:
     dependencies:
       svelte: 5.23.0
 
-  svelte-french-toast@git+https://git@github.com:seriousm4x/svelte-french-toast.git#fbf89b9952cf11e15174b1841a6eb1ad23770349(svelte@5.23.0):
+  svelte-french-toast@https://codeload.github.com/seriousm4x/svelte-french-toast/tar.gz/fbf89b9952cf11e15174b1841a6eb1ad23770349(svelte@5.23.0):
     dependencies:
       svelte: 5.23.0
       svelte-writable-derived: 3.1.1(svelte@5.23.0)
