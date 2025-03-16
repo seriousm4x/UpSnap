@@ -99,7 +99,7 @@
 			<h1 class="card-title">{device.name}</h1>
 		{/if}
 		{#if device.description}
-			<p>{device.description}</p>
+			<p class="grow-0">{device.description}</p>
 		{/if}
 		<div class="card rounded-box w-full">
 			<DeviceCardNic {device} />
