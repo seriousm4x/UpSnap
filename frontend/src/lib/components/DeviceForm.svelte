@@ -157,6 +157,7 @@
 			.then((res) => {
 				deviceGroups = [...deviceGroups, res as Group];
 				toast.success(m.toasts_group_created({ group: newGroup }));
+				newGroup = '';
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -659,6 +660,12 @@
 					class="input join-item"
 					placeholder={m.device_groups_placeholder()}
 					type="text"
+					on:keydown={(e) => {
+						if (e.key === 'Enter') {
+							e.preventDefault();
+							addGroup();
+						}
+					}}
 					bind:value={newGroup}
 				/>
 				<button class="btn btn-neutral join-item" type="button" on:click={() => addGroup()}
