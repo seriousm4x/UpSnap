@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -24,6 +25,21 @@
 	let searchInput: HTMLInputElement;
 	const isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
 	const gridClass = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4';
+
+	if (browser) {
+		const storedOrderBy = localStorage.getItem('orderBy');
+		if (storedOrderBy === 'name' || storedOrderBy === 'ip') {
+			orderBy = storedOrderBy;
+		}
+		orderByGroups = localStorage.getItem('orderByGroups') !== 'false';
+	}
+
+	$: if (browser) {
+		localStorage.setItem('orderBy', orderBy);
+	}
+	$: if (browser) {
+		localStorage.setItem('orderByGroups', String(orderByGroups));
+	}
 
 	onMount(() => {});
 	const filteredDevices = () =>
