@@ -2,6 +2,7 @@
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { localeStore } from '$lib/stores/locale';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Group } from '$lib/types/device';
 	import {
@@ -138,16 +139,16 @@
 		<div class="space-y-6">
 			{#if devicesWithoutGroups().length > 0}
 				<div class={gridClass}>
-					{#each devicesWithoutGroups().sort( (a, b) => a[orderBy].localeCompare(b[orderBy]) ) as device}
+					{#each devicesWithoutGroups().sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device}
 						<DeviceCard {device} />
 					{/each}
 				</div>
 			{/if}
-			{#each Object.entries(devicesWithGroup()).sort( ([a], [b]) => a.localeCompare(b) ) as [group, groupDevices]}
+			{#each Object.entries(devicesWithGroup()).sort( ([a], [b]) => a.localeCompare( b, $localeStore, { numeric: true } ) ) as [group, groupDevices]}
 				<div>
 					<h1 class="mb-3 text-2xl font-bold">{group}</h1>
 					<div class={gridClass}>
-						{#each groupDevices.sort((a, b) => a[orderBy].localeCompare(b[orderBy])) as device}
+						{#each groupDevices.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device}
 							<DeviceCard {device} />
 						{/each}
 					</div>
@@ -156,7 +157,7 @@
 		</div>
 	{:else}
 		<div class={gridClass}>
-			{#each filteredDevices().sort((a, b) => a[orderBy].localeCompare(b[orderBy])) as device}
+			{#each filteredDevices().sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device}
 				<DeviceCard {device} />
 			{/each}
 		</div>

@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import { m } from '$lib/paraglide/messages';
+	import { localeStore } from '$lib/stores/locale';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPriv } from '$lib/stores/settings';
 	import type { Device } from '$lib/types/device';
@@ -166,7 +167,7 @@
 				</div>
 			</div>
 			{#if scanResponse.devices?.length > 0}
-				{#each scanResponse.devices.sort( (a, b) => a.ip.localeCompare( b.ip, undefined, { numeric: true } ) ) as device, index}
+				{#each scanResponse.devices.sort( (a, b) => a.ip.localeCompare( b.ip, $localeStore, { numeric: true } ) ) as device, index}
 					<div class="collapse-arrow bg-base-100 collapse">
 						<input type="radio" name="scanned-devices" checked={index === 0} />
 						<div class="collapse-title font-bold">

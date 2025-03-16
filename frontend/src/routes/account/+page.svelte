@@ -179,7 +179,7 @@
 			</div>
 			<h2 class="card-title mt-4 mb-2">{m.account_language_title()}</h2>
 			<select class="select w-full max-w-xs" bind:value={selectedLang}>
-				{#each [...locales].sort( (a, b) => a.localeCompare( b, undefined, { sensitivity: 'base' } ) ) as lang}
+				{#each [...locales].sort( (a, b) => a.localeCompare( b, $localeStore, { sensitivity: 'base' } ) ) as lang}
 					<option value={lang} selected={$localeStore === lang}>
 						{languageEmojis[lang]}
 						{localeToFullName(lang)} [{lang}]
