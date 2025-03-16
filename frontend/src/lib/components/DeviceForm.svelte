@@ -50,7 +50,7 @@
 		device.mac = device.mac.replaceAll(' ', '');
 		device.netmask = device.netmask.replaceAll(' ', '');
 		device.wake_cmd = device.wake_cmd.trim();
-		device.shutdown_cmd = device.wake_cmd.trim();
+		device.shutdown_cmd = device.shutdown_cmd.trim();
 		device.wake_cron = device.wake_cron.trim();
 		device.shutdown_cron = device.shutdown_cron.trim();
 		device.ports = portIds;
@@ -593,7 +593,7 @@
 								type="password"
 								placeholder={m.device_sol_password()}
 								class="input"
-								bind:value={device.sol_passwort}
+								bind:value={device.sol_password}
 								disabled={!device.sol_auth}
 								required={device.sol_auth}
 							/>
