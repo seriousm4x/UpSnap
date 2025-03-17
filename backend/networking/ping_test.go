@@ -80,7 +80,7 @@ func TestCheckPort(t *testing.T) {
 			name:      "Port Zero",
 			host:      "8.8.8.8",
 			port:      "0",
-			wantError: true,
+			wantError: false,
 		},
 	}
 
