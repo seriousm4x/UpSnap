@@ -1,6 +1,7 @@
 package networking
 
 import (
+	"errors"
 	"net"
 	"os"
 	"os/exec"
@@ -76,6 +77,13 @@ func CheckPort(host string, port string) (bool, error) {
 	timeout := 500 * time.Millisecond
 	conn, err := net.DialTimeout("tcp", net.JoinHostPort(host, port), timeout)
 	if err != nil {
+		// treat "host unreachable" and "timeout" as no error
+		var netErr *net.OpError
+		if errors.As(err, &netErr) {
+			if errors.Is(netErr.Err, syscall.EHOSTUNREACH) || errors.Is(netErr.Err, os.ErrDeadlineExceeded) {
+				return false, nil
+			}
+		}
 		return false, err
 	}
 	defer conn.Close()
