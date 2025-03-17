@@ -80,7 +80,10 @@ func CheckPort(host string, port string) (bool, error) {
 		// treat "host unreachable" and "timeout" as no error
 		var netErr *net.OpError
 		if errors.As(err, &netErr) {
-			if errors.Is(netErr.Err, syscall.EHOSTUNREACH) || errors.Is(netErr.Err, os.ErrDeadlineExceeded) {
+			if errors.Is(netErr.Err, syscall.EHOSTUNREACH) {
+				return false, nil
+			}
+			if netErr.Timeout() {
 				return false, nil
 			}
 		}
