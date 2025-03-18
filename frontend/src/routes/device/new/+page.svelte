@@ -5,16 +5,43 @@
 	import NetworkScan from '$lib/components/NetworkScan.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
-	import type { Device, Port } from '$lib/types/device';
+	import type { Device, Group, Port } from '$lib/types/device';
 	import { faBinoculars, faWrench } from '@fortawesome/free-solid-svg-icons';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 
 	let device: Device = {
+		name: '',
+		ip: '',
+		mac: '',
+		netmask: '',
+		description: '',
+		status: '',
+		ports: [] as string[],
+		link_open: '',
+		ping_cmd: '',
+		wake_cron: '',
+		wake_cron_enabled: false,
+		wake_cmd: '',
+		wake_confirm: false,
+		wake_timeout: 0,
+		shutdown_cron: '',
+		shutdown_cron_enabled: false,
+		shutdown_cmd: '',
+		shutdown_confirm: false,
+		shutdown_timeout: 0,
+		password: '',
+		groups: [] as string[],
 		expand: {
-			ports: [] as Port[]
+			ports: [] as Port[],
+			groups: [] as Group[]
 		},
-		groups: [] as string[]
+		created_by: '',
+		sol_enabled: false,
+		sol_auth: false,
+		sol_user: '',
+		sol_password: '',
+		sol_port: 0
 	} as Device;
 
 	$: if (Object.hasOwn($permission, 'create')) {
