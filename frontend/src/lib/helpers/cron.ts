@@ -5,20 +5,9 @@ import cronParser from 'cron-parser';
 import { formatDate, type Locale } from 'date-fns';
 import { get } from 'svelte/store';
 
-export const cronRegex = new RegExp(/((((\d+,)+\d+|(\d+(\/|-)\d+)|\d+|\*) ?){5,6})/);
-
 export function nextCronDate(expression: string) {
 	try {
-		if (
-			expression === '' ||
-			!cronRegex.test(expression) ||
-			Object.keys(cronParser.parseString(expression).errors).length > 0
-		) {
-			throw new Error('cron-parser failed to parse string');
-		}
-
 		const cron = cronParser.parseExpression(expression, {});
-
 		return formatDate(cron.next().toISOString(), 'PPpp', {
 			locale: get(dateFnsLocale) as unknown as Locale
 		});
