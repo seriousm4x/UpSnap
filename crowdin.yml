@@ -1,1 +1,3 @@
-files: []
+files:
+  - source: /frontend/translations/*.json
+    translation: /frontend/translations/%two_letters_code%
