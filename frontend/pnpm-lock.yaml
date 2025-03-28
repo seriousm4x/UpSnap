@@ -46,8 +46,8 @@ importers:
         specifier: ^3.0.7
         version: 3.0.7
       '@inlang/paraglide-js':
-        specifier: 2.0.5
-        version: 2.0.5
+        specifier: 2.0.6
+        version: 2.0.6
       '@sveltejs/adapter-static':
         specifier: ^3.0.8
         version: 3.0.8(@sveltejs/kit@2.20.2(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.25.3)(vite@6.2.3(jiti@2.4.2)(lightningcss@1.29.2)))(svelte@5.25.3)(vite@6.2.3(jiti@2.4.2)(lightningcss@1.29.2)))
@@ -346,8 +346,8 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  '@inlang/paraglide-js@2.0.5':
-    resolution: {integrity: sha512-vf1gVFbqeXluZTPdjetC8rG1EHzTS4CthhxYe1ECjxRma9Rxtnfu5utaKtAswCI/gVkDrpUgAUIepfEQMGO1AA==}
+  '@inlang/paraglide-js@2.0.6':
+    resolution: {integrity: sha512-hvSrtUwgYnEsfQXqQCCAqFhvmp6mIhvDiV0Z8l5y8kiTv4JxNWwjQTuwom1YD9Hmfk7JoKwJPSFHXSjWKULPrg==}
     hasBin: true
 
   '@inlang/recommend-sherlock@0.2.1':
@@ -355,6 +355,10 @@ packages:
 
   '@inlang/sdk@2.4.4':
     resolution: {integrity: sha512-1cbeEzfQLTHTl1Y2qthZWItiZHe0ok0w1rNeANW1IO8GcFCmx44WGt7KnNssiUjPl7YKi4JG9XhwwaVPqNJfyA==}
+    engines: {node: '>=18.0.0'}
+
+  '@inlang/sdk@2.4.5':
+    resolution: {integrity: sha512-3zlc2llEQGeQALSEz5sZ9MdqDpFiZCxwgqNtt5QA46KD7DIp2bh7VD5kmUKifyNzDxiIk1r4liAxIgCvgC2m5w==}
     engines: {node: '>=18.0.0'}
 
   '@jridgewell/gen-mapping@0.3.8':
@@ -379,8 +383,15 @@ packages:
     resolution: {integrity: sha512-VuiBsDTiPtkqnDHvpmPbP4e55Gl1Bcj5Efmk7myRjZC9Y3sxjy6CGCQJH1wLr4hLPcHz4xUsQw+LphjbKFtu8w==}
     engines: {node: '>=18'}
 
+  '@lix-js/sdk@0.4.5':
+    resolution: {integrity: sha512-H0bu99QlzYArFtyV+5aKHGfgjAvtUYMxatQVXFddG0q+I3GtjR4PyNAjQdh0zeTnMJkSXWo2giSsQpXpFBz4Dw==}
+    engines: {node: '>=18'}
+
   '@lix-js/server-api-schema@0.1.1':
     resolution: {integrity: sha512-W1Z7KKOxAQ4Dag9V2wrDevHPh5rPk+icBUsxNfNCNB2tlPrKpba99562vcTCPoT03KXpihEbWutZNujCRtMA+g==}
+
+  '@lix-js/server-protocol-schema@0.1.1':
+    resolution: {integrity: sha512-jBeALB6prAbtr5q4vTuxnRZZv1M2rKe8iNqRQhFJ4Tv7150unEa0vKyz0hs8Gl3fUGsWaNJBh3J8++fpbrpRBQ==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1440,9 +1451,6 @@ packages:
     resolution: {integrity: sha512-J9rcZ/xVJonAoESqVGHHZhrNdVbrCfkdB41BP6eiwHMoFShD9it3yZXApVYMHdGfCshBsZCKsajwJeBbS/M1zg==}
     engines: {node: '>=18'}
 
-  tailwindcss@4.0.16:
-    resolution: {integrity: sha512-i/SbG7ThTIcLshcFJL+je7hCv9dPis4Xl4XNeel6iZNX42pp/BZ+la+SbZIPoYE+PN8zhKbnHblpQ/lhOWwIeQ==}
-
   tailwindcss@4.0.17:
     resolution: {integrity: sha512-OErSiGzRa6rLiOvaipsDZvLMSpsBZ4ysB4f0VKGXUrjw2jfkJRd6kjRKV2+ZmTCNvwtvgdDam5D7w6WXsdLJZw==}
 
@@ -1732,10 +1740,10 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@inlang/paraglide-js@2.0.5':
+  '@inlang/paraglide-js@2.0.6':
     dependencies:
       '@inlang/recommend-sherlock': 0.2.1
-      '@inlang/sdk': 2.4.4
+      '@inlang/sdk': 2.4.5
       commander: 11.1.0
       consola: 3.4.0
       json5: 2.2.3
@@ -1751,6 +1759,16 @@ snapshots:
   '@inlang/sdk@2.4.4':
     dependencies:
       '@lix-js/sdk': 0.4.4
+      '@sinclair/typebox': 0.31.28
+      kysely: 0.27.6
+      sqlite-wasm-kysely: 0.3.0(kysely@0.27.6)
+      uuid: 10.0.0
+    transitivePeerDependencies:
+      - babel-plugin-macros
+
+  '@inlang/sdk@2.4.5':
+    dependencies:
+      '@lix-js/sdk': 0.4.5
       '@sinclair/typebox': 0.31.28
       kysely: 0.27.6
       sqlite-wasm-kysely: 0.3.0(kysely@0.27.6)
@@ -1787,7 +1805,21 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
+  '@lix-js/sdk@0.4.5':
+    dependencies:
+      '@lix-js/server-protocol-schema': 0.1.1
+      dedent: 1.5.1
+      human-id: 4.1.1
+      js-sha256: 0.11.0
+      kysely: 0.27.6
+      sqlite-wasm-kysely: 0.3.0(kysely@0.27.6)
+      uuid: 10.0.0
+    transitivePeerDependencies:
+      - babel-plugin-macros
+
   '@lix-js/server-api-schema@0.1.1': {}
+
+  '@lix-js/server-protocol-schema@0.1.1': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -2728,8 +2760,6 @@ snapshots:
       locate-character: 3.0.0
       magic-string: 0.30.17
       zimmerframe: 1.1.2
-
-  tailwindcss@4.0.16: {}
 
   tailwindcss@4.0.17: {}
 
