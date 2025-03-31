@@ -139,8 +139,8 @@ UpSnap is available in the following languages so far:
 - 🇳🇱 **Dutch** (nl-NL)
 - 🇵🇱 **Polish** (pl-PL)
 - 🇵🇹 **Portuguese** (pt-PT)
-- 🇨🇳 **Chinese** (zh-CN)
 - 🇹🇼 **Chinese (Taiwan)** (zh-TW)
+- 🇨🇳 **Chinese** (zh-CN)
 
 **If you want to contribute and help translating, check the wiki: [How to add languages](https://github.com/seriousm4x/UpSnap/wiki/How-to-add-languages)**
 

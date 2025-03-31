@@ -1,7 +1,20 @@
 {
 	"$schema": "https://inlang.com/schema/project-settings",
-	"baseLocale": "en",
-	"locales": ["de", "en", "es", "fr", "id", "it", "ja", "nl", "pl", "pt", "zh-TW", "zh"],
+	"baseLocale": "en-US",
+	"locales": [
+		"de-DE",
+		"en-US",
+		"es-ES",
+		"fr-FR",
+		"id-ID",
+		"it-IT",
+		"ja-JP",
+		"nl-NL",
+		"pl-PL",
+		"pt-PT",
+		"zh-TW",
+		"zh-CN"
+	],
 	"modules": [
 		"https://cdn.jsdelivr.net/npm/@inlang/plugin-message-format@4/dist/index.js",
 		"https://cdn.jsdelivr.net/npm/@inlang/plugin-m-function-matcher@2/dist/index.js"
