@@ -1,3 +1,3 @@
 files:
-  - source: /frontend/translations/en.json
+  - source: /frontend/translations/en-US.json
     translation: /frontend/translations/%locale%.json
