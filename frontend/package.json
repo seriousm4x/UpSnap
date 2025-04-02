@@ -46,7 +46,7 @@
 	},
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.7.2",
-		"@tailwindcss/postcss": "^4.0.17",
+		"@tailwindcss/postcss": "^4.1.0",
 		"cron-parser": "^4.9.0",
 		"date-fns": "^4.1.0",
 		"pocketbase": "^0.25.2",
