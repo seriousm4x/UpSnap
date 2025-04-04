@@ -46,8 +46,8 @@ importers:
         specifier: ^3.0.10
         version: 3.0.10
       '@inlang/paraglide-js':
-        specifier: 2.0.8
-        version: 2.0.8
+        specifier: 2.0.10
+        version: 2.0.10
       '@sveltejs/adapter-static':
         specifier: ^3.0.8
         version: 3.0.8(@sveltejs/kit@2.20.3(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.25.6)(vite@6.2.4(jiti@2.4.2)(lightningcss@1.29.2)))(svelte@5.25.6)(vite@6.2.4(jiti@2.4.2)(lightningcss@1.29.2)))
@@ -350,16 +350,12 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  '@inlang/paraglide-js@2.0.8':
-    resolution: {integrity: sha512-DlzpXFV/21xSv79yYYevvCcUhtu78fpGp66NUZvZCs7vWckzew3FZoKMbKlYRKoxTnJFsJmnb+4rBhZoqYnPJw==}
+  '@inlang/paraglide-js@2.0.10':
+    resolution: {integrity: sha512-rsG6GfQwAtr9oby9vPtkEw0RItADGyS3ru82fc8DHpuSeQO9BVHnX5l7jsNLcV991GcwCodc+b72doEUtvRXVA==}
     hasBin: true
 
   '@inlang/recommend-sherlock@0.2.1':
     resolution: {integrity: sha512-ckv8HvHy/iTqaVAEKrr+gnl+p3XFNwe5D2+6w6wJk2ORV2XkcRkKOJ/XsTUJbPSiyi4PI+p+T3bqbmNx/rDUlg==}
-
-  '@inlang/sdk@2.4.6':
-    resolution: {integrity: sha512-Oh0MEWHE1VneS82MHUt8ieFoyGMMlM0mwTI1t2rMG+KBJjCEoSpUCc58IkE3K4c+3p0L5U4PcBTL0D7ebzjcbA==}
-    engines: {node: '>=18.0.0'}
 
   '@inlang/sdk@2.4.7':
     resolution: {integrity: sha512-EKq1mituvRjYVT4iCLFQyz4W4c5L0i5JsPKcjiOZnFUN7gcnKgnoqQB/M7eBy2dNTinH+yR6lftmurOdh77rzA==}
@@ -382,10 +378,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
-
-  '@lix-js/sdk@0.4.5':
-    resolution: {integrity: sha512-H0bu99QlzYArFtyV+5aKHGfgjAvtUYMxatQVXFddG0q+I3GtjR4PyNAjQdh0zeTnMJkSXWo2giSsQpXpFBz4Dw==}
-    engines: {node: '>=18'}
 
   '@lix-js/sdk@0.4.6':
     resolution: {integrity: sha512-uxdDhD9kKLaySyTPlMw5GfPDEDH7YIPcReoCaktFoZ1HUEtdcvABWH+nzC7TTP5nvUIrW70u72ThEczysUgnrw==}
@@ -1449,9 +1441,6 @@ packages:
     resolution: {integrity: sha512-RGkaeAXDuJdvhA1fdSM5GgD++vYfJYijZL0uN6kM2s/TRJ663jktBhZlF0qjzAJGR/34PtaeT3G8MKJY1EKeqg==}
     engines: {node: '>=18'}
 
-  tailwindcss@4.1.1:
-    resolution: {integrity: sha512-QNbdmeS979Efzim2g/bEvfuh+fTcIdp1y7gA+sb6OYSW74rt7Cr7M78AKdf6HqWT3d5AiTb7SwTT3sLQxr4/qw==}
-
   tailwindcss@4.1.2:
     resolution: {integrity: sha512-VCsK+fitIbQF7JlxXaibFhxrPq4E2hDcG8apzHUdWFMCQWD8uLdlHg4iSkZ53cgLCCcZ+FZK7vG8VjvLcnBgKw==}
 
@@ -1745,10 +1734,10 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@inlang/paraglide-js@2.0.8':
+  '@inlang/paraglide-js@2.0.10':
     dependencies:
       '@inlang/recommend-sherlock': 0.2.1
-      '@inlang/sdk': 2.4.6
+      '@inlang/sdk': 2.4.7
       commander: 11.1.0
       consola: 3.4.0
       json5: 2.2.3
@@ -1760,16 +1749,6 @@ snapshots:
   '@inlang/recommend-sherlock@0.2.1':
     dependencies:
       comment-json: 4.2.5
-
-  '@inlang/sdk@2.4.6':
-    dependencies:
-      '@lix-js/sdk': 0.4.5
-      '@sinclair/typebox': 0.31.28
-      kysely: 0.27.6
-      sqlite-wasm-kysely: 0.3.0(kysely@0.27.6)
-      uuid: 10.0.0
-    transitivePeerDependencies:
-      - babel-plugin-macros
 
   '@inlang/sdk@2.4.7':
     dependencies:
@@ -1797,18 +1776,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
-
-  '@lix-js/sdk@0.4.5':
-    dependencies:
-      '@lix-js/server-protocol-schema': 0.1.1
-      dedent: 1.5.1
-      human-id: 4.1.1
-      js-sha256: 0.11.0
-      kysely: 0.27.6
-      sqlite-wasm-kysely: 0.3.0(kysely@0.27.6)
-      uuid: 10.0.0
-    transitivePeerDependencies:
-      - babel-plugin-macros
 
   '@lix-js/sdk@0.4.6':
     dependencies:
@@ -2761,8 +2728,6 @@ snapshots:
       locate-character: 3.0.0
       magic-string: 0.30.17
       zimmerframe: 1.1.2
-
-  tailwindcss@4.1.1: {}
 
   tailwindcss@4.1.2: {}
 
