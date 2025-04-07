@@ -46,8 +46,8 @@ importers:
         specifier: ^3.0.10
         version: 3.0.10
       '@inlang/paraglide-js':
-        specifier: 2.0.10
-        version: 2.0.10
+        specifier: 2.0.11
+        version: 2.0.11
       '@sveltejs/adapter-static':
         specifier: ^3.0.8
         version: 3.0.8(@sveltejs/kit@2.20.4(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.25.6)(vite@6.2.5(jiti@2.4.2)(lightningcss@1.29.2)))(svelte@5.25.6)(vite@6.2.5(jiti@2.4.2)(lightningcss@1.29.2)))
@@ -354,8 +354,8 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  '@inlang/paraglide-js@2.0.10':
-    resolution: {integrity: sha512-rsG6GfQwAtr9oby9vPtkEw0RItADGyS3ru82fc8DHpuSeQO9BVHnX5l7jsNLcV991GcwCodc+b72doEUtvRXVA==}
+  '@inlang/paraglide-js@2.0.11':
+    resolution: {integrity: sha512-aR3vq/Q8wdXIaTHVujTZ+9NGlN+7OwVLVCiJBbhSo4Io9swR3iToAKgGeBk3GV8PJxiVqf/JwC5s4MLjZNcNJg==}
     hasBin: true
 
   '@inlang/recommend-sherlock@0.2.1':
@@ -1743,7 +1743,7 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@inlang/paraglide-js@2.0.10':
+  '@inlang/paraglide-js@2.0.11':
     dependencies:
       '@inlang/recommend-sherlock': 0.2.1
       '@inlang/sdk': 2.4.7
