@@ -49,7 +49,7 @@
 		"@tailwindcss/postcss": "^4.1.4",
 		"cron-parser": "^4.9.0",
 		"date-fns": "^4.1.0",
-		"pocketbase": "^0.25.2",
+		"pocketbase": "^0.26.0",
 		"postcss": "^8.5.3",
 		"svelte-fa": "^4.0.3",
 		"svelte-french-toast": "https://github.com/seriousm4x/svelte-french-toast.git#fix-72-build",
