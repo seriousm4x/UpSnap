@@ -2,10 +2,12 @@ services:
   upsnap:
     container_name: upsnap
     image: ghcr.io/seriousm4x/upsnap:5 # images are also available on docker hub: seriousm4x/upsnap:5
-    network_mode: host
     restart: unless-stopped
+    ports:
+      - "8090:8090"
     volumes:
       - ./data:/app/pb_data
+      # - upsnap:/app/pb_data # For persistent storage
     # # To use a non-root user, create the mountpoint first (mkdir data) so that it has the right permission.
     # user: 1000:1000
     # environment:
@@ -26,3 +28,14 @@ services:
     #   interval: 10s
     # # or install custom packages for shutdown
     # entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http 0.0.0.0:8090"
+    networks:
+      - upsert-network
+
+networks:
+  upsert-network:
+      driver: bridge
+
+# To use persistent volumes 
+# volumes:
+#   upsnap:
+#     driver: local    
