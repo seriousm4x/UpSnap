@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   upsnap:
     container_name: upsnap
@@ -7,35 +9,37 @@ services:
       - "8090:8090"
     volumes:
       - ./data:/app/pb_data
-      # - upsnap:/app/pb_data # For persistent storage
-    # # To use a non-root user, create the mountpoint first (mkdir data) so that it has the right permission.
-    # user: 1000:1000
-    # environment:
-    #   - TZ=Europe/Berlin # Set container timezone for cron schedules
-    #   - UPSNAP_INTERVAL=*/10 * * * * * # Sets the interval in which the devices are pinged
-    #   - UPSNAP_SCAN_RANGE=192.168.1.0/24 # Scan range is used for device discovery on local network
-    #   - UPSNAP_SCAN_TIMEOUT=500ms # Scan timeout is nmap's --host-timeout value to wait for devices (https://nmap.org/book/man-performance.html)
-    #   - UPSNAP_PING_PRIVILEGED=true # Set to false if you don't have root user permissions
-    #   - UPSNAP_WEBSITE_TITLE=Custom name # Custom website title
-    # # dns is used for name resolution during network scan
+      # Uncomment for persistent named volume instead of local directory
+      # - upsnap:/app/pb_data
+    # user: 1000:1000  # Uncomment to use non-root user
+    environment:
+      # Uncomment and customize these environment variables as needed
+      # - TZ=Europe/Berlin  # Set container timezone for cron schedules
+      # - UPSNAP_INTERVAL=*/10 * * * *  # Sets the interval in which the devices are pinged (cron format)
+      # - UPSNAP_SCAN_RANGE=192.168.1.0/24  # Scan range for device discovery
+      # - UPSNAP_SCAN_TIMEOUT=500ms  # Scan timeout (nmap's --host-timeout value)
+      # - UPSNAP_PING_PRIVILEGED=true  # Set to false without root permissions
+      # - UPSNAP_WEBSITE_TITLE=Custom name  # Custom website title
+    # DNS servers for name resolution during network scan
     # dns:
-    #   - 192.18.0.1
-    #   - 192.18.0.2
-    # # you can change the listen ip:port inside the container like this:
-    # entrypoint: /bin/sh -c "./upsnap serve --http 0.0.0.0:5000"
-    # healthcheck:
-    #   test: curl -fs "http://localhost:5000/api/health" || exit 1
-    #   interval: 10s
-    # # or install custom packages for shutdown
-    # entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http 0.0.0.0:8090"
+    #   - 192.168.0.1 
+    #   - 192.168.0.2
+    # Custom entrypoint configuration options (uncomment only one)
+    # entrypoint: /bin/sh -c "./upsnap serve --http 0.0.0.0:8090"  # Custom port
+    # entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http 0.0.0.0:8090"  # Install packages
+    healthcheck:
+      test: curl -fs "http://localhost:8090/api/health" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
     networks:
-      - upsert-network
+      - upsnap-network
 
 networks:
-  upsert-network:
-      driver: bridge
+  upsnap-network:
+    driver: bridge
 
-# To use persistent volumes 
+# Uncomment to use persistent volumes
 # volumes:
 #   upsnap:
-#     driver: local    
+#     driver: local
