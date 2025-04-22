@@ -27,8 +27,8 @@ importers:
         specifier: ^8.5.3
         version: 8.5.3
       svelte-fa:
-        specifier: ^4.0.3
-        version: 4.0.3(svelte@5.28.1)
+        specifier: ^4.0.4
+        version: 4.0.4(svelte@5.28.1)
       svelte-french-toast:
         specifier: github:seriousm4x/svelte-french-toast#fix-72-build
         version: https://codeload.github.com/seriousm4x/svelte-french-toast/tar.gz/fbf89b9952cf11e15174b1841a6eb1ad23770349(svelte@5.28.1)
@@ -1445,8 +1445,8 @@ packages:
       svelte:
         optional: true
 
-  svelte-fa@4.0.3:
-    resolution: {integrity: sha512-saZ8yACM0k9Aexey+2NXU1W0MBosU5lBsRgqFCJKM+Taw7d0HyimPaPAjmvY/Xkyi3UwEYL/Sdu1IZJv/p0Flw==}
+  svelte-fa@4.0.4:
+    resolution: {integrity: sha512-85BomCGkTrH8kPDGvb8JrVwq9CqR9foprbKjxemP4Dtg3zPR7OXj5hD0xVYK0C+UCzFI1zooLoK/ndIX6aYXAw==}
     peerDependencies:
       svelte: ^4.0.0 || ^5.0.0
 
@@ -2755,7 +2755,7 @@ snapshots:
     optionalDependencies:
       svelte: 5.28.1
 
-  svelte-fa@4.0.3(svelte@5.28.1):
+  svelte-fa@4.0.4(svelte@5.28.1):
     dependencies:
       svelte: 5.28.1
 
