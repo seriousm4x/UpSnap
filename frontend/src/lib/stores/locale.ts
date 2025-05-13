@@ -42,6 +42,9 @@ localeStore.subscribe((l: string) => {
 		case 'ja':
 			dateFnsLocale.set(ja);
 			break;
+		case 'ko':
+			dateFnsLocale.set(ko);
+			break;
 		case 'nl':
 			dateFnsLocale.set(nl);
 			break;
