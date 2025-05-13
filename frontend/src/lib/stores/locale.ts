@@ -7,6 +7,7 @@ import { es } from 'date-fns/locale/es';
 import { fr } from 'date-fns/locale/fr';
 import { it } from 'date-fns/locale/it';
 import { ja } from 'date-fns/locale/ja';
+import { ko } from 'date-fns/locale/ko';
 import { nl } from 'date-fns/locale/nl';
 import { pl } from 'date-fns/locale/pl';
 import { pt } from 'date-fns/locale/pt';
