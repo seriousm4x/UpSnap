@@ -21,40 +21,40 @@ export const dateFnsLocale: Writable<Locale> = writable(enUS);
 
 localeStore.subscribe((l: string) => {
 	switch (l) {
-		case 'de':
+		case 'de-DE':
 			dateFnsLocale.set(de);
 			break;
-		case 'en':
+		case 'en-US':
 			dateFnsLocale.set(enUS);
 			break;
-		case 'es':
+		case 'es-ES':
 			dateFnsLocale.set(es);
 			break;
-		case 'fr':
+		case 'fr-FR':
 			dateFnsLocale.set(fr);
 			break;
-		case 'id':
+		case 'id-ID':
 			dateFnsLocale.set(id);
 			break;
-		case 'it':
+		case 'it-IT':
 			dateFnsLocale.set(it);
 			break;
-		case 'ja':
+		case 'ja-JP':
 			dateFnsLocale.set(ja);
 			break;
-		case 'ko':
+		case 'ko-KR':
 			dateFnsLocale.set(ko);
 			break;
-		case 'nl':
+		case 'nl-NL':
 			dateFnsLocale.set(nl);
 			break;
-		case 'pl':
+		case 'pl-PL':
 			dateFnsLocale.set(pl);
 			break;
 		case 'pt':
 			dateFnsLocale.set(pt);
 			break;
-		case 'zh':
+		case 'zh-CN':
 			dateFnsLocale.set(zhCN);
 			break;
 		case 'zh-TW':
