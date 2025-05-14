@@ -11,7 +11,7 @@
 	let hoverText = '';
 	let disabled = false;
 	let timeout = 120;
-	var interval: number;
+	let interval: number;
 	let modalWake: HTMLDialogElement;
 	let modalShutdown: HTMLDialogElement;
 
@@ -45,6 +45,9 @@
 	}
 
 	function wake() {
+		countdown(Date.now(), 'wake');
+		device.status = 'pending';
+
 		fetch(`${backendUrl}api/upsnap/wake/${device.id}`, {
 			headers: {
 				Authorization: $pocketbase.authStore.token
@@ -52,8 +55,11 @@
 		})
 			.then((resp) => resp.json())
 			.then(async (data) => {
+				if (data.status !== 200) {
+					device.status = 'offline';
+					return;
+				}
 				device = data as Device;
-				await countdown(Date.parse(device.updated), 'wake');
 				if (device.status === 'online' && device.link && device.link_open !== '') {
 					if (device.link_open === 'new_tab') {
 						window.open(device.link, '_blank');
@@ -68,15 +74,21 @@
 	}
 
 	function shutdown() {
+		countdown(Date.now(), 'shutdown');
+		device.status = 'pending';
+
 		fetch(`${backendUrl}api/upsnap/shutdown/${device.id}`, {
 			headers: {
 				Authorization: $pocketbase.authStore.token
 			}
 		})
 			.then((resp) => resp.json())
-			.then((data) => {
+			.then(async (data) => {
+				if (data.status !== 200) {
+					device.status = 'online';
+					return;
+				}
 				device = data as Device;
-				countdown(Date.parse(device.updated), 'shutdown');
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -84,33 +96,26 @@
 	}
 
 	function countdown(updated: number, action: 'wake' | 'shutdown') {
-		return new Promise((resolve, reject) => {
-			try {
-				timeout = action === 'wake' ? device.wake_timeout : device.shutdown_timeout;
-				if (timeout <= 0) {
-					timeout = 120;
-				}
+		timeout = action === 'wake' ? device.wake_timeout : device.shutdown_timeout;
+		if (timeout <= 0) {
+			timeout = 120;
+		}
 
-				const end = updated + timeout * 1000;
+		const end = updated + timeout * 1000;
 
-				if (interval) {
-					clearInterval(interval);
-					interval = 0;
-				}
+		if (interval) {
+			clearInterval(interval);
+			interval = 0;
+		}
 
-				interval = setInterval(() => {
-					timeout = Math.round((end - Date.now()) / 1000);
+		interval = setInterval(() => {
+			timeout = Math.round((end - Date.now()) / 1000);
 
-					if (timeout <= 0 || device.status !== 'pending') {
-						clearInterval(interval);
-						interval = 0;
-						resolve(interval);
-					}
-				}, 1000);
-			} catch (error) {
-				reject(error);
+			if (timeout <= 0 || device.status !== 'pending') {
+				clearInterval(interval);
+				interval = 0;
 			}
-		});
+		}, 1000);
 	}
 
 	function handleClick() {

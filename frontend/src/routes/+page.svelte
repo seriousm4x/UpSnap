@@ -41,7 +41,6 @@
 		localStorage.setItem('orderByGroups', String(orderByGroups));
 	}
 
-	onMount(() => {});
 	const filteredDevices = () =>
 		devices.filter(
 			(dev) =>
