@@ -91,8 +91,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0(picomatch@4.0.2)(svelte@5.30.1)(typescript@5.8.3)
       tailwindcss:
-        specifier: ^4.1.6
-        version: 4.1.6
+        specifier: ^4.1.7
+        version: 4.1.7
       tslib:
         specifier: ^2.8.1
         version: 2.8.1
@@ -1734,6 +1734,9 @@ packages:
 
   tailwindcss@4.1.6:
     resolution: {integrity: sha512-j0cGLTreM6u4OWzBeLBpycK0WIh8w7kSwcUsQZoGLHZ7xDTdM69lN64AgoIEEwFi0tnhs4wSykUa5YWxAzgFYg==}
+
+  tailwindcss@4.1.7:
+    resolution: {integrity: sha512-kr1o/ErIdNhTz8uzAYL7TpaUuzKIE6QPQ4qmSdxnoX/lo+5wmUHQA6h3L5yIqEImSRnAAURDirLu/BgiXGPAhg==}
 
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
@@ -3396,6 +3399,8 @@ snapshots:
       zimmerframe: 1.1.2
 
   tailwindcss@4.1.6: {}
+
+  tailwindcss@4.1.7: {}
 
   tapable@2.2.1: {}
 
