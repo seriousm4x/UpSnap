@@ -59,17 +59,27 @@
 			await $pocketbase
 				.collection('_superusers')
 				.authRefresh()
-				.catch(() => {
-					$pocketbase.authStore.clear();
-					goto('/login');
+				.catch((err) => {
+					// clear the store only on invalidated/expired token
+					const status = err?.status << 0;
+					if (status == 401 || status == 403) {
+						$pocketbase.authStore.clear();
+						goto('/login');
+					} else {
+						console.log('NOT CLEARED');
+					}
 				});
 		} else {
 			await $pocketbase
 				.collection('users')
 				.authRefresh()
-				.catch(() => {
-					$pocketbase.authStore.clear();
-					goto('/login');
+				.catch((err) => {
+					// clear the store only on invalidated/expired token
+					const status = err?.status << 0;
+					if (status == 401 || status == 403) {
+						$pocketbase.authStore.clear();
+						goto('/login');
+					}
 				});
 		}
 	});
