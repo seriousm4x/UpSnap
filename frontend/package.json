@@ -29,7 +29,7 @@
 		"globals": "^15.15.0",
 		"husky": "^9.1.7",
 		"prettier": "^3.5.3",
-		"prettier-plugin-svelte": "^3.3.3",
+		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.6.11",
 		"svelte": "^5.28.6",
 		"svelte-check": "^4.2.0",
