@@ -23,7 +23,7 @@
 		"@sveltejs/kit": "^2.21.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"daisyui": "^5.0.35",
-		"eslint": "^9.26.0",
+		"eslint": "^9.27.0",
 		"eslint-config-prettier": "^10.1.5",
 		"eslint-plugin-svelte": "^2.46.1",
 		"globals": "^15.15.0",
