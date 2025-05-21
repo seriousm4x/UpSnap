@@ -331,7 +331,10 @@ func HandlerValidateCron(e *core.RequestEvent) error {
 }
 
 func asyncCall(e *core.RequestEvent, fn func() *router.ApiError) *router.ApiError {
-	isAsync := e.Request.URL.Query().Get("async") == "true"
+	isAsync, err := strconv.ParseBool(e.Request.URL.Query().Get("async"))
+	if err != nil {
+		isAsync = false
+	}
 
 	if !isAsync {
 		return fn()
