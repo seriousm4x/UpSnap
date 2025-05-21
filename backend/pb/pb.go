@@ -63,6 +63,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		se.Router.GET("/{path...}", apis.Static(distDirFS, true))
 
 		se.Router.GET("/api/upsnap/wake/{id}", HandlerWake).Bind(RequireUpSnapPermission())
+		se.Router.GET("/api/upsnap/wakegroup/{id}", HandlerWakeGroup).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/sleep/{id}", HandlerSleep).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/reboot/{id}", HandlerReboot).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/shutdown/{id}", HandlerShutdown).Bind(RequireUpSnapPermission())

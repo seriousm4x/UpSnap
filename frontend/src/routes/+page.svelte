@@ -4,12 +4,13 @@
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { localeStore } from '$lib/stores/locale';
-	import { permission, pocketbase } from '$lib/stores/pocketbase';
+	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import type { Device, Group } from '$lib/types/device';
 	import {
 		faChevronCircleLeft,
 		faChevronCircleRight,
 		faPlus,
+		faPowerOff,
 		faWarning
 	} from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
@@ -56,7 +57,7 @@
 		return filteredDevices().reduce(
 			(groups, dev) => {
 				dev.expand?.groups?.forEach((group: Group) => {
-					groups[group.name] = [...(groups[group.name] || []), dev];
+					groups[group.id] = [...(groups[group.id] || []), dev];
 				});
 				return groups;
 			},
@@ -78,6 +79,16 @@
 			event.preventDefault();
 			searchInput.focus();
 		}
+	}
+
+	function wakeGroup(group: string) {
+		fetch(`${backendUrl}api/upsnap/wakegroup/${group}`, {
+			headers: {
+				Authorization: $pocketbase.authStore.token
+			}
+		}).catch((err) => {
+			toast.error(err.message);
+		});
 	}
 
 	onMount(() => {
@@ -161,7 +172,13 @@
 			{/if}
 			{#each Object.entries(devicesWithGroup()).sort( ([a], [b]) => a.localeCompare( b, $localeStore, { numeric: true } ) ) as [group, groupDevices]}
 				<div>
-					<h1 class="mb-3 text-2xl font-bold">{group}</h1>
+					<h1 class="mb-3 text-2xl font-bold">
+						{groupDevices[0].expand.groups.find((grp) => grp.id === group)?.name ||
+							'Unknown group name'}
+						<button class="btn btn-sm btn-success btn-soft" on:click={() => wakeGroup(group)}
+							><Fa icon={faPowerOff} /> {m.home_wake_group()}</button
+						>
+					</h1>
 					<div class={gridClass}>
 						{#each groupDevices.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device}
 							<DeviceCard {device} />

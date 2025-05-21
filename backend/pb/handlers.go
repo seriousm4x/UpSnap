@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/tools/router"
@@ -167,6 +168,40 @@ func HandlerShutdown(e *core.RequestEvent) error {
 	}
 
 	return e.JSON(http.StatusOK, record)
+}
+
+func HandlerWakeGroup(e *core.RequestEvent) error {
+	records, err := e.App.FindRecordsByFilter("devices", "groups.id = {:grpId} && status = 'offline'", "", 0, 0,
+		dbx.Params{"grpId": e.Request.PathValue("id")},
+	)
+	if err != nil {
+		return apis.NewNotFoundError("No devices in group", err)
+	}
+
+	for _, record := range records {
+		go func() {
+			record.Set("status", "pending")
+			if err := e.App.Save(record); err != nil {
+				logger.Error.Println("Failed to save record:", err)
+			}
+
+			if err := networking.WakeDevice(record); err != nil {
+				logger.Error.Println(err)
+				record.Set("status", "offline")
+				if err := e.App.Save(record); err != nil {
+					logger.Error.Println("Failed to save record:", err)
+				}
+				return
+			}
+
+			record.Set("status", "online")
+			if err := e.App.Save(record); err != nil {
+				logger.Error.Println("Failed to save record:", err)
+			}
+		}()
+	}
+
+	return e.JSON(http.StatusOK, records)
 }
 
 type Nmaprun struct {
