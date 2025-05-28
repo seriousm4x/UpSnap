@@ -28,6 +28,8 @@ builds:
         goarch: arm
       - goos: darwin
         goarch: arm
+      - goos: freebsd
+        goarch: arm
 archives:
   - formats: [ 'zip' ]
 checksum:
