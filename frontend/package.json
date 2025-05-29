@@ -50,7 +50,7 @@
 		"cron-parser": "^4.9.0",
 		"date-fns": "^4.1.0",
 		"pocketbase": "^0.26.0",
-		"postcss": "^8.5.3",
+		"postcss": "^8.5.4",
 		"svelte-fa": "^4.0.4",
 		"svelte-french-toast": "github:seriousm4x/svelte-french-toast#fix-72-build",
 		"theme-change": "^2.5.0"
