@@ -53,6 +53,7 @@
 		device.shutdown_cmd = device.shutdown_cmd.trim();
 		device.wake_cron = device.wake_cron.trim();
 		device.shutdown_cron = device.shutdown_cron.trim();
+		device.ping_cmd = device.ping_cmd.trim();
 		device.ports = portIds;
 		if (device.id) {
 			updateDevice(device);
