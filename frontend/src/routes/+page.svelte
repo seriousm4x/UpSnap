@@ -165,12 +165,12 @@
 		<div class="space-y-6">
 			{#if devicesWithoutGroups().length > 0}
 				<div class={gridClass}>
-					{#each devicesWithoutGroups().sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device}
+					{#each devicesWithoutGroups().sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
 						<DeviceCard {device} />
 					{/each}
 				</div>
 			{/if}
-			{#each Object.entries(devicesWithGroup()).sort( ([a], [b]) => a.localeCompare( b, $localeStore, { numeric: true } ) ) as [group, groupDevices]}
+			{#each Object.entries(devicesWithGroup()).sort( ([a], [b]) => a.localeCompare( b, $localeStore, { numeric: true } ) ) as [group, groupDevices], i (i)}
 				<div>
 					<h1 class="mb-3 text-2xl font-bold">
 						{groupDevices[0].expand.groups.find((grp) => grp.id === group)?.name ||
@@ -180,7 +180,7 @@
 						>
 					</h1>
 					<div class={gridClass}>
-						{#each groupDevices.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device}
+						{#each groupDevices.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
 							<DeviceCard {device} />
 						{/each}
 					</div>
@@ -189,7 +189,7 @@
 		</div>
 	{:else}
 		<div class={gridClass}>
-			{#each filteredDevices().sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device}
+			{#each filteredDevices().sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
 				<DeviceCard {device} />
 			{/each}
 		</div>

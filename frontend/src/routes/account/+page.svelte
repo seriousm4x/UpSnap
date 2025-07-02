@@ -156,7 +156,7 @@
 		<form on:submit|preventDefault={saveUser}>
 			<h2 class="card-title mt-4 mb-2">{m.account_avatar_title()}</h2>
 			<div class="flex flex-row flex-wrap gap-4">
-				{#each [...Array(10).keys()] as i}
+				{#each [...Array(10).keys()] as i (i)}
 					<div class="avatar">
 						<div
 							class="hover:ring-neutral w-11 rounded-full hover:ring-2 hover:ring-offset-2"
@@ -184,7 +184,7 @@
 			</div>
 			<h2 class="card-title mt-4 mb-2">{m.account_language_title()}</h2>
 			<select class="select w-full max-w-xs" bind:value={selectedLang}>
-				{#each [...locales].sort( (a, b) => a.localeCompare( b, $localeStore, { sensitivity: 'base' } ) ) as lang}
+				{#each [...locales].sort( (a, b) => a.localeCompare( b, $localeStore, { sensitivity: 'base' } ) ) as lang (lang)}
 					<option value={lang} selected={$localeStore === lang}>
 						{languageEmojis[lang]}
 						{localeToFullName(lang)} [{lang}]

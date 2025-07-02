@@ -73,7 +73,7 @@
 <h1 class="mb-8 text-3xl font-bold">{m.device_page_title()}</h1>
 <div class="mb-6 flex justify-center">
 	<ul class="menu menu-horizontal rounded-box bg-base-200 gap-1">
-		{#each tabs as tab}
+		{#each tabs as tab (tab)}
 			{#if tab.show}
 				<li>
 					<button class:menu-active={activeTab === tab.name} on:click={() => (activeTab = tab.name)}

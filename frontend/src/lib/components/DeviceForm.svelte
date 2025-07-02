@@ -269,7 +269,7 @@
 			<div class="w-full">
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 					<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-					{#each device.expand.ports as _, index}
+					{#each device.expand.ports as _, index (index)}
 						<DeviceFormPort bind:device {index} />
 					{/each}
 				</div>
@@ -660,7 +660,7 @@ second (0–59, optional)
 				{m.device_groups_desc()}
 			</p>
 			<div class="flex flex-row flex-wrap gap-2">
-				{#each deviceGroups as group}
+				{#each deviceGroups as group (group.id)}
 					<div class="join">
 						<div class=" tooltip" data-tip="Delete">
 							<button

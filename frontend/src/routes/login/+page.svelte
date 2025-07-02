@@ -116,7 +116,7 @@
 							</li>
 							{#await $pocketbase.collection('users').listAuthMethods() then authMethods}
 								{#if authMethods.oauth2.enabled && authMethods.oauth2.providers.length > 0}
-									{#each authMethods.oauth2.providers as provider}
+									{#each authMethods.oauth2.providers as provider (provider)}
 										<li>
 											<button type="button" on:click={() => loginWithProvider(provider)}
 												>{provider.displayName}</button

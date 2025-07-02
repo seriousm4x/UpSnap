@@ -57,7 +57,7 @@
 		'silk'
 	];
 	let activeTheme: string | null = '';
-	$: avatar = $pocketbase.authStore.record?.avatar;
+	let avatar = $pocketbase.authStore.record?.avatar;
 
 	onMount(() => {
 		themeChange(false);
@@ -140,7 +140,7 @@
 						>
 						<ul>
 							<div class="h-fit max-h-72 overflow-scroll">
-								{#each availableThemes as theme}
+								{#each availableThemes as theme (theme)}
 									<li class="w-full">
 										<button
 											class="gap-3 px-2"
@@ -212,7 +212,7 @@
 				</button>
 				<div class="dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 shadow-sm">
 					<ul class="menu menu-horizontal h-fit max-h-96 overflow-y-auto">
-						{#each availableThemes as theme}
+						{#each availableThemes as theme (theme)}
 							<li class="w-full">
 								<button
 									class="gap-3 px-2"

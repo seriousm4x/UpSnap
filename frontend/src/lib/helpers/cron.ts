@@ -7,8 +7,12 @@ import { get } from 'svelte/store';
 
 export function nextCronDate(expression: string) {
 	try {
-		const cron = cronParser.parseExpression(expression, {});
-		return formatDate(cron.next().toISOString(), 'PPpp', {
+		const cron = cronParser.parse(expression);
+		const cronStr = cron.next().toISOString();
+		if (!cronStr) {
+			throw new Error(m.settings_invalid_cron());
+		}
+		return formatDate(cronStr, 'PPpp', {
 			locale: get(dateFnsLocale) as unknown as Locale
 		});
 	} catch {

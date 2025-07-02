@@ -56,6 +56,7 @@
 	$: {
 		clearInterval(interval);
 		interval = setInterval(() => {
+			// eslint-disable-next-line svelte/infinite-reactive-loop
 			now = Date.now();
 		}, 1000);
 	}
@@ -142,7 +143,7 @@
 			</span>
 			{#if moreButtons.filter((btn) => btn.requires).length > 0}
 				<div class="ms-auto flex flex-row flex-wrap gap-1">
-					{#each moreButtons as btn}
+					{#each moreButtons as btn, i (i)}
 						{#if btn.requires}
 							<div class="tooltip" data-tip={btn.text}>
 								<button class="btn btn-sm btn-circle" on:click={btn.onClick}>

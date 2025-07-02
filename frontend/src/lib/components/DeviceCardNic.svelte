@@ -16,6 +16,7 @@
 	let modalShutdown: HTMLDialogElement;
 
 	$: if (device.status === 'pending' && !interval) {
+		// eslint-disable-next-line svelte/infinite-reactive-loop
 		countdown(Date.parse(device.updated), 'wake');
 	}
 	$: minutes = Math.floor(timeout / 60);
@@ -113,6 +114,7 @@
 
 			if (timeout <= 0 || device.status !== 'pending') {
 				clearInterval(interval);
+				// eslint-disable-next-line svelte/infinite-reactive-loop
 				interval = 0;
 			}
 		}, 1000);
@@ -174,7 +176,7 @@
 		<div>{device.mac}</div>
 		<div class="flex flex-wrap gap-x-4">
 			{#if device?.expand?.ports}
-				{#each device?.expand?.ports.sort((a, b) => a.number - b.number) as port}
+				{#each device?.expand?.ports.sort((a, b) => a.number - b.number) as port (port.id)}
 					<span class="flex items-center gap-1 break-all">
 						{#if port.status}
 							<div class="inline-grid *:[grid-area:1/1]">

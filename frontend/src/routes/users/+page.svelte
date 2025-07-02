@@ -182,7 +182,7 @@
 	<PageLoading />
 {:then}
 	<h1 class="mb-8 text-3xl font-bold">{m.users_page_title()}</h1>
-	{#each users as user, index}
+	{#each users as user, index (user.id)}
 		<form on:submit|preventDefault={() => save(user)}>
 			<div class="card bg-base-200 mt-6 w-full shadow-sm">
 				<div class="card-body gap-4">
@@ -194,7 +194,7 @@
 						</label>
 						{user.username}
 					</h2>
-					{#each permissions.filter((perm) => perm.user === user.id) as permission}
+					{#each permissions.filter((perm) => perm.user === user.id) as permission (permission.id)}
 						<div class="w-fit">
 							<label class="label cursor-pointer gap-2 text-wrap">
 								<input type="checkbox" bind:checked={permission.create} class="checkbox" />
@@ -217,9 +217,9 @@
 									<div class="font-bold">{m.users_update()}</div>
 									<div class="font-bold">{m.users_delete()}</div>
 									<div class="font-bold">{m.users_power()}</div>
-									{#each devices as device}
+									{#each devices as device (device.id)}
 										<hr class="border-neutral col-span-full w-full border-b-1 opacity-30" />
-										{#each permissions.filter((perm) => perm.user === user.id) as permission}
+										{#each permissions.filter((perm) => perm.user === user.id) as permission (permission.id)}
 											<div
 												class="col-span-full flex flex-row flex-wrap gap-2 place-self-start break-all md:col-span-1"
 											>
