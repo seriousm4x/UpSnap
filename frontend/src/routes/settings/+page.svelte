@@ -60,21 +60,18 @@
 		)
 			return;
 
-		if (
-			settingsPrivClone.interval === '' ||
-			!(await parseCron(settingsPrivClone.interval)) ||
-			Object.keys(cronParser.parseString(settingsPrivClone.interval).errors).length > 0
-		) {
+		try {
+			cronParser.parse(settingsPrivClone.interval);
+		} catch {
+			toast.error(m.settings_invalid_cron());
+			throw new Error(`failed to parse cron: ` + settingsPrivClone.interval);
+		}
+
+		if (settingsPrivClone.interval === '' || !(await parseCron(settingsPrivClone.interval))) {
 			toast.error(m.settings_invalid_cron());
 			throw new Error('ping_interval not valid');
 		}
 
-		if (faviconInputElement.files !== null && faviconInputElement.files?.length > 0) {
-			let form = new FormData();
-			form.append('favicon', faviconInputElement.files[0]);
-			const res = await $pocketbase.collection('settings_public').update(settingsPubClone.id, form);
-			settingsPub.set(res as SettingsPublic);
-		}
 		await $pocketbase
 			.collection('settings_public')
 			.update(settingsPubClone.id, settingsPubClone)
@@ -84,6 +81,14 @@
 			.catch((err) => {
 				toast.error(err.message);
 			});
+
+		if (faviconInputElement.files !== null && faviconInputElement.files?.length > 0) {
+			let form = new FormData();
+			form.append('favicon', faviconInputElement.files[0]);
+			const res = await $pocketbase.collection('settings_public').update(settingsPubClone.id, form);
+			settingsPub.set(res as SettingsPublic);
+		}
+
 		await $pocketbase
 			.collection('settings_private')
 			.update(settingsPrivClone.id, settingsPrivClone)
