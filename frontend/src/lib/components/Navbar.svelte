@@ -181,7 +181,7 @@
 	</div>
 	<div class="hidden {$settingsPub?.website_title ? 'lg:flex' : 'md:flex'}">
 		{#if $settingsPub?.website_title}
-			<span class="px-2">{$settingsPub?.website_title}</span>
+			<span class="self-center px-2">{$settingsPub?.website_title}</span>
 		{/if}
 		<ul class="menu menu-horizontal h-full gap-1 px-1">
 			<li class="h-full">
