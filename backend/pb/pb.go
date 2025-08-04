@@ -10,6 +10,7 @@ import (
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
+	"github.com/pocketbase/pocketbase/plugins/ghupdate"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 	"github.com/robfig/cron/v3"
 	"github.com/seriousm4x/upsnap/cronjobs"
@@ -56,6 +57,13 @@ func StartPocketBase(distDirFS fs.FS) {
 	// auto migrate db
 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
 		Automigrate: true,
+	})
+
+	// GitHub selfupdate
+	ghupdate.MustRegister(app, app.RootCmd, ghupdate.Config{
+		Owner:             "seriousm4x",
+		Repo:              "UpSnap",
+		ArchiveExecutable: "upsnap",
 	})
 
 	// event hooks
