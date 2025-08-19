@@ -19,6 +19,15 @@
     </div>
 </div>
 
+> [!NOTE]
+>
+> #### UpSnap is, and always will be, free and open source software.
+>
+> If someone is asking you to pay money for access to UpSnap binaries, source code, or licenses, you are being scammed.
+>
+> The official and only trusted source for UpSnap is this repository (and its linked releases).
+> Do not pay third parties for something that is provided here for free.
+
 ## ✨ Features
 
 - 🚀 One-Click Device Wake-Up Dashboard
