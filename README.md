@@ -140,6 +140,7 @@ UpSnap is available in the following languages so far:
 - 🇳🇴 **Norwegian** (nb-NO)
 - 🇵🇱 **Polish** (pl-PL)
 - 🇵🇹 **Portuguese** (pt-PT)
+- 🇺🇦 **Ukrainian** (uk-UA)
 - 🇹🇼 **Chinese (Taiwan)** (zh-TW)
 - 🇨🇳 **Chinese** (zh-CN)
 
