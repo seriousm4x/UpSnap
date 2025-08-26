@@ -8,7 +8,7 @@ export type Device = RecordModel & {
 	description: string;
 	status: 'pending' | 'online' | 'offline' | '';
 	ports: string[];
-	link: URL;
+	link: string;
 	link_open: '' | 'same_tab' | 'new_tab';
 	ping_cmd: string;
 	wake_cron: string;

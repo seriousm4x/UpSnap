@@ -92,8 +92,8 @@
 
 <div class="card bg-base-200 shadow-sm" transition:scale={{ delay: 0, duration: 200 }}>
 	<div class="card-body p-6">
-		{#if device.link.toString() !== ''}
-			<a href={device.link.toString()} target="_blank">
+		{#if device.link !== ''}
+			<a href={device.link} target="_blank">
 				<h1 class="link card-title">{device.name}</h1>
 			</a>
 		{:else}
