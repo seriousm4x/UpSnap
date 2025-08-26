@@ -93,12 +93,7 @@
 		orderByGroups = localStorage.getItem('orderByGroups') !== 'false';
 		getAllDevices();
 		['devices', 'ports', 'permissions'].forEach((collection) =>
-			$pocketbase
-				.collection(collection)
-				.subscribe('*', getAllDevices)
-				.then(() => {
-					console.log('Subscribed to changes in collection:', collection);
-				})
+			$pocketbase.collection(collection).subscribe('*', getAllDevices)
 		);
 	});
 </script>
