@@ -50,21 +50,17 @@
 			dev.description.toLowerCase().includes(searchQuery.toLowerCase())
 	);
 
-	function devicesWithoutGroups() {
-		return filteredDevices.filter((dev) => dev.groups.length === 0);
-	}
+	$: devicesWithoutGroups = filteredDevices.filter((dev) => dev.groups.length === 0);
 
-	function devicesWithGroup() {
-		return filteredDevices.reduce(
-			(groups, dev) => {
-				dev.expand?.groups?.forEach((group: Group) => {
-					groups[group.id] = [...(groups[group.id] || []), dev];
-				});
-				return groups;
-			},
-			{} as Record<string, Device[]>
-		);
-	}
+	$: devicesWithGroup = filteredDevices.reduce(
+		(groups, dev) => {
+			dev.expand?.groups?.forEach((group: Group) => {
+				groups[group.id] = [...(groups[group.id] || []), dev];
+			});
+			return groups;
+		},
+		{} as Record<string, Device[]>
+	);
 
 	function getAllDevices() {
 		$pocketbase
@@ -97,7 +93,12 @@
 		orderByGroups = localStorage.getItem('orderByGroups') !== 'false';
 		getAllDevices();
 		['devices', 'ports', 'permissions'].forEach((collection) =>
-			$pocketbase.collection(collection).subscribe('*', getAllDevices)
+			$pocketbase
+				.collection(collection)
+				.subscribe('*', getAllDevices)
+				.then(() => {
+					console.log('Subscribed to changes in collection:', collection);
+				})
 		);
 	});
 </script>
@@ -164,14 +165,14 @@
 
 	{#if orderByGroups}
 		<div class="space-y-6">
-			{#if devicesWithoutGroups().length > 0}
+			{#if devicesWithoutGroups.length > 0}
 				<div class={gridClass}>
-					{#each devicesWithoutGroups().sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
+					{#each structuredClone(devicesWithoutGroups).sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
 						<DeviceCard {device} />
 					{/each}
 				</div>
 			{/if}
-			{#each Object.entries(devicesWithGroup()).sort( ([a], [b]) => a.localeCompare( b, $localeStore, { numeric: true } ) ) as [group, groupDevices], i (i)}
+			{#each Object.entries(devicesWithGroup).sort( ([a], [b]) => a.localeCompare( b, $localeStore, { numeric: true } ) ) as [group, groupDevices], i (i)}
 				<div>
 					<h1 class="mb-3 text-2xl font-bold">
 						{groupDevices[0].expand.groups.find((grp) => grp.id === group)?.name ||
