@@ -42,19 +42,20 @@
 		localStorage.setItem('orderByGroups', String(orderByGroups));
 	}
 
-	const filteredDevices = () =>
-		devices.filter(
-			(dev) =>
-				dev.ip.includes(searchQuery.toLowerCase()) ||
-				dev.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				dev.mac.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				dev.description.toLowerCase().includes(searchQuery.toLowerCase())
-		);
+	$: filteredDevices = devices.filter(
+		(dev) =>
+			dev.ip.includes(searchQuery.toLowerCase()) ||
+			dev.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			dev.mac.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			dev.description.toLowerCase().includes(searchQuery.toLowerCase())
+	);
 
-	const devicesWithoutGroups = () => filteredDevices().filter((dev) => dev.groups.length === 0);
+	function devicesWithoutGroups() {
+		return filteredDevices.filter((dev) => dev.groups.length === 0);
+	}
 
-	const devicesWithGroup = () => {
-		return filteredDevices().reduce(
+	function devicesWithGroup() {
+		return filteredDevices.reduce(
 			(groups, dev) => {
 				dev.expand?.groups?.forEach((group: Group) => {
 					groups[group.id] = [...(groups[group.id] || []), dev];
@@ -63,7 +64,7 @@
 			},
 			{} as Record<string, Device[]>
 		);
-	};
+	}
 
 	function getAllDevices() {
 		$pocketbase
@@ -189,7 +190,7 @@
 		</div>
 	{:else}
 		<div class={gridClass}>
-			{#each filteredDevices().sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
+			{#each structuredClone(filteredDevices).sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
 				<DeviceCard {device} />
 			{/each}
 		</div>
