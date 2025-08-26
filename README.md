@@ -151,6 +151,7 @@ UpSnap is available in the following languages so far:
 - 🇵🇱 **Polish** (pl-PL)
 - 🇵🇹 **Portuguese** (pt-PT)
 - 🇺🇦 **Ukrainian** (uk-UA)
+- 🇻🇳 **Vietnamese** (vi-VN)
 - 🇹🇼 **Chinese (Taiwan)** (zh-TW)
 - 🇨🇳 **Chinese** (zh-CN)
 
