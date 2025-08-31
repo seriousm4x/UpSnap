@@ -145,8 +145,8 @@
 										<button
 											class="gap-3 px-2"
 											data-set-theme={theme}
-											on:click={() => (activeTheme = theme)}
-											on:keydown={() => (activeTheme = theme)}
+											onclick={() => (activeTheme = theme)}
+											onkeydown={() => (activeTheme = theme)}
 										>
 											<div
 												data-theme={theme}
@@ -217,8 +217,8 @@
 								<button
 									class="gap-3 px-2"
 									data-set-theme={theme}
-									on:click={() => (activeTheme = theme)}
-									on:keydown={() => (activeTheme = theme)}
+									onclick={() => (activeTheme = theme)}
+									onkeydown={() => (activeTheme = theme)}
 								>
 									<div
 										data-theme={theme}
@@ -266,7 +266,7 @@
 						<a href="/account"><Fa icon={faUserGear} />{m.navbar_edit_account()}</a>
 					</li>
 					<li>
-						<div on:click={async () => logout()} on:keydown={async () => logout()} role="none">
+						<div onclick={async () => logout()} onkeydown={async () => logout()} role="none">
 							<Fa icon={faDoorOpen} />{m.navbar_logout()}
 						</div>
 					</li>

@@ -73,7 +73,13 @@
 				</figure>
 				<h2 class="card-title">{m.login_welcome()}</h2>
 			</div>
-			<form class="w-full" on:submit|preventDefault={tryAdminThenUser}>
+			<form
+				class="w-full"
+				onsubmit={(e) => {
+					e.preventDefault();
+					tryAdminThenUser();
+				}}
+			>
 				<label class="label" for="email">
 					<span>{m.login_email_label()}</span>
 				</label>
@@ -85,8 +91,8 @@
 					<div
 						class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
 						role="none"
-						on:click={() => toggleVisibility(inputPassword)}
-						on:keydown={() => toggleVisibility(inputPassword)}
+						onclick={() => toggleVisibility(inputPassword)}
+						onkeydown={() => toggleVisibility(inputPassword)}
 					>
 						<Fa icon={faEye} />
 					</div>
@@ -118,7 +124,7 @@
 								{#if authMethods.oauth2.enabled && authMethods.oauth2.providers.length > 0}
 									{#each authMethods.oauth2.providers as provider (provider)}
 										<li>
-											<button type="button" on:click={() => loginWithProvider(provider)}
+											<button type="button" onclick={() => loginWithProvider(provider)}
 												>{provider.displayName}</button
 											>
 										</li>

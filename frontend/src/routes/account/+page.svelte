@@ -10,9 +10,8 @@
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 
-	let newAvatar: number;
-
-	let selectedLang: Locale;
+	let newAvatar: number | undefined = $state();
+	let selectedLang: Locale = $state('en-US' as Locale);
 
 	// locales
 	const languageEmojis = {
@@ -36,21 +35,27 @@
 	};
 
 	// password change
-	let newPassword = {
+	let newPassword = $state({
 		old: '',
 		password: '',
 		confirm: ''
-	};
-	$: adminBody = JSON.stringify({
-		password: newPassword.password,
-		passwordConfirm: newPassword.confirm
 	});
-	$: userBody = JSON.stringify({
-		oldPassword: newPassword.old,
-		password: newPassword.password,
-		passwordConfirm: newPassword.confirm
-	});
+	let adminBody: string;
+	let userBody: string;
 
+	$effect(() => {
+		adminBody = JSON.stringify({
+			password: newPassword.password,
+			passwordConfirm: newPassword.confirm
+		});
+	});
+	$effect(() => {
+		userBody = JSON.stringify({
+			oldPassword: newPassword.old,
+			password: newPassword.password,
+			passwordConfirm: newPassword.confirm
+		});
+	});
 	onMount(() => {
 		selectedLang = getLocale();
 	});
@@ -157,7 +162,12 @@
 				</h3>
 			</div>
 		</div>
-		<form on:submit|preventDefault={saveUser}>
+		<form
+			onsubmit={(e) => {
+				e.preventDefault();
+				saveUser();
+			}}
+		>
 			<h2 class="card-title mt-4 mb-2">{m.account_avatar_title()}</h2>
 			<div class="flex flex-row flex-wrap gap-4">
 				{#each [...Array(10).keys()] as i (i)}
@@ -176,7 +186,7 @@
 							class:ring-offset-2={newAvatar !== undefined
 								? i === newAvatar
 								: i === $pocketbase.authStore.record?.avatar}
-							on:click={() => (newAvatar = i)}
+							onclick={() => (newAvatar = i)}
 							role="none"
 						>
 							{#if $pocketbase.authStore.record?.id}
@@ -207,7 +217,12 @@
 	<div class="card-body">
 		<h2 class="card-title">{m.account_change_password_title()}</h2>
 		<p>{m.account_change_password_body()}</p>
-		<form on:submit|preventDefault={changePassword}>
+		<form
+			onsubmit={(e) => {
+				e.preventDefault();
+				changePassword();
+			}}
+		>
 			<div class="w-full max-w-xs">
 				{#if !$pocketbase.authStore.isSuperuser}
 					<fieldset class="fieldset">

@@ -19,11 +19,9 @@
 	import { scale } from 'svelte/transition';
 	import DeviceCardNic from './DeviceCardNic.svelte';
 
-	export let device: Device;
-
+	let { device = $bindable() }: { device: Device } = $props();
 	let modalReboot: HTMLDialogElement;
-
-	$: moreButtons = [
+	let moreButtons = $derived([
 		{
 			text: m.device_card_btn_more_sleep(),
 			icon: faBed,
@@ -48,18 +46,17 @@
 			onClick: () => goto(`/device/${device.id}`),
 			requires: $pocketbase.authStore.isSuperuser || $permission.update?.includes(device.id)
 		}
-	];
+	]);
 
 	// update device status change
-	let now = Date.now();
+	let now = $state(Date.now());
 	let interval: number;
-	$: {
+	$effect(() => {
 		clearInterval(interval);
 		interval = setInterval(() => {
-			// eslint-disable-next-line svelte/infinite-reactive-loop
 			now = Date.now();
 		}, 1000);
-	}
+	});
 
 	function sleep() {
 		fetch(`${backendUrl}api/upsnap/sleep/${device.id}`, {
@@ -146,7 +143,7 @@
 					{#each moreButtons as btn, i (i)}
 						{#if btn.requires}
 							<div class="tooltip" data-tip={btn.text}>
-								<button class="btn btn-sm btn-circle" on:click={btn.onClick}>
+								<button class="btn btn-sm btn-circle" onclick={btn.onClick}>
 									<Fa icon={btn.icon} />
 								</button>
 							</div>
@@ -167,7 +164,7 @@
 		<div class="modal-action">
 			<form method="dialog">
 				<button class="btn">{m.buttons_cancel()}</button>
-				<button class="btn btn-success" on:click={reboot}>{m.buttons_confirm()}</button>
+				<button class="btn btn-success" onclick={reboot}>{m.buttons_confirm()}</button>
 			</form>
 		</div>
 	</div>

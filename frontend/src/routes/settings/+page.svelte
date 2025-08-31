@@ -107,7 +107,13 @@
 	<PageLoading />
 {:else}
 	<h1 class="mb-8 text-3xl font-bold">{m.settings_page_title()}</h1>
-	<form on:submit|preventDefault={save}>
+	<form
+		onsubmit={(e) => {
+			e.preventDefault();
+			save();
+		}}
+		class="flex w-full flex-col"
+	>
 		<div class="card bg-base-200 mt-6 w-full shadow-sm">
 			<div class="card-body">
 				<h2 class="card-title">{m.settings_ping_interval_title()}</h2>
@@ -201,8 +207,8 @@ second (0–59, optional)
 					/>
 					<button
 						class="btn btn-error"
-						on:click={() => resetFavicon()}
-						on:keydown={() => resetFavicon()}>{m.buttons_reset()}</button
+						onclick={() => resetFavicon()}
+						onkeydown={() => resetFavicon()}>{m.buttons_reset()}</button
 					>
 				</div>
 			</div>

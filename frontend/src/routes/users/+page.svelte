@@ -12,24 +12,26 @@
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 
-	let getUsersPromise = getUsers();
-	let getPermissionsPromise = getPermissions();
-	let getDevicesPromise = getDevices();
-	let deleteModal = [] as HTMLDialogElement[];
+	let getUsersPromise = $state(getUsers());
+	let getPermissionsPromise = $state(getPermissions());
+	let getDevicesPromise = $state(getDevices());
+	let deleteModal = $state([] as HTMLDialogElement[]);
 
-	let users = [] as User[];
-	let permissions = [] as Permission[];
-	let devices = [] as Device[];
-	let newUser = {
+	let users = $state([] as User[]);
+	let permissions = $state([] as Permission[]);
+	let devices = $state([] as Device[]);
+	let newUser = $state({
 		username: '',
 		password: '',
 		passwordConfirm: ''
-	};
+	});
 
-	$: users.map((user) => {
-		if (!permissions.find((perm) => perm.user === user.id)) {
-			permissions = [...permissions, { user: user.id } as Permission];
-		}
+	$effect(() => {
+		users.map((user) => {
+			if (!permissions.find((perm) => perm.user === user.id)) {
+				permissions = [...permissions, { user: user.id } as Permission];
+			}
+		});
 	});
 
 	onMount(() => {
@@ -183,7 +185,12 @@
 {:then}
 	<h1 class="mb-8 text-3xl font-bold">{m.users_page_title()}</h1>
 	{#each users as user, index (user.id)}
-		<form on:submit|preventDefault={() => save(user)}>
+		<form
+			onsubmit={(e) => {
+				e.preventDefault();
+				save(user);
+			}}
+		>
 			<div class="card bg-base-200 mt-6 w-full shadow-sm">
 				<div class="card-body gap-4">
 					<h2 class="card-title">
@@ -255,7 +262,7 @@
 									<button
 										class="btn btn-sm md:col-start-2"
 										type="button"
-										on:click={() => {
+										onclick={() => {
 											toggleAllPermissions(user, 'read');
 										}}
 										><span class="hidden md:block">{m.users_toggle()}</span><Fa
@@ -266,7 +273,7 @@
 									<button
 										class=" btn btn-sm"
 										type="button"
-										on:click={() => {
+										onclick={() => {
 											toggleAllPermissions(user, 'update');
 										}}
 										><span class="hidden md:block">{m.users_toggle()}</span><Fa
@@ -277,7 +284,7 @@
 									<button
 										class=" btn btn-sm"
 										type="button"
-										on:click={() => {
+										onclick={() => {
 											toggleAllPermissions(user, 'delete');
 										}}
 										><span class="hidden md:block">{m.users_toggle()}</span><Fa
@@ -288,7 +295,7 @@
 									<button
 										class=" btn btn-sm"
 										type="button"
-										on:click={() => {
+										onclick={() => {
 											toggleAllPermissions(user, 'power');
 										}}
 										><span class="hidden md:block">{m.users_toggle()}</span><Fa
@@ -305,7 +312,7 @@
 						<button
 							class="btn btn-error join-item"
 							type="button"
-							on:click={() => deleteModal[index].showModal()}
+							onclick={() => deleteModal[index].showModal()}
 							><Fa icon={faTrash} />{m.buttons_delete()}</button
 						>
 						<button class="btn btn-success join-item" type="submit"
@@ -322,7 +329,7 @@
 				<div class="modal-action">
 					<form method="dialog">
 						<button class="btn">{m.buttons_cancel()}</button>
-						<button class="btn btn-error" on:click={() => deleteUser(user)}
+						<button class="btn btn-error" onclick={() => deleteUser(user)}
 							>{m.buttons_delete()}</button
 						>
 					</form>
@@ -333,7 +340,12 @@
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{m.users_create_new_user()}</h2>
-			<form on:submit|preventDefault={createUser}>
+			<form
+				onsubmit={(e) => {
+					e.preventDefault();
+					createUser();
+				}}
+			>
 				<div class="flex flex-row flex-wrap gap-4">
 					<div class="w-full max-w-xs">
 						<label class="label" for="username">

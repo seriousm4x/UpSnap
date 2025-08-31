@@ -6,44 +6,46 @@
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 
-	export let device: Device;
-
-	let hoverText = '';
-	let disabled = false;
+	let { device = $bindable() }: { device: Device } = $props();
+	let hoverText = $state('');
+	let disabled = $state(false);
 	let timeout = 120;
 	let interval: number;
 	let modalWake: HTMLDialogElement;
 	let modalShutdown: HTMLDialogElement;
+	let seconds = $derived(timeout % 60);
+	let minutes = $derived(Math.floor(timeout / 60));
 
-	$: if (device.status === 'pending' && !interval) {
-		// eslint-disable-next-line svelte/infinite-reactive-loop
-		countdown(Date.parse(device.updated), 'wake');
-	}
-	$: minutes = Math.floor(timeout / 60);
-	$: seconds = timeout % 60;
-	$: if (device.status === 'pending' || device.status === '') {
-		disabled = true;
-		hoverText = m.device_card_nic_tooltip_pending();
-	} else if (device.status === 'online') {
-		if (device.shutdown_cmd === '') {
-			disabled = true;
-			hoverText = m.device_card_nic_tooltip_shutdown_no_cmd();
-		} else if (!$pocketbase.authStore.isSuperuser && !$permission.power?.includes(device.id)) {
-			disabled = true;
-			hoverText = m.device_card_nic_tooltip_shutdown_no_permission();
-		} else {
-			disabled = false;
-			hoverText = m.device_card_nic_tooltip_shutdown();
+	$effect(() => {
+		if (device.status === 'pending' && !interval) {
+			countdown(Date.parse(device.updated), 'wake');
 		}
-	} else if (device.status === 'offline') {
-		if (!$pocketbase.authStore.isSuperuser && !$permission.power?.includes(device.id)) {
+	});
+	$effect(() => {
+		if (device.status === 'pending' || device.status === '') {
 			disabled = true;
-			hoverText = m.device_card_nic_tooltip_power_no_permission();
-		} else {
-			disabled = false;
-			hoverText = m.device_card_nic_tooltip_power();
+			hoverText = m.device_card_nic_tooltip_pending();
+		} else if (device.status === 'online') {
+			if (device.shutdown_cmd === '') {
+				disabled = true;
+				hoverText = m.device_card_nic_tooltip_shutdown_no_cmd();
+			} else if (!$pocketbase.authStore.isSuperuser && !$permission.power?.includes(device.id)) {
+				disabled = true;
+				hoverText = m.device_card_nic_tooltip_shutdown_no_permission();
+			} else {
+				disabled = false;
+				hoverText = m.device_card_nic_tooltip_shutdown();
+			}
+		} else if (device.status === 'offline') {
+			if (!$pocketbase.authStore.isSuperuser && !$permission.power?.includes(device.id)) {
+				disabled = true;
+				hoverText = m.device_card_nic_tooltip_power_no_permission();
+			} else {
+				disabled = false;
+				hoverText = m.device_card_nic_tooltip_power();
+			}
 		}
-	}
+	});
 
 	function wake() {
 		countdown(Date.now(), 'wake');
@@ -114,7 +116,7 @@
 
 			if (timeout <= 0 || device.status !== 'pending') {
 				clearInterval(interval);
-				// eslint-disable-next-line svelte/infinite-reactive-loop
+
 				interval = 0;
 			}
 		}, 1000);
@@ -148,8 +150,8 @@
 <div
 	class={`tooltip ${disabled ? 'cursor-not-allowed' : 'hover:bg-base-300 cursor-pointer'} bg-base-100 rounded-box flex items-start gap-4 p-2`}
 	data-tip={hoverText}
-	on:click={disabled ? null : handleClick}
-	on:keydown={disabled ? null : handleClick}
+	onclick={disabled ? null : handleClick}
+	onkeydown={disabled ? null : handleClick}
 	role="none"
 >
 	{#if device.status === 'offline'}
@@ -176,7 +178,9 @@
 		<div>{device.mac}</div>
 		<div class="flex flex-wrap gap-x-4">
 			{#if device?.expand?.ports}
-				{#each device?.expand?.ports.sort((a, b) => a.number - b.number) as port (port.id)}
+				{#each $state
+					.snapshot(device)
+					.expand?.ports.sort((a, b) => a.number - b.number) as port (port.id)}
 					<span class="flex items-center gap-1 break-all">
 						{#if port.status}
 							<div class="inline-grid *:[grid-area:1/1]">
@@ -194,7 +198,7 @@
 								href={port.link}
 								target="_blank"
 								class="underline"
-								on:click={(e) => e.stopPropagation()}>{port.name} ({port.number})</a
+								onclick={(e) => e.stopPropagation()}>{port.name} ({port.number})</a
 							>
 						{:else}
 							{port.name} ({port.number})
@@ -215,7 +219,7 @@
 		<div class="modal-action">
 			<form method="dialog">
 				<button class="btn">{m.buttons_cancel()}</button>
-				<button class="btn btn-success" on:click={wake}>{m.buttons_confirm()}</button>
+				<button class="btn btn-success" onclick={wake}>{m.buttons_confirm()}</button>
 			</form>
 		</div>
 	</div>
@@ -230,7 +234,7 @@
 		<div class="modal-action">
 			<form method="dialog">
 				<button class="btn">{m.buttons_cancel()}</button>
-				<button class="btn btn-success" on:click={shutdown}>{m.buttons_confirm()}</button>
+				<button class="btn btn-success" onclick={shutdown}>{m.buttons_confirm()}</button>
 			</form>
 		</div>
 	</div>

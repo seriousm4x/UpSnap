@@ -8,27 +8,31 @@
 	import type { Device, Group, Port } from '$lib/types/device';
 	import toast from 'svelte-french-toast';
 
-	$: if (Object.hasOwn($permission, 'update')) {
-		if (!$pocketbase.authStore.isSuperuser && !$permission.update.includes(page.params.id)) {
-			toast(m.toasts_no_permission({ url: page.url.pathname }), {
-				icon: '⛔'
-			});
-			goto('/');
+	$effect(() => {
+		if (Object.hasOwn($permission, 'update')) {
+			const id = page.params.id;
+			if (!$pocketbase.authStore.isSuperuser && !$permission.update.includes(id || '')) {
+				toast(m.toasts_no_permission({ url: page.url.pathname }), {
+					icon: '⛔'
+				});
+				goto('/');
+			}
 		}
-	}
+	});
 
 	async function getDevice(): Promise<Device> {
-		const resp = await $pocketbase
-			.collection('devices')
-			.getOne(page.params.id, { expand: 'ports,groups' });
+		const id = page.params.id;
+		if (!id) throw new Error('No device ID provided');
 
+		const resp = await $pocketbase.collection('devices').getOne(id, { expand: 'ports,groups' });
 		let device = resp as Device;
 
-		if (!device.expand)
+		if (!device.expand) {
 			device.expand = {} as {
 				ports: Port[];
 				groups: Group[];
 			};
+		}
 
 		if (!device.expand.ports) {
 			device.expand.ports = [] as Port[];

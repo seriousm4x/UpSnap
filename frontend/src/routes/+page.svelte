@@ -17,13 +17,17 @@
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 
-	let loading = true;
-	let devices: Device[] = [];
-	let orderBy: 'name' | 'ip' = 'name';
-	let orderExpanded = false;
-	let orderByGroups = true;
-	let searchQuery = '';
-	let searchInput: HTMLInputElement;
+	let loading = $state(true);
+	let devices: Device[] = $state([]);
+	let orderBy: 'name' | 'ip' = $state('name');
+	let orderExpanded = $state(false);
+	let orderByGroups = $state(true);
+	let searchQuery = $state('');
+	let searchInput: HTMLInputElement | undefined = $state();
+	let filteredDevices: Device[] = $derived([]);
+	let devicesWithoutGroups: Device[] = $derived([]);
+	let devicesWithGroup: Record<string, Device[]> = $derived({});
+
 	const isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
 	const gridClass = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4';
 
@@ -35,32 +39,41 @@
 		orderByGroups = localStorage.getItem('orderByGroups') !== 'false';
 	}
 
-	$: if (browser) {
-		localStorage.setItem('orderBy', orderBy);
-	}
-	$: if (browser) {
-		localStorage.setItem('orderByGroups', String(orderByGroups));
-	}
-
-	$: filteredDevices = devices.filter(
-		(dev) =>
-			dev.ip.includes(searchQuery.toLowerCase()) ||
-			dev.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			dev.mac.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			dev.description.toLowerCase().includes(searchQuery.toLowerCase())
-	);
-
-	$: devicesWithoutGroups = filteredDevices.filter((dev) => dev.groups.length === 0);
-
-	$: devicesWithGroup = filteredDevices.reduce(
-		(groups, dev) => {
-			dev.expand?.groups?.forEach((group: Group) => {
-				groups[group.id] = [...(groups[group.id] || []), dev];
-			});
-			return groups;
-		},
-		{} as Record<string, Device[]>
-	);
+	$effect(() => {
+		if (browser) {
+			localStorage.setItem('orderBy', orderBy);
+		}
+	});
+	$effect(() => {
+		if (browser) {
+			localStorage.setItem('orderByGroups', String(orderByGroups));
+		}
+	});
+	$effect(() => {
+		filteredDevices = devices.filter(
+			(dev) =>
+				dev.ip.includes(searchQuery.toLowerCase()) ||
+				dev.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+				dev.mac.toLowerCase().includes(searchQuery.toLowerCase()) ||
+				dev.description.toLowerCase().includes(searchQuery.toLowerCase())
+		);
+	});
+	$effect(() => {
+		devicesWithoutGroups = filteredDevices
+			.filter((dev) => dev.groups.length === 0)
+			.sort((a, b) => a[orderBy].localeCompare(b[orderBy], $localeStore, { numeric: true }));
+	});
+	$effect(() => {
+		devicesWithGroup = filteredDevices.reduce(
+			(groups, dev) => {
+				dev.expand?.groups?.forEach((group: Group) => {
+					groups[group.id] = [...(groups[group.id] || []), dev];
+				});
+				return groups;
+			},
+			{} as Record<string, Device[]>
+		);
+	});
 
 	function getAllDevices() {
 		$pocketbase
@@ -74,7 +87,7 @@
 	function handleShortcut(event: KeyboardEvent) {
 		if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
 			event.preventDefault();
-			searchInput.focus();
+			searchInput?.focus();
 		}
 	}
 
@@ -98,7 +111,7 @@
 	});
 </script>
 
-<svelte:document on:keydown={handleShortcut} />
+<svelte:document onkeydown={handleShortcut} />
 
 {#if loading}
 	<PageLoading />
@@ -127,7 +140,7 @@
 		</label>
 		<div class="join ms-auto">
 			{#if orderExpanded}
-				<button class="btn join-item !outline-0" on:click={() => (orderByGroups = !orderByGroups)}>
+				<button class="btn join-item !outline-0" onclick={() => (orderByGroups = !orderByGroups)}>
 					{m.home_order_groups()}
 					<input type="checkbox" class="checkbox" checked={orderByGroups} />
 				</button>
@@ -151,7 +164,7 @@
 			<button
 				class="btn join-item tooltip {orderExpanded ? '' : 'rounded-field'}"
 				data-tip={m.home_order_tooltip()}
-				on:click={() => (orderExpanded = !orderExpanded)}
+				onclick={() => (orderExpanded = !orderExpanded)}
 			>
 				<Fa icon={orderExpanded ? faChevronCircleRight : faChevronCircleLeft} size="lg" />
 			</button>
@@ -162,7 +175,7 @@
 		<div class="space-y-6">
 			{#if devicesWithoutGroups.length > 0}
 				<div class={gridClass}>
-					{#each structuredClone(devicesWithoutGroups).sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
+					{#each devicesWithoutGroups as device (device.id)}
 						<DeviceCard {device} />
 					{/each}
 				</div>
@@ -172,7 +185,7 @@
 					<h1 class="mb-3 text-2xl font-bold">
 						{groupDevices[0].expand.groups.find((grp) => grp.id === group)?.name ||
 							'Unknown group name'}
-						<button class="btn btn-sm btn-success btn-soft" on:click={() => wakeGroup(group)}
+						<button class="btn btn-sm btn-success btn-soft" onclick={() => wakeGroup(group)}
 							><Fa icon={faPowerOff} /> {m.home_wake_group()}</button
 						>
 					</h1>
@@ -186,7 +199,9 @@
 		</div>
 	{:else}
 		<div class={gridClass}>
-			{#each structuredClone(filteredDevices).sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
+			{#each $state
+				.snapshot(filteredDevices)
+				.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
 				<DeviceCard {device} />
 			{/each}
 		</div>

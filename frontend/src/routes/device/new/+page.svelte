@@ -43,15 +43,18 @@
 		sol_password: '',
 		sol_port: 0
 	} as Device;
+	let activeTab = $state('manual');
 
-	$: if (Object.hasOwn($permission, 'create')) {
-		if (!$pocketbase.authStore.isSuperuser && !$permission.create) {
-			toast(m.toasts_no_permission({ url: $page.url.pathname }), {
-				icon: '⛔'
-			});
-			goto('/');
+	$effect(() => {
+		if (Object.hasOwn($permission, 'create')) {
+			if (!$pocketbase.authStore.isSuperuser && !$permission.create) {
+				toast(m.toasts_no_permission({ url: $page.url.pathname }), {
+					icon: '⛔'
+				});
+				goto('/');
+			}
 		}
-	}
+	});
 
 	let tabs = [
 		{
@@ -67,7 +70,6 @@
 			show: $pocketbase.authStore.isSuperuser
 		}
 	];
-	let activeTab = 'manual';
 </script>
 
 <h1 class="mb-8 text-3xl font-bold">{m.device_page_title()}</h1>
@@ -76,7 +78,7 @@
 		{#each tabs as tab (tab)}
 			{#if tab.show}
 				<li>
-					<button class:menu-active={activeTab === tab.name} on:click={() => (activeTab = tab.name)}
+					<button class:menu-active={activeTab === tab.name} onclick={() => (activeTab = tab.name)}
 						>{tab.ll_name} <Fa icon={tab.icon} class="ms-2" /></button
 					>
 				</li>

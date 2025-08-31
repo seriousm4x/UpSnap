@@ -76,7 +76,7 @@
 					<h2 class="card-title">{m.welcome_not_expected_title()}</h2>
 					<p>{m.welcome_not_expected_desc()}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-success" on:click={() => goto('/')}
+						<button class="btn btn-success" onclick={() => goto('/')}
 							>{m.welcome_not_expected_back()}</button
 						>
 					</div>
@@ -87,7 +87,7 @@
 					<h2 class="card-title">{m.welcome_step1_page_title()}</h2>
 					<p>{m.welcome_step1_setup_desc()}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-success" on:click={() => (stepsCompleted = 1)}
+						<button class="btn btn-success" onclick={() => (stepsCompleted = 1)}
 							>{m.welcome_step1_setup_btn_next()} <Fa icon={faArrowRight} /></button
 						>
 					</div>
@@ -98,7 +98,13 @@
 						<figure class="w-16"><img src="/gopher.svg" alt="Gopher" /></figure>
 						<h2 class="card-title">{m.welcome_step2_page_title()}</h2>
 					</div>
-					<form class="w-full" on:submit|preventDefault={register}>
+					<form
+						class="w-full"
+						onsubmit={(e) => {
+							e.preventDefault();
+							register();
+						}}
+					>
 						<label class="label" for="email">
 							<span>{m.welcome_step2_label_email()}</span>
 						</label>
@@ -111,8 +117,8 @@
 							<div
 								class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
 								role="none"
-								on:click={() => toggleVisibility(inputPassword)}
-								on:keydown={() => toggleVisibility(inputPassword)}
+								onclick={() => toggleVisibility(inputPassword)}
+								onkeydown={() => toggleVisibility(inputPassword)}
 							>
 								<Fa icon={faEye} />
 							</div>
@@ -134,8 +140,8 @@
 							<div
 								class="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer"
 								role="none"
-								on:click={() => toggleVisibility(inputConfirm)}
-								on:keydown={() => toggleVisibility(inputConfirm)}
+								onclick={() => toggleVisibility(inputConfirm)}
+								onkeydown={() => toggleVisibility(inputConfirm)}
 							>
 								<Fa icon={faEye} />
 							</div>
@@ -163,7 +169,7 @@
 					<h2 class="card-title">{m.welcome_step3_page_title()}</h2>
 					<p>{m.welcome_step3_page_desc()}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-success" on:click={() => goto('/')}
+						<button class="btn btn-success" onclick={() => goto('/')}
 							>{m.welcome_step3_btn_done()}</button
 						>
 					</div>

@@ -194,7 +194,13 @@
 	}
 </script>
 
-<form on:submit|preventDefault={save}>
+<form
+	onsubmit={(e) => {
+		e.preventDefault();
+		save();
+	}}
+	class="flex w-full flex-col"
+>
 	<div class="card bg-base-200 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{m.device_general()}</h2>
@@ -275,7 +281,7 @@
 				</div>
 				<button
 					class="btn max-w-xs {device.expand.ports.length > 0 ? 'mt-4' : ''}"
-					on:click={() => createEmptyPort()}
+					onclick={() => createEmptyPort()}
 					type="button">{m.device_ports_add_new()}</button
 				>
 			</div>
@@ -666,12 +672,12 @@ second (0–59, optional)
 							<button
 								class="btn btn-error join-item"
 								type="button"
-								on:click={() => deleteGroup(group)}><Fa icon={faX} /></button
+								onclick={() => deleteGroup(group)}><Fa icon={faX} /></button
 							>
 						</div>
 						<div
 							class="btn join-item bg-base-100 hover:bg-base-200"
-							on:click={() => toggleGroup(group.id)}
+							onclick={() => toggleGroup(group.id)}
 							role="none"
 						>
 							<input
@@ -689,7 +695,7 @@ second (0–59, optional)
 					class="input join-item"
 					placeholder={m.device_groups_placeholder()}
 					type="text"
-					on:keydown={(e) => {
+					onkeydown={(e) => {
 						if (e.key === 'Enter') {
 							e.preventDefault();
 							addGroup();
@@ -697,7 +703,7 @@ second (0–59, optional)
 					}}
 					bind:value={newGroup}
 				/>
-				<button class="btn btn-neutral join-item" type="button" on:click={() => addGroup()}
+				<button class="btn btn-neutral join-item" type="button" onclick={() => addGroup()}
 					>{m.buttons_add()}</button
 				>
 			</div>
@@ -705,7 +711,7 @@ second (0–59, optional)
 	</div>
 	<div class="card-actions mt-6 justify-end gap-4">
 		{#if $pocketbase.authStore.isSuperuser || $permission.delete?.includes(device.id)}
-			<button class="btn btn-error" type="button" on:click={() => deleteModal.showModal()}
+			<button class="btn btn-error" type="button" onclick={() => deleteModal.showModal()}
 				><Fa icon={faTrash} />{m.buttons_delete()}</button
 			>
 		{/if}
@@ -719,7 +725,7 @@ second (0–59, optional)
 		<div class="modal-action">
 			<form method="dialog">
 				<button class="btn">{m.buttons_cancel()}</button>
-				<button class="btn btn-error" on:click={() => deleteDevice()}>{m.buttons_delete()}</button>
+				<button class="btn btn-error" onclick={() => deleteDevice()}>{m.buttons_delete()}</button>
 			</form>
 		</div>
 	</div>

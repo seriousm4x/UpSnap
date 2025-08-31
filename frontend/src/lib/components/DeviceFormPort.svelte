@@ -70,7 +70,7 @@
 		</fieldset>
 		<button
 			class="btn btn-error btn-xs btn-soft ms-auto"
-			on:click={() => deletePort(device.expand.ports[index])}
+			onclick={() => deletePort(device.expand.ports[index])}
 			type="button"><Fa icon={faTrash} />{m.buttons_delete()}</button
 		>
 	</fieldset>

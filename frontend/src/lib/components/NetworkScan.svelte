@@ -125,7 +125,12 @@
 				{m.device_network_scan_desc()}
 			</p>
 			<div class="flex flex-row flex-wrap items-end gap-4">
-				<form on:submit|preventDefault={saveSettings}>
+				<form
+					onsubmit={(e) => {
+						e.preventDefault();
+						saveSettings();
+					}}
+				>
 					<fieldset class="fieldset p-0">
 						<label class="floating-label mt-2">
 							<span>{m.device_network_scan_ip_range()}</span>
@@ -160,7 +165,7 @@
 								{m.device_network_scan_running()}
 							</button>
 						{:else}
-							<button class="btn btn-success" on:click={() => scan()}>
+							<button class="btn btn-success" onclick={() => scan()}>
 								<Fa icon={faMagnifyingGlass} />
 								{m.device_network_scan()}
 							</button>
@@ -197,7 +202,7 @@
 								<div class="ms-auto">
 									<button
 										class="btn btn-success btn-sm"
-										on:click={(e) => {
+										onclick={(e) => {
 											addSingle(device);
 											e.currentTarget.disabled = true;
 										}}><Fa icon={faPlus} />{m.buttons_add()}</button
@@ -240,7 +245,7 @@
 						{#if addAllCheckbox}
 							<button
 								class="btn btn-success"
-								on:click={() => addAll()}
+								onclick={() => addAll()}
 								disabled={scanResponse.devices.length === 0}
 							>
 								<Fa icon={faPlus} />
@@ -249,7 +254,7 @@
 						{:else}
 							<button
 								class="btn btn-success"
-								on:click={() => addAll()}
+								onclick={() => addAll()}
 								disabled={scanResponse.devices.filter((dev) => dev.name !== 'Unknown').length === 0}
 							>
 								<Fa icon={faPlus} />
@@ -263,7 +268,7 @@
 					<div class="max-w-fit">
 						<button
 							class="btn btn-success"
-							on:click={() => addAll()}
+							onclick={() => addAll()}
 							disabled={scanResponse.devices.length === 0}
 						>
 							<Fa icon={faPlus} />
