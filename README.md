@@ -138,22 +138,23 @@ Although UpSnap has user authorisation, it is **not recommended to expose it to 
 
 UpSnap is available in the following languages so far:
 
-- 🇧🇬 **Bulgarian** (bg-BG)
-- 🇩🇪 **German** (de-DE)
-- 🇺🇸 **English** (en-US)
-- 🇪🇸 **Spanish** (es-ES)
-- 🇫🇷 **French** (fr-FR)
-- 🇮🇩 **Bahasa Indonesia** (id-ID)
-- 🇮🇹 **Italian** (it-IT)
-- 🇯🇵 **Japanese** (ja-JP)
-- 🇳🇱 **Dutch** (nl-NL)
-- 🇳🇴 **Norwegian** (nb-NO)
-- 🇵🇱 **Polish** (pl-PL)
-- 🇵🇹 **Portuguese** (pt-PT)
-- 🇺🇦 **Ukrainian** (uk-UA)
-- 🇻🇳 **Vietnamese** (vi-VN)
+- 🇧🇬 **Bulgarian (Bulgaria)** (bg-BG)
+- 🇩🇪 **German (Germany)** (de-DE)
+- 🇺🇸 **English (United States)** (en-US)
+- 🇪🇸 **Spanish (Spain)** (es-ES)
+- 🇫🇷 **French (France)** (fr-FR)
+- 🇮🇳 **Hindi (India)** (hi-IN)
+- 🇮🇩 **Bahasa (Indonesia)** (id-ID)
+- 🇮🇹 **Italian (Italy)** (it-IT)
+- 🇯🇵 **Japanese (Japan)** (ja-JP)
+- 🇳🇱 **Dutch (Netherlands)** (nl-NL)
+- 🇳🇴 **Norwegian (Norway)** (nb-NO)
+- 🇵🇱 **Polish (Poland)** (pl-PL)
+- 🇵🇹 **Portuguese (Portugal)** (pt-PT)
+- 🇺🇦 **Ukrainian (Ukrain)** (uk-UA)
+- 🇻🇳 **Vietnamese (Vietnam)** (vi-VN)
 - 🇹🇼 **Chinese (Taiwan)** (zh-TW)
-- 🇨🇳 **Chinese** (zh-CN)
+- 🇨🇳 **Chinese (China)** (zh-CN)
 
 **If you want to contribute and help translating, check the wiki: [How to add languages](https://github.com/seriousm4x/UpSnap/wiki/How-to-add-languages)**
 

@@ -20,18 +20,19 @@
 		'en-US': '🇺🇸',
 		'es-ES': '🇪🇸',
 		'fr-FR': '🇫🇷',
+		'hi-IN': '🇮🇳',
 		'id-ID': '🇮🇩',
 		'it-IT': '🇮🇹',
 		'ja-JP': '🇯🇵',
 		'ko-KR': '🇰🇷',
-		'nl-NL': '🇳🇱',
 		'nb-NO': '🇳🇴',
+		'nl-NL': '🇳🇱',
 		'pl-PL': '🇵🇱',
 		'pt-PT': '🇵🇹',
 		'uk-UA': '🇺🇦',
 		'vi-VN': '🇻🇳',
-		'zh-TW': '🇹🇼',
-		'zh-CN': '🇨🇳'
+		'zh-CN': '🇨🇳',
+		'zh-TW': '🇹🇼'
 	};
 
 	// password change

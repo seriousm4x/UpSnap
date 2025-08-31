@@ -1,11 +1,12 @@
 import { getLocale } from '$lib/paraglide/runtime';
 import type { Locale } from 'date-fns';
-import { id } from 'date-fns/locale';
 import { bg } from 'date-fns/locale/bg';
 import { de } from 'date-fns/locale/de';
 import { enUS } from 'date-fns/locale/en-US';
 import { es } from 'date-fns/locale/es';
 import { fr } from 'date-fns/locale/fr';
+import { hi } from 'date-fns/locale/hi';
+import { id } from 'date-fns/locale/id';
 import { it } from 'date-fns/locale/it';
 import { ja } from 'date-fns/locale/ja';
 import { ko } from 'date-fns/locale/ko';
@@ -39,6 +40,9 @@ localeStore.subscribe((l: string) => {
 			break;
 		case 'fr-FR':
 			dateFnsLocale.set(fr);
+			break;
+		case 'hi-IN':
+			dateFnsLocale.set(hi);
 			break;
 		case 'id-ID':
 			dateFnsLocale.set(id);
