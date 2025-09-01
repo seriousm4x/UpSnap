@@ -78,7 +78,7 @@ You can use the [docker-compose](docker-compose.yml) example. See the comments i
 
 ### Non-root docker user:
 
-You will loose the ability to add network devices via the scan page.
+You will lose the ability to add network devices via the scan page.
 
 Create the mount point first:
 
