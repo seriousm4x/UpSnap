@@ -116,6 +116,21 @@ upsnap.example.com {
 }
 ```
 
+### Run in sub path
+
+You can run UpSnap on a different path than `/`, e.g. `/upsnap-sub-path/`. To do this in caddy, set the following:
+
+```
+http://localhost:8091 {
+    handle /upsnap-sub-path/* {
+        uri strip_prefix /upsnap-sub-path
+        reverse_proxy localhost:8090
+    }
+}
+```
+
+Paths must end with a trailing `/`.
+
 ## 🐧 Install from the [AUR](https://aur.archlinux.org/packages/upsnap-bin)
 
 ```bash

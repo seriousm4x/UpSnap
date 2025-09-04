@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
+	import { asset, resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { PUBLIC_VERSION } from '$env/static/public';
 	import PageLoading from '$lib/components/PageLoading.svelte';
@@ -194,7 +194,7 @@ second (0–59, optional)
 						class="h-36"
 						src={$settingsPub.favicon !== ''
 							? `${backendUrl}api/files/settings_public/${$settingsPub.id}/${$settingsPub.favicon}`
-							: '/gopher.svg'}
+							: asset('/gopher.svg')}
 						alt="Favicon preview"
 						bind:this={faviconPreview}
 					/>

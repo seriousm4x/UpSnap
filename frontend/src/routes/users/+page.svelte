@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/stores';
+	import { asset, resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { pocketbase } from '$lib/stores/pocketbase';
@@ -37,7 +37,7 @@
 
 	onMount(() => {
 		if (!$pocketbase.authStore.isSuperuser) {
-			toast(m.toasts_no_permission({ url: $page.url.pathname }), {
+			toast(m.toasts_no_permission({ url: page.url.pathname }), {
 				icon: '⛔'
 			});
 			goto(resolve('/'));
@@ -197,7 +197,7 @@
 					<h2 class="card-title">
 						<label tabindex="-1" class="avatar" for="avatar{index}">
 							<div class="w-10 rounded-full" id="avatar{index}">
-								<img src="/avatars/avatar{user.avatar}.svg" alt="Avatar {user.avatar}" />
+								<img src={asset(`/avatars/avatar${user.avatar}.svg`)} alt="Avatar {user.avatar}" />
 							</div>
 						</label>
 						{user.username}

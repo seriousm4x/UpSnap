@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
+	import { asset, resolve } from '$app/paths';
 	import { m } from '$lib/paraglide/messages';
 	import type { Locale } from '$lib/paraglide/runtime';
 	import { getLocale, locales, setLocale } from '$lib/paraglide/runtime';
@@ -145,7 +145,7 @@
 				<div class="w-16 rounded-full">
 					{#if $pocketbase.authStore.record?.id}
 						<img
-							src="/avatars/avatar{newAvatar ?? $pocketbase.authStore.record?.avatar}.svg"
+							src={asset(`/avatars/avatar${newAvatar ?? $pocketbase.authStore.record?.avatar}.svg`)}
 							alt="Avatar {newAvatar ?? $pocketbase.authStore.record?.avatar}"
 						/>
 					{/if}
@@ -192,7 +192,7 @@
 							role="none"
 						>
 							{#if $pocketbase.authStore.record?.id}
-								<img src="/avatars/avatar{i}.svg" alt="{m.account_avatar_title()} {i}" />
+								<img src={asset(`/avatars/avatar${i}.svg`)} alt="{m.account_avatar_title()} {i}" />
 							{/if}
 						</div>
 					</div>

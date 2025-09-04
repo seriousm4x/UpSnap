@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/stores';
+	import { asset, resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { m } from '$lib/paraglide/messages';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
@@ -111,7 +111,7 @@
 					</div>
 				{/if}
 				<li>
-					<a href={resolve('/')} class="px-4 py-2" class:active={$page.url.pathname === '/'}
+					<a href={resolve('/')} class="px-4 py-2" class:active={page.url.pathname === resolve('/')}
 						><Fa icon={faHome} />{m.home_page_title()}</a
 					>
 				</li>
@@ -120,7 +120,7 @@
 						<a
 							href={resolve('/users')}
 							class="px-4 py-2"
-							class:active={$page.url.pathname.startsWith('/users')}
+							class:active={page.url.pathname.startsWith(resolve('/users'))}
 							><Fa icon={faUsersGear} />{m.users_page_title()}</a
 						>
 					</li>
@@ -128,7 +128,7 @@
 						<a
 							href={resolve('/settings/')}
 							class="px-4 py-2"
-							class:active={$page.url.pathname.startsWith('/settings')}
+							class:active={page.url.pathname.startsWith(resolve('/settings'))}
 							><Fa icon={faCog} />{m.settings_page_title()}</a
 						>
 					</li>
@@ -173,7 +173,7 @@
 			<img
 				src={$settingsPub?.id && $settingsPub?.favicon
 					? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
-					: '/gopher.svg'}
+					: asset('/gopher.svg')}
 				alt={$settingsPub?.website_title ? $settingsPub?.website_title : 'UpSnap'}
 				width="45"
 				height="45"
@@ -186,7 +186,7 @@
 		{/if}
 		<ul class="menu menu-horizontal h-full gap-1 px-1">
 			<li class="h-full">
-				<a href={resolve('/')} class="p-2" class:menu-active={$page.url.pathname === '/'}
+				<a href={resolve('/')} class="p-2" class:menu-active={page.url.pathname === resolve('/')}
 					><Fa icon={faHome} />{m.home_page_title()}</a
 				>
 			</li>
@@ -195,7 +195,7 @@
 					<a
 						href={resolve('/users')}
 						class="p-2"
-						class:menu-active={$page.url.pathname.startsWith('/users')}
+						class:menu-active={page.url.pathname.startsWith(resolve('/users'))}
 						><Fa icon={faUsersGear} />{m.users_page_title()}</a
 					>
 				</li>
@@ -203,7 +203,7 @@
 					<a
 						href={resolve('/settings/')}
 						class="p-2"
-						class:menu-active={$page.url.pathname.startsWith('/settings')}
+						class:menu-active={page.url.pathname.startsWith(resolve('/settings'))}
 						><Fa icon={faCog} />{m.settings_page_title()}</a
 					>
 				</li>
@@ -254,7 +254,7 @@
 			<div class="dropdown dropdown-end">
 				<label tabindex="-1" class="avatar btn btn-circle btn-ghost" for="avatar">
 					<div class="w-10 rounded-full" id="avatar">
-						<img src="/avatars/avatar{avatar}.svg" alt="Avatar {avatar}" />
+						<img src={asset(`/avatars/avatar${avatar}.svg`)} alt="Avatar {avatar}" />
 					</div>
 				</label>
 				<ul

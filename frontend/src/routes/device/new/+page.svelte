@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
 	import NetworkScan from '$lib/components/NetworkScan.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -49,7 +49,7 @@
 	$effect(() => {
 		if (Object.hasOwn($permission, 'create')) {
 			if (!$pocketbase.authStore.isSuperuser && !$permission.create) {
-				toast(m.toasts_no_permission({ url: $page.url.pathname }), {
+				toast(m.toasts_no_permission({ url: page.url.pathname }), {
 					icon: '⛔'
 				});
 				goto(resolve('/'));

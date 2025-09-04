@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
+	import { asset, resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
@@ -90,7 +90,7 @@
 		rel="shortcut icon"
 		href={$settingsPub?.id && $settingsPub?.favicon
 			? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
-			: '/gopher.svg'}
+			: asset('/gopher.svg')}
 	/>
 	{#if $settingsPub === undefined}
 		<title>UpSnap</title>
@@ -99,7 +99,7 @@
 	{/if}
 </svelte:head>
 
-{#if authIsValid && !page.url.pathname.startsWith('/welcome')}
+{#if authIsValid && !page.url.pathname.startsWith(resolve('/welcome'))}
 	<Navbar />
 {/if}
 
