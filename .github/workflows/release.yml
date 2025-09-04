@@ -35,9 +35,11 @@ jobs:
 
       # install latest node
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: latest
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
 
       # build sveltekit frontend
       - name: Build frontend
