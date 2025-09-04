@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { nextCronDate } from '$lib/helpers/cron';
 	import { m } from '$lib/paraglide/messages';
 	import { dateFnsLocale } from '$lib/stores/locale';
@@ -43,7 +44,7 @@
 		{
 			text: m.device_card_btn_more_edit(),
 			icon: faPen,
-			onClick: () => goto(`/device/${device.id}`),
+			onClick: () => goto(resolve(`/device/${device.id}`)),
 			requires: $pocketbase.authStore.isSuperuser || $permission.update?.includes(device.id)
 		}
 	]);
@@ -90,6 +91,7 @@
 <div class="card bg-base-200 shadow-sm" transition:scale={{ delay: 0, duration: 200 }}>
 	<div class="card-body p-6">
 		{#if device.link !== ''}
+			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 			<a href={device.link} target="_blank">
 				<h1 class="link card-title">{device.name}</h1>
 			</a>
@@ -100,7 +102,7 @@
 			<p class="grow-0">{device.description}</p>
 		{/if}
 		<div class="card rounded-box w-full">
-			<DeviceCardNic {device} />
+			<DeviceCardNic bind:device />
 		</div>
 		{#if device.wake_cron_enabled || device.shutdown_cron_enabled || device.password}
 			<div class="mt-1 flex flex-row flex-wrap gap-2">

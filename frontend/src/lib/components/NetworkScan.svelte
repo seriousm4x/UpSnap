@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { localeStore } from '$lib/stores/locale';
@@ -113,7 +114,7 @@
 			})
 		);
 		toast.success(m.toasts_devices_created_multiple({ count: count }));
-		goto('/');
+		goto(resolve('/'));
 	}
 </script>
 

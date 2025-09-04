@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { m } from '$lib/paraglide/messages';
 	import type { Locale } from '$lib/paraglide/runtime';
 	import { getLocale, locales, setLocale } from '$lib/paraglide/runtime';
@@ -111,7 +112,7 @@
 				if (data.ok) {
 					toast.success(m.toasts_password_changed());
 					$pocketbase.authStore.clear();
-					goto('/login');
+					goto(resolve('/login'));
 				} else {
 					const j = await data.json();
 					if (j?.data?.password?.message) {

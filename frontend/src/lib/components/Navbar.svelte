@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/stores';
 	import { m } from '$lib/paraglide/messages';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
@@ -73,7 +74,7 @@
 		await $pocketbase.collection('ports').unsubscribe('*');
 		await $pocketbase.collection('permissions').unsubscribe('*');
 		$pocketbase.authStore.clear();
-		goto('/login', { invalidateAll: true });
+		goto(resolve('/login'), { invalidateAll: true });
 	}
 </script>
 
@@ -110,14 +111,14 @@
 					</div>
 				{/if}
 				<li>
-					<a href="/" class="px-4 py-2" class:active={$page.url.pathname === '/'}
+					<a href={resolve('/')} class="px-4 py-2" class:active={$page.url.pathname === '/'}
 						><Fa icon={faHome} />{m.home_page_title()}</a
 					>
 				</li>
 				{#if $pocketbase.authStore.isSuperuser}
 					<li>
 						<a
-							href="/users"
+							href={resolve('/users')}
 							class="px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/users')}
 							><Fa icon={faUsersGear} />{m.users_page_title()}</a
@@ -125,7 +126,7 @@
 					</li>
 					<li>
 						<a
-							href="/settings/"
+							href={resolve('/settings/')}
 							class="px-4 py-2"
 							class:active={$page.url.pathname.startsWith('/settings')}
 							><Fa icon={faCog} />{m.settings_page_title()}</a
@@ -168,7 +169,7 @@
 				</li>
 			</ul>
 		</div>
-		<a class="btn btn-ghost h-full border-0 px-2 text-xl" href="/">
+		<a class="btn btn-ghost h-full border-0 px-2 text-xl" href={resolve('/')}>
 			<img
 				src={$settingsPub?.id && $settingsPub?.favicon
 					? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
@@ -185,19 +186,22 @@
 		{/if}
 		<ul class="menu menu-horizontal h-full gap-1 px-1">
 			<li class="h-full">
-				<a href="/" class="p-2" class:menu-active={$page.url.pathname === '/'}
+				<a href={resolve('/')} class="p-2" class:menu-active={$page.url.pathname === '/'}
 					><Fa icon={faHome} />{m.home_page_title()}</a
 				>
 			</li>
 			{#if $pocketbase.authStore.isSuperuser}
 				<li class="h-full">
-					<a href="/users" class="p-2" class:menu-active={$page.url.pathname.startsWith('/users')}
+					<a
+						href={resolve('/users')}
+						class="p-2"
+						class:menu-active={$page.url.pathname.startsWith('/users')}
 						><Fa icon={faUsersGear} />{m.users_page_title()}</a
 					>
 				</li>
 				<li class="h-full">
 					<a
-						href="/settings/"
+						href={resolve('/settings/')}
 						class="p-2"
 						class:menu-active={$page.url.pathname.startsWith('/settings')}
 						><Fa icon={faCog} />{m.settings_page_title()}</a
@@ -242,7 +246,7 @@
 	<div class="ms-auto justify-end">
 		{#if $pocketbase.authStore?.record !== null}
 			{#if $pocketbase.authStore.isSuperuser || $permission.create}
-				<a class="btn btn-success me-4" href="/device/new">
+				<a class="btn btn-success me-4" href={resolve('/device/new')}>
 					<Fa icon={faPlus} />
 					{m.navbar_new()}
 				</a>
@@ -263,7 +267,7 @@
 							: $pocketbase.authStore.record?.username}
 					</li>
 					<li>
-						<a href="/account"><Fa icon={faUserGear} />{m.navbar_edit_account()}</a>
+						<a href={resolve('/account')}><Fa icon={faUserGear} />{m.navbar_edit_account()}</a>
 					</li>
 					<li>
 						<div onclick={async () => logout()} onkeydown={async () => logout()} role="none">

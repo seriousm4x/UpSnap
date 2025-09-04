@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import DeviceFormPort from '$lib/components/DeviceFormPort.svelte';
 	import { nextCronDate, parseCron as validateCron } from '$lib/helpers/cron';
 	import { m } from '$lib/paraglide/messages';
@@ -68,7 +69,7 @@
 			.update(device.id, device)
 			.then(() => {
 				toast.success(m.toasts_device_updated({ device: device.name }));
-				goto('/');
+				goto(resolve('/'));
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -84,7 +85,7 @@
 			.create(device)
 			.then(() => {
 				toast.success(m.toasts_device_created({ device: device.name }));
-				goto('/');
+				goto(resolve('/'));
 			})
 			.catch((err) => {
 				toast.error(err.message);
@@ -127,7 +128,7 @@
 			.delete(device.id)
 			.then(() => {
 				toast.success(m.toasts_device_deleted({ device: device.name }));
-				goto('/');
+				goto(resolve('/'));
 			})
 			.catch((err) => {
 				toast.error(err.message);

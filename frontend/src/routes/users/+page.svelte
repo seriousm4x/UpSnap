@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/stores';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -39,7 +40,7 @@
 			toast(m.toasts_no_permission({ url: $page.url.pathname }), {
 				icon: '⛔'
 			});
-			goto('/');
+			goto(resolve('/'));
 			return;
 		}
 	});
@@ -216,7 +217,7 @@
 							{#if devices.length === 0}
 								<p>
 									{m.home_no_devices()}
-									<a href="/device/new" class="link">{m.users_create_new_device()}</a>
+									<a href={resolve('/device/new')} class="link">{m.users_create_new_device()}</a>
 								</p>
 							{:else}
 								<div class="grid grid-cols-4 justify-items-center gap-4 md:grid-cols-5">

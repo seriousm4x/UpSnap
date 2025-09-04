@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
 	import { m } from '$lib/paraglide/messages.js';
-	import { locales, localizeHref } from '$lib/paraglide/runtime';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import type { Permission } from '$lib/types/permission';
@@ -50,7 +50,7 @@
 		// redirect to welcome page if setup is not completed
 		if ($settingsPub.setup_completed === false && page.url.pathname !== '/welcome') {
 			$pocketbase.authStore.clear();
-			goto('/welcome');
+			goto(resolve('/welcome'));
 			return;
 		}
 
@@ -64,7 +64,7 @@
 					const status = err?.status << 0;
 					if (status == 401 || status == 403) {
 						$pocketbase.authStore.clear();
-						goto('/login');
+						goto(resolve('/login'));
 					} else {
 						console.log('NOT CLEARED');
 					}
@@ -78,7 +78,7 @@
 					const status = err?.status << 0;
 					if (status == 401 || status == 403) {
 						$pocketbase.authStore.clear();
-						goto('/login');
+						goto(resolve('/login'));
 					}
 				});
 		}
@@ -110,9 +110,3 @@
 		<slot />
 	</div>
 </Transition>
-
-<div class="hidden">
-	{#each locales as locale (locale)}
-		<a href={localizeHref(page.url.pathname, { locale })}>{locale}</a>
-	{/each}
-</div>

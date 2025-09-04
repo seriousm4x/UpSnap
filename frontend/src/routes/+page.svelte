@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { resolve } from '$app/paths';
 	import DeviceCard from '$lib/components/DeviceCard.svelte';
 	import PageLoading from '$lib/components/PageLoading.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -26,7 +27,10 @@
 	let searchInput: HTMLInputElement | undefined = $state();
 	let filteredDevices: Device[] = $derived([]);
 	let devicesWithoutGroups: Device[] = $derived([]);
-	let devicesWithGroup: Record<string, Device[]> = $derived({});
+	let devicesWithGroup: {
+		group: Group | null;
+		devices: Device[];
+	}[] = $derived([]);
 
 	const isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
 	const gridClass = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4';
@@ -64,15 +68,21 @@
 			.sort((a, b) => a[orderBy].localeCompare(b[orderBy], $localeStore, { numeric: true }));
 	});
 	$effect(() => {
-		devicesWithGroup = filteredDevices.reduce(
-			(groups, dev) => {
-				dev.expand?.groups?.forEach((group: Group) => {
-					groups[group.id] = [...(groups[group.id] || []), dev];
-				});
-				return groups;
-			},
-			{} as Record<string, Device[]>
-		);
+		const groups: Record<string, { group: Group; devices: Device[] }> = {};
+		filteredDevices.forEach((dev) => {
+			if (dev.expand?.groups?.length) {
+				for (const g of dev.expand.groups) {
+					if (!groups[g.id]) groups[g.id] = { group: g, devices: [] };
+					groups[g.id].devices.push(dev);
+				}
+			}
+		});
+		devicesWithGroup = Object.values(groups).map((g) => ({
+			group: g.group,
+			devices: g.devices.sort((a, b) =>
+				a[orderBy].localeCompare(b[orderBy], $localeStore, { numeric: true })
+			)
+		}));
 	});
 
 	function getAllDevices() {
@@ -170,39 +180,40 @@
 			</button>
 		</div>
 	</div>
-
 	{#if orderByGroups}
 		<div class="space-y-6">
 			{#if devicesWithoutGroups.length > 0}
 				<div class={gridClass}>
-					{#each devicesWithoutGroups as device (device.id)}
-						<DeviceCard {device} />
+					{#each devicesWithoutGroups as device, i (device.id)}
+						<DeviceCard bind:device={devicesWithoutGroups[i]} />
 					{/each}
 				</div>
 			{/if}
-			{#each Object.entries(devicesWithGroup).sort( ([a], [b]) => a.localeCompare( b, $localeStore, { numeric: true } ) ) as [group, groupDevices], i (i)}
+			{#each devicesWithGroup.sort( (a, b) => (a.group?.name ?? '').localeCompare( b.group?.name ?? '', $localeStore, { numeric: true } ) ) as { group, devices } (group?.id)}
 				<div>
 					<h1 class="mb-3 text-2xl font-bold">
-						{groupDevices[0].expand.groups.find((grp) => grp.id === group)?.name ||
-							'Unknown group name'}
-						<button class="btn btn-sm btn-success btn-soft" onclick={() => wakeGroup(group)}
+						{group?.name ?? 'Unknown group name'}
+						<button
+							class="btn btn-sm btn-success btn-soft"
+							onclick={() => wakeGroup(group?.id ?? '')}
 							><Fa icon={faPowerOff} /> {m.home_wake_group()}</button
 						>
 					</h1>
 					<div class={gridClass}>
-						{#each groupDevices.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
-							<DeviceCard {device} />
+						{#each devices as device, i (device.id)}
+							<DeviceCard bind:device={devices[i]} />
 						{/each}
 					</div>
 				</div>
 			{/each}
 		</div>
 	{:else}
+		{@const sorted = $state
+			.snapshot(filteredDevices)
+			.sort((a, b) => a[orderBy].localeCompare(b[orderBy], $localeStore, { numeric: true }))}
 		<div class={gridClass}>
-			{#each $state
-				.snapshot(filteredDevices)
-				.sort( (a, b) => a[orderBy].localeCompare( b[orderBy], $localeStore, { numeric: true } ) ) as device (device.id)}
-				<DeviceCard {device} />
+			{#each sorted as device, i (device.id)}
+				<DeviceCard bind:device={sorted[i]} />
 			{/each}
 		</div>
 	{/if}
@@ -215,7 +226,9 @@
 					<h3 class="font-bold">{m.home_no_devices()}</h3>
 					<div class="text-xs">{m.home_add_first_device()}</div>
 				</div>
-				<a href="/device/new" class="btn btn-sm"><Fa icon={faPlus} />{m.home_add_first_device()}</a>
+				<a href={resolve('/device/new')} class="btn btn-sm"
+					><Fa icon={faPlus} />{m.home_add_first_device()}</a
+				>
 			{:else}
 				<span>
 					{m.home_grant_permissions()}

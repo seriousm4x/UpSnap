@@ -9,7 +9,7 @@
 	let { device = $bindable() }: { device: Device } = $props();
 	let hoverText = $state('');
 	let disabled = $state(false);
-	let timeout = 120;
+	let timeout = $state(120);
 	let interval: number;
 	let modalWake: HTMLDialogElement;
 	let modalShutdown: HTMLDialogElement;
@@ -194,12 +194,14 @@
 							</div>
 						{/if}
 						{#if port.link}
+							<!-- eslint-disable svelte/no-navigation-without-resolve -->
 							<a
 								href={port.link}
 								target="_blank"
 								class="underline"
 								onclick={(e) => e.stopPropagation()}>{port.name} ({port.number})</a
 							>
+							<!-- eslint-enable svelte/no-navigation-without-resolve -->
 						{:else}
 							{port.name} ({port.number})
 						{/if}

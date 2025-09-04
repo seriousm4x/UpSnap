@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { toggleVisibility } from '$lib/helpers/forms';
 	import { m } from '$lib/paraglide/messages';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
@@ -18,7 +19,7 @@
 
 	onMount(() => {
 		if ($pocketbase.authStore.isValid) {
-			goto('/');
+			goto(resolve('/'));
 		}
 	});
 
@@ -27,14 +28,14 @@
 			.collection('_superusers')
 			.authWithPassword(form.email, form.password)
 			.then(() => {
-				goto('/');
+				goto(resolve('/'));
 			})
 			.catch(() => {
 				$pocketbase
 					.collection('users')
 					.authWithPassword(form.email, form.password)
 					.then(() => {
-						goto('/');
+						goto(resolve('/'));
 					})
 					.catch((err) => {
 						toast.error(err.message);
@@ -47,7 +48,7 @@
 			.collection('users')
 			.authWithOAuth2({ provider: provider.name })
 			.then(() => {
-				goto('/');
+				goto(resolve('/'));
 			})
 			.catch((err) => {
 				console.log(err);

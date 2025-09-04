@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/stores';
 	import DeviceForm from '$lib/components/DeviceForm.svelte';
 	import NetworkScan from '$lib/components/NetworkScan.svelte';
@@ -51,7 +52,7 @@
 				toast(m.toasts_no_permission({ url: $page.url.pathname }), {
 					icon: '⛔'
 				});
-				goto('/');
+				goto(resolve('/'));
 			}
 		}
 	});

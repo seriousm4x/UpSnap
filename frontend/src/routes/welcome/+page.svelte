@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { toggleVisibility } from '$lib/helpers/forms';
 	import { m } from '$lib/paraglide/messages.js';
 	import { pocketbase } from '$lib/stores/pocketbase';
@@ -76,7 +77,7 @@
 					<h2 class="card-title">{m.welcome_not_expected_title()}</h2>
 					<p>{m.welcome_not_expected_desc()}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-success" onclick={() => goto('/')}
+						<button class="btn btn-success" onclick={() => goto(resolve('/'))}
 							>{m.welcome_not_expected_back()}</button
 						>
 					</div>
@@ -169,7 +170,7 @@
 					<h2 class="card-title">{m.welcome_step3_page_title()}</h2>
 					<p>{m.welcome_step3_page_desc()}</p>
 					<div class="card-actions justify-end">
-						<button class="btn btn-success" onclick={() => goto('/')}
+						<button class="btn btn-success" onclick={() => goto(resolve('/'))}
 							>{m.welcome_step3_btn_done()}</button
 						>
 					</div>
