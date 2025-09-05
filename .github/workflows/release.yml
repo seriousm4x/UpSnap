@@ -85,6 +85,8 @@ jobs:
         run: |
           mkdir -p backend/pb_public
           tar -xzf frontend-dist.tar.gz -C backend/pb_public
+          git reset --hard
+          git clean -fd
 
       - name: Set up Go
         uses: actions/setup-go@v6
