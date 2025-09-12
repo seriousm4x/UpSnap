@@ -129,6 +129,25 @@ http://localhost:8091 {
 }
 ```
 
+Or nginx:
+
+```
+http {
+    server {
+        listen 8091;
+        server_name localhost;
+        location /upsnap-sub-path/ {
+            proxy_pass http://localhost:8090/;
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+}
+```
+
 Paths must end with a trailing `/`.
 
 ## 🐧 Install from the [AUR](https://aur.archlinux.org/packages/upsnap-bin)
