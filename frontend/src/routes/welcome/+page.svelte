@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
+	import { asset, resolve } from '$app/paths';
 	import { toggleVisibility } from '$lib/helpers/forms';
 	import { m } from '$lib/paraglide/messages.js';
 	import { pocketbase } from '$lib/stores/pocketbase';
@@ -72,7 +72,7 @@
 	<div class="my-4 flex w-screen max-w-lg flex-col gap-16">
 		<div class="card bg-base-200 shadow-sm">
 			{#if stepsCompleted === 0 && $settingsPub?.setup_completed}
-				<figure class="mx-auto w-72 pt-6"><img src="/gopher.svg" alt="Gopher" /></figure>
+				<figure class="mx-auto w-72 pt-6"><img src={asset('/gopher.svg')} alt="Gopher" /></figure>
 				<div class="card-body">
 					<h2 class="card-title">{m.welcome_not_expected_title()}</h2>
 					<p>{m.welcome_not_expected_desc()}</p>
@@ -83,7 +83,7 @@
 					</div>
 				</div>
 			{:else if stepsCompleted === 0}
-				<figure class="mx-auto w-44 pt-6"><img src="/gopher.svg" alt="Gopher" /></figure>
+				<figure class="mx-auto w-44 pt-6"><img src={asset('/gopher.svg')} alt="Gopher" /></figure>
 				<div class="card-body">
 					<h2 class="card-title">{m.welcome_step1_page_title()}</h2>
 					<p>{m.welcome_step1_setup_desc()}</p>
@@ -96,7 +96,7 @@
 			{:else if stepsCompleted === 1}
 				<div class="card-body">
 					<div class="flex flex-row gap-4">
-						<figure class="w-16"><img src="/gopher.svg" alt="Gopher" /></figure>
+						<figure class="w-16"><img src={asset('/gopher.svg')} alt="Gopher" /></figure>
 						<h2 class="card-title">{m.welcome_step2_page_title()}</h2>
 					</div>
 					<form
@@ -165,7 +165,7 @@
 					</form>
 				</div>
 			{:else if stepsCompleted === 2}
-				<figure class="mx-auto w-72 pt-6"><img src="/gopher.svg" alt="Gopher" /></figure>
+				<figure class="mx-auto w-72 pt-6"><img src={asset('/gopher.svg')} alt="Gopher" /></figure>
 				<div class="card-body">
 					<h2 class="card-title">{m.welcome_step3_page_title()}</h2>
 					<p>{m.welcome_step3_page_desc()}</p>
