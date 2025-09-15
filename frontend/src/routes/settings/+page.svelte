@@ -15,10 +15,10 @@
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 
-	let settingsPubClone: SettingsPublic | undefined;
-	let settingsPrivClone: SettingsPrivate | undefined;
-	let faviconPreview: HTMLImageElement;
-	let faviconInputElement: HTMLInputElement;
+	let settingsPubClone: SettingsPublic | undefined = $state();
+	let settingsPrivClone: SettingsPrivate | undefined = $state();
+	let faviconPreview: HTMLImageElement | undefined = $state();
+	let faviconInputElement: HTMLInputElement | undefined = $state();
 
 	onMount(() => {
 		if (!$pocketbase.authStore.isSuperuser) {
@@ -47,10 +47,9 @@
 	});
 
 	function resetFavicon() {
-		if (settingsPubClone === undefined) return;
-		settingsPubClone.favicon = '';
-		faviconInputElement.value = '';
-		faviconPreview.src = '/gopher.svg';
+		if (settingsPubClone) settingsPubClone.favicon = '';
+		if (faviconInputElement) faviconInputElement.value = '';
+		if (faviconPreview) faviconPreview.src = '/gopher.svg';
 	}
 
 	async function save() {
@@ -73,9 +72,19 @@
 			throw new Error('ping_interval not valid');
 		}
 
+		// If favicon is empty and no new file is selected, don't send the favicon field at all
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const payload: any = { ...settingsPubClone };
+		if (
+			!payload.favicon &&
+			(!faviconInputElement.files || faviconInputElement.files.length === 0)
+		) {
+			delete payload.favicon;
+		}
+
 		await $pocketbase
 			.collection('settings_public')
-			.update(settingsPubClone.id, settingsPubClone)
+			.update(settingsPubClone.id, payload)
 			.then((res) => {
 				settingsPub.set(res as SettingsPublic);
 			})
