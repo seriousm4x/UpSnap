@@ -22,7 +22,13 @@ const config = {
 				'/device/new',
 				'/users',
 				'/settings'
-			]
+			],
+			handleHttpError: ({ path, message }) => {
+				if (path === '/api/upsnap/manifest.webmanifest') {
+					return;
+				}
+				throw message;
+			}
 		}
 	}
 };
