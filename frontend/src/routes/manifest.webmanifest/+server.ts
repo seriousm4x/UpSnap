@@ -50,7 +50,7 @@ export async function GET() {
 		'Cache-Control': 'no-cache, no-store'
 	};
 
-	// get icon from backend
+	// get settings from backend
 	const pb = get(pocketbase);
 	const res = await pb
 		.collection('settings_public')
