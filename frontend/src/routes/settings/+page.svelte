@@ -72,19 +72,9 @@
 			throw new Error('ping_interval not valid');
 		}
 
-		// If favicon is empty and no new file is selected, don't send the favicon field at all
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const payload: any = { ...settingsPubClone };
-		if (
-			!payload.favicon &&
-			(!faviconInputElement.files || faviconInputElement.files.length === 0)
-		) {
-			delete payload.favicon;
-		}
-
 		await $pocketbase
 			.collection('settings_public')
-			.update(settingsPubClone.id, payload)
+			.update(settingsPubClone.id, settingsPubClone)
 			.then((res) => {
 				settingsPub.set(res as SettingsPublic);
 			})
@@ -217,6 +207,7 @@ second (0–59, optional)
 					/>
 					<button
 						class="btn btn-error"
+						type="button"
 						onclick={() => resetFavicon()}
 						onkeydown={() => resetFavicon()}>{m.buttons_reset()}</button
 					>
