@@ -78,6 +78,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		se.Router.GET("/api/upsnap/scan", HandlerScan).Bind(apis.RequireSuperuserAuth())
 		se.Router.POST("/api/upsnap/init-superuser", HandlerInitSuperuser) // https://github.com/pocketbase/pocketbase/discussions/6198
 		se.Router.POST("/api/upsnap/validate-cron", HandlerValidateCron)
+		se.Router.GET("/api/upsnap/manifest.webmanifest", HandlerWebsiteManifest)
 
 		if err := importSettings(app); err != nil {
 			return err

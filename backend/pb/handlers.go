@@ -1,7 +1,9 @@
 package pb
 
 import (
+	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"net"
 	"net/http"
 	"os"
@@ -380,4 +382,86 @@ func asyncCall(e *core.RequestEvent, fn func() *router.ApiError) *router.ApiErro
 	}()
 
 	return nil
+}
+
+func HandlerWebsiteManifest(e *core.RequestEvent) error {
+	scheme := "http"
+	if e.Request.TLS != nil {
+		scheme = "https"
+	}
+	baseUrl := fmt.Sprintf("%s://%s", scheme, e.Request.Host)
+
+	manifest := map[string]any{
+		"name":             "UpSnap",
+		"short_name":       "UpSnap",
+		"description":      "A simple wake on lan web app written with SvelteKit, Go and PocketBase.",
+		"theme_color":      "#55BCD9",
+		"background_color": "#55BCD9",
+		"display":          "standalone",
+		"scope":            baseUrl,
+		"start_url":        baseUrl,
+		"icons": []map[string]string{
+			{
+				"src":     "/icon_192.png",
+				"sizes":   "192x192",
+				"type":    "image/png",
+				"purpose": "any",
+			},
+			{
+				"src":     "/icon_512.png",
+				"sizes":   "512x512",
+				"type":    "image/png",
+				"purpose": "any",
+			},
+			{
+				"src":     "/maskable_192.png",
+				"sizes":   "192x192",
+				"type":    "image/png",
+				"purpose": "maskable",
+			},
+			{
+				"src":     "/maskable_512.png",
+				"sizes":   "512x512",
+				"type":    "image/png",
+				"purpose": "maskable",
+			},
+			{
+				"src":   "/gopher.svg",
+				"sizes": "any",
+				"type":  "image/svg+xml",
+			},
+		},
+	}
+
+	publicSettings, err := e.App.FindFirstRecordByFilter("settings_public", "")
+	if err != nil {
+		return writeManifest(e, manifest)
+	}
+
+	// override title if set
+	if title := publicSettings.GetString("website_title"); title != "" {
+		manifest["name"] = title
+		manifest["short_name"] = title
+	}
+
+	// override icons if set
+	if favicon := publicSettings.GetString("favicon"); favicon != "" {
+
+		manifest["icons"] = []map[string]string{
+			{
+				"src":     fmt.Sprintf("%s/api/files/settings_public/%s/%s", baseUrl, publicSettings.Id, favicon),
+				"sizes":   "any",
+				"purpose": "any",
+			},
+		}
+	}
+
+	return writeManifest(e, manifest)
+}
+
+func writeManifest(e *core.RequestEvent, manifest map[string]any) error {
+	e.Response.Header().Set("Content-Type", "application/manifest+json")
+	e.Response.Header().Set("Cache-Control", "no-cache, no-store")
+	enc := json.NewEncoder(e.Response)
+	return enc.Encode(manifest)
 }
