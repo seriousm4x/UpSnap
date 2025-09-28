@@ -69,7 +69,7 @@ localeStore.subscribe((l: string) => {
 		case 'pt':
 			dateFnsLocale.set(pt);
 			break;
-		case 'ru':
+		case 'ru-RU':
 			dateFnsLocale.set(ru);
 			break;
 		case 'uk-UA':
