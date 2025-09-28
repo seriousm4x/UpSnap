@@ -386,7 +386,7 @@ func asyncCall(e *core.RequestEvent, fn func() *router.ApiError) *router.ApiErro
 
 func HandlerWebsiteManifest(e *core.RequestEvent) error {
 	scheme := "http"
-	if e.Request.TLS != nil {
+	if e.Request.TLS != nil || e.Request.Header.Get("X-Forwarded-Proto") == "https" {
 		scheme = "https"
 	}
 	baseUrl := fmt.Sprintf("%s://%s", scheme, e.Request.Host)
