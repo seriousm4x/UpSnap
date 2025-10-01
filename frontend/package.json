@@ -18,7 +18,7 @@
 		"@eslint/compat": "^1.4.0",
 		"@eslint/js": "^9.36.0",
 		"@inlang/cli": "^3.0.12",
-		"@inlang/paraglide-js": "2.3.2",
+		"@inlang/paraglide-js": "2.4.0",
 		"@sveltejs/adapter-static": "^3.0.9",
 		"@sveltejs/kit": "^2.43.6",
 		"@sveltejs/vite-plugin-svelte": "^5.1.1",
