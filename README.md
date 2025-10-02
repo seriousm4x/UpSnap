@@ -185,6 +185,7 @@ UpSnap is available in the following languages so far:
 - 🇳🇴 **Norwegian (Norway)** (nb-NO)
 - 🇵🇱 **Polish (Poland)** (pl-PL)
 - 🇵🇹 **Portuguese (Portugal)** (pt-PT)
+- 🇷🇺 **Russian (Russia)** (ru-RU)
 - 🇺🇦 **Ukrainian (Ukrain)** (uk-UA)
 - 🇻🇳 **Vietnamese (Vietnam)** (vi-VN)
 - 🇹🇼 **Chinese (Taiwan)** (zh-TW)
