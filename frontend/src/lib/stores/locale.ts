@@ -14,6 +14,7 @@ import { nb } from 'date-fns/locale/nb';
 import { nl } from 'date-fns/locale/nl';
 import { pl } from 'date-fns/locale/pl';
 import { pt } from 'date-fns/locale/pt';
+import { ru } from 'date-fns/locale/ru';
 import { uk } from 'date-fns/locale/uk';
 import { vi } from 'date-fns/locale/vi';
 import { zhCN } from 'date-fns/locale/zh-CN';
@@ -67,6 +68,9 @@ localeStore.subscribe((l: string) => {
 			break;
 		case 'pt':
 			dateFnsLocale.set(pt);
+			break;
+		case 'ru-RU':
+			dateFnsLocale.set(ru);
 			break;
 		case 'uk-UA':
 			dateFnsLocale.set(uk);
