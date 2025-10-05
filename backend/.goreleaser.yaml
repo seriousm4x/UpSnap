@@ -40,7 +40,7 @@ builds:
       - goos: freebsd
         goarch: arm
 archives:
-  - formats: [ 'zip' ]
+  - formats: ["zip"]
 checksum:
   name_template: "checksums.txt"
 snapshot:
@@ -69,20 +69,20 @@ changelog:
 git:
   ignore_tags:
     - "{{ if not .Prerelease}}*beta*{{ end }}"
-aurs:
-  - name: upsnap-bin
-    homepage: https://github.com/seriousm4x/UpSnap
-    description: "A simple wake on lan web app written with SvelteKit, Go and PocketBase."
-    maintainers:
-      - "SeriousM4x <maxi at quoss dot org>"
-    license: "MIT"
-    private_key: "{{ .Env.AUR_KEY }}"
-    git_url: "ssh://aur@aur.archlinux.org/upsnap-bin.git"
-    package: |-
-      install -Dm755 "./upsnap" "${pkgdir}/usr/bin/upsnap"
-    skip_upload: auto
-    optdepends:
-      - "nmap: to scan for network devices"
-    commit_author:
-      name: goreleaserbot
-      email: bot@goreleaser.com
+# aurs:
+#   - name: upsnap-bin
+#     homepage: https://github.com/seriousm4x/UpSnap
+#     description: "A simple wake on lan web app written with SvelteKit, Go and PocketBase."
+#     maintainers:
+#       - "SeriousM4x <maxi at quoss dot org>"
+#     license: "MIT"
+#     private_key: "{{ .Env.AUR_KEY }}"
+#     git_url: "ssh://aur@aur.archlinux.org/upsnap-bin.git"
+#     package: |-
+#       install -Dm755 "./upsnap" "${pkgdir}/usr/bin/upsnap"
+#     skip_upload: auto
+#     optdepends:
+#       - "nmap: to scan for network devices"
+#     commit_author:
+#       name: goreleaserbot
+#       email: bot@goreleaser.com
