@@ -1,6 +1,7 @@
 import { getLocale } from '$lib/paraglide/runtime';
 import type { Locale } from 'date-fns';
 import { bg } from 'date-fns/locale/bg';
+import { cs } from 'date-fns/locale/cs';
 import { de } from 'date-fns/locale/de';
 import { enUS } from 'date-fns/locale/en-US';
 import { es } from 'date-fns/locale/es';
@@ -29,6 +30,9 @@ localeStore.subscribe((l: string) => {
 	switch (l) {
 		case 'bg-BG':
 			dateFnsLocale.set(bg);
+			break;
+		case 'cs-CZ':
+			dateFnsLocale.set(cs);
 			break;
 		case 'de-DE':
 			dateFnsLocale.set(de);

@@ -173,6 +173,7 @@ Although UpSnap has user authorisation, it is **not recommended to expose it to 
 UpSnap is available in the following languages so far:
 
 - 🇧🇬 **Bulgarian (Bulgaria)** (bg-BG)
+- 🇨🇿 **Czech (Czech republic)** (cs-CZ)
 - 🇩🇪 **German (Germany)** (de-DE)
 - 🇺🇸 **English (United States)** (en-US)
 - 🇪🇸 **Spanish (Spain)** (es-ES)
