@@ -50,10 +50,10 @@ importers:
         version: 2.4.0
       '@sveltejs/adapter-static':
         specifier: ^3.0.10
-        version: 3.0.10(@sveltejs/kit@2.46.5(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))
+        version: 3.0.10(@sveltejs/kit@2.47.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))
       '@sveltejs/kit':
-        specifier: ^2.46.5
-        version: 2.46.5(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1))
+        specifier: ^2.47.0
+        version: 2.47.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1))
       '@sveltejs/vite-plugin-svelte':
         specifier: ^5.1.1
         version: 5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1))
@@ -527,8 +527,8 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
 
-  '@sveltejs/kit@2.46.5':
-    resolution: {integrity: sha512-7TSvMrCdmig5TMyYDW876C5FljhA0wlGixtvASCiqUqtLfmyEEpaysXjC7GhR5mWcGRrCGF+L2Bl1eEaW1wTCA==}
+  '@sveltejs/kit@2.47.0':
+    resolution: {integrity: sha512-mznN01MBXtr4T7X/E3ENkhF6GzqxTxL6/whG3OzCzUu8G8KYRNiCdoxLMVWAHJx/mDMPP3XAeKCMZHF/Xd/CDw==}
     engines: {node: '>=18.13'}
     hasBin: true
     peerDependencies:
@@ -851,8 +851,8 @@ packages:
     resolution: {integrity: sha512-ecqj/sy1jcK1uWrwpR67UhYrIFQ+5WlGxth34WquCbamhFA6hkkwiu37o6J5xCHdo1oixJRfVRw+ywV+Hq/0Aw==}
     engines: {node: '>=8'}
 
-  devalue@5.3.2:
-    resolution: {integrity: sha512-UDsjUbpQn9kvm68slnrs+mfxwFkIflOhkanmyabZ8zOYk8SMEIbJ3TK+88g70hSIeytu4y18f0z/hYHMTrXIWw==}
+  devalue@5.4.1:
+    resolution: {integrity: sha512-YtoaOfsqjbZQKGIMRYDWKjUmSB4VJ/RElB+bXZawQAQYAo4xu08GKTMVlsZDTF6R2MbAgjcAQRPI5eIyRAT2OQ==}
 
   enhanced-resolve@5.18.3:
     resolution: {integrity: sha512-d4lC8xfavMeBjzGr2vECC3fsGXziXZQyJxD868h2M/mBI3PwAuODxAkLkq5HYuvrPYcUtiLzsTo8U3PgX3Ocww==}
@@ -1933,11 +1933,11 @@ snapshots:
     dependencies:
       acorn: 8.15.0
 
-  '@sveltejs/adapter-static@3.0.10(@sveltejs/kit@2.46.5(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))':
+  '@sveltejs/adapter-static@3.0.10(@sveltejs/kit@2.47.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))':
     dependencies:
-      '@sveltejs/kit': 2.46.5(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1))
+      '@sveltejs/kit': 2.47.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1))
 
-  '@sveltejs/kit@2.46.5(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1))':
+  '@sveltejs/kit@2.47.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1)))(svelte@5.40.1)(vite@6.4.0(jiti@2.6.1)(lightningcss@1.30.1))':
     dependencies:
       '@standard-schema/spec': 1.0.0
       '@sveltejs/acorn-typescript': 1.0.6(acorn@8.15.0)
@@ -1945,7 +1945,7 @@ snapshots:
       '@types/cookie': 0.6.0
       acorn: 8.15.0
       cookie: 0.6.0
-      devalue: 5.3.2
+      devalue: 5.4.1
       esm-env: 1.2.2
       kleur: 4.1.5
       magic-string: 0.30.19
@@ -2254,7 +2254,7 @@ snapshots:
 
   detect-libc@2.1.1: {}
 
-  devalue@5.3.2: {}
+  devalue@5.4.1: {}
 
   enhanced-resolve@5.18.3:
     dependencies:
