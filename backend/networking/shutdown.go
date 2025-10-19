@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os/exec"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/pocketbase/pocketbase/core"
@@ -28,6 +29,9 @@ func ShutdownDevice(device *core.Record) error {
 		shell = "/bin/sh"
 		shell_arg = "-c"
 	}
+
+	shutdown_cmd = strings.ReplaceAll(shutdown_cmd, "{{ DEVICE_IP }}", device.GetString("ip"))
+	shutdown_cmd = strings.ReplaceAll(shutdown_cmd, "{{ DEVICE_MAC }}", device.GetString("mac"))
 
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)

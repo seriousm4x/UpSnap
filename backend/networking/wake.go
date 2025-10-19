@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os/exec"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/pocketbase/pocketbase/core"
@@ -31,6 +32,9 @@ func WakeDevice(device *core.Record) error {
 			shell = "/bin/sh"
 			shell_arg = "-c"
 		}
+
+		wake_cmd = strings.ReplaceAll(wake_cmd, "{{ DEVICE_IP }}", device.GetString("ip"))
+		wake_cmd = strings.ReplaceAll(wake_cmd, "{{ DEVICE_MAC }}", device.GetString("mac"))
 
 		ctx := context.Background()
 		ctx, cancel := context.WithCancel(ctx)
