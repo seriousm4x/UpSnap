@@ -71,6 +71,8 @@ github.com/pocketbase/dbx v1.11.0 h1:LpZezioMfT3K4tLrqA55wWFw1EtH1pM4tzSVa7kgszU
 github.com/pocketbase/dbx v1.11.0/go.mod h1:xXRCIAKTHMgUCyCKZm55pUOdvFziJjQfXaWKhu2vhMs=
 github.com/pocketbase/pocketbase v0.30.3 h1:exl+HAxC3cnGiqJuV9FaeIWyn5cgc0+gVMtDxav+juk=
 github.com/pocketbase/pocketbase v0.30.3/go.mod h1:qsI0S4J/3uRSGv5Z4ce8wu8FXe5dyvyGBEItFRyV7lE=
+github.com/pocketbase/pocketbase v0.30.4 h1:UT8WnRmG3b7hXFIjDPzSIKkDED/mK1CJC+LsGiJUE4w=
+github.com/pocketbase/pocketbase v0.30.4/go.mod h1:qsI0S4J/3uRSGv5Z4ce8wu8FXe5dyvyGBEItFRyV7lE=
 github.com/prometheus-community/pro-bing v0.7.0 h1:KFYFbxC2f2Fp6c+TyxbCOEarf7rbnzr9Gw8eIb0RfZA=
 github.com/prometheus-community/pro-bing v0.7.0/go.mod h1:Moob9dvlY50Bfq6i88xIwfyw7xLFHH69LUgx9n5zqCE=
 github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec h1:W09IVJc94icq4NjY3clb7Lk8O1qJ8BdBEF8z0ibU0rE=
@@ -96,6 +98,8 @@ golang.org/x/crypto v0.43.0 h1:dduJYIi3A3KOfdGOHX8AVZ/jGiyPa3IbBozJ5kNuE04=
 golang.org/x/crypto v0.43.0/go.mod h1:BFbav4mRNlXJL4wNeejLpWxB7wMbc79PdRGhWKncxR0=
 golang.org/x/exp v0.0.0-20251009144603-d2f985daa21b h1:18qgiDvlvH7kk8Ioa8Ov+K6xCi0GMvmGfGW0sgd/SYA=
 golang.org/x/exp v0.0.0-20251009144603-d2f985daa21b/go.mod h1:j/pmGrbnkbPtQfxEe5D0VQhZC6qKbfKifgD0oM7sR70=
+golang.org/x/exp v0.0.0-20251017212417-90e834f514db h1:by6IehL4BH5k3e3SJmcoNbOobMey2SLpAF79iPOEBvw=
+golang.org/x/exp v0.0.0-20251017212417-90e834f514db/go.mod h1:j/pmGrbnkbPtQfxEe5D0VQhZC6qKbfKifgD0oM7sR70=
 golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
 golang.org/x/image v0.32.0 h1:6lZQWq75h7L5IWNk0r+SCpUJ6tUVd3v4ZHnbRKLkUDQ=
 golang.org/x/image v0.32.0/go.mod h1:/R37rrQmKXtO6tYXAjtDLwQgFLHmhW+V6ayXlxzP2Pc=
