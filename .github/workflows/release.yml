@@ -61,7 +61,7 @@ jobs:
           tar -czf frontend-dist.tar.gz -C frontend/build .
 
       - name: Upload frontend artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: frontend-dist
           path: frontend-dist.tar.gz
@@ -116,7 +116,7 @@ jobs:
           AUR_KEY: ${{ secrets.AUR_KEY }}
 
       - name: Upload backend artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: backend-dist
           path: backend/dist
