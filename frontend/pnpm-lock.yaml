@@ -58,8 +58,8 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1(svelte@5.43.2)(vite@6.4.1(jiti@2.6.1)(lightningcss@1.30.2))
       daisyui:
-        specifier: ^5.3.10
-        version: 5.3.10
+        specifier: ^5.4.3
+        version: 5.4.3
       eslint:
         specifier: ^9.39.1
         version: 9.39.1(jiti@2.6.1)
@@ -301,10 +301,6 @@ packages:
 
   '@eslint/eslintrc@3.3.1':
     resolution: {integrity: sha512-gtF186CXhIl1p4pJNGZw8Yc6RlshoePRvE0X91oPGb3vZ8pM3qOS9W9NGPat9LziaBV7XrJWGylNQXkGcnM3IQ==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@eslint/js@9.38.0':
-    resolution: {integrity: sha512-UZ1VpFvXf9J06YG9xQBdnzU+kthors6KjhMAl6f4gH4usHyh31rUf2DLGInT8RFYIReYXNSydgPY0V2LuWgl7A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/js@9.39.1':
@@ -813,8 +809,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  daisyui@5.3.10:
-    resolution: {integrity: sha512-vmjyPmm0hvFhA95KB6uiGmWakziB2pBv6CUcs5Ka/3iMBMn9S+C3SZYx9G9l2JrgTZ1EFn61F/HrPcwaUm2kLQ==}
+  daisyui@5.4.3:
+    resolution: {integrity: sha512-dfDCJnN4utErGoWfElgdEE252FtfHV9Mxj5Dq1+JzUq3nVkluWdF3JYykP0Xy/y/yArnPXYztO1tLNCow3kjmg==}
 
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
@@ -1731,8 +1727,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@eslint/js@9.38.0': {}
-
   '@eslint/js@9.39.1': {}
 
   '@eslint/object-schema@2.1.7': {}
@@ -2215,7 +2209,7 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  daisyui@5.3.10: {}
+  daisyui@5.4.3: {}
 
   date-fns@4.1.0: {}
 
