@@ -5,7 +5,7 @@ go 1.24.1
 require (
 	github.com/mdlayher/wol v0.0.0-20220221231636-b763a792253a
 	github.com/pocketbase/dbx v1.11.0
-	github.com/pocketbase/pocketbase v0.31.0
+	github.com/pocketbase/pocketbase v0.32.0
 	github.com/prometheus-community/pro-bing v0.7.0
 	github.com/robfig/cron/v3 v3.0.1
 	golang.org/x/sys v0.37.0
@@ -47,5 +47,5 @@ require (
 	modernc.org/libc v1.66.10 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.39.1 // indirect
+	modernc.org/sqlite v1.40.0 // indirect
 )
