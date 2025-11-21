@@ -29,7 +29,7 @@ jobs:
     needs: check-runner
     runs-on: ${{ needs.check-runner.outputs.runner-label }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 1
 
@@ -72,7 +72,7 @@ jobs:
       - frontend
     runs-on: ${{ needs.check-runner.outputs.runner-label }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -128,7 +128,7 @@ jobs:
       - goreleaser
     runs-on: ${{ needs.check-runner.outputs.runner-label }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
