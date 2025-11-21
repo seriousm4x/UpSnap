@@ -86,7 +86,7 @@
 </script>
 
 <svelte:head>
-	<link rel="manifest" href={backendUrl + 'api/upsnap/manifest.webmanifest'} />
+	<link rel="manifest" href={backendUrl + 'api/upsnap/manifest.webmanifest'} crossorigin="use-credentials" />
 	<link
 		rel="shortcut icon"
 		href={$settingsPub?.id && $settingsPub?.favicon
