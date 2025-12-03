@@ -5,7 +5,7 @@ go 1.24.1
 require (
 	github.com/mdlayher/wol v0.0.0-20220221231636-b763a792253a
 	github.com/pocketbase/dbx v1.11.0
-	github.com/pocketbase/pocketbase v0.34.0
+	github.com/pocketbase/pocketbase v0.34.1
 	github.com/prometheus-community/pro-bing v0.7.0
 	github.com/robfig/cron/v3 v3.0.1
 	golang.org/x/sys v0.38.0
@@ -38,7 +38,7 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/stretchr/testify v1.11.1 // indirect
 	golang.org/x/crypto v0.45.0 // indirect
-	golang.org/x/exp v0.0.0-20251113190631-e25ba8c21ef6 // indirect
+	golang.org/x/exp v0.0.0-20251125195548-87e1e737ad39 // indirect
 	golang.org/x/image v0.33.0 // indirect
 	golang.org/x/net v0.47.0 // indirect
 	golang.org/x/oauth2 v0.33.0 // indirect
