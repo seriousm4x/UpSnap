@@ -20,7 +20,7 @@
 		"@inlang/cli": "^3.0.12",
 		"@inlang/paraglide-js": "2.6.0",
 		"@sveltejs/adapter-static": "^3.0.10",
-		"@sveltejs/kit": "^2.49.1",
+		"@sveltejs/kit": "^2.49.2",
 		"@sveltejs/vite-plugin-svelte": "^5.1.1",
 		"daisyui": "^5.5.8",
 		"eslint": "^9.39.1",
