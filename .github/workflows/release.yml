@@ -45,7 +45,7 @@ jobs:
           cache-dependency-path: frontend/pnpm-lock.yaml
 
       - name: Cache frontend build
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             frontend/node_modules
@@ -95,7 +95,7 @@ jobs:
           cache-dependency-path: backend/go.sum
 
       - name: Cache Go build
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.cache/go-build
