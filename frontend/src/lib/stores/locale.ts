@@ -1,5 +1,5 @@
 import { getLocale } from '$lib/paraglide/runtime';
-import type { Locale } from 'date-fns';
+import type { zhCN } from 'date-fns';
 import { bg } from 'date-fns/locale/bg';
 import { cs } from 'date-fns/locale/cs';
 import { de } from 'date-fns/locale/de';
