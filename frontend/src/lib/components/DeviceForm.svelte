@@ -327,7 +327,7 @@
 				{@html m.device_ping_desc()}
 			</p>
 			<fieldset class="fieldset">
-				<label class="input mt-2">
+				<label class="input mt-2 w-full">
 					<span>$:</span>
 					<input
 						type="text"
@@ -360,8 +360,8 @@
 						/>
 					</label>
 				</fieldset>
-				<fieldset class="fieldset">
-					<label class="input mt-2">
+				<fieldset class="fieldset grow">
+					<label class="input mt-2 w-full">
 						<span>$:</span>
 						<input
 							type="text"
@@ -457,8 +457,8 @@ second (0–59, optional)
 						/>
 					</label>
 				</fieldset>
-				<fieldset class="fieldset">
-					<label class="input mt-2">
+				<fieldset class="fieldset grow">
+					<label class="input mt-2 w-full">
 						<span>$:</span>
 						<input
 							type="text"
