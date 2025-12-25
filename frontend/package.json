@@ -58,7 +58,8 @@
 	"pnpm": {
 		"onlyBuiltDependencies": [
 			"@tailwindcss/oxide",
-			"esbuild"
+			"esbuild",
+			"svelte-french-toast@2.0.0-alpha.0"
 		]
 	}
 }
