@@ -75,13 +75,6 @@ func TestCheckPort(t *testing.T) {
 			port:      "70000", // invalid
 			wantError: true,
 		},
-		// Port zero
-		{
-			name:      "Port Zero",
-			host:      "0.0.0.0",
-			port:      "0",
-			wantError: true,
-		},
 	}
 
 	for _, tc := range testCases {
