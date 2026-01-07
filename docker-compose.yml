@@ -8,8 +8,8 @@ services:
       - ./data:/app/pb_data
     # # To use a non-root user, create the mountpoint first (mkdir data) so that it has the right permission.
     # user: 1000:1000
-    environment:
-      - HTTP_LISTEN=${HTTP_LISTEN:-127.0.0.1:8090}
+    # environment:
+    #   - HTTP_LISTEN=127.0.0.1:8090
     #   - TZ=Europe/Berlin # Set container timezone for cron schedules
     #   - UPSNAP_INTERVAL=*/10 * * * * * # Sets the interval in which the devices are pinged
     #   - UPSNAP_SCAN_RANGE=192.168.1.0/24 # Scan range is used for device discovery on local network
@@ -21,4 +21,4 @@ services:
     #   - 192.18.0.1
     #   - 192.18.0.2
     # # or install custom packages for shutdown
-    # entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http 0.0.0.0:8090"
+    # entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http $HTTP_LISTEN"

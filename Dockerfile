@@ -3,9 +3,6 @@ ARG TARGETOS
 ARG TARGETARCH
 ARG TARGETVARIANT
 ARG VERSION
-ARG HTTP_LISTEN=127.0.0.1:8090
-# ARG HTTP_LISTEN=0.0.0.0:8090
-ENV HTTP_LISTEN=${HTTP_LISTEN}
 ENV BUILDX_ARCH="${TARGETOS:-linux}_${TARGETARCH:-amd64}${TARGETVARIANT}"
 WORKDIR /app
 RUN wget https://github.com/seriousm4x/UpSnap/releases/download/${VERSION}/UpSnap_${VERSION}_${BUILDX_ARCH}.zip &&\
@@ -26,4 +23,4 @@ WORKDIR /app
 COPY --from=downloader /app/upsnap upsnap
 HEALTHCHECK --interval=10s \
     CMD curl -fs "http://${HTTP_LISTEN}/api/health" || exit 1
-ENTRYPOINT ["./upsnap", "serve", "--http=${HTTP_LISTEN}"]
+ENTRYPOINT ["sh", "-c", "./upsnap serve --http $HTTP_LISTEN"]
