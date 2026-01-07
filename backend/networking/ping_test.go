@@ -57,7 +57,7 @@ func TestCheckPort(t *testing.T) {
 		// Valid case: all inputs correct
 		{
 			name:      "Valid Case",
-			host:      "8.8.8.8",
+			host:      "0.0.0.0",
 			port:      "443",
 			wantError: false,
 		},
@@ -71,16 +71,16 @@ func TestCheckPort(t *testing.T) {
 		// Invalid port number
 		{
 			name:      "Invalid Port",
-			host:      "8.8.8.8",
+			host:      "0.0.0.0",
 			port:      "70000", // invalid
 			wantError: true,
 		},
 		// Port zero
 		{
 			name:      "Port Zero",
-			host:      "8.8.8.8",
+			host:      "0.0.0.0",
 			port:      "0",
-			wantError: false,
+			wantError: true,
 		},
 	}
 
