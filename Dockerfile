@@ -14,7 +14,7 @@ RUN wget https://github.com/seriousm4x/UpSnap/releases/download/${VERSION}/UpSna
     setcap 'cap_net_raw=+ep' ./upsnap
 
 FROM alpine:3
-ARG UPSNAP_HTTP_LISTEN=127.0.0.1:8090
+ARG UPSNAP_HTTP_LISTEN=0.0.0.0:8090
 ENV UPSNAP_HTTP_LISTEN=${UPSNAP_HTTP_LISTEN}
 RUN apk update &&\
     apk add --no-cache tzdata ca-certificates nmap samba samba-common-tools openssh sshpass curl &&\
@@ -23,4 +23,4 @@ WORKDIR /app
 COPY --from=downloader /app/upsnap upsnap
 HEALTHCHECK --interval=10s \
     CMD curl -fs "http://${UPSNAP_HTTP_LISTEN}/api/health" || exit 1
-ENTRYPOINT ["sh", "-c", "./upsnap serve"]
+ENTRYPOINT ["sh", "-c", "./upsnap serve --http ${UPSNAP_HTTP_LISTEN}"]
