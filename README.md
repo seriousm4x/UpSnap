@@ -93,15 +93,14 @@ Then add `user: 1000:1000` to the docker-compose file (or whatever your $UID:$GI
 If you want to change the port from 8090 to something else, change the following (5000 in this case):
 
 ```yml
-entrypoint: /bin/sh -c "./upsnap serve --http 0.0.0.0:5000"
-healthcheck:
-  test: curl -fs "http://localhost:5000/api/health" || exit 1
+environment:
+  - HTTP_LISTEN=0.0.0.0:5000
 ```
 
 ### Install additional packages for shutdown cmd
 
 ```yml
-entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http 0.0.0.0:8090"
+entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http $HTTP_LISTEN"
 ```
 
 You can search for your needed package [here](https://pkgs.alpinelinux.org/packages).
