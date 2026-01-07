@@ -188,9 +188,24 @@ func StartPocketBase(distDirFS fs.FS) {
 		return e.Next()
 	})
 
-	if err := app.Start(); err != nil {
-		logger.Error.Fatalln(err)
+	// check for custom http listen address in env var, else use default
+	httpListen := os.Getenv("UPSNAP_HTTP_LISTEN")
+	if httpListen != "" {
+		if err := app.Bootstrap(); err != nil {
+			logger.Error.Fatalln(err)
+		}
+		if err := apis.Serve(app, apis.ServeConfig{
+			HttpAddr:        httpListen,
+			ShowStartBanner: true,
+		}); err != nil {
+			logger.Error.Fatalln(err)
+		}
+	} else {
+		if err := app.Start(); err != nil {
+			logger.Error.Fatalln(err)
+		}
 	}
+
 }
 
 func importSettings(app *pocketbase.PocketBase) error {

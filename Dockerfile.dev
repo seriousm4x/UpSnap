@@ -17,13 +17,13 @@ RUN go build -o upsnap main.go &&\
     setcap 'cap_net_raw=+ep' ./upsnap
 
 FROM alpine:3
-ARG HTTP_LISTEN=127.0.0.1:8090
-ENV HTTP_LISTEN=${HTTP_LISTEN}
+ARG UPSNAP_HTTP_LISTEN=127.0.0.1:8090
+ENV UPSNAP_HTTP_LISTEN=${UPSNAP_HTTP_LISTEN}
 RUN apk update &&\
     apk add --no-cache tzdata ca-certificates nmap samba samba-common-tools openssh sshpass curl &&\
     rm -rf /var/cache/apk/*
 WORKDIR /app
 COPY --from=go /app/upsnap upsnap
 HEALTHCHECK --interval=10s \
-    CMD curl -fs "http://${HTTP_LISTEN}/api/health" || exit 1
-ENTRYPOINT ["sh", "-c", "./upsnap serve --http $HTTP_LISTEN"]
+    CMD curl -fs "http://${UPSNAP_HTTP_LISTEN}/api/health" || exit 1
+ENTRYPOINT ["sh", "-c", "./upsnap serve"]

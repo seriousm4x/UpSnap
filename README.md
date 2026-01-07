@@ -94,13 +94,13 @@ If you want to change the port from 8090 to something else, change the following
 
 ```yml
 environment:
-  - HTTP_LISTEN=0.0.0.0:5000
+  - UPSNAP_HTTP_LISTEN=0.0.0.0:5000
 ```
 
 ### Install additional packages for shutdown cmd
 
 ```yml
-entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve --http $HTTP_LISTEN"
+entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve"
 ```
 
 You can search for your needed package [here](https://pkgs.alpinelinux.org/packages).
