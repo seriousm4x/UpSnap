@@ -5,7 +5,7 @@ go 1.24.1
 require (
 	github.com/mdlayher/wol v0.0.0-20220221231636-b763a792253a
 	github.com/pocketbase/dbx v1.11.0
-	github.com/pocketbase/pocketbase v0.35.0
+	github.com/pocketbase/pocketbase v0.35.1
 	github.com/prometheus-community/pro-bing v0.7.0
 	github.com/robfig/cron/v3 v3.0.1
 	golang.org/x/sys v0.40.0
@@ -43,9 +43,9 @@ require (
 	golang.org/x/net v0.48.0 // indirect
 	golang.org/x/oauth2 v0.34.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	golang.org/x/text v0.33.0 // indirect
 	modernc.org/libc v1.66.10 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.41.0 // indirect
+	modernc.org/sqlite v1.43.0 // indirect
 )
