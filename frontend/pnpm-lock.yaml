@@ -46,8 +46,8 @@ importers:
         specifier: ^3.0.12
         version: 3.0.12
       '@inlang/paraglide-js':
-        specifier: 2.7.2
-        version: 2.7.2
+        specifier: 2.8.0
+        version: 2.8.0
       '@sveltejs/adapter-static':
         specifier: ^3.0.10
         version: 3.0.10(@sveltejs/kit@2.49.4(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.46.1)(vite@6.4.1(jiti@2.6.1)(lightningcss@1.30.2)))(svelte@5.46.1)(typescript@5.9.3)(vite@6.4.1(jiti@2.6.1)(lightningcss@1.30.2)))
@@ -344,19 +344,19 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  '@inlang/paraglide-js@2.7.2':
-    resolution: {integrity: sha512-tUkzcK7yCuJsQCeSHLlCaISFFX65efYeYdFBXtTXyorl1PClH2/BxFg4MqCsemXiX7KZWgbvIfjnsDiVTrj7bQ==}
+  '@inlang/paraglide-js@2.8.0':
+    resolution: {integrity: sha512-ataaSmV53zz+tIr+KJLdC3tTB1uikS79hvtLlZk2ikbGRB/kcyQeg+lsqzjsXCAvy0/O28ucCRjxbHsTzOVQVg==}
     hasBin: true
 
   '@inlang/recommend-sherlock@0.2.1':
     resolution: {integrity: sha512-ckv8HvHy/iTqaVAEKrr+gnl+p3XFNwe5D2+6w6wJk2ORV2XkcRkKOJ/XsTUJbPSiyi4PI+p+T3bqbmNx/rDUlg==}
 
-  '@inlang/sdk@2.4.10':
-    resolution: {integrity: sha512-MLcYSb9ERwvyfxMsMXGjmAYfh6Bn/rkT58ffkibWxbFLiL3ejSdmLGP8Wl7118dMo6nj2PXTcEPzUw+2YPQ62Q==}
-    engines: {node: '>=18.0.0'}
-
   '@inlang/sdk@2.4.9':
     resolution: {integrity: sha512-cvz/C1rF5WBxzHbEoiBoI6Sz6q6M+TdxfWkEGBYTD77opY8i8WN01prUWXEM87GPF4SZcyIySez9U0Ccm12oFQ==}
+    engines: {node: '>=18.0.0'}
+
+  '@inlang/sdk@2.6.0':
+    resolution: {integrity: sha512-f4iVHVXyzOi0CXlXSAT7XPrReLBaVXy/po/qrOPf2OHh+hUwyD1bDx2EYC5KgrZ16z3ylWfqWVuc7o4l7/tuUQ==}
     engines: {node: '>=18.0.0'}
 
   '@jridgewell/gen-mapping@0.3.13':
@@ -1486,6 +1486,10 @@ packages:
     resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
     hasBin: true
 
+  uuid@13.0.0:
+    resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
+    hasBin: true
+
   vite@6.4.1:
     resolution: {integrity: sha512-+Oxm7q9hDoLMyJOYfUYBuHQo+dkAloi33apOPP56pzj+vsdJDzr+j1NISE5pyaAuKL4A3UD34qd0lx5+kfKp2g==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
@@ -1715,10 +1719,10 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@inlang/paraglide-js@2.7.2':
+  '@inlang/paraglide-js@2.8.0':
     dependencies:
       '@inlang/recommend-sherlock': 0.2.1
-      '@inlang/sdk': 2.4.10
+      '@inlang/sdk': 2.6.0
       commander: 11.1.0
       consola: 3.4.0
       json5: 2.2.3
@@ -1731,7 +1735,7 @@ snapshots:
     dependencies:
       comment-json: 4.5.1
 
-  '@inlang/sdk@2.4.10':
+  '@inlang/sdk@2.4.9':
     dependencies:
       '@lix-js/sdk': 0.4.7
       '@sinclair/typebox': 0.31.28
@@ -1741,13 +1745,13 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@inlang/sdk@2.4.9':
+  '@inlang/sdk@2.6.0':
     dependencies:
       '@lix-js/sdk': 0.4.7
       '@sinclair/typebox': 0.31.28
       kysely: 0.27.6
       sqlite-wasm-kysely: 0.3.0(kysely@0.27.6)
-      uuid: 10.0.0
+      uuid: 13.0.0
     transitivePeerDependencies:
       - babel-plugin-macros
 
@@ -2751,6 +2755,8 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   uuid@10.0.0: {}
+
+  uuid@13.0.0: {}
 
   vite@6.4.1(jiti@2.6.1)(lightningcss@1.30.2):
     dependencies:
