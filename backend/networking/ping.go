@@ -36,7 +36,7 @@ func PingDevice(device *core.Record) (bool, error) {
 		pinger.Count = 1
 		pinger.Timeout = 500 * time.Millisecond
 
-		privileged := isRoot()
+		privileged := true
 		privilegedEnv := os.Getenv("UPSNAP_PING_PRIVILEGED")
 		if privilegedEnv != "" {
 			privileged, err = strconv.ParseBool(privilegedEnv)
