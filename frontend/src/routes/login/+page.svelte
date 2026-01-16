@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
+	import { asset, resolve } from '$app/paths';
 	import { toggleVisibility } from '$lib/helpers/forms';
 	import { m } from '$lib/paraglide/messages';
 	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
@@ -68,7 +68,7 @@
 					<img
 						src={$settingsPub?.id && $settingsPub?.favicon
 							? `${backendUrl}api/files/settings_public/${$settingsPub?.id}/${$settingsPub?.favicon}`
-							: '/gopher.svg'}
+							: asset('/gopher.svg')}
 						alt={$settingsPub?.website_title ? $settingsPub?.website_title : 'Gopher'}
 					/>
 				</figure>
