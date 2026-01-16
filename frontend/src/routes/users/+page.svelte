@@ -226,7 +226,7 @@
 									<div class="font-bold">{m.users_delete()}</div>
 									<div class="font-bold">{m.users_power()}</div>
 									{#each devices as device (device.id)}
-										<hr class="border-neutral col-span-full w-full border-b-1 opacity-30" />
+										<hr class="border-neutral col-span-full w-full border-b opacity-30" />
 										{#each permissions.filter((perm) => perm.user === user.id) as permission (permission.id)}
 											<div
 												class="col-span-full flex flex-row flex-wrap gap-2 place-self-start break-all md:col-span-1"

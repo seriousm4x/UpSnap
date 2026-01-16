@@ -217,7 +217,8 @@
 				<div class="max-w-fit">
 					<label class="label cursor-pointer">
 						<input type="checkbox" class="checkbox" bind:checked={replaceNetmaskCheckbox} />
-						<span class="ms-2 text-wrap break-words">{m.device_network_scan_replace_netmask()}</span
+						<span class="ms-2 text-wrap wrap-break-word"
+							>{m.device_network_scan_replace_netmask()}</span
 						>
 					</label>
 				</div>
@@ -239,7 +240,7 @@
 					<div class="max-w-fit">
 						<label class="label cursor-pointer">
 							<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
-							<span class="ms-2 text-wrap break-words"
+							<span class="ms-2 text-wrap wrap-break-word"
 								>{m.device_network_scan_include_unknown()}</span
 							>
 						</label>

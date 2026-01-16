@@ -103,7 +103,7 @@
 			<ul
 				id="mobile-menu"
 				tabindex="-1"
-				class="menu dropdown-content rounded-box bg-base-200 z-[1] mt-3 w-max gap-1 p-2 shadow-sm"
+				class="menu dropdown-content rounded-box bg-base-200 z-1 mt-3 w-max gap-1 p-2 shadow-sm"
 			>
 				{#if $settingsPub?.website_title}
 					<div class="menu-title">
@@ -259,7 +259,7 @@
 				</label>
 				<ul
 					tabindex="-1"
-					class="menu dropdown-content rounded-box bg-base-200 z-[1] mt-3 w-52 p-2 shadow"
+					class="menu dropdown-content rounded-box bg-base-200 z-1 mt-3 w-52 p-2 shadow"
 				>
 					<li class="menu-title">
 						{$pocketbase.authStore.isSuperuser

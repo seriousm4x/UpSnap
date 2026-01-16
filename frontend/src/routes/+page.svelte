@@ -150,12 +150,12 @@
 		</label>
 		<div class="join ms-auto">
 			{#if orderExpanded}
-				<button class="btn join-item !outline-0" onclick={() => (orderByGroups = !orderByGroups)}>
+				<button class="btn join-item outline-0!" onclick={() => (orderByGroups = !orderByGroups)}>
 					{m.home_order_groups()}
 					<input type="checkbox" class="checkbox" checked={orderByGroups} />
 				</button>
 				<input
-					class="btn join-item !outline-0"
+					class="btn join-item outline-0!"
 					type="radio"
 					name="order"
 					aria-label={m.home_order_name()}
@@ -163,7 +163,7 @@
 					value="name"
 				/>
 				<input
-					class="btn join-item !outline-0"
+					class="btn join-item outline-0!"
 					type="radio"
 					name="order"
 					aria-label={m.home_order_ip()}
