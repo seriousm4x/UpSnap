@@ -15,8 +15,8 @@ importers:
         specifier: ^4.1.18
         version: 4.1.18
       cron-parser:
-        specifier: ^5.4.0
-        version: 5.4.0
+        specifier: ^5.5.0
+        version: 5.5.0
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -802,8 +802,8 @@ packages:
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
-  cron-parser@5.4.0:
-    resolution: {integrity: sha512-HxYB8vTvnQFx4dLsZpGRa0uHp6X3qIzS3ZJgJ9v6l/5TJMgeWQbLkR5yiJ5hOxGbc9+jCADDnydIe15ReLZnJA==}
+  cron-parser@5.5.0:
+    resolution: {integrity: sha512-oML4lKUXxizYswqmxuOCpgFS8BNUJpIu6k/2HVHyaL8Ynnf3wdf9tkns0yRdJLSIjkJ+b0DXHMZEHGpMwjnPww==}
     engines: {node: '>=18'}
 
   cross-spawn@7.0.6:
@@ -2159,7 +2159,7 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cron-parser@5.4.0:
+  cron-parser@5.5.0:
     dependencies:
       luxon: 3.7.2
 
