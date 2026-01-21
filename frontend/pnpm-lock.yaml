@@ -46,8 +46,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3
       '@inlang/paraglide-js':
-        specifier: 2.9.0
-        version: 2.9.0
+        specifier: 2.9.1
+        version: 2.9.1
       '@sveltejs/adapter-static':
         specifier: ^3.0.10
         version: 3.0.10(@sveltejs/kit@2.50.0(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.47.1)(vite@6.4.1(jiti@2.6.1)(lightningcss@1.30.2)))(svelte@5.47.1)(typescript@5.9.3)(vite@6.4.1(jiti@2.6.1)(lightningcss@1.30.2)))
@@ -344,19 +344,19 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  '@inlang/paraglide-js@2.9.0':
-    resolution: {integrity: sha512-SDtemGiHuqwtBwprs3UEjb2K2HpAcG0km6nvmbVtd5SVwmgny2IqUyLynGBJ0F2s5Ntv2/cSeBLB59qXHynrVw==}
+  '@inlang/paraglide-js@2.9.1':
+    resolution: {integrity: sha512-hciFnOKGVA10BmLixmFFIOZwNFqlyhKwvC8V+mEh/XP1WaEUtwijBlcIn2odwN9obuGxI8Fu05KHOUuETrpj+g==}
     hasBin: true
 
   '@inlang/recommend-sherlock@0.2.1':
     resolution: {integrity: sha512-ckv8HvHy/iTqaVAEKrr+gnl+p3XFNwe5D2+6w6wJk2ORV2XkcRkKOJ/XsTUJbPSiyi4PI+p+T3bqbmNx/rDUlg==}
 
-  '@inlang/sdk@2.6.0':
-    resolution: {integrity: sha512-f4iVHVXyzOi0CXlXSAT7XPrReLBaVXy/po/qrOPf2OHh+hUwyD1bDx2EYC5KgrZ16z3ylWfqWVuc7o4l7/tuUQ==}
-    engines: {node: '>=18.0.0'}
-
   '@inlang/sdk@2.6.1':
     resolution: {integrity: sha512-iXpZFnBfyQB1kUR/hTO92BnmEZl6Nh4KJe3JHltMJv1GxDzSXAJyM5C6f1sBR+zYC/DYSQAf/5XE4FfN+OKrNQ==}
+    engines: {node: '>=18.0.0'}
+
+  '@inlang/sdk@2.6.2':
+    resolution: {integrity: sha512-eOgAX+eQpHvD/H4BMILc4tZ85XviTlwr/51RKkKUHozVVthj5avUPKP+4N4vcTUrqSscl2atTh9NbNTuvoBN0A==}
     engines: {node: '>=18.0.0'}
 
   '@jridgewell/gen-mapping@0.3.13':
@@ -1719,10 +1719,10 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@inlang/paraglide-js@2.9.0':
+  '@inlang/paraglide-js@2.9.1':
     dependencies:
       '@inlang/recommend-sherlock': 0.2.1
-      '@inlang/sdk': 2.6.0
+      '@inlang/sdk': 2.6.2
       commander: 11.1.0
       consola: 3.4.0
       json5: 2.2.3
@@ -1735,7 +1735,7 @@ snapshots:
     dependencies:
       comment-json: 4.5.1
 
-  '@inlang/sdk@2.6.0':
+  '@inlang/sdk@2.6.1':
     dependencies:
       '@lix-js/sdk': 0.4.7
       '@sinclair/typebox': 0.31.28
@@ -1745,7 +1745,7 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@inlang/sdk@2.6.1':
+  '@inlang/sdk@2.6.2':
     dependencies:
       '@lix-js/sdk': 0.4.7
       '@sinclair/typebox': 0.31.28
