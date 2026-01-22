@@ -43,8 +43,8 @@ importers:
         specifier: ^9.39.2
         version: 9.39.2
       '@inlang/cli':
-        specifier: ^3.1.3
-        version: 3.1.3
+        specifier: ^3.1.4
+        version: 3.1.4
       '@inlang/paraglide-js':
         specifier: 2.9.1
         version: 2.9.1
@@ -339,8 +339,8 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@inlang/cli@3.1.3':
-    resolution: {integrity: sha512-xnhGCftXXiMxpfHw08spNFtiEQEBfoCF0Cb4qHKaDdpLd+smZNdIQSSpLGIyi13A09suJWyJCma/18MtPDEt9A==}
+  '@inlang/cli@3.1.4':
+    resolution: {integrity: sha512-nVW1fzJVoNNX1EdBcfrg7TO7kpzKgo+lxWBwSPBNUrU3Z9Yv4QXeJCpEYJ5spR69L2O7jujMMQkxbYaOVEldZA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -350,10 +350,6 @@ packages:
 
   '@inlang/recommend-sherlock@0.2.1':
     resolution: {integrity: sha512-ckv8HvHy/iTqaVAEKrr+gnl+p3XFNwe5D2+6w6wJk2ORV2XkcRkKOJ/XsTUJbPSiyi4PI+p+T3bqbmNx/rDUlg==}
-
-  '@inlang/sdk@2.6.1':
-    resolution: {integrity: sha512-iXpZFnBfyQB1kUR/hTO92BnmEZl6Nh4KJe3JHltMJv1GxDzSXAJyM5C6f1sBR+zYC/DYSQAf/5XE4FfN+OKrNQ==}
-    engines: {node: '>=18.0.0'}
 
   '@inlang/sdk@2.6.2':
     resolution: {integrity: sha512-eOgAX+eQpHvD/H4BMILc4tZ85XviTlwr/51RKkKUHozVVthj5avUPKP+4N4vcTUrqSscl2atTh9NbNTuvoBN0A==}
@@ -1712,9 +1708,9 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@inlang/cli@3.1.3':
+  '@inlang/cli@3.1.4':
     dependencies:
-      '@inlang/sdk': 2.6.1
+      '@inlang/sdk': 2.6.2
       esbuild-wasm: 0.19.12
     transitivePeerDependencies:
       - babel-plugin-macros
@@ -1734,16 +1730,6 @@ snapshots:
   '@inlang/recommend-sherlock@0.2.1':
     dependencies:
       comment-json: 4.5.1
-
-  '@inlang/sdk@2.6.1':
-    dependencies:
-      '@lix-js/sdk': 0.4.7
-      '@sinclair/typebox': 0.31.28
-      kysely: 0.27.6
-      sqlite-wasm-kysely: 0.3.0(kysely@0.27.6)
-      uuid: 13.0.0
-    transitivePeerDependencies:
-      - babel-plugin-macros
 
   '@inlang/sdk@2.6.2':
     dependencies:
