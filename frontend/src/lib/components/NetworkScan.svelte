@@ -24,6 +24,8 @@
 	let replaceNetmaskCheckbox = false;
 	let replaceNetmask = '';
 
+	let loading = true;
+
 	onMount(() => {
 		if (!$settingsPriv) {
 			$pocketbase
@@ -35,11 +37,12 @@
 					scanRange = settings.scan_range;
 				})
 				.catch((err) => {
-					toast.error(err.message);
+					//toast.error(err.message);
 				});
 		} else {
 			scanRange = $settingsPriv.scan_range;
 		}
+		loading = false;
 	});
 
 	function saveSettings() {
@@ -118,7 +121,7 @@
 	}
 </script>
 
-{#if $settingsPriv}
+{#if !loading}
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
 			<h2 class="card-title">{m['device_tabs.1']()}</h2>
@@ -126,36 +129,39 @@
 				{m.device_network_scan_desc()}
 			</p>
 			<div class="flex flex-row flex-wrap items-end gap-4">
-				<form
-					onsubmit={(e) => {
-						e.preventDefault();
-						saveSettings();
-					}}
-				>
-					<fieldset class="fieldset p-0">
-						<label class="floating-label mt-2">
-							<span>{m.device_network_scan_ip_range()}</span>
-							<div class="join max-w-xs">
-								<input
-									id="scan-range"
-									class="input join-item w-full"
-									type="text"
-									placeholder="192.168.1.0/24"
-									bind:value={scanRange}
-								/>
-								<button class="btn btn-neutral join-item" type="submit">{m.buttons_save()}</button>
-							</div>
-						</label>
-					</fieldset>
-				</form>
+				{#if $settingsPriv}
+					<form
+						onsubmit={(e) => {
+							e.preventDefault();
+							saveSettings();
+						}}
+					>
+						<fieldset class="fieldset p-0">
+							<label class="floating-label mt-2">
+								<span>{m.device_network_scan_ip_range()}</span>
+								<div class="join max-w-xs">
+									<input
+										id="scan-range"
+										class="input join-item w-full"
+										type="text"
+										placeholder="192.168.1.0/24"
+										bind:value={scanRange}
+									/>
+									<button class="btn btn-neutral join-item" type="submit">{m.buttons_save()}</button
+									>
+								</div>
+							</label>
+						</fieldset>
+					</form>
+				{/if}
 				<div>
 					<div>
-						{#if !$settingsPriv.scan_range}
+						{#if $settingsPriv && !$settingsPriv.scan_range}
 							<button class="btn btn-error" disabled>
 								<Fa icon={faX} />
 								{m.device_network_scan_no_range()}
 							</button>
-						{:else if scanRange !== $settingsPriv.scan_range}
+						{:else if $settingsPriv && scanRange !== $settingsPriv.scan_range}
 							<button class="btn btn-error" disabled>
 								<Fa icon={faX} />
 								{m.device_network_scan_unsaved_changes()}

@@ -7,6 +7,32 @@ import (
 	"github.com/pocketbase/pocketbase/tools/hook"
 )
 
+func RequireScanDevicesPermission() *hook.Handler[*core.RequestEvent] {
+	return &hook.Handler[*core.RequestEvent]{
+		Func: func(e *core.RequestEvent) error {
+			if e.HasSuperuserAuth() {
+				return e.Next()
+			}
+
+			user := e.Auth
+			if user == nil {
+				return apis.NewUnauthorizedError("The request requires superuser or record authorization token to be set.", nil)
+			}
+
+			res, err := e.App.FindFirstRecordByFilter(
+				"permissions",
+				"user.id = {:userId} && create = true",
+				dbx.Params{"userId": user.Id},
+			)
+			if res == nil || err != nil {
+				return apis.NewForbiddenError("You are not allowed to perform this request.", nil)
+			}
+
+			return e.Next()
+		},
+	}
+}
+
 func RequireUpSnapPermission() *hook.Handler[*core.RequestEvent] {
 	return &hook.Handler[*core.RequestEvent]{
 		Func: func(e *core.RequestEvent) error {
