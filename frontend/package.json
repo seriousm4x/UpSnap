@@ -32,7 +32,7 @@
 		"prettier-plugin-svelte": "^3.4.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
 		"svelte": "^5.49.1",
-		"svelte-check": "^4.3.5",
+		"svelte-check": "^4.3.6",
 		"tailwindcss": "^4.1.18",
 		"tslib": "^2.8.1",
 		"typescript": "^5.9.3",
