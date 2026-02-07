@@ -20,7 +20,7 @@ import { uk } from 'date-fns/locale/uk';
 import { vi } from 'date-fns/locale/vi';
 import { zhCN } from 'date-fns/locale/zh-CN';
 import { zhTW } from 'date-fns/locale/zh-TW';
-
+import { arSA } from 'date-fns/locale';
 import { writable, type Writable } from 'svelte/store';
 
 export const localeStore = writable(getLocale());
@@ -87,6 +87,9 @@ localeStore.subscribe((l: string) => {
 			break;
 		case 'zh-TW':
 			dateFnsLocale.set(zhTW);
+			break;
+		case 'ar':
+			dateFnsLocale.set(arSA);
 			break;
 		default:
 			dateFnsLocale.set(enUS);

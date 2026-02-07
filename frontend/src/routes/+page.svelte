@@ -32,7 +32,7 @@
 		devices: Device[];
 	}[] = $derived([]);
 
-	const isMac = /Mac|iPhone|iPad/.test(navigator.userAgent);
+	const isMac = browser && /Mac|iPhone|iPad/.test(navigator.userAgent);
 	const gridClass = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4';
 
 	if (browser) {
