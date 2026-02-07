@@ -12,9 +12,17 @@
 	import { onMount } from 'svelte';
 	import toast, { Toaster, type ToastOptions } from 'svelte-french-toast';
 	import '../app.css';
+	import { localeStore } from '$lib/stores/locale';
 	const toastOptions: ToastOptions = {
 		duration: 5000
 	};
+
+	$effect(() => {
+		if (typeof document !== 'undefined') {
+			document.documentElement.dir = $localeStore === 'ar-SA' ? 'rtl' : 'ltr';
+			document.documentElement.lang = $localeStore;
+		}
+	});
 
 	let authIsValid = false;
 
