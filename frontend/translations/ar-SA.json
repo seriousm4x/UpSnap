@@ -1,0 +1,195 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"account_account_type_admin": "مسؤول",
+	"account_account_type_user": "مستخدم",
+	"account_avatar_title": "صورة",
+	"account_change_password_body": "بعد تعديل كلمة المرور، يجب عليك تسجيل الدخول مرة أخرى",
+	"account_change_password_confirm": "تأكيد كلمة المرور",
+	"account_change_password_label": "كلمة المرور القديمة",
+	"account_change_password_new": "كلمة المرور الجديدة",
+	"account_change_password_title": "تغيير كلمة المرور",
+	"account_language_title": "اللغة",
+	"account_page_title": "الحساب",
+	"buttons_add": "إضافة",
+	"buttons_cancel": "إلغاء",
+	"buttons_change": "تغيير",
+	"buttons_confirm": "تأكيد",
+	"buttons_delete": "حذف",
+	"buttons_reset": "إعادة تعيين",
+	"buttons_save": "حفظ",
+	"device_card_btn_more_edit": "تعديل",
+	"device_card_btn_more_reboot": "إعادة تشغيل",
+	"device_card_btn_more_sleep": "سكون",
+	"device_card_btn_more": "المزيد",
+	"device_card_nic_tooltip_pending": "قيد الانتظار",
+	"device_card_nic_tooltip_power_no_permission": "لا توجد صلاحية لتشغيل هذا الجهاز",
+	"device_card_nic_tooltip_power": "تشغيل",
+	"device_card_nic_tooltip_shutdown_no_cmd": "لم يتم تعيين أمر الإيقاف",
+	"device_card_nic_tooltip_shutdown_no_permission": "لا توجد صلاحية لإيقاف هذا الجهاز",
+	"device_card_nic_tooltip_shutdown": "إيقاف التشغيل",
+	"device_card_password": "كلمة المرور",
+	"device_card_tooltip_last_status_change": "آخر تغيير في الحالة",
+	"device_card_tooltip_shutdown_cron": "جدولة الإيقاف",
+	"device_card_tooltip_wake_cron": "جدولة التشغيل",
+	"device_card_tooltip_wake_password": "كلمة مرور التشغيل",
+	"device_general_description_placeholder": "وصف للجهاز",
+	"device_general_description": "الوصف",
+	"device_general_ip": "عنوان IP",
+	"device_general_mac": "عنوان Mac",
+	"device_general_name": "الاسم",
+	"device_general_netmask": "قناع الشبكة",
+	"device_general_required_field": "حقل مطلوب",
+	"device_general": "عام",
+	"device_groups_desc": "يمكنك إضافة الأجهزة إلى مجموعة لفرزها حسب المجموعة في لوحة التحكم.",
+	"device_groups_placeholder": "مثلاً 'القبو' أو 'المكتب'",
+	"device_groups": "المجموعات",
+	"device_link_desc": "يجعل اسم جهازك رابطاً قابلاً للنقر، مثالي للربط بلوحة تحكم على سبيل المثال.",
+	"device_link_open_new_tab": "تبويب جديد",
+	"device_link_open_no": "لا",
+	"device_link_open_same_tab": "نفس التبويب",
+	"device_link_open": "فتح الرابط تلقائياً",
+	"device_link": "الرابط",
+	"device_modal_confirm_shutdown_desc": "يرجى التأكيد لإيقاف {device}.",
+	"device_modal_confirm_shutdown_title": "إيقاف {device}؟",
+	"device_modal_confirm_wake_desc": "يرجى التأكيد لتشغيل {device}.",
+	"device_modal_confirm_wake_title": "تشغيل {device}؟",
+	"device_network_scan_add_all": "إضافة جميع الأجهزة",
+	"device_network_scan_desc": "فحص شبكتك تلقائياً للعثور على الأجهزة. لكي يعمل هذا، تحتاج إلى تشغيل UpSnap كمسؤول وتثبيت nmap وإتاحته في $PATH (بالنسبة لمستخدمي Docker، هذا متوفر بالفعل ولا تحتاج لفعل أي شيء). قد يستغرق الفحص بضع ثوانٍ.",
+	"device_network_scan_include_unknown": "تضمين الأجهزة التي اسمها \"Unknown\"",
+	"device_network_scan_ip_range": "نطاق IP",
+	"device_network_scan_ip": "IP:",
+	"device_network_scan_mac_vendor": "جهة تصنيع الـ Mac:",
+	"device_network_scan_mac": "Mac:",
+	"device_network_scan_netmask": "قناع الشبكة:",
+	"device_network_scan_new_netmask": "قناع شبكة جديد",
+	"device_network_scan_no_range": "لا يوجد نطاق فحص",
+	"device_network_scan_range_saved": "تم حفظ نطاق الفحص",
+	"device_network_scan_replace_netmask": "استبدال قناع الشبكة لجميع الأجهزة؟",
+	"device_network_scan_running": "الفحص قيد التشغيل",
+	"device_network_scan_unsaved_changes": "تغييرات غير محفوظة",
+	"device_network_scan": "فحص",
+	"device_page_title": "جهاز جديد",
+	"device_password_desc": "بعض بطاقات الشبكة لديها خيار تعيين كلمة مرور لـ Magic Packets، تسمى أيضاً <span class=\"badge\">SecureON</span>. يمكن أن تكون كلمة المرور 0 أو 4 أو 6 أحرف فقط.",
+	"device_password": "كلمة المرور",
+	"device_ping_cmd": "أمر ping مخصص",
+	"device_ping_desc": "يمكنك استخدام أمر shell مخصص لمعرفة ما إذا كان الجهاز قيد التشغيل. يجب أن يُرجع الأمر رمز خروج <span class=\"badge\">0</span> للإشارة إلى أن الجهاز قيد التشغيل، أي رمز خروج آخر سيحدد الجهاز على أنه متوقف.",
+	"device_ping": "Ping",
+	"device_ports_add_new": "إضافة منفذ جديد",
+	"device_ports_desc": "يمكن لـ UpSnap أيضاً التحقق مما إذا كانت المنافذ المحددة مفتوحة.",
+	"device_ports_name": "الاسم",
+	"device_ports_number": "الرقم",
+	"device_ports": "المنافذ",
+	"device_require_confirmation": "يتطلب تأكيد",
+	"device_shutdown_cmd": "أمر الإيقاف",
+	"device_shutdown_cron_desc": "تماماً مثل تعيين جدولة لتشغيل الجهاز، يمكنك أيضاً جدولة مهمة لإيقاف هذا الجهاز.",
+	"device_shutdown_cron_enable": "تفعيل جدولة الإيقاف",
+	"device_shutdown_cron": "جدولة الإيقاف",
+	"device_shutdown_desc": "سيتم تشغيل <strong>أمر shell</strong> هذا داخل الحاوية الخاصة بك (إذا كنت تستخدم Docker) أو على المضيف الخاص بك (إذا كنت تستخدم الملف الثنائي). للتحقق من أنه يعمل، يمكنك تشغيل الأمر داخل الحاوية أو على shell المضيف أولاً. الأوامر الشائعة هي <span class=\"badge\">net rpc</span> لـ Windows، <span class=\"badge\">sshpass</span> لـ Linux أو <span class=\"badge\">curl</span> بشكل عام لإجراء طلبات الويب.",
+	"device_shutdown_examples_linux": "إيقاف جهاز Linux عن بُعد:",
+	"device_shutdown_examples_windows": "إيقاف جهاز Windows عن بُعد:",
+	"device_shutdown_examples": "أمثلة:",
+	"device_shutdown_timeout": "مهلة الإيقاف (بالثواني)",
+	"device_shutdown": "الإيقاف",
+	"device_sol_authorization": "التفويض",
+	"device_sol_desc1": "يمكنك وضع الأجهزة في وضع السكون باستخدام أداة <a class=\"link\" href=\"https://github.com/SR-G/sleep-on-lan\" target=\"_blank\">Sleep-On-LAN</a>. وهي أداة خارجية تعمل على الأجهزة التي تريد التحكم بها وتوفر نقطة نهاية REST. للمزيد، راجع قسم <a href=\"https://github.com/SR-G/sleep-on-lan#usage\" class=\"link\" target=\"_blank\">الاستخدام</a>.",
+	"device_sol_desc2": "تم تكوين SOL لإرسال الطلبات عبر HTTP بدلاً من UDP لتمكين التفويض وجعل الطلبات أكثر موثوقية.",
+	"device_sol_desc3": "لذلك، يرجى التأكد من تضمين <span class=\"badge\">HTTP:&lt;YOURPORT&gt;</span> في قسم <span class=\"badge\">Listeners</span> من <a href=\"https://github.com/SR-G/sleep-on-lan#configuration\" class=\"link\" target=\"_blank\">تكوين SOL</a>.",
+	"device_sol_enable": "تفعيل Sleep-On-LAN",
+	"device_sol_password": "كلمة مرور SOL",
+	"device_sol_port": "منفذ SOL",
+	"device_sol_user": "مستخدم SOL",
+	"device_sol": "Sleep-On-LAN",
+	"device_tabs.0": "يدوي",
+	"device_tabs.1": "فحص الشبكة",
+	"device_wake_cmd": "أمر تشغيل مخصص",
+	"device_wake_cron_enable": "تفعيل جدولة التشغيل",
+	"device_wake_cron": "جدولة التشغيل",
+	"device_wake_desc": "يمكنك تشغيل هذا الجهاز باستخدام مهمة مجدولة.",
+	"device_wake_timeout": "مهلة التشغيل (بالثواني)",
+	"device_wake": "التشغيل",
+	"home_add_first_device": "أضف جهازك الأول",
+	"home_grant_permissions": "يرجى الطلب من المسؤول منحك صلاحيات للأجهزة الموجودة أو لإنشاء أجهزة جديدة.",
+	"home_no_devices": "لا توجد أجهزة هنا.",
+	"home_order_groups": "المجموعات",
+	"home_order_ip": "IP",
+	"home_order_name": "الاسم",
+	"home_order_tooltip": "الترتيب",
+	"home_page_title": "الرئيسية",
+	"home_search_placeholder": "البحث عن الأجهزة",
+	"home_wake_group": "تشغيل المجموعة",
+	"login_btn_login": "تسجيل الدخول",
+	"login_btn_more": "المزيد",
+	"login_email_label": "البريد الإلكتروني أو اسم المستخدم:",
+	"login_menu_title_auth_providers": "موفرو مصادقة آخرون",
+	"login_password_label": "كلمة المرور:",
+	"login_welcome": "مرحباً",
+	"navbar_edit_account": "تعديل الحساب",
+	"navbar_logout": "تسجيل الخروج",
+	"navbar_new": "جديد",
+	"navbar_theme": "المظهر",
+	"settings_icon_desc": "تعيين أيقونة مفضلة مخصصة. أنواع الملفات المدعومة هي:",
+	"settings_icon_title": "الأيقونة",
+	"settings_invalid_cron": "❌ صيغة cron غير صالحة",
+	"settings_lazy_ping_desc": "عندما يتم تشغيل الـ ping خامل سيقوم UpSnap بفحص الأجهزة فقط إذا كان هناك مستخدم نشط يزور الموقع. إذا تم إيقاف تشغيله، سيقوم UpSnap دائماً بفحص الأجهزة.",
+	"settings_lazy_ping_enable": "تفعيل",
+	"settings_lazy_ping_title": "Ping خامل",
+	"settings_page_title": "الإعدادات",
+	"settings_ping_interval_desc1": "يعين الفاصل الزمني الذي يتم فيه فحص الأجهزة. اتركه فارغاً لاستخدام القيمة الافتراضية <span class=\"badge\">*/3 * * * * *</span>.",
+	"settings_ping_interval_desc2": "تعرف على المزيد حول الصيغة الصحيحة لـ cron على <a class=\"link\" href=\"https://en.wikipedia.org/wiki/Cron\" target=\"_blank\">ويكيبيديا</a> أو راجع <a class=\"link\" href=\"https://github.com/harrisiirak/cron-parser\" target=\"_blank\">توثيق الحزمة</a>.",
+	"settings_ping_interval_title": "فاصل زمني للـ Ping",
+	"settings_upsnap_version": "إصدار UpSnap",
+	"settings_website_title_desc": "يعين عنوان الموقع وفي تبويب المتصفح.",
+	"settings_website_title_title": "عنوان الموقع",
+	"toasts_admin_saved": "تم حفظ المسؤول",
+	"toasts_device_created": "تم إنشاء {device}",
+	"toasts_device_deleted": "تم حذف {device}",
+	"toasts_device_updated": "تم تحديث {device}",
+	"toasts_devices_created_multiple": "تم إنشاء {count} جهاز",
+	"toasts_group_created": "تم إنشاء المجموعة {group}",
+	"toasts_group_deleted": "تم حذف المجموعة {group}",
+	"toasts_no_permission": "ليس لديك صلاحية لزيارة {url}",
+	"toasts_password_changed": "تم تغيير كلمة المرور. يرجى تسجيل الدخول مرة أخرى.",
+	"toasts_passwords_missmatch": "كلمات المرور غير متطابقة",
+	"toasts_permissions_created": "تم إنشاء صلاحيات لـ {username}",
+	"toasts_permissions_deleted": "تم حذف صلاحيات {username}",
+	"toasts_permissions_updated_personal": "تم تحديث صلاحياتك",
+	"toasts_permissions_updated": "تم تحديث صلاحيات {username}",
+	"toasts_settings_saved": "تم حفظ الإعدادات",
+	"toasts_user_created": "تم إنشاء المستخدم {username}",
+	"toasts_user_deleted": "تم حذف المستخدم {username}",
+	"toasts_user_saved": "تم حفظ المستخدم",
+	"users_allow_create_devices": "السماح لـ {username} بإنشاء أجهزة جديدة وتعديل مجموعات الأجهزة",
+	"users_confirm_delete_desc": "هل أنت متأكد من حذف {username}؟",
+	"users_confirm_delete_title": "تأكيد الحذف",
+	"users_create_new_device": "إنشاء جهاز جديد",
+	"users_create_new_user": "إنشاء مستخدم جديد",
+	"users_delete": "حذف",
+	"users_device_permissions": "صلاحيات الأجهزة",
+	"users_page_title": "المستخدمون",
+	"users_password_confirm": "تأكيد كلمة المرور",
+	"users_password": "كلمة المرور",
+	"users_power": "التشغيل",
+	"users_read": "قراءة",
+	"users_required_field": "حقل مطلوب",
+	"users_toggle": "تبديل",
+	"users_update": "تحديث",
+	"users_username": "اسم المستخدم",
+	"welcome_not_expected_back": "العودة",
+	"welcome_not_expected_desc": "لقد انتهيت بالفعل من الإعداد! لا يوجد شيء للقيام به.",
+	"welcome_not_expected_title": "لم أتوقع رؤيتك هنا! 🧐",
+	"welcome_progress_step1": "مرحباً",
+	"welcome_progress_step2": "إنشاء حساب",
+	"welcome_progress_step3": "تم",
+	"welcome_step1_page_title": "مرحباً بك في UpSnap 🥳",
+	"welcome_step1_setup_btn_next": "التالي",
+	"welcome_step1_setup_desc": "يرجى إكمال الخطوات التالية لإنهاء الإعداد.",
+	"welcome_step2_btn_create": "إنشاء",
+	"welcome_step2_label_email": "البريد الإلكتروني:",
+	"welcome_step2_label_min_chars": "10 أحرف كحد أدنى",
+	"welcome_step2_label_password_confirm": "تأكيد كلمة المرور:",
+	"welcome_step2_label_password": "كلمة المرور:",
+	"welcome_step2_page_title": "إنشاء حساب مسؤول",
+	"welcome_step3_btn_done": "لنبدأ!",
+	"welcome_step3_page_desc": "تابع وأضف بعض الأجهزة إلى لوحة التحكم الخاصة بك.",
+	"welcome_step3_page_title": "كل شيء جاهز! 🎉"
+}
