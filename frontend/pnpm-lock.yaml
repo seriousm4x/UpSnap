@@ -43,8 +43,8 @@ importers:
         specifier: ^9.39.2
         version: 9.39.2
       '@inlang/cli':
-        specifier: ^3.1.5
-        version: 3.1.5
+        specifier: ^3.1.6
+        version: 3.1.6
       '@inlang/paraglide-js':
         specifier: 2.11.0
         version: 2.11.0
@@ -339,8 +339,8 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@inlang/cli@3.1.5':
-    resolution: {integrity: sha512-YaNNyc/QqcBrgvk7TCJAHg/SR+lx3ZMSCPGgPBlicBUsj2dt+5VlmswYEb7SQNhR8cmlyd62TMERcC5qQQREhg==}
+  '@inlang/cli@3.1.6':
+    resolution: {integrity: sha512-fJG2E/DB4b31/Z8ie4rdfJaO9zK+aUcE90DNn1YoRxiaZ/nxk7cgYdh9Yd6tcZKQjHxH0V6fF6R+bGDxr/3Enw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -1713,7 +1713,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@inlang/cli@3.1.5':
+  '@inlang/cli@3.1.6':
     dependencies:
       '@inlang/sdk': 2.7.0
       esbuild-wasm: 0.19.12
