@@ -16,6 +16,7 @@
 
 	// locales
 	const languageEmojis = {
+		'ar-SA': '🇸🇦',
 		'bg-BG': '🇧🇬',
 		'cs-CZ': '🇨🇿',
 		'de-DE': '🇩🇪',

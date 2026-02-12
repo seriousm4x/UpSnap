@@ -5,6 +5,7 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Transition from '$lib/components/Transition.svelte';
 	import { m } from '$lib/paraglide/messages.js';
+	import { localeStore } from '$lib/stores/locale';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
 	import { settingsPub } from '$lib/stores/settings';
 	import type { Permission } from '$lib/types/permission';
@@ -12,11 +13,27 @@
 	import { onMount } from 'svelte';
 	import toast, { Toaster, type ToastOptions } from 'svelte-french-toast';
 	import '../app.css';
+
+	let authIsValid = $state(false);
+
 	const toastOptions: ToastOptions = {
 		duration: 5000
 	};
 
-	let authIsValid = false;
+	// list of RTL languages, more can be added if needed
+	const RTL_LANGS = ['ar-SA'];
+
+	function setHTMLdir(lang: string) {
+		if (RTL_LANGS.includes(lang)) {
+			document.documentElement.setAttribute('dir', 'rtl');
+		} else {
+			document.documentElement.setAttribute('dir', 'ltr');
+		}
+	}
+
+	$effect(() => {
+		setHTMLdir($localeStore);
+	});
 
 	onMount(async () => {
 		$pocketbase.authStore.onChange(() => {
