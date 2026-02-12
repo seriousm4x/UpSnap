@@ -1,5 +1,6 @@
 import { getLocale } from '$lib/paraglide/runtime';
 import type { Locale } from 'date-fns';
+import { arSA } from 'date-fns/locale/ar-SA';
 import { bg } from 'date-fns/locale/bg';
 import { cs } from 'date-fns/locale/cs';
 import { de } from 'date-fns/locale/de';
@@ -20,7 +21,6 @@ import { uk } from 'date-fns/locale/uk';
 import { vi } from 'date-fns/locale/vi';
 import { zhCN } from 'date-fns/locale/zh-CN';
 import { zhTW } from 'date-fns/locale/zh-TW';
-import { arSA } from 'date-fns/locale';
 import { writable, type Writable } from 'svelte/store';
 
 export const localeStore = writable(getLocale());
@@ -28,6 +28,9 @@ export const dateFnsLocale: Writable<Locale> = writable(enUS);
 
 localeStore.subscribe((l: string) => {
 	switch (l) {
+		case 'ar-SA':
+			dateFnsLocale.set(arSA);
+			break;
 		case 'bg-BG':
 			dateFnsLocale.set(bg);
 			break;
@@ -87,9 +90,6 @@ localeStore.subscribe((l: string) => {
 			break;
 		case 'zh-TW':
 			dateFnsLocale.set(zhTW);
-			break;
-		case 'ar':
-			dateFnsLocale.set(arSA);
 			break;
 		default:
 			dateFnsLocale.set(enUS);
