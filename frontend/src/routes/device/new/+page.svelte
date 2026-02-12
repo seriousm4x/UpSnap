@@ -68,7 +68,7 @@
 			name: 'scan',
 			ll_name: m['device_tabs.1'](),
 			icon: faBinoculars,
-			show: $pocketbase.authStore.isSuperuser
+			show: true
 		}
 	];
 </script>
