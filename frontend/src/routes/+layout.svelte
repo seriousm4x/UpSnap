@@ -14,6 +14,7 @@
 	import toast, { Toaster, type ToastOptions } from 'svelte-french-toast';
 	import '../app.css';
 
+	let { children } = $props();
 	let authIsValid = $state(false);
 
 	const toastOptions: ToastOptions = {
@@ -129,6 +130,6 @@
 
 <Transition url={page.url}>
 	<div class="container mx-auto mb-4 p-2">
-		<slot />
+		{@render children()}
 	</div>
 </Transition>

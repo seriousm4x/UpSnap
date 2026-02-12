@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
-	export let url: URL;
+	let { url, children } = $props();
 </script>
 
 {#key url}
 	<div in:fly={{ y: 50, duration: 300 }}>
-		<slot />
+		{@render children()}
 	</div>
 {/key}

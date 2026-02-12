@@ -37,7 +37,7 @@
 					scanRange = settings.scan_range;
 				})
 				.catch((err) => {
-					//toast.error(err.message);
+					toast.error(err.message);
 				});
 		} else {
 			scanRange = $settingsPriv.scan_range;
