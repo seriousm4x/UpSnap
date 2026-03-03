@@ -46,8 +46,8 @@ importers:
         specifier: ^3.1.6
         version: 3.1.6
       '@inlang/paraglide-js':
-        specifier: 2.13.0
-        version: 2.13.0
+        specifier: 2.13.1
+        version: 2.13.1
       '@sveltejs/adapter-static':
         specifier: ^3.0.10
         version: 3.0.10(@sveltejs/kit@2.53.3(@sveltejs/vite-plugin-svelte@5.1.1(svelte@5.53.6)(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1)))(svelte@5.53.6)(typescript@5.9.3)(vite@6.4.1(jiti@2.6.1)(lightningcss@1.31.1)))
@@ -344,8 +344,8 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  '@inlang/paraglide-js@2.13.0':
-    resolution: {integrity: sha512-m7JQiTeLC3tY3DusUCc4iRWlsKoMuDLhw4iGhkY0yI96ki7PK42DLsi1kMk8ubSVenKOwgrs7eqQZN1Htvkhew==}
+  '@inlang/paraglide-js@2.13.1':
+    resolution: {integrity: sha512-IsGm5gHmH6hVA9iwzvoRkt+Q9nrzX+6+G1nAmxODk/l+mpm0siPebfkXiu6DODSluFuHg0Q6fjXcDXAaqOen+Q==}
     hasBin: true
 
   '@inlang/recommend-sherlock@0.2.1':
@@ -788,8 +788,8 @@ packages:
     resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
     engines: {node: '>=16'}
 
-  comment-json@4.5.1:
-    resolution: {integrity: sha512-taEtr3ozUmOB7it68Jll7s0Pwm+aoiHyXKrEC8SEodL4rNpdfDLqa7PfBlrgFoCNNdR8ImL+muti5IGvktJAAg==}
+  comment-json@4.6.2:
+    resolution: {integrity: sha512-R2rze/hDX30uul4NZoIZ76ImSJLFxn/1/ZxtKC1L77y2X1k+yYu1joKbAtMA2Fg3hZrTOiw0I5mwVMo0cf250w==}
     engines: {node: '>= 6'}
 
   concat-map@0.0.1:
@@ -802,9 +802,6 @@ packages:
   cookie@0.6.0:
     resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
-
-  core-util-is@1.0.3:
-    resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
   cron-parser@5.5.0:
     resolution: {integrity: sha512-oML4lKUXxizYswqmxuOCpgFS8BNUJpIu6k/2HVHyaL8Ynnf3wdf9tkns0yRdJLSIjkJ+b0DXHMZEHGpMwjnPww==}
@@ -1727,7 +1724,7 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
-  '@inlang/paraglide-js@2.13.0':
+  '@inlang/paraglide-js@2.13.1':
     dependencies:
       '@inlang/recommend-sherlock': 0.2.1
       '@inlang/sdk': 2.7.0
@@ -1741,7 +1738,7 @@ snapshots:
 
   '@inlang/recommend-sherlock@0.2.1':
     dependencies:
-      comment-json: 4.5.1
+      comment-json: 4.6.2
 
   '@inlang/sdk@2.7.0':
     dependencies:
@@ -2146,10 +2143,9 @@ snapshots:
 
   commander@11.1.0: {}
 
-  comment-json@4.5.1:
+  comment-json@4.6.2:
     dependencies:
       array-timsort: 1.0.3
-      core-util-is: 1.0.3
       esprima: 4.0.1
 
   concat-map@0.0.1: {}
@@ -2157,8 +2153,6 @@ snapshots:
   consola@3.4.0: {}
 
   cookie@0.6.0: {}
-
-  core-util-is@1.0.3: {}
 
   cron-parser@5.5.0:
     dependencies:
