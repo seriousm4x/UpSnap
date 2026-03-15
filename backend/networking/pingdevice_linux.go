@@ -2,32 +2,17 @@
 package networking
 
 import (
-	"errors"
 	"fmt"
-	"net"
 	"os"
 	"os/exec"
 	"runtime"
 	"strconv"
-	"syscall"	
 	"time"
 
 	"github.com/pocketbase/pocketbase/core"
 	"kernel.org/pub/linux/libs/security/libcap/cap"
 	probing "github.com/prometheus-community/pro-bing"
 )
-
-func isNoRouteOrDownError(err error) bool {
-	opErr, ok := err.(*net.OpError)
-	if !ok {
-		return false
-	}
-	syscallErr, ok := opErr.Err.(*os.SyscallError)
-	if !ok {
-		return false
-	}
-	return syscallErr.Err == syscall.EHOSTUNREACH || syscallErr.Err == syscall.EHOSTDOWN
-}
 
 func PingDevice(device *core.Record) (bool, error) {
 	ping_cmd := device.GetString("ping_cmd")
@@ -95,23 +80,4 @@ func PingDevice(device *core.Record) (bool, error) {
 
 		return err == nil, err
 	}
-}
-
-func CheckPort(host string, port string) (bool, error) {
-	timeout := 500 * time.Millisecond
-	conn, err := net.DialTimeout("tcp", net.JoinHostPort(host, port), timeout)
-	if err != nil {
-		// treat "host unreachable", "connection refused" and "timeout" as no error
-		var netErr *net.OpError
-		if errors.As(err, &netErr) {
-			if errors.Is(netErr.Err, syscall.EHOSTUNREACH) ||
-				errors.Is(netErr.Err, syscall.ECONNREFUSED) ||
-				netErr.Timeout() {
-				return false, nil
-			}
-		}
-		return false, err
-	}
-	defer conn.Close()
-	return conn != nil, nil
 }
