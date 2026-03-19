@@ -44,7 +44,7 @@ func ShutdownDevice(device *core.Record) error {
 	cmd.Stderr = &stderr
 
 	if err := cmd.Start(); err != nil {
-		logger.Error.Println(err)
+		return err
 	}
 
 	done := make(chan error, 1)
