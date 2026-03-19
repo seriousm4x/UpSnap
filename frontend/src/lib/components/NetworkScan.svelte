@@ -181,7 +181,7 @@
 				</div>
 			</div>
 			{#if scanResponse.devices?.length > 0}
-				{#each scanResponse.devices.sort( (a, b) => a.ip.localeCompare( b.ip, $localeStore, { numeric: true } ) ) as device, index (device.mac)}
+				{#each scanResponse.devices.sort( (a, b) => a.ip.localeCompare( b.ip, $localeStore, { numeric: true } ) ) as device, index (device)}
 					<div class="collapse-arrow bg-base-100 collapse">
 						<input type="radio" name="scanned-devices" checked={index === 0} />
 						<div class="collapse-title font-bold">

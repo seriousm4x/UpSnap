@@ -1,5 +1,4 @@
 //go:build !windows
-// +build !windows
 
 package networking
 
@@ -28,8 +27,6 @@ func KillProcess(process *os.Process) error {
 	if err != nil {
 		return unix.Kill(-pgid, unix.SIGKILL)
 	}
-
-	_, err = process.Wait()
 
 	return err
 }
