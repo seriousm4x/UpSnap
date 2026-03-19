@@ -24,6 +24,10 @@ func PingDevice(device *core.Record) (bool, error) {
 		pinger.Timeout = 500 * time.Millisecond
 
 		privileged := true // default to privileged ping, required by Windows
+		if runtime.GOOS == "darwin" {
+			// macOS pings will fail when using privileged ping as non root, but works with non-privileged.
+			privileged = false
+		}
 		privilegedEnv := os.Getenv("UPSNAP_PING_PRIVILEGED")
 		if privilegedEnv != "" {
 			privileged, err = strconv.ParseBool(privilegedEnv)
