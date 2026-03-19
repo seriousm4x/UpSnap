@@ -46,27 +46,27 @@ func HandlerScan(e *core.RequestEvent) error {
 
 	c, err := orig.Dup()
 	if err != nil {
-					return fmt.Errorf("Failed to dup existing capabilities: %v", err)
+		return fmt.Errorf("Failed to dup existing capabilities: %v", err)
 	}
 
 	if on, _ := c.GetFlag(cap.Permitted, cap.NET_RAW); !on {
-					return fmt.Errorf("Privileged ping selected but NET_RAW capability not permitted")
+		return fmt.Errorf("unable to get NET_RAW permissions")
 	}
 
 	if err := c.SetFlag(cap.Effective, true, cap.NET_RAW); err != nil {
-					return fmt.Errorf("unable to set NET_RAW capability effective")
+		return fmt.Errorf("unable to set NET_RAW capability effective")
 	}
 
 	if err := c.SetFlag(cap.Inheritable, true, cap.NET_RAW); err != nil {
-					return fmt.Errorf("unable to set NET_RAW capability inheritable")
+		return fmt.Errorf("unable to set NET_RAW capability inheritable")
 	}
 
 	if err := c.SetProc(); err != nil {
-					return fmt.Errorf("unable to raise NET_RAW capability")
+		return fmt.Errorf("unable to raise NET_RAW capability")
 	}
 
 	if err := cap.SetAmbient(true, cap.NET_RAW); err != nil {
-					return fmt.Errorf("unable to set NET_RAW capability ambient")
+		return fmt.Errorf("unable to set NET_RAW capability ambient")
 	}
 
 	cmd := exec.Command(nmap, "-sn", "-oX", "-", scanRange, "--host-timeout", timeout, "--privileged")
