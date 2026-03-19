@@ -44,7 +44,7 @@ func ShutdownDevice(device *core.Record) error {
 	cmd.Stderr = &stderr
 
 	if err := cmd.Start(); err != nil {
-		logger.Error.Println(err)
+		return err
 	}
 
 	done := make(chan error, 1)
@@ -61,17 +61,38 @@ func ShutdownDevice(device *core.Record) error {
 
 	for {
 		select {
-		case <-time.After(1 * time.Second):
+		case err := <-done:
+			if err != nil {
+				return fmt.Errorf("%s", stderr.String())
+			} else {
+				for {
+					isOnline, err := PingDevice(device)
+					if err != nil {
+						logger.Error.Println(err)
+						return err
+					}
+					if isOnline {
+						if time.Since(start) >= time.Duration(shutdownTimeout)*time.Second {
+							return fmt.Errorf("%s not offline after %d seconds", device.GetString("name"), shutdownTimeout)
+						}
+					}
+					if !isOnline {
+						return nil
+					}
+					time.Sleep(1 * time.Second)
+				}
+			}
+		default:
+			isOnline, err := PingDevice(device)
+			if err != nil {
+				logger.Error.Println(err)
+				return err
+			}
 			if time.Since(start) >= time.Duration(shutdownTimeout)*time.Second {
 				if err := KillProcess(cmd.Process); err != nil {
 					logger.Error.Println(err)
 				}
 				return fmt.Errorf("%s not offline after %d seconds", device.GetString("name"), shutdownTimeout)
-			}
-			isOnline, err := PingDevice(device)
-			if err != nil {
-				logger.Error.Println(err)
-				return err
 			}
 			if !isOnline {
 				if err := KillProcess(cmd.Process); err != nil {
@@ -79,13 +100,7 @@ func ShutdownDevice(device *core.Record) error {
 				}
 				return nil
 			}
-		case err := <-done:
-			if err != nil {
-				if err := KillProcess(cmd.Process); err != nil {
-					logger.Error.Println(err)
-				}
-				return fmt.Errorf("%s", stderr.String())
-			}
+			time.Sleep(1 * time.Second)
 		}
 	}
 }

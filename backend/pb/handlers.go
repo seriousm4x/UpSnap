@@ -151,7 +151,7 @@ func HandlerShutdown(e *core.RequestEvent) error {
 
 	if err := asyncCall(e, func() *router.ApiError {
 		if err := networking.ShutdownDevice(record); err != nil {
-			logger.Error.Println(err)
+			logger.Error.Println(strings.ReplaceAll(err.Error(), "\n", ""))
 			record.Set("status", "online")
 			if err := e.App.Save(record); err != nil {
 				logger.Error.Println("Failed to save record:", err)
