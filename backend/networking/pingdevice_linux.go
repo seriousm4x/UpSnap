@@ -1,17 +1,17 @@
 //go:build linux
+
 package networking
 
 import (
 	"fmt"
 	"os"
 	"os/exec"
-	"runtime"
 	"strconv"
 	"time"
 
 	"github.com/pocketbase/pocketbase/core"
-	"kernel.org/pub/linux/libs/security/libcap/cap"
 	probing "github.com/prometheus-community/pro-bing"
+	"kernel.org/pub/linux/libs/security/libcap/cap"
 )
 
 func PingDevice(device *core.Record) (bool, error) {
@@ -38,19 +38,19 @@ func PingDevice(device *core.Record) (bool, error) {
 
 			c, err := orig.Dup()
 			if err != nil {
-							return false, fmt.Errorf("Failed to dup existing capabilities: %v", err)
+				return false, fmt.Errorf("Failed to dup existing capabilities: %v", err)
 			}
 
 			if on, _ := c.GetFlag(cap.Permitted, cap.NET_RAW); !on {
-							return false, fmt.Errorf("Privileged ping selected but NET_RAW capability not permitted")
+				return false, fmt.Errorf("Privileged ping selected but NET_RAW capability not permitted")
 			}
 
 			if err := c.SetFlag(cap.Effective, true, cap.NET_RAW); err != nil {
-							return false, fmt.Errorf("unable to set NET_RAW capability")
+				return false, fmt.Errorf("unable to set NET_RAW capability")
 			}
 
 			if err := c.SetProc(); err != nil {
-							return false, fmt.Errorf("unable to raise NET_RAW capability")
+				return false, fmt.Errorf("unable to raise NET_RAW capability")
 			}
 		}
 		pinger.SetPrivileged(privileged)
@@ -67,13 +67,9 @@ func PingDevice(device *core.Record) (bool, error) {
 	} else {
 		var shell string
 		var shell_arg string
-		if runtime.GOOS == "windows" {
-			shell = "cmd"
-			shell_arg = "/C"
-		} else {
-			shell = "/bin/sh"
-			shell_arg = "-c"
-		}
+
+		shell = "/bin/sh"
+		shell_arg = "-c"
 
 		cmd := exec.Command(shell, shell_arg, ping_cmd)
 		err := cmd.Run()
