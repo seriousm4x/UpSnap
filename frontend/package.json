@@ -15,18 +15,18 @@
 		"machine-translate": "inlang machine translate --project project.inlang"
 	},
 	"devDependencies": {
-		"@eslint/compat": "^1.4.1",
-		"@eslint/js": "^9.39.4",
+		"@eslint/compat": "^2.0.3",
+		"@eslint/js": "^10.0.1",
 		"@inlang/cli": "^3.1.7",
 		"@inlang/paraglide-js": "2.15.0",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.55.0",
-		"@sveltejs/vite-plugin-svelte": "^5.1.1",
+		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"daisyui": "^5.5.19",
-		"eslint": "^9.39.4",
+		"eslint": "^10.0.3",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.15.2",
-		"globals": "^16.5.0",
+		"globals": "^17.4.0",
 		"husky": "^9.1.7",
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.5.1",
@@ -37,7 +37,7 @@
 		"tslib": "^2.8.1",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.57.1",
-		"vite": "^6.4.1"
+		"vite": "^7.3.1"
 	},
 	"type": "module",
 	"lint-staged": {
@@ -45,12 +45,11 @@
 		"*.{js,css,md,svelte,scss}": "prettier --write --cache --cache-strategy content --ignore-path ../.gitignore ."
 	},
 	"dependencies": {
-		"@fortawesome/free-solid-svg-icons": "^6.7.2",
-		"@tailwindcss/postcss": "^4.2.2",
+		"@fortawesome/free-solid-svg-icons": "^7.2.0",
+		"@tailwindcss/vite": "^4.2.2",
 		"cron-parser": "^5.5.0",
 		"date-fns": "^4.1.0",
 		"pocketbase": "^0.26.8",
-		"postcss": "^8.5.8",
 		"svelte-fa": "^4.0.4",
 		"svelte-french-toast": "github:seriousm4x/svelte-french-toast#fix-72-build",
 		"theme-change": "^2.5.0"
