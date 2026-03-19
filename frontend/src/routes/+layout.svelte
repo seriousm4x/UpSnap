@@ -66,7 +66,7 @@
 		}
 
 		// redirect to welcome page if setup is not completed
-		if ($settingsPub.setup_completed === false && page.url.pathname !== '/welcome') {
+		if ($settingsPub.setup_completed === false && page.url.pathname !== '/welcome/') {
 			$pocketbase.authStore.clear();
 			goto(resolve('/welcome'));
 			return;
