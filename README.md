@@ -61,10 +61,10 @@ Just download the latest binary from the [release page](https://github.com/serio
 sudo ./upsnap serve --http=0.0.0.0:8090
 ```
 
-### Non-root:
+### Non-root on linux only:
 
 ```bash
-sudo setcap cap_net_raw=+ep ./upsnap # only once after downloading
+sudo setcap cap_net_raw=+p ./upsnap # only once after downloading to allow for pinging devices
 ./upsnap serve --http=0.0.0.0:8090
 ```
 
