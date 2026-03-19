@@ -9,6 +9,7 @@ require (
 	github.com/prometheus-community/pro-bing v0.8.0
 	github.com/robfig/cron/v3 v3.0.1
 	golang.org/x/sys v0.41.0
+	kernel.org/pub/linux/libs/security/libcap/cap v1.2.77
 )
 
 require (
@@ -44,9 +45,8 @@ require (
 	golang.org/x/oauth2 v0.35.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
-	modernc.org/libc v1.67.6 // indirect
-	kernel.org/pub/linux/libs/security/libcap/cap v1.2.77 // indirect
 	kernel.org/pub/linux/libs/security/libcap/psx v1.2.77 // indirect
+	modernc.org/libc v1.67.6 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
 	modernc.org/sqlite v1.45.0 // indirect
