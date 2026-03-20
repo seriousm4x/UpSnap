@@ -220,16 +220,14 @@
 					</div>
 				{/each}
 				<h2 class="card-title mt-4">{m.device_network_scan_add_all()}</h2>
-				<div class="max-w-fit">
+				<div class="flex max-w-fit flex-col gap-2">
 					<label class="label cursor-pointer">
 						<input type="checkbox" class="checkbox" bind:checked={replaceNetmaskCheckbox} />
 						<span class="ms-2 text-wrap wrap-break-word"
 							>{m.device_network_scan_replace_netmask()}</span
 						>
 					</label>
-				</div>
-				{#if replaceNetmaskCheckbox}
-					<div class="max-w-fit">
+					{#if replaceNetmaskCheckbox}
 						<label class="label cursor-pointer" for="replaceNetmaskInput">
 							<span class="ms-2">{m.device_network_scan_new_netmask()}</span>
 						</label>
@@ -240,10 +238,8 @@
 							placeholder="255.255.255.0"
 							bind:value={replaceNetmask}
 						/>
-					</div>
-				{/if}
-				{#if scanResponse.devices.find((dev) => dev.name === 'Unknown')}
-					<div class="max-w-fit">
+					{/if}
+					{#if scanResponse.devices.find((dev) => dev.name === 'Unknown')}
 						<label class="label cursor-pointer">
 							<input type="checkbox" class="checkbox" bind:checked={addAllCheckbox} />
 							<span class="ms-2 text-wrap wrap-break-word"
@@ -271,9 +267,7 @@
 								).length})
 							</button>
 						{/if}
-					</div>
-				{:else}
-					<div class="max-w-fit">
+					{:else}
 						<button
 							class="btn btn-success"
 							onclick={() => addAll()}
@@ -282,8 +276,8 @@
 							<Fa icon={faPlus} />
 							{m.device_network_scan_add_all()} ({scanResponse.devices.length})
 						</button>
-					</div>
-				{/if}
+					{/if}
+				</div>
 			{/if}
 		</div>
 	</div>
