@@ -11,7 +11,7 @@
 
 	$effect(() => {
 		if (Object.hasOwn($permission, 'update')) {
-			const id = page.params.id;
+			const id = page.url.searchParams.get('id');
 			if (!$pocketbase.authStore.isSuperuser && !$permission.update.includes(id || '')) {
 				toast(m.toasts_no_permission({ url: page.url.pathname }), {
 					icon: '⛔'
@@ -22,7 +22,7 @@
 	});
 
 	async function getDevice(): Promise<Device> {
-		const id = page.params.id;
+		const id = page.url.searchParams.get('id');
 		if (!id) throw new Error('No device ID provided');
 
 		const resp = await $pocketbase.collection('devices').getOne(id, { expand: 'ports,groups' });

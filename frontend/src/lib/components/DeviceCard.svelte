@@ -44,7 +44,7 @@
 		{
 			text: m.device_card_btn_more_edit(),
 			icon: faPen,
-			onClick: () => goto(resolve(`/device/${device.id}`)),
+			onClick: () => goto(resolve(`/device?id=${device.id}`)),
 			requires: $pocketbase.authStore.isSuperuser || $permission.update?.includes(device.id)
 		}
 	]);
