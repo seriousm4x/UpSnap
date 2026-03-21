@@ -34,21 +34,21 @@ func SendMagicPacket(device *core.Record) error {
 	}
 
 	// send wake via udp port 9
-	if err := wakeUDP(broadcastIp, parsedMac, bytePassword); err != nil {
+	if err := wakeUDP(broadcastIp, ip, parsedMac, bytePassword); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func wakeUDP(broadcastIp string, target net.HardwareAddr, password []byte) error {
+func wakeUDP(broadcastIp string, deviceIp string, target net.HardwareAddr, password []byte) error {
 	c, err := wol.NewClient()
 	if err != nil {
 		return err
 	}
 	defer c.Close()
 
-	// send 4 magic packets to different addresses to enhance change of waking up
+	// send 6 magic packets to different addresses to enhance chance of waking up
 	destinations := []string{
 		// default user-calculated broadcast to port 9
 		fmt.Sprintf("%s:9", broadcastIp),
@@ -58,6 +58,10 @@ func wakeUDP(broadcastIp string, target net.HardwareAddr, password []byte) error
 		"255.255.255.255:9",
 		// broadcast to alternative port 7
 		"255.255.255.255:7",
+		// send direct to device via port 9 (for routed network WOL)
+		fmt.Sprintf("%s:9", deviceIp),
+		// send direct to device via alternative port 7 (for routed network WOL)
+		fmt.Sprintf("%s:7", deviceIp),		
 	}
 
 	for _, dest := range destinations {
