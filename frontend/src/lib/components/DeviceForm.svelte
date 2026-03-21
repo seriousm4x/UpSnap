@@ -343,7 +343,7 @@
 		<div class="card-body">
 			<h2 class="card-title">{m.device_wake()}</h2>
 			<p>
-				{m.device_wake_desc()}
+				{@html m.device_wake_desc()}
 				<!-- eslint-disable svelte/no-at-html-tags -->
 				{@html m.settings_ping_interval_desc2()}
 			</p>
