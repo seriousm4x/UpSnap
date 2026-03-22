@@ -124,7 +124,7 @@
 {#if !loading}
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
 		<div class="card-body">
-			<h2 class="card-title">{m['device_tabs.1']()}</h2>
+			<h2 class="card-title">{m['device_tabs_0']()}</h2>
 			<p class="my-2">
 				{m.device_network_scan_desc()}
 			</p>

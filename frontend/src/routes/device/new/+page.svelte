@@ -60,13 +60,13 @@
 	let tabs = [
 		{
 			name: 'manual',
-			ll_name: m['device_tabs.0'](),
+			ll_name: m['device_tabs_0'](),
 			icon: faWrench,
 			show: true
 		},
 		{
 			name: 'scan',
-			ll_name: m['device_tabs.1'](),
+			ll_name: m['device_tabs_1'](),
 			icon: faBinoculars,
 			show: true
 		}
