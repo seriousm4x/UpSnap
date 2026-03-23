@@ -107,6 +107,7 @@ func TestSendMagicPacket(t *testing.T) {
 func TestWakeUDP(t *testing.T) {
 	testCases := []struct {
 		name        string
+		ip          string
 		broadcastIp string
 		targetMac   string
 		password    string
@@ -115,6 +116,7 @@ func TestWakeUDP(t *testing.T) {
 		// Valid case: all inputs correct
 		{
 			name:        "Valid Case",
+			ip:          "192.168.1.10",
 			broadcastIp: "192.168.1.255",
 			targetMac:   "00:11:22:33:44:55",
 			password:    "secret",
@@ -123,6 +125,7 @@ func TestWakeUDP(t *testing.T) {
 		// Invalid MAC address
 		{
 			name:        "Invalid MAC",
+			ip:          "192.168.1.10",
 			broadcastIp: "192.168.1.255",
 			targetMac:   "invalid",
 			password:    "secret",
@@ -131,6 +134,7 @@ func TestWakeUDP(t *testing.T) {
 		// Password too short
 		{
 			name:        "Password Too Short",
+			ip:          "192.168.1.10",
 			broadcastIp: "192.168.1.255",
 			targetMac:   "00:11:22:33:44:55",
 			password:    "s", // length 1
@@ -139,6 +143,7 @@ func TestWakeUDP(t *testing.T) {
 		// Password too long
 		{
 			name:        "Password Too Long",
+			ip:          "192.168.1.10",
 			broadcastIp: "192.168.1.255",
 			targetMac:   "00:11:22:33:44:55",
 			password:    "password", // length 9
@@ -156,7 +161,7 @@ func TestWakeUDP(t *testing.T) {
 			}
 
 			// Now test the wakeUDP function
-			err = wakeUDP(tc.broadcastIp, mac, []byte(tc.password))
+			err = wakeUDP(tc.broadcastIp, tc.ip, mac, []byte(tc.password))
 			if tc.wantError {
 				if err == nil {
 					t.Errorf("Expected error but got none")
