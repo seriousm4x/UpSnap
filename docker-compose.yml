@@ -1,7 +1,7 @@
 services:
   upsnap:
     cap_add:
-      - NET_RAW # NET_RAW is required for privileged ping
+      - NET_RAW # NET_RAW is required for privileged ping and network device scan (nmap)
     cap_drop:
       - ALL
     container_name: upsnap
@@ -28,5 +28,3 @@ services:
     # dns:
     #   - 192.18.0.1
     #   - 192.18.0.2
-    # # or install custom packages for shutdown
-    # entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve"
