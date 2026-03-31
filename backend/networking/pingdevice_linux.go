@@ -74,6 +74,12 @@ func PingDevice(device *core.Record) (bool, error) {
 		cmd := exec.Command(shell, shell_arg, ping_cmd)
 		err := cmd.Run()
 
-		return err == nil, err
+		if err != nil {
+			if _, ok := err.(*exec.ExitError); ok {
+				return false, nil
+			}
+			return false, err
+		}
+		return true, nil
 	}
 }

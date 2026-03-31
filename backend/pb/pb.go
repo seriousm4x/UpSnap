@@ -118,12 +118,19 @@ func StartPocketBase(distDirFS fs.FS) {
 				oldShutdownCmd := oldRecord.GetString("shutdown_cmd")
 				oldShutdownCronEnabled := oldRecord.GetBool("shutdown_cron_enabled")
 
+				newIp := newRecord.GetString("ip")
+				oldIp := oldRecord.GetString("ip")
+				newPingCmd := newRecord.GetString("ping_cmd")
+				oldPingCmd := oldRecord.GetString("ping_cmd")
+
 				if newWakeCron != oldWakeCron ||
 					newWakeCmd != oldWakeCmd ||
 					newWakeCronEnabled != oldWakeCronEnabled ||
 					newShutdownCron != oldShutdownCron ||
 					newShutdownCronEnabled != oldShutdownCronEnabled ||
-					newShutdownCmd != oldShutdownCmd {
+					newShutdownCmd != oldShutdownCmd ||
+					newIp != oldIp ||
+					newPingCmd != oldPingCmd {
 					cronjobs.SetWakeShutdownJobs(app)
 				}
 			}
