@@ -34,6 +34,7 @@
 - ⏰ Timed Events via Cron for Automation
 - 🔌 Ping Any Port You Choose
 - 🔍 Discover Devices with Network Scanning (nmap required)
+- ❎️ Shutdown Devices with a Custom Command
 - 👤 Secured User Management
 - 🌐 i18n support for [these](/frontend/translations) languages
 - 🎨 35 Themes
@@ -55,40 +56,19 @@
 
 Just download the latest binary from the [release page](https://github.com/seriousm4x/UpSnap/releases) and run it.
 
-### Root:
+```sudo ./upsnap serve --http=0.0.0.0:8090```
 
-```bash
-sudo ./upsnap serve --http=0.0.0.0:8090
-```
-
-### Non-root on linux only:
-
-```bash
-sudo setcap cap_net_raw=+p ./upsnap # only once after downloading to allow for pinging devices
-./upsnap serve --http=0.0.0.0:8090
-```
+To run as non-root (Linux only), refer to the Wiki: [Use non-root user](https://github.com/seriousm4x/UpSnap/wiki/Use-non%E2%80%90root-user)
 
 For more options check `./upsnap --help` or visit [PocketBase documentation](https://pocketbase.io/docs).
 
-If you want to use network discovery, make sure to have `nmap` installed and run UpSnap as root/admin.
+## 🐳 Run in Docker
 
-## 🐳 Run in docker
+Just pull and run the image: `docker run --network=host seriousm4x/upsnap:latest` or you can use the [docker-compose](docker-compose.yml) example. See the comments in the file for customization.
 
-You can use the [docker-compose](docker-compose.yml) example. See the comments in the file for customization.
+To run as non-root, refer to the Wiki: [Use non-root user](https://github.com/seriousm4x/UpSnap/wiki/Use-non%E2%80%90root-user)
 
-### Non-root docker user:
-
-You will lose the ability to add network devices via the scan page.
-
-Create the mount point first:
-
-```bash
-mkdir data
-```
-
-Then add `user: 1000:1000` to the docker-compose file (or whatever your $UID:$GID is).
-
-### Change port
+### Change port (Docker)
 
 If you want to change the port from 8090 to something else, change the following (5000 in this case):
 
@@ -96,16 +76,10 @@ If you want to change the port from 8090 to something else, change the following
 environment:
   - UPSNAP_HTTP_LISTEN=0.0.0.0:5000
 ```
+## ❎️ Shutting Down Devices
 
-### Install additional packages for shutdown cmd
-
-```yml
-entrypoint: /bin/sh -c "apk update && apk add --no-cache <YOUR_PACKAGE> && rm -rf /var/cache/apk/* && ./upsnap serve"
-```
-
-You can search for your needed package [here](https://pkgs.alpinelinux.org/packages).
-
-### Reverse Proxy
+To shutdown devices, refer to the Wiki: [How to use shutdowns](https://github.com/seriousm4x/UpSnap/wiki/How-to-use-shutdowns)
+## Reverse Proxy
 
 **Caddy example**
 
@@ -115,7 +89,7 @@ upsnap.example.com {
 }
 ```
 
-### Run in sub path
+## Run in sub path
 
 You can run UpSnap on a different path than `/`, e.g. `/upsnap-sub-path/`. To do this in caddy, set the following:
 
@@ -163,14 +137,15 @@ UpSnap offers unique access for each user, per device. While admins have all per
 
 Although UpSnap has user authorisation, it is **not recommended to expose it to the open web** and make it accessible by everyone!
 
-**Reason**: The shutdown device command is basically a command piped to #sh (root if you run docker). If anyone gains unauthorized access and can abuse this api route in any way, the attacker has access to a (root) shell on your local network.
+**Reason**: The shutdown device command is basically a command piped to #sh (possibly as root user). If anyone gains unauthorized access and can abuse this API route in any way, the attacker has access to a (root) shell on your local network.
 
-**Recommended**: If you need access from outside your network, please use a vpn. Wireguard or OpenVPN is your way to go.
+**Recommended**: If you need access from outside your network, please use a VPN. Wireguard or OpenVPN is your way to go.
 
 ## 🌐 Help translating
 
 UpSnap is available in the following languages so far:
 
+- 🇸🇦 **Arabic (Saudi Arabia)** (ar-SA)
 - 🇧🇬 **Bulgarian (Bulgaria)** (bg-BG)
 - 🇨🇿 **Czech (Czech republic)** (cs-CZ)
 - 🇩🇪 **German (Germany)** (de-DE)
@@ -181,6 +156,7 @@ UpSnap is available in the following languages so far:
 - 🇮🇩 **Bahasa (Indonesia)** (id-ID)
 - 🇮🇹 **Italian (Italy)** (it-IT)
 - 🇯🇵 **Japanese (Japan)** (ja-JP)
+- 🇰🇷 **Korean (Republic of Korea)** (ko-KR)
 - 🇳🇱 **Dutch (Netherlands)** (nl-NL)
 - 🇳🇴 **Norwegian (Norway)** (nb-NO)
 - 🇵🇱 **Polish (Poland)** (pl-PL)
