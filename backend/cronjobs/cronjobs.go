@@ -132,7 +132,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				if d.GetString("status") == "pending" {
 					return
 				}
-				isOnline, err := networking.PingDevice(dev)
+				isOnline, err := networking.PingDevice(d)
 				if err != nil {
 					logger.Error.Println(err)
 					return
@@ -170,7 +170,7 @@ func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
 				if d.GetString("status") == "pending" {
 					return
 				}
-				isOnline, err := networking.PingDevice(dev)
+				isOnline, err := networking.PingDevice(d)
 				if err != nil {
 					logger.Error.Println(err)
 					return
