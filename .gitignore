@@ -236,3 +236,8 @@ dist/
 vite.config.js.timestamp*
 
 frontend/src/lib/paraglide
+
+# Ignore bin and obj build files
+mobile/bin
+mobile/obj
+.vs

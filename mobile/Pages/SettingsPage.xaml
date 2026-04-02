@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="mobile.Pages.SettingsPage"
+             Title="Settings">
+
+       <ContentPage.ToolbarItems>
+              <ToolbarItem Text="Done"
+                                    Clicked="OnDoneClicked" />
+       </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20"
+                             Spacing="16">
+            <Label Text="Frontend URL"
+                   FontSize="24"
+                   FontAttributes="Bold" />
+
+            <Label Text="Enter the full URL for the existing UpSnap frontend. This value is stored on the device and used by the WebView tab." />
+
+            <Entry x:Name="FrontendUrlEntry"
+                   Placeholder="https://upsnap.example.com"
+                   Keyboard="Url"
+                   ClearButtonVisibility="WhileEditing" />
+
+                     <Grid ColumnDefinitions="*,Auto"
+                           ColumnSpacing="12">
+                            <Button Grid.Column="0"
+                                    Text="Save"
+                                    Clicked="OnSaveClicked" />
+                            <Button Grid.Column="1"
+                                    Text="Clear"
+                                    Clicked="OnClearClicked" />
+                     </Grid>
+
+            <Label Text="Saved value"
+                   FontAttributes="Bold" />
+            <Label x:Name="SavedUrlLabel"
+                   LineBreakMode="CharacterWrap" />
+
+            <Label x:Name="StatusLabel"
+                   LineBreakMode="WordWrap"
+                   TextColor="{AppThemeBinding Light=#1B6E3C, Dark=#7BD88F}" />
+
+            <Label Text="Examples"
+                   FontAttributes="Bold" />
+            <Label Text="https://upsnap.example.com&#10;http://192.168.1.50:5173&#10;http://10.0.2.2:5173" />
+
+            <Label Text="Android emulator note: if the frontend runs on your development machine, http://10.0.2.2 maps back to the host localhost for the Android emulator."
+                   FontSize="12"
+                   TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

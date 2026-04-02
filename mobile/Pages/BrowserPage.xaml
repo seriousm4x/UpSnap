@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="mobile.Pages.BrowserPage"
+             Title="UpSnap">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Settings"
+                     Clicked="OnOpenSettingsClicked" />
+        <ToolbarItem Text="URL"
+                     Clicked="OnShowUrlClicked" />
+        <ToolbarItem Text="Refresh"
+                     Clicked="OnRefreshClicked" />
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <WebView x:Name="FrontendWebView"
+                 IsVisible="False"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Fill"
+                 Navigating="OnWebViewNavigating"
+                 Navigated="OnWebViewNavigated" />
+
+        <ScrollView x:Name="EmptyStateLayout"
+                    IsVisible="False">
+            <VerticalStackLayout Spacing="14"
+                                 Padding="20,40"
+                                 VerticalOptions="Center">
+                <Label Text="No frontend URL is configured."
+                       FontSize="24"
+                       FontAttributes="Bold" />
+                <Label Text="Open the Settings tab and save the full URL for the existing UpSnap frontend." />
+                <Label Text="Examples:"
+                       FontAttributes="Bold" />
+                <Label Text="https://upsnap.example.com&#10;http://192.168.1.50:5173&#10;http://10.0.2.2:5173" />
+                <Label Text="Use a LAN IP or hosted URL for real devices. Localhost only works when the frontend runs on the same device or emulator mapping is configured."
+                       FontSize="12"
+                       TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid x:Name="LoadingOverlay"
+              IsVisible="False"
+              BackgroundColor="#66000000">
+            <ActivityIndicator IsRunning="True"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center" />
+        </Grid>
+    </Grid>
+
+</ContentPage>
