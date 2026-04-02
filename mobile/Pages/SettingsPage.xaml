@@ -23,15 +23,22 @@
                    Keyboard="Url"
                    ClearButtonVisibility="WhileEditing" />
 
-                     <Grid ColumnDefinitions="*,Auto"
-                           ColumnSpacing="12">
-                            <Button Grid.Column="0"
-                                    Text="Save"
-                                    Clicked="OnSaveClicked" />
-                            <Button Grid.Column="1"
-                                    Text="Clear"
-                                    Clicked="OnClearClicked" />
-                     </Grid>
+            <Label Text="Android note: local DNS names may fail. Prefer a LAN IP when possible."
+                   FontSize="12"
+                   TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+
+                             <Grid ColumnDefinitions="*,Auto,Auto"
+                                   ColumnSpacing="12">
+                                   <Button Grid.Column="0"
+                                           Text="Save"
+                                           Clicked="OnSaveClicked" />
+                                   <Button Grid.Column="1"
+                                           Text="Test"
+                                           Clicked="OnTestClicked" />
+                                   <Button Grid.Column="2"
+                                           Text="Clear"
+                                           Clicked="OnClearClicked" />
+                             </Grid>
 
             <Label Text="Saved value"
                    FontAttributes="Bold" />
@@ -49,6 +56,10 @@
             <Label Text="Android emulator note: if the frontend runs on your development machine, http://10.0.2.2 maps back to the host localhost for the Android emulator."
                    FontSize="12"
                    TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
+
+                     <Label Text="If a local DNS name like http://DOMAIN_NAME:PORT works on Windows but not on Android, test it here first. Some Android devices or VPN setups do not resolve local hostnames the same way as Windows. In that case, try the server's LAN IP instead."
+                            FontSize="12"
+                            TextColor="{AppThemeBinding Light=#666666, Dark=#BBBBBB}" />
         </VerticalStackLayout>
     </ScrollView>
 

@@ -236,16 +236,84 @@ You will need:
 - Android SDK / emulator for Android builds
 - Xcode and Apple signing setup for iOS or MacCatalyst builds
 
-To inspect installed workloads:
+### First-time .NET and MAUI setup
+
+If you already work with MAUI on this machine, you can probably skip this section.
+
+If you do not, this is the simplest setup path.
+
+#### 1. Install the .NET 10 SDK
+
+Install the .NET 10 SDK from Microsoft:
+
+- https://dotnet.microsoft.com/en-us/download
+
+Then verify it is available:
+
+```sh
+dotnet --list-sdks
+dotnet --info
+```
+
+You should see a `10.0.x` SDK in the output.
+
+#### 2. Install MAUI support
+
+If you are using **Visual Studio**, the easiest route is to install the MAUI-related workloads from the Visual Studio Installer:
+
+- .NET Multi-platform App UI development
+- Android SDK / emulator tools
+- Windows App SDK support
+
+If you prefer the CLI, install the MAUI workloads with:
+
+```sh
+dotnet workload install maui
+```
+
+If you want to be explicit, you can also install the platform workloads directly:
+
+```sh
+dotnet workload install android ios maccatalyst maui-windows
+```
+
+Then verify what is installed:
 
 ```sh
 dotnet workload list
 ```
 
-If needed, install MAUI workloads:
+#### 3. Restore project workloads
+
+From the repository root, run:
 
 ```sh
-dotnet workload install maui
+dotnet workload restore
+```
+
+This makes sure the machine has the workloads this repo expects.
+
+#### 4. Android setup
+
+For Android development or publishing, make sure you also have:
+
+- an Android SDK installed
+- at least one emulator image or a physical device
+- USB debugging enabled if you plan to run on a phone
+
+If you want to confirm that a device is visible:
+
+```sh
+adb devices
+```
+
+#### 5. Quick sanity check
+
+Before trying a release publish, do one clean build from the mobile folder:
+
+```sh
+cd mobile
+dotnet build
 ```
 
 ### Run the mobile app in development
@@ -371,6 +439,107 @@ dotnet publish -c Release -f net10.0-ios
 ```
 
 iOS release publishing requires Apple signing and, in normal practice, a Mac build environment.
+
+### Troubleshooting
+
+These are the most common setup and publish problems for this MAUI wrapper.
+
+#### `dotnet` is missing or the wrong SDK is used
+
+Check:
+
+```sh
+dotnet --info
+dotnet --list-sdks
+```
+
+If you do not see a `10.0.x` SDK, install or repair the .NET 10 SDK first.
+
+#### MAUI workloads are missing or broken
+
+Try the following in order:
+
+```sh
+dotnet workload restore
+dotnet workload install maui
+dotnet workload repair
+```
+
+Then re-run:
+
+```sh
+dotnet workload list
+```
+
+#### Android publish hangs at `_CompileResources`
+
+This is not usually caused by the UpSnap code itself.
+
+It is more often caused by one of these:
+
+- stale Android `bin` / `obj` output
+- antivirus or file indexing touching Android intermediate files
+- building from a slow, synced, virtualized, or network-backed folder
+- an Android SDK or build-tools mismatch
+
+Recovery steps:
+
+```sh
+cd mobile
+dotnet clean -f net10.0-android
+```
+
+If that is not enough, delete the Android-specific outputs and rebuild:
+
+```sh
+Remove-Item .\bin\Release\net10.0-android -Recurse -Force
+Remove-Item .\obj\Release\net10.0-android -Recurse -Force
+dotnet build -c Release -f net10.0-android
+dotnet publish -c Release -f net10.0-android -p:AndroidPackageFormat=apk -bl:android-publish.binlog
+```
+
+If you are building from a path like a backup drive, mapped drive, cloud-synced folder, or VM-mounted folder, move the repo to a short local path such as `C:\Dev\UpSnapMauiApp` and try again. That is often the real fix.
+
+#### Visual Studio says a Windows runtime pack is missing while publishing Android
+
+If you see an error about something like `Microsoft.NETCore.App.Runtime.win-x64` while trying to publish Android, that usually means Visual Studio reused the wrong publish profile, runtime, or restore state.
+
+Fixes:
+
+- delete the old Android publish profile and create a fresh one
+- make sure the selected target is Android before archiving or publishing
+- do not reuse a Windows publish profile for Android
+- if needed, close Visual Studio, run `dotnet workload restore`, and reopen the solution
+
+#### The app opens but the WebView stays blank
+
+Usually this means the saved frontend URL is not reachable from the device.
+
+Examples:
+
+- a real phone cannot use `http://localhost:5173`
+- the Android emulator should use `http://10.0.2.2:5173`
+- a real device should use your machine's LAN IP or a hosted URL
+
+If in doubt, open the same URL in the device browser first.
+
+#### A connected Android device does not show up
+
+Check:
+
+```sh
+adb devices
+```
+
+If the device is missing:
+
+- reconnect the cable
+- accept the USB debugging prompt on the phone
+- restart ADB if needed with `adb kill-server` then `adb start-server`
+
+#### When in doubt, reset the local build outputs
+
+For stubborn local issues, deleting `bin` and `obj` for the mobile project is still the fastest low-risk reset.
 
 ### Mobile project structure
 

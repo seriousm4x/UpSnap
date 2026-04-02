@@ -29,7 +29,7 @@
                 <Label Text="No frontend URL is configured."
                        FontSize="24"
                        FontAttributes="Bold" />
-                <Label Text="Open the Settings tab and save the full URL for the existing UpSnap frontend." />
+              <Label Text="Open Settings and save the full URL for the existing UpSnap frontend." />
                 <Label Text="Examples:"
                        FontAttributes="Bold" />
                 <Label Text="https://upsnap.example.com&#10;http://192.168.1.50:5173&#10;http://10.0.2.2:5173" />

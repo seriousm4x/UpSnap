@@ -85,7 +85,13 @@ public partial class BrowserPage : ContentPage
 
 		if (e.Result != WebNavigationResult.Success)
 		{
-			await DisplayAlertAsync("Frontend unreachable", "The WebView could not load the configured frontend URL. Check the address in Settings and confirm the site is reachable from this device.", "OK");
+			var message = $"The WebView could not load {frontendSettings.FrontendUrl}. Check the address in Settings and confirm the site is reachable from this device.";
+
+#if ANDROID
+			message += " If this is an http URL, Android also needs cleartext traffic enabled. If this is an https URL, check that the certificate is valid on the device.";
+#endif
+
+			await DisplayAlertAsync("Frontend unreachable", message, "OK");
 		}
 	}
 }

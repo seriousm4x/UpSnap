@@ -47,9 +47,28 @@ public sealed class FrontendSettings : INotifyPropertyChanged
 		return IsSupportedScheme(uri) ? uri : null;
 	}
 
+	public bool TryGetNormalizedUri(string? candidate, out Uri? uri, out string normalizedUrl, out string errorMessage)
+	{
+		uri = null;
+
+		if (!TryNormalize(candidate, out normalizedUrl, out errorMessage))
+		{
+			return false;
+		}
+
+		if (!Uri.TryCreate(normalizedUrl, UriKind.Absolute, out uri) || !IsSupportedScheme(uri))
+		{
+			uri = null;
+			errorMessage = "Use a full http or https URL, for example http://192.168.1.50:5173.";
+			return false;
+		}
+
+		return true;
+	}
+
 	public bool TrySave(string? candidate, out string normalizedUrl, out string errorMessage)
 	{
-		if (!TryNormalize(candidate, out normalizedUrl, out errorMessage))
+		if (!TryGetNormalizedUri(candidate, out _, out normalizedUrl, out errorMessage))
 		{
 			return false;
 		}
