@@ -15,6 +15,9 @@
 	let modalShutdown: HTMLDialogElement;
 	let seconds = $derived(timeout % 60);
 	let minutes = $derived(Math.floor(timeout / 60));
+	let formattedTimeout = $derived(
+		`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+	);
 
 	$effect(() => {
 		if (device.status === 'pending' && !interval) {
@@ -162,11 +165,8 @@
 			class:cursor-not-allowed={device.shutdown_cmd === ''}><Fa icon={faPowerOff} /></button
 		>
 	{:else if device.status === 'pending'}
-		<button class="btn btn-warning">
-			<span class="countdown font-mono">
-				<span style="--value:{minutes};"></span>:
-				<span style="--value:{seconds};"></span>
-			</span>
+		<button class="btn btn-warning font-mono tabular-nums">
+			{formattedTimeout}
 		</button>
 	{:else}
 		<div class="btn btn-warning btn-circle size-12">
