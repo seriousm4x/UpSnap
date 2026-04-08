@@ -163,9 +163,9 @@
 		>
 	{:else if device.status === 'pending'}
 		<button class="btn btn-warning">
-			<span class="countdown font-mono">
-				<span style="--value:{minutes};"></span>:
-				<span style="--value:{seconds};"></span>
+			<span class="countdown font-mono tabular-nums">
+				<span style="--value:{minutes};--digits: 2"></span>:
+				<span style="--value:{seconds};--digits: 2"></span>
 			</span>
 		</button>
 	{:else}
