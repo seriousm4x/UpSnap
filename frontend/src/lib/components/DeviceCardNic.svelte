@@ -162,8 +162,11 @@
 			class:cursor-not-allowed={device.shutdown_cmd === ''}><Fa icon={faPowerOff} /></button
 		>
 	{:else if device.status === 'pending'}
-		<button class="btn btn-warning font-mono tabular-nums">
-			{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+		<button class="btn btn-warning">
+			<span class="countdown font-mono tabular-nums">
+				<span style="--value:{minutes};--digits: 2"></span>:
+				<span style="--value:{seconds};--digits: 2"></span>
+			</span>
 		</button>
 	{:else}
 		<div class="btn btn-warning btn-circle size-12">
