@@ -202,6 +202,40 @@ func HandlerWakeGroup(e *core.RequestEvent) error {
 	return e.JSON(http.StatusOK, records)
 }
 
+func HandlerShutdownGroup(e *core.RequestEvent) error {
+	records, err := e.App.FindRecordsByFilter("devices", "groups.id = {:grpId} && status = 'online'", "", 0, 0,
+		dbx.Params{"grpId": e.Request.PathValue("id")},
+	)
+	if err != nil {
+		return apis.NewNotFoundError("No devices in group", err)
+	}
+
+	for _, record := range records {
+		go func() {
+			record.Set("status", "pending")
+			if err := e.App.Save(record); err != nil {
+				logger.Error.Println("Failed to save record:", err)
+			}
+
+			if err := networking.ShutdownDevice(record); err != nil {
+				logger.Error.Println(err)
+				record.Set("status", "online")
+				if err := e.App.Save(record); err != nil {
+					logger.Error.Println("Failed to save record:", err)
+				}
+				return
+			}
+
+			record.Set("status", "offline")
+			if err := e.App.Save(record); err != nil {
+				logger.Error.Println("Failed to save record:", err)
+			}
+		}()
+	}
+
+	return e.JSON(http.StatusOK, records)
+}
+
 type Nmaprun struct {
 	Host []struct {
 		Address []struct {
