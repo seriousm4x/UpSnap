@@ -25,6 +25,8 @@
 	let orderByGroups = $state(true);
 	let searchQuery = $state('');
 	let searchInput: HTMLInputElement | undefined = $state();
+	let modalShutdownGroup: HTMLDialogElement | undefined = $state();
+	let pendingShutdownGroup: Group | null = $state(null);
 	let filteredDevices: Device[] = $derived([]);
 	let devicesWithoutGroups: Device[] = $derived([]);
 	let devicesWithGroup: {
@@ -111,6 +113,23 @@
 		});
 	}
 
+	function askShutdownGroupConfirmation(group: Group) {
+		pendingShutdownGroup = group;
+		modalShutdownGroup?.showModal();
+	}
+
+	function executeShutdownGroup() {
+		if (pendingShutdownGroup) {
+			fetch(`${backendUrl}api/upsnap/shutdowngroup/${pendingShutdownGroup.id}`, {
+				headers: {
+					Authorization: $pocketbase.authStore.token
+				}
+			}).catch((err) => {
+				toast.error(err.message);
+			});
+		}
+	}
+
 	onMount(() => {
 		orderBy = (localStorage.getItem('orderBy') as 'name' | 'ip') || 'name';
 		orderByGroups = localStorage.getItem('orderByGroups') !== 'false';
@@ -191,12 +210,17 @@
 			{/if}
 			{#each devicesWithGroup.sort( (a, b) => (a.group?.name ?? '').localeCompare( b.group?.name ?? '', $localeStore, { numeric: true } ) ) as { group, devices } (group?.id)}
 				<div>
-					<h1 class="mb-3 text-2xl font-bold">
-						{group?.name ?? 'Unknown group name'}
+					<h1 class="mb-3 flex flex-wrap items-center gap-3 text-2xl font-bold">
+						<span>{group?.name ?? 'Unknown group name'}</span>
 						<button
 							class="btn btn-sm btn-success btn-soft"
 							onclick={() => wakeGroup(group?.id ?? '')}
 							><Fa icon={faPowerOff} /> {m.home_wake_group()}</button
+						>
+						<button
+							class="btn btn-sm btn-error btn-soft"
+							onclick={() => group && askShutdownGroupConfirmation(group)}
+							><Fa icon={faPowerOff} /> {m.home_shutdown_group()}</button
 						>
 					</h1>
 					<div class={gridClass}>
@@ -237,3 +261,20 @@
 		</div>
 	</div>
 {/if}
+
+<dialog class="modal" bind:this={modalShutdownGroup}>
+	<div class="modal-box">
+		<h3 class="text-lg font-bold">
+			{m.home_modal_confirm_shutdown_group_title({ group: pendingShutdownGroup?.name ?? '' })}
+		</h3>
+		<p class="py-4">
+			{m.home_modal_confirm_shutdown_group_desc({ group: pendingShutdownGroup?.name ?? '' })}
+		</p>
+		<div class="modal-action">
+			<form method="dialog">
+				<button class="btn">{m.buttons_cancel()}</button>
+				<button class="btn btn-error" onclick={executeShutdownGroup}>{m.buttons_confirm()}</button>
+			</form>
+		</div>
+	</div>
+</dialog>

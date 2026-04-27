@@ -74,6 +74,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		se.Router.GET("/api/upsnap/sleep/{id}", HandlerSleep).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/reboot/{id}", HandlerReboot).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/shutdown/{id}", HandlerShutdown).Bind(RequireUpSnapPermission())
+		se.Router.GET("/api/upsnap/shutdowngroup/{id}", HandlerShutdownGroup).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/scan", HandlerScan).Bind(RequireScanDevicesPermission())
 		se.Router.POST("/api/upsnap/init-superuser", HandlerInitSuperuser) // https://github.com/pocketbase/pocketbase/discussions/6198
 		se.Router.POST("/api/upsnap/validate-cron", HandlerValidateCron)
