@@ -4,6 +4,7 @@ import { arSA } from 'date-fns/locale/ar-SA';
 import { bg } from 'date-fns/locale/bg';
 import { cs } from 'date-fns/locale/cs';
 import { de } from 'date-fns/locale/de';
+import { el } from 'date-fns/locale/el';
 import { enUS } from 'date-fns/locale/en-US';
 import { es } from 'date-fns/locale/es';
 import { fr } from 'date-fns/locale/fr';
@@ -39,6 +40,9 @@ localeStore.subscribe((l: string) => {
 			break;
 		case 'de-DE':
 			dateFnsLocale.set(de);
+			break;
+		case 'el-GR':
+			dateFnsLocale.set(el);
 			break;
 		case 'en-US':
 			dateFnsLocale.set(enUS);
