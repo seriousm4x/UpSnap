@@ -208,7 +208,7 @@
 					{/each}
 				</div>
 			{/if}
-			{#each devicesWithGroup.sort( (a, b) => (a.group?.name ?? '').localeCompare( b.group?.name ?? '', $localeStore, { numeric: true } ) ) as { group, devices } (group?.id)}
+			{#each devicesWithGroup.sort( (a, b) => (a.group?.name ?? '').localeCompare( b.group?.name ?? '', $localeStore, { numeric: true } ) ) as { group, devices: groupDevices } (group?.id)}
 				<div>
 					<h1 class="mb-3 flex flex-wrap items-center gap-3 text-2xl font-bold">
 						<span>{group?.name ?? 'Unknown group name'}</span>
@@ -224,8 +224,8 @@
 						>
 					</h1>
 					<div class={gridClass}>
-						{#each devices as device, i (device.id)}
-							<DeviceCard bind:device={devices[i]} />
+						{#each groupDevices as device (device.id)}
+							<DeviceCard bind:device={devices[devices.findIndex((d) => d.id === device.id)]} />
 						{/each}
 					</div>
 				</div>
@@ -236,8 +236,8 @@
 			.snapshot(filteredDevices)
 			.sort((a, b) => a[orderBy].localeCompare(b[orderBy], $localeStore, { numeric: true }))}
 		<div class={gridClass}>
-			{#each sorted as device, i (device.id)}
-				<DeviceCard bind:device={sorted[i]} />
+			{#each sorted as device (device.id)}
+				<DeviceCard bind:device={devices[devices.findIndex((d) => d.id === device.id)]} />
 			{/each}
 		</div>
 	{/if}
