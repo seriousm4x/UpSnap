@@ -10,7 +10,7 @@
 	import { settingsPriv, settingsPub } from '$lib/stores/settings';
 	import type { SettingsPrivate, SettingsPublic } from '$lib/types/settings';
 	import { faSave } from '@fortawesome/free-solid-svg-icons';
-	import cronParser from 'cron-parser';
+	import { CronExpressionParser } from 'cron-parser';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
@@ -61,7 +61,7 @@
 			return;
 
 		try {
-			cronParser.parse(settingsPrivClone.interval);
+			CronExpressionParser.parse(settingsPrivClone.interval);
 		} catch {
 			toast.error(m.settings_invalid_cron());
 			throw new Error(`failed to parse cron: ` + settingsPrivClone.interval);

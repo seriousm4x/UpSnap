@@ -1,13 +1,13 @@
 import { m } from '$lib/paraglide/messages';
 import { dateFnsLocale } from '$lib/stores/locale';
 import { backendUrl } from '$lib/stores/pocketbase';
-import cronParser from 'cron-parser';
+import { CronExpressionParser } from 'cron-parser';
 import { formatDate, type Locale } from 'date-fns';
 import { get } from 'svelte/store';
 
 export function nextCronDate(expression: string) {
 	try {
-		const cron = cronParser.parse(expression);
+		const cron = CronExpressionParser.parse(expression);
 		const cronStr = cron.next().toISOString();
 		if (!cronStr) {
 			throw new Error(m.settings_invalid_cron());
