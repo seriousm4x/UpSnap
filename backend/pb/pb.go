@@ -1,7 +1,6 @@
 package pb
 
 import (
-	"errors"
 	"fmt"
 	"io/fs"
 	"os"
@@ -76,7 +75,6 @@ func StartPocketBase(distDirFS fs.FS) {
 		se.Router.GET("/api/upsnap/shutdown/{id}", HandlerShutdown).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/shutdowngroup/{id}", HandlerShutdownGroup).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/scan", HandlerScan).Bind(RequireScanDevicesPermission())
-		se.Router.POST("/api/upsnap/init-superuser", HandlerInitSuperuser) // https://github.com/pocketbase/pocketbase/discussions/6198
 		se.Router.POST("/api/upsnap/validate-cron", HandlerValidateCron)
 		se.Router.GET("/api/upsnap/manifest.webmanifest", HandlerWebsiteManifest)
 
@@ -142,6 +140,10 @@ func StartPocketBase(distDirFS fs.FS) {
 
 	app.OnModelAfterCreateSuccess().BindFunc(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_superusers" {
+			// when pocketbase creates it's default superuser, do not trigger setSetupCompleted()
+			if e.Model.(*core.Record).Email() == core.DefaultInstallerEmail {
+				return e.Next()
+			}
 			if err := setSetupCompleted(e.App); err != nil {
 				logger.Error.Println(err)
 				return err
@@ -178,14 +180,6 @@ func StartPocketBase(distDirFS fs.FS) {
 				logger.Error.Println(err)
 				return err
 			}
-		}
-		return e.Next()
-	})
-
-	// prevent new superuser bahavior introduced in pocketbase 0.23
-	app.OnRecordCreate(core.CollectionNameSuperusers).BindFunc(func(e *core.RecordEvent) error {
-		if e.Record.Email() == core.DefaultInstallerEmail {
-			return errors.New("skip default PocketBase installer")
 		}
 		return e.Next()
 	})
@@ -291,7 +285,6 @@ func importSettings(app *pocketbase.PocketBase) error {
 		return err
 	}
 
-	logger.Info.Println("Ping interval set to", interval)
 	return nil
 }
 
@@ -310,15 +303,22 @@ func resetDeviceStates(app *pocketbase.PocketBase) error {
 }
 
 func setSetupCompleted(app core.App) error {
-	totalAdmins, err := app.CountRecords(core.CollectionNameSuperusers)
+	allSuperusers, err := app.FindAllRecords(core.CollectionNameSuperusers)
 	if err != nil {
 		return err
+	}
+	realSuperusers := 0
+	for _, r := range allSuperusers {
+		// exclude the temporary PocketBase installer account from the count
+		if r.Email() != core.DefaultInstallerEmail {
+			realSuperusers++
+		}
 	}
 	settingsPublicRecords, err := app.FindAllRecords("settings_public")
 	if err != nil {
 		return err
 	}
-	if totalAdmins > 0 {
+	if realSuperusers > 0 {
 		settingsPublicRecords[0].Set("setup_completed", true)
 	} else {
 		settingsPublicRecords[0].Set("setup_completed", false)
