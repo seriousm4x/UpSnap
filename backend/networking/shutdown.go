@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"net"
 	"os/exec"
 	"runtime"
 	"strings"
@@ -28,6 +29,16 @@ func ShutdownDevice(device *core.Record) error {
 	} else {
 		shell = "/bin/sh"
 		shell_arg = "-c"
+	}
+
+	// Validate IP and MAC addresses before replacing placeholders to prevent command injection
+	deviceIP := device.GetString("ip")
+	if net.ParseIP(deviceIP) == nil {
+		return fmt.Errorf("invalid device IP address: %q", deviceIP)
+	}
+	deviceMAC := device.GetString("mac")
+	if _, err := net.ParseMAC(deviceMAC); err != nil {
+		return fmt.Errorf("invalid device MAC address: %q", deviceMAC)
 	}
 
 	shutdown_cmd = strings.ReplaceAll(shutdown_cmd, "{{ DEVICE_IP }}", device.GetString("ip"))

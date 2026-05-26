@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"net"
 	"os/exec"
 	"runtime"
 	"strings"
@@ -33,8 +34,17 @@ func WakeDevice(device *core.Record) error {
 			shell_arg = "-c"
 		}
 
-		wake_cmd = strings.ReplaceAll(wake_cmd, "{{ DEVICE_IP }}", device.GetString("ip"))
-		wake_cmd = strings.ReplaceAll(wake_cmd, "{{ DEVICE_MAC }}", device.GetString("mac"))
+		// Validate IP and MAC addresses before replacing placeholders to prevent command injection
+		deviceIP := device.GetString("ip")
+		if net.ParseIP(deviceIP) == nil {
+			return fmt.Errorf("invalid device IP address: %q", deviceIP)
+		}
+		deviceMAC := device.GetString("mac")
+		if _, err := net.ParseMAC(deviceMAC); err != nil {
+			return fmt.Errorf("invalid device MAC address: %q", deviceMAC)
+		}
+		wake_cmd = strings.ReplaceAll(wake_cmd, "{{ DEVICE_IP }}", deviceIP)
+		wake_cmd = strings.ReplaceAll(wake_cmd, "{{ DEVICE_MAC }}", deviceMAC)
 
 		ctx := context.Background()
 		ctx, cancel := context.WithCancel(ctx)

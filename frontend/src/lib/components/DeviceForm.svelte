@@ -225,6 +225,7 @@
 							type="text"
 							placeholder={m.device_general_ip()}
 							class="input"
+							pattern="^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b)\{4}$"
 							bind:value={device.ip}
 							required
 						/>
@@ -237,6 +238,7 @@
 							type="text"
 							placeholder={m.device_general_mac()}
 							class="input"
+							pattern="^([0-9\A-Fa-f]{2}[:-]){5}([0-9\A-Fa-f]{2})$"
 							bind:value={device.mac}
 							required
 						/>
