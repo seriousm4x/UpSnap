@@ -5,7 +5,7 @@ go 1.26.3
 require (
 	github.com/mdlayher/wol v0.0.0-20220221231636-b763a792253a
 	github.com/pocketbase/dbx v1.12.0
-	github.com/pocketbase/pocketbase v0.38.2
+	github.com/pocketbase/pocketbase v0.39.0
 	github.com/prometheus-community/pro-bing v0.8.0
 	github.com/robfig/cron/v3 v3.0.1
 	golang.org/x/sys v0.45.0
@@ -27,7 +27,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/josharian/native v1.1.0 // indirect
-	github.com/mattn/go-colorable v0.1.14 // indirect
+	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
 	github.com/mdlayher/ethernet v0.0.0-20220221185849-529eae5b6118 // indirect
 	github.com/mdlayher/packet v1.1.2 // indirect
@@ -48,5 +48,5 @@ require (
 	modernc.org/libc v1.72.3 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.50.1 // indirect
+	modernc.org/sqlite v1.51.0 // indirect
 )
