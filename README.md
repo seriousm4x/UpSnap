@@ -56,7 +56,9 @@
 
 Just download the latest binary from the [release page](https://github.com/seriousm4x/UpSnap/releases) and run it.
 
-```sudo ./upsnap serve --http=0.0.0.0:8090```
+```bash
+sudo ./upsnap serve --http=0.0.0.0:8090
+```
 
 To run as non-root (Linux only), refer to the Wiki: [Use non-root user](https://github.com/seriousm4x/UpSnap/wiki/Use-non%E2%80%90root-user)
 
@@ -76,9 +78,11 @@ If you want to change the port from 8090 to something else, change the following
 environment:
   - UPSNAP_HTTP_LISTEN=0.0.0.0:5000
 ```
+
 ## ❎️ Shutting Down Devices
 
 To shutdown devices, refer to the Wiki: [How to use shutdowns](https://github.com/seriousm4x/UpSnap/wiki/How-to-use-shutdowns)
+
 ## Reverse Proxy
 
 **Caddy example**
@@ -160,6 +164,7 @@ UpSnap is available in the following languages so far:
 - 🇳🇱 **Dutch (Netherlands)** (nl-NL)
 - 🇳🇴 **Norwegian (Norway)** (nb-NO)
 - 🇵🇱 **Polish (Poland)** (pl-PL)
+- 🇧🇷 **Portuguese (Brazil)** (pt-BR)
 - 🇵🇹 **Portuguese (Portugal)** (pt-PT)
 - 🇷🇺 **Russian (Russia)** (ru-RU)
 - 🇺🇦 **Ukrainian (Ukrain)** (uk-UA)
@@ -175,7 +180,7 @@ Fork this branch and clone it.
 
 1. Start backend
 
-```sh
+```bash
 cd backend
 go mod tidy
 go run main.go serve
@@ -183,7 +188,7 @@ go run main.go serve
 
 2. Start frontend
 
-```sh
+```bash
 cd frontend
 pnpm i
 pnpm run dev
