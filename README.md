@@ -153,6 +153,7 @@ UpSnap is available in the following languages so far:
 - 🇧🇬 **Bulgarian (Bulgaria)** (bg-BG)
 - 🇨🇿 **Czech (Czech republic)** (cs-CZ)
 - 🇩🇪 **German (Germany)** (de-DE)
+- 🇬🇷 **Greek (Greece)** (el-GR)
 - 🇺🇸 **English (United States)** (en-US)
 - 🇪🇸 **Spanish (Spain)** (es-ES)
 - 🇫🇷 **French (France)** (fr-FR)
@@ -161,16 +162,16 @@ UpSnap is available in the following languages so far:
 - 🇮🇹 **Italian (Italy)** (it-IT)
 - 🇯🇵 **Japanese (Japan)** (ja-JP)
 - 🇰🇷 **Korean (Republic of Korea)** (ko-KR)
-- 🇳🇱 **Dutch (Netherlands)** (nl-NL)
 - 🇳🇴 **Norwegian (Norway)** (nb-NO)
+- 🇳🇱 **Dutch (Netherlands)** (nl-NL)
 - 🇵🇱 **Polish (Poland)** (pl-PL)
 - 🇧🇷 **Portuguese (Brazil)** (pt-BR)
 - 🇵🇹 **Portuguese (Portugal)** (pt-PT)
 - 🇷🇺 **Russian (Russia)** (ru-RU)
 - 🇺🇦 **Ukrainian (Ukrain)** (uk-UA)
 - 🇻🇳 **Vietnamese (Vietnam)** (vi-VN)
-- 🇹🇼 **Chinese (Taiwan)** (zh-TW)
 - 🇨🇳 **Chinese (China)** (zh-CN)
+- 🇹🇼 **Chinese (Taiwan)** (zh-TW)
 
 **If you want to contribute and help translating, check the wiki: [How to add languages](https://github.com/seriousm4x/UpSnap/wiki/How-to-add-languages)**
 
