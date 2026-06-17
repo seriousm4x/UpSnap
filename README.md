@@ -7,7 +7,6 @@
     <p>A simple wake on lan web app written with SvelteKit, Go and PocketBase.</p>
     <div>
         <a target="_blank" href="https://github.com/seriousm4x/upsnap"><img src="https://img.shields.io/github/stars/seriousm4x/UpSnap?style=flat&label=Stars" /></a>
-        <a target="_blank" href="https://github.com/seriousm4x/UpSnap/pkgs/container/upsnap"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fipitio%2Fbackage%2Findex%2Fseriousm4x%2FUpSnap%2Fupsnap.json&query=downloads&label=ghcr.io%20pulls" /></a>
         <a target="_blank" href="https://hub.docker.com/r/seriousm4x/upsnap"><img src="https://img.shields.io/docker/pulls/seriousm4x/upsnap?label=docker%20hub%20pulls" /></a>
         <a target="_blank" href="https://github.com/seriousm4x/UpSnap/releases"><img src="https://img.shields.io/github/downloads/seriousm4x/upsnap/total?label=binary%20downloads" /></a>
     </div>
