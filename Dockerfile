@@ -19,6 +19,8 @@ ENV UPSNAP_HTTP_LISTEN=${UPSNAP_HTTP_LISTEN}
 RUN apk update &&\
     apk add --no-cache tzdata ca-certificates nmap samba samba-common-tools openssh sshpass curl &&\
     rm -rf /var/cache/apk/*
+RUN addgroup -g 1000 &&\
+    adduser -G upsnap -D -H -u 1000 upsnap -s /sbin/nologin
 WORKDIR /app
 COPY --from=downloader /app/upsnap upsnap
 LABEL org.opencontainers.image.source="https://github.com/seriousm4x/UpSnap" \
