@@ -11,6 +11,7 @@
 		faCog,
 		faDoorOpen,
 		faHome,
+		faListUl,
 		faPlus,
 		faSwatchbook,
 		faUserGear,
@@ -132,6 +133,14 @@
 							><Fa icon={faCog} />{m.settings_page_title()}</a
 						>
 					</li>
+					<li>
+						<a
+							href={resolve('/logs')}
+							class="px-4 py-2"
+							class:active={page.url.pathname.startsWith(resolve('/logs'))}
+							><Fa icon={faListUl} />{m.logs_page_title()}</a
+						>
+					</li>
 				{/if}
 				<li>
 					<details>
@@ -205,6 +214,14 @@
 						class="p-2"
 						class:menu-active={page.url.pathname.startsWith(resolve('/settings'))}
 						><Fa icon={faCog} />{m.settings_page_title()}</a
+					>
+				</li>
+				<li class="h-full">
+					<a
+						href={resolve('/logs')}
+						class="p-2"
+						class:menu-active={page.url.pathname.startsWith(resolve('/logs'))}
+						><Fa icon={faListUl} />{m.logs_page_title()}</a
 					>
 				</li>
 			{/if}

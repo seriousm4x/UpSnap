@@ -60,6 +60,7 @@ Temporary Items
 ### Node ###
 # Logs
 logs
+!frontend/src/routes/logs/
 *.log
 npm-debug.log*
 yarn-debug.log*

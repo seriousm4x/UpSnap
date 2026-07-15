@@ -21,7 +21,8 @@ const config = {
 				'/device',
 				'/device/new',
 				'/users',
-				'/settings'
+				'/settings',
+				'/logs'
 			],
 			handleHttpError: ({ path, message }) => {
 				if (path === '/api/upsnap/manifest.webmanifest') {
