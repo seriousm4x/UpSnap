@@ -88,8 +88,7 @@ func getBroadcastIp(ipStr, maskStr string) (string, error) {
 		return "", errors.New("subnet mask not a valid ipv4 address")
 	}
 	mask = mask.To4()
-	ip = ip.To4()
-	if ip == nil {
+	if mask == nil {
 		return "", errors.New("subnet mask not a valid ipv4 address")
 	}
 
