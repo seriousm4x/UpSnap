@@ -17,12 +17,13 @@
 	let deviceGroups = [] as Group[];
 	let newGroup = '';
 
-	const ipPattern = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/.source
-	const macPattern = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/.source;
-
 	onMount(async () => {
 		await getGroups();
 	});
+
+	const ipPattern =
+		'^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}$';
+	const macPattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$';
 
 	async function save() {
 		// validate crons
