@@ -97,14 +97,20 @@ func SetPingJobs(app core.App) {
 					return
 				}
 				for _, port := range ports {
-					isUp, err := networking.CheckPort(d.GetString("ip"), port.GetString("number"))
-					if err != nil {
-						log.Error("Failed to check port", "device", d.GetString("name"), "port", port.GetString("number"), "error", err)
-					}
-					if isUp != port.GetBool("status") {
-						port.Set("status", isUp)
-						if err := app.Save(port); err != nil {
-							log.Error("Failed to save port status", "device", d.GetString("name"), "port", port.GetString("number"), "error", err)
+					deviceIP, err := networking.ResolveToIPAddr(device.GetString("ip"))
+					// no IP found means the device is down
+					if err != nil || deviceIP == "" {
+						port.Set("status", false)
+					} else {
+						isUp, err := networking.CheckPort(deviceIP, port.GetString("number"))
+						if err != nil {
+							log.Error("Failed to check port", "device", d.GetString("name"), "port", port.GetString("number"), "error", err)
+						}
+						if isUp != port.GetBool("status") {
+							port.Set("status", isUp)
+							if err := app.Save(port); err != nil {
+								log.Error("Failed to save port status", "device", d.GetString("name"), "port", port.GetString("number"), "error", err)
+							}
 						}
 					}
 				}
