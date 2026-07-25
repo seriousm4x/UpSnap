@@ -34,11 +34,14 @@ func WakeDevice(device *core.Record) error {
 			shell_arg = "-c"
 		}
 
-		// Validate IP and MAC addresses before replacing placeholders to prevent command injection
-		deviceIP := device.GetString("ip")
-		if net.ParseIP(deviceIP) == nil {
-			return fmt.Errorf("invalid device IP address: %q", deviceIP)
-		}
+    deviceIP, err := ResolveToIPAddr(device.GetString("ip"))
+    if err != nil {
+      return err
+    }
+    if deviceIP == "" {
+      deviceIP = device.GetString("ip")
+    }
+		// Validate MAC address before replacing placeholders to prevent command injection
 		deviceMAC := device.GetString("mac")
 		if _, err := net.ParseMAC(deviceMAC); err != nil {
 			return fmt.Errorf("invalid device MAC address: %q", deviceMAC)

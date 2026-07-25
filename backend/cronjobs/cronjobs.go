@@ -89,16 +89,22 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 					logger.Error.Println(err)
 				}
 				for _, port := range ports {
-					isUp, err := networking.CheckPort(d.GetString("ip"), port.GetString("number"))
-					if err != nil {
-						logger.Error.Println("Failed to check port:", err)
-					}
-					if isUp != port.GetBool("status") {
-						port.Set("status", isUp)
-						if err := app.Save(port); err != nil {
-							logger.Error.Println("Failed to save record:", err)
-						}
-					}
+          deviceIP, err := networking.ResolveToIPAddr(device.GetString("ip"))
+          // no IP found means the device is down
+          if err != nil || deviceIP == "" {
+            port.Set("status", false)
+          } else {
+            isUp, err := networking.CheckPort(deviceIP, port.GetString("number"))
+            if err != nil {
+              logger.Error.Println("Failed to check port:", err)
+            }
+            if isUp != port.GetBool("status") {
+              port.Set("status", isUp)
+              if err := app.Save(port); err != nil {
+                logger.Error.Println("Failed to save record:", err)
+              }
+            }
+          }
 				}
 			}(device)
 		}

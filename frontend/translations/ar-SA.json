@@ -35,7 +35,7 @@
 	"device_general": "عام",
 	"device_general_description": "الوصف",
 	"device_general_description_placeholder": "وصف للجهاز",
-	"device_general_ip": "عنوان IP",
+	"device_general_ip": "عنوان IP/FQDN",
 	"device_general_mac": "عنوان Mac",
 	"device_general_name": "الاسم",
 	"device_general_netmask": "قناع الشبكة",

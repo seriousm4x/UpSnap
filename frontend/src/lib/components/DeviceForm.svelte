@@ -22,8 +22,10 @@
 	});
 
 	const ipPattern =
-		'^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}$';
+		'^(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}\\.?|(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})$';
 	const macPattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$';
+	const netmaskPattern =
+		'^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}$';
 
 	async function save() {
 		// validate crons
@@ -229,6 +231,7 @@
 							type="text"
 							placeholder={m.device_general_ip()}
 							class="input"
+							maxlength="255"
 							pattern={ipPattern}
 							bind:value={device.ip}
 							required
@@ -242,6 +245,7 @@
 							type="text"
 							placeholder={m.device_general_mac()}
 							class="input"
+							maxlength="18"
 							pattern={macPattern}
 							bind:value={device.mac}
 							required
@@ -255,6 +259,8 @@
 							type="text"
 							placeholder={m.device_general_netmask()}
 							class="input"
+							maxlength="16"
+							pattern={netmaskPattern}
 							bind:value={device.netmask}
 							required
 						/>

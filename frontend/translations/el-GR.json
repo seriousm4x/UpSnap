@@ -35,7 +35,7 @@
 	"device_general": "Γενικά",
 	"device_general_description": "Περιγραφή",
 	"device_general_description_placeholder": "Περιγραφή συσκευής",
-	"device_general_ip": "IP Διεύθυνση",
+	"device_general_ip": "IP Διεύθυνση/FQDN",
 	"device_general_mac": "Mac Φυσική Διεύθυνση",
 	"device_general_name": "Όνομα",
 	"device_general_netmask": "Μάσκα δικτύου",

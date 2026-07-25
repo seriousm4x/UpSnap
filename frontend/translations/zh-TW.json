@@ -35,7 +35,7 @@
 	"device_general": "一般",
 	"device_general_description": "描述",
 	"device_general_description_placeholder": "關於這個裝置的描述",
-	"device_general_ip": "IP",
+	"device_general_ip": "IP/FQDN",
 	"device_general_mac": "Mac",
 	"device_general_name": "名稱",
 	"device_general_netmask": "子網域遮罩",

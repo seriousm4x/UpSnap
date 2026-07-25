@@ -35,7 +35,7 @@
 	"device_general": "Общи",
 	"device_general_description": "Описание",
 	"device_general_description_placeholder": "Описание на устройството",
-	"device_general_ip": "IP адрес",
+	"device_general_ip": "IP адрес/FQDN",
 	"device_general_mac": "MAC адрес",
 	"device_general_name": "Име",
 	"device_general_netmask": "Мрежова маска",

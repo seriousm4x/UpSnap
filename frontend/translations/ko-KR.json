@@ -35,7 +35,7 @@
 	"device_general": "일반",
 	"device_general_description": "설명",
 	"device_general_description_placeholder": "기기에 관한 설명",
-	"device_general_ip": "IP 주소",
+	"device_general_ip": "IP 주소/FQDN",
 	"device_general_mac": "Mac 주소",
 	"device_general_name": "이름",
 	"device_general_netmask": "넷 마스크",

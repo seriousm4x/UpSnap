@@ -35,7 +35,7 @@
 	"device_general": "सामान्य",
 	"device_general_description": "विवरण",
 	"device_general_description_placeholder": "डिवाइस का कुछ विवरण",
-	"device_general_ip": "IP",
+	"device_general_ip": "IP/FQDN",
 	"device_general_mac": "Mac",
 	"device_general_name": "नाम",
 	"device_general_netmask": "नेटमास्क",
