@@ -2,6 +2,7 @@ import type { RecordModel } from 'pocketbase';
 
 export type Device = RecordModel & {
 	name: string;
+	fqdn: string;
 	ip: string;
 	mac: string;
 	netmask: string;

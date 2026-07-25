@@ -35,7 +35,7 @@
 	"device_general": "Tổng quan",
 	"device_general_description": "Mô tả",
 	"device_general_description_placeholder": "Mô tả về thiết bị",
-	"device_general_ip": "IP",
+	"device_general_ip": "IP/FQDN",
 	"device_general_mac": "Mac",
 	"device_general_name": "Tên",
 	"device_general_netmask": "Netmask",

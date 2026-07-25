@@ -35,7 +35,7 @@
 	"device_general": "Generale",
 	"device_general_description": "Descrizione",
 	"device_general_description_placeholder": "Descrizione del dispositivo",
-	"device_general_ip": "IP",
+	"device_general_ip": "IP/FQDN",
 	"device_general_mac": "Mac",
 	"device_general_name": "Nome",
 	"device_general_netmask": "Maschera di rete",

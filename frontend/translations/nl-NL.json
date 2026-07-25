@@ -35,7 +35,7 @@
 	"device_general": "Algemeen",
 	"device_general_description": "Beschrijving",
 	"device_general_description_placeholder": "Enige beschrijving van het apparaat",
-	"device_general_ip": "IP",
+	"device_general_ip": "IP/FQDN",
 	"device_general_mac": "Mac",
 	"device_general_name": "Naam",
 	"device_general_netmask": "Subnetmask",

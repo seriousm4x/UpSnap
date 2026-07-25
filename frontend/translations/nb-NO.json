@@ -35,7 +35,7 @@
 	"device_general": "Generelt",
 	"device_general_description": "Beskrivelse",
 	"device_general_description_placeholder": "Liten beskrivelse av enheten",
-	"device_general_ip": "IP",
+	"device_general_ip": "IP/FQDN",
 	"device_general_mac": "MAC",
 	"device_general_name": "Navn",
 	"device_general_netmask": "Nettmaske",

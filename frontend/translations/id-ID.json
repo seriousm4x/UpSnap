@@ -35,7 +35,7 @@
 	"device_general": "Umum",
 	"device_general_description": "Deskripsi",
 	"device_general_description_placeholder": "Deskripsi perangkat ini",
-	"device_general_ip": "IP",
+	"device_general_ip": "IP/FQDN",
 	"device_general_mac": "Mac",
 	"device_general_name": "Nama",
 	"device_general_netmask": "Netmask",

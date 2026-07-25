@@ -18,7 +18,7 @@ func ShutdownDevice(device *core.Record) error {
 	logger.Info.Println("Shutdown triggered for", device.GetString("name"))
 	shutdown_cmd := device.GetString("shutdown_cmd")
 	if shutdown_cmd == "" {
-		return fmt.Errorf("%s: no shutdown_cmd definded", device.GetString("name"))
+		return fmt.Errorf("%s: no shutdown_cmd defined", device.GetString("name"))
 	}
 
 	var shell string
@@ -31,18 +31,19 @@ func ShutdownDevice(device *core.Record) error {
 		shell_arg = "-c"
 	}
 
-	// Validate IP and MAC addresses before replacing placeholders to prevent command injection
-	deviceIP := device.GetString("ip")
-	if net.ParseIP(deviceIP) == nil {
-		return fmt.Errorf("invalid device IP address: %q", deviceIP)
-	}
+	// Validate IP or resolve FQDN to IP
+  deviceIP, err := ResolveToIPAddr(device.GetString("ip"))
+  if err != nil || deviceIP == "" {
+    return fmt.Errorf("Unable to resolve %s to an IP address", device.GetString("ip"))
+  }
+	// Validate MAC address before replacing placeholder to prevent command injection
 	deviceMAC := device.GetString("mac")
 	if _, err := net.ParseMAC(deviceMAC); err != nil {
 		return fmt.Errorf("invalid device MAC address: %q", deviceMAC)
 	}
 
-	shutdown_cmd = strings.ReplaceAll(shutdown_cmd, "{{ DEVICE_IP }}", device.GetString("ip"))
-	shutdown_cmd = strings.ReplaceAll(shutdown_cmd, "{{ DEVICE_MAC }}", device.GetString("mac"))
+	shutdown_cmd = strings.ReplaceAll(shutdown_cmd, "{{ DEVICE_IP }}", deviceIP)
+	shutdown_cmd = strings.ReplaceAll(shutdown_cmd, "{{ DEVICE_MAC }}", deviceMAC)
 
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)

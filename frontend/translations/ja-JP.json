@@ -35,7 +35,7 @@
 	"device_general": "一般",
 	"device_general_description": "説明",
 	"device_general_description_placeholder": "装置の説明",
-	"device_general_ip": "IP",
+	"device_general_ip": "IP/FQDN",
 	"device_general_mac": "Mac",
 	"device_general_name": "名前",
 	"device_general_netmask": "ネットマスク",
