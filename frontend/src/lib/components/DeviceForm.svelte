@@ -255,6 +255,7 @@
 							type="text"
 							placeholder={m.device_general_netmask()}
 							class="input"
+							pattern={ipPattern}
 							bind:value={device.netmask}
 							required
 						/>

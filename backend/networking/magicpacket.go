@@ -61,7 +61,7 @@ func wakeUDP(broadcastIp string, deviceIp string, target net.HardwareAddr, passw
 		// send direct to device via port 9 (for routed network WOL)
 		fmt.Sprintf("%s:9", deviceIp),
 		// send direct to device via alternative port 7 (for routed network WOL)
-		fmt.Sprintf("%s:7", deviceIp),		
+		fmt.Sprintf("%s:7", deviceIp),
 	}
 
 	for _, dest := range destinations {
