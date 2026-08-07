@@ -3,21 +3,22 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { m } from '$lib/paraglide/messages';
-	import { backendUrl, pocketbase } from '$lib/stores/pocketbase';
+	import { pocketbase } from '$lib/stores/pocketbase';
 	import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa';
 	import toast from 'svelte-french-toast';
 
 	type LogEntry = {
-		time: string;
-		level: string;
+		id: string;
+		created: string;
 		message: string;
+		level: number;
 	};
 
 	let logs = $state([] as LogEntry[]);
 	let loading = $state(true);
-	let interval: ReturnType<typeof setInterval>;
+	let error = $state<string | null>(null);
 
 	const levelBadge: Record<string, string> = {
 		INFO: 'badge-info',
@@ -26,25 +27,22 @@
 		ERROR: 'badge-error'
 	};
 
-	function getLogs() {
-		fetch(`${backendUrl}api/upsnap/logs`, {
-			headers: {
-				Authorization: $pocketbase.authStore.token
-			}
-		})
-			.then(async (resp) => {
-				if (resp.ok) {
-					return resp.json();
-				}
-				return Promise.reject(await resp.json());
+	async function getLogs() {
+		loading = true;
+		await $pocketbase.logs
+			.getList(1, 50, {
+				sort: '-created',
+				filter: 'level >= 0'
 			})
-			.then((data) => {
-				logs = (data as LogEntry[]).slice().reverse();
+			.then((res) => {
+				return res;
 			})
 			.catch((err) => {
-				toast.error(err.message ?? String(err));
+				toast.error(err.message);
 			})
-			.finally(() => (loading = false));
+			.finally(() => {
+				loading = false;
+			});
 	}
 
 	onMount(() => {
@@ -57,11 +55,6 @@
 		}
 
 		getLogs();
-		interval = setInterval(getLogs, 5000);
-	});
-
-	onDestroy(() => {
-		clearInterval(interval);
 	});
 </script>
 
@@ -77,6 +70,11 @@
 			{m.logs_refresh()}
 		</button>
 	</div>
+	{#if error}
+		<span class="badge badge-error gap-1 p-3">
+			<p>{error}</p>
+		</span>
+	{/if}
 
 	{#if loading}
 		<span class="loading loading-spinner loading-lg"></span>
@@ -84,7 +82,7 @@
 		<p>{m.logs_empty()}</p>
 	{:else}
 		<div class="overflow-x-auto">
-			<table class="table-zebra table table-sm">
+			<table class="table-zebra table-sm table">
 				<thead>
 					<tr>
 						<th class="w-48">{m.logs_column_time()}</th>
@@ -95,7 +93,7 @@
 				<tbody>
 					{#each logs as entry, i (i)}
 						<tr>
-							<td class="whitespace-nowrap">{new Date(entry.time).toLocaleString()}</td>
+							<td class="whitespace-nowrap">{new Date(entry.created).toLocaleString()}</td>
 							<td>
 								<span class="badge {levelBadge[entry.level] ?? 'badge-neutral'}">{entry.level}</span
 								>

@@ -67,6 +67,8 @@ func StartPocketBase(distDirFS fs.FS) {
 
 	// event hooks
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
+		logger.InitLogger(app)
+
 		se.Router.GET("/{path...}", apis.Static(distDirFS, true))
 		se.Router.GET("/api/upsnap/wake/{id}", HandlerWake).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/wakegroup/{id}", HandlerWakeGroup).Bind(RequireUpSnapPermission())
@@ -77,7 +79,6 @@ func StartPocketBase(distDirFS fs.FS) {
 		se.Router.GET("/api/upsnap/scan", HandlerScan).Bind(RequireScanDevicesPermission())
 		se.Router.POST("/api/upsnap/validate-cron", HandlerValidateCron)
 		se.Router.GET("/api/upsnap/manifest.webmanifest", HandlerWebsiteManifest)
-		se.Router.GET("/api/upsnap/logs", HandlerLogs).Bind(apis.RequireSuperuserAuth())
 
 		if err := importSettings(app); err != nil {
 			return err

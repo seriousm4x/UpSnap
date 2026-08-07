@@ -404,7 +404,3 @@ func writeManifest(e *core.RequestEvent, manifest map[string]any) error {
 	enc := json.NewEncoder(e.Response)
 	return enc.Encode(manifest)
 }
-
-func HandlerLogs(e *core.RequestEvent) error {
-	return e.JSON(http.StatusOK, logger.Entries())
-}
