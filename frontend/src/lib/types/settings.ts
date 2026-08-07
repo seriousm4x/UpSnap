@@ -11,4 +11,5 @@ export type SettingsPrivate = RecordModel & {
 	interval: string;
 	lazy_ping: boolean;
 	scan_range: string;
+	track_ip_interval: string;
 };

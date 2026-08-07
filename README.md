@@ -33,6 +33,7 @@
 - ⏰ Timed Events via Cron for Automation
 - 🔌 Ping Any Port You Choose
 - 🔍 Discover Devices with Network Scanning (nmap required)
+- 📌 Optional IP Address Tracking per Device via periodic ARP scan (nmap required, no extra privileges beyond network scanning)
 - ❎️ Shutdown Devices with a Custom Command
 - 👤 Secured User Management
 - 🌐 i18n support for [these](/frontend/translations) languages

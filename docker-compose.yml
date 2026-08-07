@@ -1,7 +1,7 @@
 services:
   upsnap:
     cap_add:
-      - NET_RAW # NET_RAW is required for privileged ping and network device scan (nmap)
+      - NET_RAW # NET_RAW is required for privileged ping, network device scan and ip address tracking (nmap)
     cap_drop:
       - ALL
     container_name: upsnap

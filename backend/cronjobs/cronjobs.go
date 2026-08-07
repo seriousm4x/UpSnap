@@ -1,6 +1,9 @@
 package cronjobs
 
 import (
+	"net"
+	"sync/atomic"
+
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/robfig/cron/v3"
@@ -103,6 +106,95 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 			}(device)
 		}
 	})
+
+	// update ip addresses of opted-in devices from a periodic arp scan
+	trackIpInterval := settingsPrivateRecords[0].GetString("track_ip_interval")
+	if trackIpInterval != "" {
+		if _, err := CronPing.AddFunc(trackIpInterval, func() {
+			trackDeviceIPs(app)
+		}); err != nil {
+			logger.Error.Println("Failed to add ip tracking cronjob:", err)
+		}
+	}
+}
+
+var trackIpRunning atomic.Bool
+
+// trackDeviceIPs scans the local subnets of devices with ip tracking enabled
+// and updates their ip address if their mac address is found at a different one.
+func trackDeviceIPs(app *pocketbase.PocketBase) {
+	// skip if the previous scan is still running
+	if !trackIpRunning.CompareAndSwap(false, true) {
+		return
+	}
+	defer trackIpRunning.Store(false)
+
+	devices, err := app.FindRecordsByFilter("devices", "track_ip = true", "", 0, 0)
+	if err != nil {
+		logger.Error.Println(err)
+		return
+	}
+
+	// group devices by subnet, skipping subnets not directly attached to the host
+	subnets := make(map[string][]*core.Record)
+	for _, device := range devices {
+		subnet, err := networking.DeviceSubnet(device.GetString("ip"), device.GetString("netmask"))
+		if err != nil {
+			logger.Error.Println("Ip tracking for", device.GetString("name")+":", err)
+			continue
+		}
+		if ones, bits := subnet.Mask.Size(); ones == bits || ones < 16 {
+			// a /32 has nothing to scan, anything larger than a /16 takes too long
+			continue
+		}
+		if !networking.IsLocalSubnet(subnet) {
+			continue
+		}
+		subnets[subnet.String()] = append(subnets[subnet.String()], device)
+	}
+
+	for cidr, subnetDevices := range subnets {
+		scan, err := networking.NmapScan(cidr)
+		if err != nil {
+			logger.Error.Println("Ip tracking scan for", cidr+":", err)
+			continue
+		}
+
+		// map mac addresses to ips
+		macToIp := make(map[string]string)
+		for _, host := range scan.Host {
+			var hostIp, hostMac string
+			for _, addr := range host.Address {
+				if addr.Addrtype == "ipv4" {
+					hostIp = addr.Addr
+				} else if addr.Addrtype == "mac" {
+					hostMac = addr.Addr
+				}
+			}
+			if parsedMac, err := net.ParseMAC(hostMac); hostIp != "" && err == nil {
+				macToIp[parsedMac.String()] = hostIp
+			}
+		}
+
+		for _, device := range subnetDevices {
+			parsedMac, err := net.ParseMAC(device.GetString("mac"))
+			if err != nil {
+				continue
+			}
+			newIp, ok := macToIp[parsedMac.String()]
+			if !ok || newIp == device.GetString("ip") {
+				continue
+			}
+			logger.Info.Println("Ip tracking: updating", device.GetString("name"), "from", device.GetString("ip"), "to", newIp)
+			device.Set("ip", newIp)
+			// only write the changed ip field to avoid clobbering concurrent
+			// status updates from the ping and wake/shutdown cronjobs
+			device.IgnoreUnchangedFields(true)
+			if err := app.Save(device); err != nil {
+				logger.Error.Println("Failed to save record:", err)
+			}
+		}
+	}
 }
 
 func SetWakeShutdownJobs(app *pocketbase.PocketBase) {

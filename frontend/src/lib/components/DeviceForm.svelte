@@ -274,6 +274,14 @@
 				</fieldset>
 				<span class="badge text-error self-center">* {m.device_general_required_field()}</span>
 			</div>
+			<fieldset class="fieldset bg-base-100 border-base-300 rounded-box mt-2 w-fit border p-4">
+				<legend class="fieldset-legend">{m.device_general_track_ip()}</legend>
+				<label class="fieldset-label">
+					<input type="checkbox" bind:checked={device.track_ip} class="toggle toggle-success" />
+					{m.device_general_track_ip()}
+				</label>
+				<p class="fieldset-label max-w-md">{m.device_general_track_ip_desc()}</p>
+			</fieldset>
 		</div>
 	</div>
 	<div class="card bg-base-200 mt-6 w-full shadow-sm">
