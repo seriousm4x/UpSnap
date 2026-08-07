@@ -3,6 +3,7 @@ package pb
 import (
 	"fmt"
 	"io/fs"
+	"net"
 	"os"
 	"path"
 
@@ -181,6 +182,19 @@ func StartPocketBase(distDirFS fs.FS) {
 			if err := setSetupCompleted(e.App); err != nil {
 				logger.Error.Println(err)
 				return err
+			}
+		}
+		return e.Next()
+	})
+
+	app.OnRecordValidate("devices").BindFunc(func(e *core.RecordEvent) error {
+		ip := net.ParseIP(e.Record.GetString("netmask"))
+		if ip == nil {
+			logger.Warning.Println("device", e.Record.GetString("name"), "does not contain a valid netmask! Will be set to 255.255.255.255")
+			e.Record.Set("netmask", "255.255.255.255")
+			saveErr := e.App.Save(e.Record)
+			if saveErr != nil {
+				return saveErr
 			}
 		}
 		return e.Next()
