@@ -274,6 +274,39 @@ func TestTrackOneSubnetSameSubnetGuard(t *testing.T) {
 	}
 }
 
+// A paused periodic sweep scans nothing and owes a catch-up sweep, which
+// runs at most once until the next pause; an unpaused sweep scans directly.
+func TestPeriodicSweepAndCatchUp(t *testing.T) {
+	app := newTestApp(t)
+	newDevice(t, app, "tracked", "127.0.0.50", testNetmask, "AA:BB:CC:DD:09:01", true)
+	scanned := stubScan(t, map[string]string{"AA:BB:CC:DD:09:01": "127.0.0.99"})
+
+	PeriodicSweep(app, true)
+	if len(*scanned) != 0 {
+		t.Fatalf("Expected no scans while paused, got %v", *scanned)
+	}
+
+	CatchUpSweep(app)
+	if len(*scanned) != 1 {
+		t.Fatalf("Expected one scan after a paused sweep, got %v", *scanned)
+	}
+
+	CatchUpSweep(app)
+	if len(*scanned) != 1 {
+		t.Errorf("Expected no scan when none is owed, got %v", *scanned)
+	}
+
+	PeriodicSweep(app, false)
+	if len(*scanned) != 2 {
+		t.Errorf("Expected an unpaused sweep to scan, got %v", *scanned)
+	}
+
+	CatchUpSweep(app)
+	if len(*scanned) != 2 {
+		t.Errorf("Expected an unpaused sweep to owe nothing, got %v", *scanned)
+	}
+}
+
 // TrackAllSubnets scans each unique scannable subnet once, silently skips the
 // rest, and updates any tracked device found at a new ip within its own
 // subnet — even one whose own subnet couldn't be scanned.

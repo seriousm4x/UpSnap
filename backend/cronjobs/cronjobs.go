@@ -20,7 +20,7 @@ var (
 	)))
 )
 
-func SetPingJobs(app *pocketbase.PocketBase) {
+func SetPingJobs(app core.App) {
 	// remove existing jobs
 	for _, job := range CronPing.Entries() {
 		CronPing.Remove(job.ID)
@@ -109,7 +109,10 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 	trackIpInterval := settingsPrivateRecords[0].GetString("track_ip_interval")
 	if trackIpInterval != "" {
 		if _, err := CronPing.AddFunc(trackIpInterval, func() {
-			iptracking.TrackAllSubnets(app)
+			// pause scans if no realtime clients connected and lazy_ping is
+			// turned on; a catch-up sweep runs when the next client connects
+			realtimeClients := len(app.SubscriptionsBroker().Clients())
+			iptracking.PeriodicSweep(app, realtimeClients == 0 && settingsPrivateRecords[0].GetBool("lazy_ping"))
 		}); err != nil {
 			logger.Error.Println("Failed to add ip tracking cronjob:", err)
 		}

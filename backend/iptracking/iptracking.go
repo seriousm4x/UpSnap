@@ -13,6 +13,15 @@ import (
 
 var sweepRunning atomic.Bool
 
+// sweepOwed marks that a periodic sweep was skipped while no realtime
+// clients were connected, so the next client to connect gets a catch-up
+// sweep. Starts true so the first client after boot gets fresh ips.
+var sweepOwed atomic.Bool
+
+func init() {
+	sweepOwed.Store(true)
+}
+
 // nmapScan is a seam for tests to stub out the privileged nmap invocation
 var nmapScan = networking.NmapScan
 
@@ -53,6 +62,27 @@ func TrackAllSubnets(app core.App) {
 			logger.Error.Println("Ip tracking scan for", cidr+":", err)
 		}
 	}
+}
+
+// PeriodicSweep runs the scheduled sweep, or skips it when paused — no
+// realtime clients connected while lazy_ping is on — owing a catch-up
+// sweep to the next client that connects.
+func PeriodicSweep(app core.App, pause bool) {
+	if pause {
+		sweepOwed.Store(true)
+		return
+	}
+	TrackAllSubnets(app)
+}
+
+// CatchUpSweep runs a sweep if one is owed, i.e. the periodic sweep was
+// skipped while nobody was connected or hasn't run since boot. Clients
+// connecting while sweeps run on schedule trigger nothing.
+func CatchUpSweep(app core.App) {
+	if !sweepOwed.CompareAndSwap(true, false) {
+		return
+	}
+	TrackAllSubnets(app)
 }
 
 // TrackOneSubnet runs an nmap scan of the given subnet and updates the ip

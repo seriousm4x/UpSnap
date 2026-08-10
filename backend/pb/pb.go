@@ -14,6 +14,7 @@ import (
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 	"github.com/robfig/cron/v3"
 	"github.com/seriousm4x/upsnap/cronjobs"
+	"github.com/seriousm4x/upsnap/iptracking"
 	"github.com/seriousm4x/upsnap/logger"
 	_ "github.com/seriousm4x/upsnap/migrations"
 )
@@ -194,6 +195,18 @@ func StartPocketBase(distDirFS fs.FS) {
 			if saveErr != nil {
 				return saveErr
 			}
+		}
+		return e.Next()
+	})
+
+	app.OnRealtimeConnectRequest().BindFunc(func(e *core.RealtimeConnectRequestEvent) error {
+		// a client just became active: catch up on any tracking sweep that
+		// was skipped while nobody was connected
+		settings, err := e.App.FindFirstRecordByFilter("settings_private", "")
+		if err != nil {
+			logger.Error.Println(err)
+		} else if settings.GetBool("lazy_ping") && settings.GetString("track_ip_interval") != "" {
+			go iptracking.CatchUpSweep(e.App)
 		}
 		return e.Next()
 	})
