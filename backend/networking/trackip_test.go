@@ -80,26 +80,55 @@ func TestDeviceSubnet(t *testing.T) {
 	}
 }
 
-func TestIsLocalSubnet(t *testing.T) {
+func TestValidateScannableSubnet(t *testing.T) {
 	testCases := []struct {
-		name    string
-		ip      string
-		netmask string
-		want    bool
+		name      string
+		ip        string
+		netmask   string
+		wantError bool
 	}{
-		// The loopback address is configured on every host
+		// A /32 has nothing to scan
 		{
-			name:    "Loopback",
-			ip:      "127.0.0.1",
-			netmask: "255.0.0.0",
-			want:    true,
+			name:      "Host Mask",
+			ip:        "192.168.1.5",
+			netmask:   "255.255.255.255",
+			wantError: true,
 		},
-		// TEST-NET-1 (RFC 5737) is reserved for documentation and never assigned
+		// A non-contiguous mask has no cidr notation to scan
 		{
-			name:    "Reserved Test Net",
-			ip:      "192.0.2.1",
-			netmask: "255.255.255.0",
-			want:    false,
+			name:      "Non-contiguous Mask",
+			ip:        "10.0.1.5",
+			netmask:   "255.0.255.0",
+			wantError: true,
+		},
+		// Anything larger than a /16 takes too long to scan
+		{
+			name:      "Too Large",
+			ip:        "10.0.0.1",
+			netmask:   "255.0.0.0",
+			wantError: true,
+		},
+		// The loopback address as a /16 is within limits and always attached
+		{
+			name:      "Local /16",
+			ip:        "127.0.0.1",
+			netmask:   "255.255.0.0",
+			wantError: false,
+		},
+		// A sub-block of the attached loopback /8 is on-link even though
+		// it doesn't contain the host's own 127.0.0.1
+		{
+			name:      "Nested In Attached",
+			ip:        "127.0.1.5",
+			netmask:   "255.255.255.0",
+			wantError: false,
+		},
+		// TEST-NET-1 (RFC 5737) is never assigned to an interface
+		{
+			name:      "No Overlap",
+			ip:        "192.0.2.1",
+			netmask:   "255.255.255.0",
+			wantError: true,
 		},
 	}
 
@@ -109,8 +138,8 @@ func TestIsLocalSubnet(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Got unexpected error: %v", err)
 			}
-			if got := IsLocalSubnet(subnet); got != tc.want {
-				t.Errorf("IsLocalSubnet(%s): expected %v, got %v", subnet.String(), tc.want, got)
+			if err := ValidateScannableSubnet(subnet); (err != nil) != tc.wantError {
+				t.Errorf("ValidateScannableSubnet(%s): expected error=%v, got %v", subnet.String(), tc.wantError, err)
 			}
 		})
 	}

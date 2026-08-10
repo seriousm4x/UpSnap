@@ -2,6 +2,7 @@ package networking
 
 import (
 	"encoding/xml"
+	"net"
 	"os"
 	"os/exec"
 )
@@ -14,6 +15,26 @@ type Nmaprun struct {
 			Vendor   string `xml:"vendor,attr"`
 		} `xml:"address"`
 	} `xml:"host"`
+}
+
+// MacToIP maps each scanned host's normalized mac address to its ipv4
+// address, skipping hosts that lack either.
+func (n Nmaprun) MacToIP() map[string]string {
+	macToIp := make(map[string]string)
+	for _, host := range n.Host {
+		var hostIp, hostMac string
+		for _, addr := range host.Address {
+			if addr.Addrtype == "ipv4" {
+				hostIp = addr.Addr
+			} else if addr.Addrtype == "mac" {
+				hostMac = addr.Addr
+			}
+		}
+		if parsedMac, err := net.ParseMAC(hostMac); hostIp != "" && err == nil {
+			macToIp[parsedMac.String()] = hostIp
+		}
+	}
+	return macToIp
 }
 
 func runNmap(scanRange string) (Nmaprun, error) {
