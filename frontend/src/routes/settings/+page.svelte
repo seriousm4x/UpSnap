@@ -161,16 +161,6 @@
 | minute (0–59)
 second (0–59, optional)
 </code></pre>
-				<h2 class="card-title mt-2">{m.settings_lazy_ping_title()}</h2>
-				<p class="mt-2">
-					{m.settings_lazy_ping_desc()}
-				</p>
-				<div class="w-fit">
-					<label class="label cursor-pointer gap-2">
-						<input type="checkbox" class="checkbox" bind:checked={settingsPrivClone.lazy_ping} />
-						<span>{m.settings_lazy_ping_enable()}</span>
-					</label>
-				</div>
 				<h2 class="card-title mt-2">{m.settings_track_ip_title()}</h2>
 				<p class="mt-2">
 					{m.settings_track_ip_desc()}
@@ -194,6 +184,16 @@ second (0–59, optional)
 						{/await}
 					</p>
 				{/if}
+				<h2 class="card-title mt-2">{m.settings_lazy_ping_title()}</h2>
+				<p class="mt-2">
+					{m.settings_lazy_ping_desc()}
+				</p>
+				<div class="w-fit">
+					<label class="label cursor-pointer gap-2">
+						<input type="checkbox" class="checkbox" bind:checked={settingsPrivClone.lazy_ping} />
+						<span>{m.settings_lazy_ping_enable()}</span>
+					</label>
+				</div>
 			</div>
 		</div>
 		<div class="card bg-base-200 mt-6 w-full shadow-sm">
