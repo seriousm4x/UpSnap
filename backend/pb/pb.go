@@ -6,7 +6,9 @@ import (
 	"net"
 	"os"
 	"path"
+	"time"
 
+	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -140,7 +142,7 @@ func StartPocketBase(distDirFS fs.FS) {
 		return se.Next()
 	})
 
-	app.OnModelAfterCreateSuccess().BindFunc(func(e *core.ModelEvent) error {
+	app.OnModelAfterCreateSuccess("_superusers", "devices").BindFunc(func(e *core.ModelEvent) error {
 		if e.Model.TableName() == "_superusers" {
 			// when pocketbase creates it's default superuser, do not trigger setSetupCompleted()
 			if e.Model.(*core.Record).Email() == core.DefaultInstallerEmail {
@@ -176,12 +178,10 @@ func StartPocketBase(distDirFS fs.FS) {
 		return e.Next()
 	})
 
-	app.OnModelAfterDeleteSuccess().BindFunc(func(e *core.ModelEvent) error {
-		if e.Model.TableName() == "_superusers" {
-			if err := setSetupCompleted(e.App); err != nil {
-				logger.Error.Println(err)
-				return err
-			}
+	app.OnModelAfterDeleteSuccess("_superusers").BindFunc(func(e *core.ModelEvent) error {
+		if err := setSetupCompleted(e.App); err != nil {
+			logger.Error.Println(err)
+			return err
 		}
 		return e.Next()
 	})
@@ -208,6 +208,40 @@ func StartPocketBase(distDirFS fs.FS) {
 		} else if settings.GetBool("lazy_ping") && settings.GetString("track_ip_interval") != "" {
 			go iptracking.CatchUpSweep(e.App)
 		}
+		return e.Next()
+	})
+
+	app.OnRealtimeConnectRequest().BindFunc(func(e *core.RealtimeConnectRequestEvent) error {
+		// PocketBase has no realtime disconnect hook. When a browser refreshes,
+		// the old client may disappear before the new connection is registered.
+		// Delay the offline transition and use the connecting client's id to
+		// distinguish a refresh from a genuine disconnect.
+		clientID := e.Client.Id()
+		defer func() {
+			if len(e.App.SubscriptionsBroker().Clients()) != 0 {
+				return
+			}
+			time.AfterFunc(2*time.Second, func() {
+				if _, err := e.App.SubscriptionsBroker().ClientById(clientID); err == nil {
+					return
+				}
+				if len(e.App.SubscriptionsBroker().Clients()) != 0 {
+					return
+				}
+				allDevices, err := app.FindAllRecords("devices", dbx.NewExp("shutdown_cmd != ''"))
+				if err != nil {
+					logger.Error.Println(err)
+					return
+				}
+				for _, device := range allDevices {
+					device.Set("status", "offline")
+					if err := app.Save(device); err != nil {
+						logger.Error.Println(err)
+						return
+					}
+				}
+			})
+		}()
 		return e.Next()
 	})
 
