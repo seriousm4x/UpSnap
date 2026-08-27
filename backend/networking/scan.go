@@ -24,9 +24,10 @@ func (n Nmaprun) MacToIP() map[string]string {
 	for _, host := range n.Host {
 		var hostIp, hostMac string
 		for _, addr := range host.Address {
-			if addr.Addrtype == "ipv4" {
+			switch addr.Addrtype {
+			case "ipv4":
 				hostIp = addr.Addr
-			} else if addr.Addrtype == "mac" {
+			case "mac":
 				hostMac = addr.Addr
 			}
 		}

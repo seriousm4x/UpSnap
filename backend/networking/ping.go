@@ -25,8 +25,7 @@ func CheckPort(host string, port string) (bool, error) {
 	conn, err := net.DialTimeout("tcp", net.JoinHostPort(host, port), timeout)
 	if err != nil {
 		// treat "host unreachable", "connection refused" and "timeout" as no error
-		var netErr *net.OpError
-		if errors.As(err, &netErr) {
+		if netErr, ok := errors.AsType[*net.OpError](err); ok {
 			if errors.Is(netErr.Err, syscall.EHOSTUNREACH) ||
 				errors.Is(netErr.Err, syscall.ECONNREFUSED) ||
 				netErr.Timeout() {

@@ -5,6 +5,7 @@
 	import { nextCronDate, parseCron as validateCron } from '$lib/helpers/cron';
 	import { m } from '$lib/paraglide/messages';
 	import { permission, pocketbase } from '$lib/stores/pocketbase';
+	import { settingsPriv } from '$lib/stores/settings';
 	import type { Device, Group, Port } from '$lib/types/device';
 	import { faSave, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
@@ -23,7 +24,7 @@
 
 	const ipPattern =
 		'^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}$';
-	const macPattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$';
+	const macPattern = '^([0-9A-Fa-f]{2}[:\\-]){5}([0-9A-Fa-f]{2})$';
 
 	async function save() {
 		// validate crons
@@ -277,7 +278,12 @@
 			<fieldset class="fieldset bg-base-100 border-base-300 rounded-box mt-2 w-fit border p-4">
 				<legend class="fieldset-legend">{m.device_general_track_ip()}</legend>
 				<label class="fieldset-label">
-					<input type="checkbox" bind:checked={device.track_ip} class="toggle toggle-success" />
+					<input
+						type="checkbox"
+						bind:checked={device.track_ip}
+						class="toggle toggle-success"
+						disabled={$settingsPriv?.track_ip_interval.length === 0}
+					/>
 					{m.device_general_track_ip()}
 				</label>
 				<p class="fieldset-label max-w-md">{m.device_general_track_ip_desc()}</p>
