@@ -7,9 +7,9 @@
 	import { m } from '$lib/paraglide/messages.js';
 	import { localeStore } from '$lib/stores/locale';
 	import { backendUrl, permission, pocketbase } from '$lib/stores/pocketbase';
-	import { settingsPub } from '$lib/stores/settings';
+	import { settingsPriv, settingsPub } from '$lib/stores/settings';
 	import type { Permission } from '$lib/types/permission';
-	import type { SettingsPublic } from '$lib/types/settings';
+	import type { SettingsPrivate, SettingsPublic } from '$lib/types/settings';
 	import { onMount } from 'svelte';
 	import toast, { Toaster, type ToastOptions } from 'svelte-french-toast';
 	import '../app.css';
@@ -79,6 +79,13 @@
 			await $pocketbase
 				.collection('_superusers')
 				.authRefresh()
+				.then(async () => {
+					// set settingsPriv store on load
+					if (!$settingsPriv) {
+						const res = await $pocketbase.collection('settings_private').getFirstListItem('');
+						settingsPriv.set(res as SettingsPrivate);
+					}
+				})
 				.catch((err) => {
 					// clear the store only on invalidated/expired token
 					const status = err?.status << 0;
@@ -93,6 +100,14 @@
 			await $pocketbase
 				.collection('users')
 				.authRefresh()
+				.then(async () => {
+					// set settingsPriv store on load
+					if (!$settingsPriv) {
+						const res = await $pocketbase.collection('settings_private').getFirstListItem('');
+						settingsPriv.set(res as SettingsPrivate);
+					}
+				})
+
 				.catch((err) => {
 					// clear the store only on invalidated/expired token
 					const status = err?.status << 0;

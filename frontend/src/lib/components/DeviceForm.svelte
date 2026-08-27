@@ -282,7 +282,7 @@
 						type="checkbox"
 						bind:checked={device.track_ip}
 						class="toggle toggle-success"
-						disabled={$settingsPriv?.track_ip_interval.length === 0}
+						disabled={$settingsPriv?.track_ip_interval === ''}
 					/>
 					{m.device_general_track_ip()}
 				</label>
