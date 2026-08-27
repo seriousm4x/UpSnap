@@ -72,6 +72,14 @@
 			throw new Error('ping_interval not valid');
 		}
 
+		if (
+			settingsPrivClone.track_ip_interval !== '' &&
+			!(await parseCron(settingsPrivClone.track_ip_interval))
+		) {
+			toast.error(m.settings_invalid_cron());
+			throw new Error('track_ip_interval not valid');
+		}
+
 		await $pocketbase
 			.collection('settings_public')
 			.update(settingsPubClone.id, settingsPubClone)
@@ -153,6 +161,29 @@
 | minute (0–59)
 second (0–59, optional)
 </code></pre>
+				<h2 class="card-title mt-2">{m.settings_track_ip_title()}</h2>
+				<p class="mt-2">
+					{m.settings_track_ip_desc()}
+				</p>
+				<div class="mt-2 w-full">
+					<input
+						type="text"
+						placeholder="e.g. '0 */30 * * * *'"
+						class="input"
+						bind:value={settingsPrivClone.track_ip_interval}
+					/>
+				</div>
+				{#if settingsPrivClone.track_ip_interval}
+					<p class="fieldset-label">
+						{#await parseCron(settingsPrivClone.track_ip_interval)}
+							<span class="loading loading-spinner loading-xs"></span>
+						{:then valid}
+							{valid
+								? '✅ ' + nextCronDate(settingsPrivClone.track_ip_interval)
+								: m.settings_invalid_cron()}
+						{/await}
+					</p>
+				{/if}
 				<h2 class="card-title mt-2">{m.settings_lazy_ping_title()}</h2>
 				<p class="mt-2">
 					{m.settings_lazy_ping_desc()}

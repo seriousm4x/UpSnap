@@ -5,6 +5,7 @@ export type Device = RecordModel & {
 	ip: string;
 	mac: string;
 	netmask: string;
+	track_ip: boolean;
 	description: string;
 	status: 'pending' | 'online' | 'offline' | '';
 	ports: string[];

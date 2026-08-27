@@ -4,6 +4,7 @@ import (
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/robfig/cron/v3"
+	"github.com/seriousm4x/upsnap/iptracking"
 	"github.com/seriousm4x/upsnap/logger"
 	"github.com/seriousm4x/upsnap/networking"
 )
@@ -19,7 +20,7 @@ var (
 	)))
 )
 
-func SetPingJobs(app *pocketbase.PocketBase) {
+func SetPingJobs(app core.App) {
 	// remove existing jobs
 	for _, job := range CronPing.Entries() {
 		CronPing.Remove(job.ID)
@@ -103,6 +104,19 @@ func SetPingJobs(app *pocketbase.PocketBase) {
 			}(device)
 		}
 	})
+
+	// update ip addresses of opted-in devices from a periodic arp scan
+	trackIpInterval := settingsPrivateRecords[0].GetString("track_ip_interval")
+	if trackIpInterval != "" {
+		if _, err := CronPing.AddFunc(trackIpInterval, func() {
+			// pause scans if no realtime clients connected and lazy_ping is
+			// turned on; a catch-up sweep runs when the next client connects
+			realtimeClients := len(app.SubscriptionsBroker().Clients())
+			iptracking.PeriodicSweep(app, realtimeClients == 0 && settingsPrivateRecords[0].GetBool("lazy_ping"))
+		}); err != nil {
+			logger.Error.Println("Failed to add ip tracking cronjob:", err)
+		}
+	}
 }
 
 func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
