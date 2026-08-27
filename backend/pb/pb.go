@@ -236,7 +236,7 @@ func StartPocketBase(distDirFS fs.FS) {
 
 }
 
-func importSettings(app *pocketbase.PocketBase) error {
+func importSettings(app core.App) error {
 	settingsPrivateRecords, err := app.FindAllRecords("settings_private")
 	if err != nil {
 		return err
@@ -315,7 +315,7 @@ func importSettings(app *pocketbase.PocketBase) error {
 	return nil
 }
 
-func resetDeviceStates(app *pocketbase.PocketBase) error {
+func resetDeviceStates(app core.App) error {
 	devices, err := app.FindAllRecords("devices")
 	if err != nil {
 		return err

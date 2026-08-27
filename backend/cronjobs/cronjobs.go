@@ -1,7 +1,6 @@
 package cronjobs
 
 import (
-	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/robfig/cron/v3"
 	"github.com/seriousm4x/upsnap/iptracking"
@@ -119,7 +118,7 @@ func SetPingJobs(app core.App) {
 	}
 }
 
-func SetWakeShutdownJobs(app *pocketbase.PocketBase) {
+func SetWakeShutdownJobs(app core.App) {
 	// remove existing jobs
 	for _, job := range CronWakeShutdown.Entries() {
 		CronWakeShutdown.Remove(job.ID)
