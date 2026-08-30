@@ -71,6 +71,8 @@ func StartPocketBase(distDirFS fs.FS) {
 
 	// event hooks
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
+		logger.InitLogger(app)
+
 		se.Router.GET("/{path...}", apis.Static(distDirFS, true))
 		se.Router.GET("/api/upsnap/wake/{id}", HandlerWake).Bind(RequireUpSnapPermission())
 		se.Router.GET("/api/upsnap/wakegroup/{id}", HandlerWakeGroup).Bind(RequireUpSnapPermission())

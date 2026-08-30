@@ -2,7 +2,10 @@ package logger
 
 import (
 	"log"
+	"log/slog"
 	"os"
+
+	"github.com/pocketbase/pocketbase/core"
 )
 
 const (
@@ -16,13 +19,18 @@ var (
 	Error   = log.New(os.Stderr, "[ERROR] ", flags)
 )
 
-func init() {
-	// TODO: decide if you want to log to a file to max
-	// output := io.MultiWriter(os.Stdout, logFile)
-	output := os.Stdout
-	Info.SetOutput(output)
-	Error.SetOutput(output)
-	Debug.SetOutput(output)
+
+func InitLogger(app core.App) {
+
+	infoHandler := slog.NewLogLogger(app.Logger().Handler(), slog.LevelInfo)
+	errorHandler := slog.NewLogLogger(app.Logger().Handler(), slog.LevelError)
+	debugHandler := slog.NewLogLogger(app.Logger().Handler(), slog.LevelDebug)
+	warnHandler := slog.NewLogLogger(app.Logger().Handler(), slog.LevelWarn)
+
+	Info.SetOutput(infoHandler.Writer())
+	Error.SetOutput(errorHandler.Writer())
+	Debug.SetOutput(debugHandler.Writer())
+	Warning.SetOutput(warnHandler.Writer())
 
 	log.SetOutput(Debug.Writer())
 	log.SetPrefix("[DEBUG]")
