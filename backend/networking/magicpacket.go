@@ -18,13 +18,29 @@ func SendMagicPacket(device *core.Record) error {
 	netmask := device.GetString("netmask")
 	password := device.GetString("password")
 
-	// Validate MAC
+	// parse inputs
 	parsedMac, err := net.ParseMAC(mac)
 	if err != nil {
 		return err
 	}
-	var bytePassword []byte
+	if !ValidateSubnetMask(netmask) {
+		return fmt.Errorf("%q is not a valid subnet mask", netmask)
+	}
+
+	// calculate broadcast IP, if possible
 	var broadcastIp string
+	// an IP was provided or FQDN resolved to an IP so calculate broadcast destination based on that
+	if ip != "" {
+		broadcastIp, err = getBroadcastIp(ip, netmask)
+		if err != nil {
+			return err
+		}
+	} else {
+		// No IP available, so no broadcast IP can be calculated. This occurs if FQDN is .local and the device is powered off
+		broadcastIp = ""
+	}
+
+	var bytePassword []byte
 	if len(password) == 0 || len(password) == 4 || len(password) == 6 {
 		bytePassword = []byte(password)
 	} else {

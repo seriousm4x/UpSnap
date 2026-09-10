@@ -20,11 +20,11 @@ func SleepDevice(app core.App, device *core.Record) (SolResponse, error) {
 
 	var solResp SolResponse
 	var url string
-  
-  deviceIP, err := ResolveToIPAddr(device.GetString("ip"))
-  if err != nil || deviceIP == "" {
-    return solResp, fmt.Errorf("Unable to resolve %s to an IP address: %w", device.GetString("ip"), err)
-  }
+
+	deviceIP, err := ResolveToIPAddr(device.GetString("ip"))
+	if err != nil || deviceIP == "" {
+		return solResp, fmt.Errorf("Unable to resolve %s to an IP address: %w", device.GetString("ip"), err)
+	}
 	if device.GetBool("sol_auth") {
 		url = fmt.Sprintf("http://%s:%s@%s:%d/sleep?format=JSON",
 			device.GetString("sol_user"), device.GetString("sol_password"), deviceIP, device.GetInt("sol_port"))

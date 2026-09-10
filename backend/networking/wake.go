@@ -35,13 +35,13 @@ func WakeDevice(app core.App, device *core.Record, trigger string) error {
 			shell_arg = "-c"
 		}
 
-    deviceIP, err := ResolveToIPAddr(device.GetString("ip"))
-    if err != nil {
-      return err
-    }
-    if deviceIP == "" {
-      deviceIP = device.GetString("ip")
-    }
+		deviceIP, err := ResolveToIPAddr(device.GetString("ip"))
+		if err != nil {
+			return err
+		}
+		if deviceIP == "" {
+			deviceIP = device.GetString("ip")
+		}
 		// Validate MAC address before replacing placeholders to prevent command injection
 		deviceMAC := device.GetString("mac")
 		if _, err := net.ParseMAC(deviceMAC); err != nil {

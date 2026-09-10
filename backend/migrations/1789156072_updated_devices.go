@@ -18,29 +18,10 @@ func init() {
 			"help": "",
 			"hidden": false,
 			"id": "1si6ajha",
-			"max": 255,
+			"max": 0,
 			"min": 0,
 			"name": "ip",
-			"pattern": "^(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,63}\\.?|(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})$",
-			"presentable": false,
-			"primaryKey": false,
-			"required": true,
-			"system": false,
-			"type": "text"
-		}`)); err != nil {
-			return err
-		}
-
-		// update field
-		if err := collection.Fields.AddMarshaledJSONAt(3, []byte(`{
-			"autogeneratePattern": "",
-			"help": "",
-			"hidden": false,
-			"id": "fyqmpon6",
-			"max": 18,
-			"min": 0,
-			"name": "mac",
-			"pattern": "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$",
+			"pattern": "^(?:(?:[\\p{L}\\p{N}](?:[\\p{L}\\p{N}-]{0,61}[\\p{L}\\p{N}])?\\.)+[\\p{L}\\p{N}](?:[\\p{L}\\p{N}-]{0,61}[\\p{L}\\p{N}])?|(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})$",
 			"presentable": false,
 			"primaryKey": false,
 			"required": true,
@@ -56,10 +37,10 @@ func init() {
 			"help": "",
 			"hidden": false,
 			"id": "s8c5z7n0",
-			"max": 16,
+			"max": 0,
 			"min": 0,
 			"name": "netmask",
-			"pattern": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}$",
+			"pattern": "^(?:255\\.255\\.255\\.(?:255|254|252|248|240|224|192|128|0)|255\\.255\\.(?:255|254|252|248|240|224|192|128|0)\\.0|255\\.(?:255|254|252|248|240|224|192|128|0)\\.0\\.0|(?:255|254|252|248|240|224|192|128|0)\\.0\\.0\\.0)$",
 			"presentable": false,
 			"primaryKey": false,
 			"required": true,
@@ -96,25 +77,6 @@ func init() {
 		}
 
 		// update field
-		if err := collection.Fields.AddMarshaledJSONAt(3, []byte(`{
-			"autogeneratePattern": "",
-			"help": "",
-			"hidden": false,
-			"id": "fyqmpon6",
-			"max": 0,
-			"min": 0,
-			"name": "mac",
-			"pattern": "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$",
-			"presentable": false,
-			"primaryKey": false,
-			"required": true,
-			"system": false,
-			"type": "text"
-		}`)); err != nil {
-			return err
-		}
-
-		// update field
 		if err := collection.Fields.AddMarshaledJSONAt(4, []byte(`{
 			"autogeneratePattern": "",
 			"help": "",
@@ -123,7 +85,7 @@ func init() {
 			"max": 0,
 			"min": 0,
 			"name": "netmask",
-			"pattern": "",
+			"pattern": "^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}$",
 			"presentable": false,
 			"primaryKey": false,
 			"required": true,

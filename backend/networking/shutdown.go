@@ -33,10 +33,10 @@ func ShutdownDevice(app core.App, device *core.Record, trigger string) error {
 	}
 
 	// Validate IP or resolve FQDN to IP
-  deviceIP, err := ResolveToIPAddr(device.GetString("ip"))
-  if err != nil || deviceIP == "" {
-    return fmt.Errorf("Unable to resolve %s to an IP address", device.GetString("ip"))
-  }
+	deviceIP, err := ResolveToIPAddr(device.GetString("ip"))
+	if err != nil || deviceIP == "" {
+		return fmt.Errorf("Unable to resolve %s to an IP address", device.GetString("ip"))
+	}
 	// Validate MAC address before replacing placeholder to prevent command injection
 	deviceMAC := device.GetString("mac")
 	if _, err := net.ParseMAC(deviceMAC); err != nil {
