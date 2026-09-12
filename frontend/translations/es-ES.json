@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Establece un favicon personalizado. Los tipos de archivos admitidos son:",
 	"settings_icon_title": "Icon",
 	"settings_invalid_cron": "❌ Sintaxis cron no válida",
+	"settings_invalid_fqdnip": "❌ Invalid FQDN/IPv4 address",
 	"settings_lazy_ping_desc": "Cuando el ping diferido está activado, UpSnap solo hará ping a los dispositivos si hay un usuario activo visitando el sitio web. Si está desactivado, UpSnap siempre hará ping a los dispositivos.",
 	"settings_lazy_ping_enable": "Activar",
 	"settings_lazy_ping_title": "Lazy ping",

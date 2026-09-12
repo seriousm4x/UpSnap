@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Atur favicon khusus. Jenis file yang didukung:",
 	"settings_icon_title": "Ikon",
 	"settings_invalid_cron": "❌ Sintaks tugas penjadwalan tidak valid",
+	"settings_invalid_fqdnip": "❌ Alamat FQDN/IPv4 tidak valid",
 	"settings_lazy_ping_desc": "Saat Ping Santai diaktifkan, UpSnap hanya akan memping perangkat jika ada pengguna yang mengakses situs web. Jika dinonaktifkan, UpSnap akan selalu memping perangkat.",
 	"settings_lazy_ping_enable": "Aktifkan",
 	"settings_lazy_ping_title": "Ping Santai",

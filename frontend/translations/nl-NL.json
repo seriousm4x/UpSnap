@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Stel een aangepast favicon in. Ondersteunde bestandstypen zijn:",
 	"settings_icon_title": "Icoon",
 	"settings_invalid_cron": "❌ Ongeldige cron syntaxis",
+	"settings_invalid_fqdnip": "❌ Ongeldig FQDN/IPv4-adres",
 	"settings_lazy_ping_desc": "Wanneer lazy ping is ingeschakeld, pingt UpSnap alleen apparaten als er een actieve gebruiker de website bezoekt. Als het is uitgeschakeld, pingt UpSnap altijd apparaten.",
 	"settings_lazy_ping_enable": "Inschakelen",
 	"settings_lazy_ping_title": "Lazy ping",

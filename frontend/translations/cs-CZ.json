@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Nastavit vlastní ikonu. Podporované typy souborů jsou:",
 	"settings_icon_title": "Ikona",
 	"settings_invalid_cron": "❌ Neplatná syntaxe cronu",
+	"settings_invalid_fqdnip": "❌ Neplatná adresa FQDN/IPv4",
 	"settings_lazy_ping_desc": "Když je funkce líného pingu zapnutá, UpSnap bude pingovat zařízení pouze v případě, že web navštíví aktivní uživatel. Pokud je tato funkce vypnutá, UpSnap bude pingovat zařízení vždy.",
 	"settings_lazy_ping_enable": "Povolit",
 	"settings_lazy_ping_title": "Líný ping",

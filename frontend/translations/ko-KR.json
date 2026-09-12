@@ -152,6 +152,7 @@
 	"settings_icon_desc": "사용자 지정 favicon을 설정하세요. 지원되는 파일 형식:",
 	"settings_icon_title": "아이콘",
 	"settings_invalid_cron": "❌ 잘못된 크론 구문",
+	"settings_invalid_fqdnip": "❌ 유효하지 않은 FQDN/IPv4 주소입니다",
 	"settings_lazy_ping_desc": "Lazy Ping이 활성화되면, UpSnap은 웹사이트를 방문하는 활성 사용자가 있을 때만 장치를 핑합니다. 비활성화되면, UpSnap은 항상 장치를 핑합니다.",
 	"settings_lazy_ping_enable": "활성화",
 	"settings_lazy_ping_title": "Lazy Ping",

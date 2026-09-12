@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Angi et egendefinert favorittikon. Støttede filtyper er:",
 	"settings_icon_title": "Ikon",
 	"settings_invalid_cron": "❌ Ugyldig cron-syntaks",
+	"settings_invalid_fqdnip": "❌ Ugyldig FQDN/IPv4-adresse",
 	"settings_lazy_ping_desc": "Når lat ping er slått på, vil UpSnap bare pinge enheter hvis det er en aktiv bruker som besøker nettstedet. Hvis den er slått av, vil UpSnap alltid pinge enheter.",
 	"settings_lazy_ping_enable": "Aktiver",
 	"settings_lazy_ping_title": "Lazy ping",

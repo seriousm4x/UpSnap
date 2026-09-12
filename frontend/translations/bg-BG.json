@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Задайте персонализирана икона. Поддържани типове файлове:",
 	"settings_icon_title": "Икона",
 	"settings_invalid_cron": "❌ Невалиден cron синтаксис",
+	"settings_invalid_fqdnip": "❌ Невалиден FQDN/IPv4 адрес",
 	"settings_lazy_ping_desc": "Когато „мързелив ping“ е активиран, UpSnap ще ping-ва устройства само когато потребител действително посети сайта. Ако е деактивиран, UpSnap винаги ще ping-ва.",
 	"settings_lazy_ping_enable": "Активиране",
 	"settings_lazy_ping_title": "Мързелив ping",

@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Define um favicon personalizado. Tipos de ficheiros suportados são:",
 	"settings_icon_title": "Ícone",
 	"settings_invalid_cron": "❌ Sintaxe inválida do cron",
+	"settings_invalid_fqdnip": "❌ Endereço FQDN/IPv4 inválido",
 	"settings_lazy_ping_desc": "Quando o lazy ping está activo, o UpSnap irá apenas executar o ping se existir um utilizador ativo no website. Se desligado, o UpSnap irá executar sempre o ping.",
 	"settings_lazy_ping_enable": "Activar",
 	"settings_lazy_ping_title": "Lazy ping",

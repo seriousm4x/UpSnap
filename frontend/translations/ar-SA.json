@@ -152,6 +152,7 @@
 	"settings_icon_desc": "تعيين أيقونة مفضلة مخصصة. أنواع الملفات المدعومة هي:",
 	"settings_icon_title": "الأيقونة",
 	"settings_invalid_cron": "❌ صيغة cron غير صالحة",
+	"settings_invalid_fqdnip": "❌ عنوان FQDN/IPv4 غير صالح",
 	"settings_lazy_ping_desc": "عندما يتم تشغيل الـ ping خامل سيقوم UpSnap بفحص الأجهزة فقط إذا كان هناك مستخدم نشط يزور الموقع. إذا تم إيقاف تشغيله، سيقوم UpSnap دائماً بفحص الأجهزة.",
 	"settings_lazy_ping_enable": "تفعيل",
 	"settings_lazy_ping_title": "Ping خامل",

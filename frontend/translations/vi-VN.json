@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Đặt favicon tùy chỉnh. Hỗ trợ định dạng:",
 	"settings_icon_title": "Biểu tượng",
 	"settings_invalid_cron": "❌ Cú pháp cron không hợp lệ",
+	"settings_invalid_fqdnip": "❌ Tên miền đầy đủ/Địa chỉ IPv4 không hợp lệ",
 	"settings_lazy_ping_desc": "Khi bật lazy ping, UpSnap chỉ ping khi có người dùng truy cập web. Nếu tắt, UpSnap sẽ luôn ping.",
 	"settings_lazy_ping_enable": "Bật",
 	"settings_lazy_ping_title": "Lazy ping",

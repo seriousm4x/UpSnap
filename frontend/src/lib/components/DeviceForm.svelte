@@ -23,12 +23,18 @@
 	});
 
 	const ipPattern =
-		'^(?:(?:[\\p{L}\\p{N}](?:[\\p{L}\\p{N}-]{0,61}[\\p{L}\\p{N}])?\\.)+[\\p{L}\\p{N}](?:[\\p{L}\\p{N}-]{0,61}[\\p{L}\\p{N}])?|(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})$';
+		/^(?:(?:[\p{L}\p{N}](?:[\p{L}\p{N}-]{0,61}[\p{L}\p{N}])?\.)+[\p{L}\p{N}](?:[\p{L}\p{N}-]{0,61}[\p{L}\p{N}])?|(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})$/u;
 	const macPattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$';
 	const netmaskPattern =
 		'^(?:255\\.255\\.255\\.(?:255|254|252|248|240|224|192|128|0)|255\\.255\\.(?:255|254|252|248|240|224|192|128|0)\\.0|255\\.(?:255|254|252|248|240|224|192|128|0)\\.0\\.0|(?:255|254|252|248|240|224|192|128|0)\\.0\\.0\\.0)$';
 
 	async function save() {
+		// validate FQDN/IP
+		if (!ipPattern.test(device.ip)) {
+			toast.error(m.settings_invalid_fqdnip());
+			throw new Error('fqdn_ip not valid');
+		}
+
 		// validate crons
 		if (device.wake_cron_enabled && !(await validateCron(device.wake_cron))) {
 			toast.error(m.settings_invalid_cron());
@@ -233,7 +239,6 @@
 							placeholder={m.device_general_ip()}
 							class="input"
 							maxlength="255"
-							pattern={ipPattern}
 							bind:value={device.ip}
 							required
 						/>

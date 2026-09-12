@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Ustaw niestandardowy favicon. Obsługiwane są typy plików:",
 	"settings_icon_title": "Ikona",
 	"settings_invalid_cron": "❌ Nieprawidłowa składnia cron",
+	"settings_invalid_fqdnip": "❌ Nieprawidłowy adres FQDN/IPv4",
 	"settings_lazy_ping_desc": "Gdy leniwe pingowanie jest włączone, UpSnap będzie pingować urządzenia tylko wtedy, gdy użytkownicy odwiedzają stronę. Gdy ta opcja jest wyłączona, UpSnap będzie pingować urządzenia nieustannie.",
 	"settings_lazy_ping_enable": "Włącz",
 	"settings_lazy_ping_title": "Leniwe pingowanie",

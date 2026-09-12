@@ -152,6 +152,7 @@
 	"settings_icon_desc": "設定一個自訂義圖標。支援的檔案類型:",
 	"settings_icon_title": "圖標",
 	"settings_invalid_cron": "❌ 「無效的 Cron 語法」",
+	"settings_invalid_fqdnip": "❌ 無效的 FQDN/IPv4 位址",
 	"settings_lazy_ping_desc": "當開關打開時 UpSnap 只會在有使用者訪問網站時才對裝置進行 ping 測試。反之則 UpSnap 將持續對裝置進行 ping 測試。",
 	"settings_lazy_ping_enable": "啟用",
 	"settings_lazy_ping_title": "Lazy ping",

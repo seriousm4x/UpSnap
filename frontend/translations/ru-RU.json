@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Установить собственный фавикон. Поддерживаемые типы файлов:",
 	"settings_icon_title": "Иконка",
 	"settings_invalid_cron": "❌ Неверный синтаксис cron",
+	"settings_invalid_fqdnip": "❌ Неверный FQDN/IPv4-адрес",
 	"settings_lazy_ping_desc": "Если функция lazy ping (ленивый пинг) включена, UpSnap будет пинговать устройства только в том случае, если на сайте есть активный пользователь. Если функция отключена, UpSnap будет пинговать устройства всегда.",
 	"settings_lazy_ping_enable": "Включить",
 	"settings_lazy_ping_title": "Lazy ping",

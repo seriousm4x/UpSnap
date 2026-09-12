@@ -152,6 +152,7 @@
 	"settings_icon_desc": "Προσδιορισμός προσαρμοσμένου favicon. Υποστηριζόμενοι τύποι είναι:",
 	"settings_icon_title": "Εικονίδιο",
 	"settings_invalid_cron": "❌ Μη έγκυρο συντακτικό πραγμαμματισμού",
+	"settings_invalid_fqdnip": "❌ Μη έγκυρη διεύθυνση FQDN/IPv4",
 	"settings_lazy_ping_desc": "Όταν το lazy ping είναι ενεργό, το UpSnap θα στείλει ping στις συσκευές αν υπάρχει ενεργός χρήστης εντός του ιστότοπου. Αν δεν είναι ενεργό, το UpSnap θα στέλνει πάντα ping στις συσκευές.",
 	"settings_lazy_ping_enable": "Ενεργοποίηση",
 	"settings_lazy_ping_title": "Lazy ping",

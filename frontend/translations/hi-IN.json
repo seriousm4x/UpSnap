@@ -152,6 +152,7 @@
 	"settings_icon_desc": "एक कस्टम favicon सेट करें। समर्थित फ़ाइल प्रकार हैं:",
 	"settings_icon_title": "आइकन",
 	"settings_invalid_cron": "❌ अमान्य क्रोन सिंटैक्स",
+	"settings_invalid_fqdnip": "❌ अमान्य FQDN/IPv4 पता",
 	"settings_lazy_ping_desc": "जब Lazy Ping चालू होता है, UpSnap केवल तब पिंग करेगा जब कोई सक्रिय उपयोगकर्ता वेबसाइट पर हो। बंद होने पर यह हमेशा पिंग करेगा।",
 	"settings_lazy_ping_enable": "सक्रिय करें",
 	"settings_lazy_ping_title": "Lazy पिंग",

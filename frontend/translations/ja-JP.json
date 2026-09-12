@@ -152,6 +152,7 @@
 	"settings_icon_desc": "カスタムファビコンを設定します。サポートされているファイルタイプ:",
 	"settings_icon_title": "アイコン",
 	"settings_invalid_cron": "❌ 無効なcron構文",
+	"settings_invalid_fqdnip": "❌ 無効なFQDN/IPv4アドレス",
 	"settings_lazy_ping_desc": "Lazy ping をオンにすると、UpSnap はアクティブなユーザーがウェブサイトを訪れている場合にのみデバイスを ping します。オフの場合、UpSnap は常にデバイスを ping します。",
 	"settings_lazy_ping_enable": "有効化",
 	"settings_lazy_ping_title": "Lazy ping",
