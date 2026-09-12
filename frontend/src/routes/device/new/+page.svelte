@@ -13,7 +13,6 @@
 
 	let device: Device = {
 		name: '',
-		fqdn: '',
 		ip: '',
 		mac: '',
 		netmask: '',
