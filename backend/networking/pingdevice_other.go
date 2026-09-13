@@ -16,7 +16,11 @@ import (
 func PingDevice(device *core.Record) (bool, error) {
 	ping_cmd := device.GetString("ping_cmd")
 	if ping_cmd == "" {
-		pinger, err := probing.NewPinger(device.GetString("ip"))
+		ip, err := ResolveToIPAddr(device.GetString("ip"))
+		if err != nil || ip == "" {
+			return false, err
+		}
+		pinger, err := probing.NewPinger(ip)
 		if err != nil {
 			return false, err
 		}
