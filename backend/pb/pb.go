@@ -223,6 +223,17 @@ func StartPocketBase(distDirFS fs.FS) error {
 		// distinguish a refresh from a genuine disconnect.
 		clientID := e.Client.Id()
 		defer func() {
+			// with lazy ping disabled the ping cron keeps updating device
+			// statuses while no clients are connected, so there is nothing
+			// to compensate for here
+			settings, err := e.App.FindFirstRecordByFilter("settings_private", "")
+			if err != nil {
+				logging.Logger(e.App).Error("Failed to load private settings for offline transition", "error", err)
+				return
+			}
+			if !settings.GetBool("lazy_ping") {
+				return
+			}
 			if len(e.App.SubscriptionsBroker().Clients()) != 0 {
 				return
 			}
@@ -238,12 +249,22 @@ func StartPocketBase(distDirFS fs.FS) error {
 					logging.Logger(app).Error("Failed to load devices for offline transition", "error", err)
 					return
 				}
+				marked := 0
 				for _, device := range allDevices {
+					// leave devices that are already offline alone so the
+					// "offline since" timestamp keeps its real meaning
+					if device.GetString("status") == "offline" {
+						continue
+					}
 					device.Set("status", "offline")
 					if err := app.Save(device); err != nil {
 						logging.Logger(app).Error("Failed to save offline device status", "device", device.GetString("name"), "error", err)
 						return
 					}
+					marked++
+				}
+				if marked > 0 {
+					logging.Logger(app).Info("Marked devices offline after the last client disconnected", "count", marked)
 				}
 			})
 		}()
