@@ -96,10 +96,19 @@ func SetPingJobs(app core.App) {
 					log.Error("Failed to load device ports", "device", d.GetString("name"), "error", err)
 					return
 				}
+				deviceIP, resolveErr := networking.ResolveToIPAddr(d.GetString("ip"))
+				if resolveErr != nil {
+					log.Error("Failed to resolve device IP", "device", d.GetString("name"), "error", resolveErr)
+				}
 				for _, port := range ports {
-					isUp, err := networking.CheckPort(d.GetString("ip"), port.GetString("number"))
-					if err != nil {
-						log.Error("Failed to check port", "device", d.GetString("name"), "port", port.GetString("number"), "error", err)
+					isUp := false
+					// No IP found means the device is down.
+					if resolveErr == nil && deviceIP != "" {
+						var checkErr error
+						isUp, checkErr = networking.CheckPort(deviceIP, port.GetString("number"))
+						if checkErr != nil {
+							log.Error("Failed to check port", "device", d.GetString("name"), "port", port.GetString("number"), "error", checkErr)
+						}
 					}
 					if isUp != port.GetBool("status") {
 						port.Set("status", isUp)

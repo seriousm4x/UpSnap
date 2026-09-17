@@ -3,7 +3,6 @@ package pb
 import (
 	"fmt"
 	"io/fs"
-	"net"
 	"os"
 	"path"
 	"time"
@@ -19,6 +18,7 @@ import (
 	"github.com/seriousm4x/upsnap/iptracking"
 	"github.com/seriousm4x/upsnap/logging"
 	_ "github.com/seriousm4x/upsnap/migrations"
+	"github.com/seriousm4x/upsnap/networking"
 )
 
 var Version = "(untracked)"
@@ -192,8 +192,7 @@ func StartPocketBase(distDirFS fs.FS) error {
 	})
 
 	app.OnRecordValidate("devices").BindFunc(func(e *core.RecordEvent) error {
-		ip := net.ParseIP(e.Record.GetString("netmask"))
-		if ip == nil {
+		if !networking.ValidateSubnetMask(e.Record.GetString("netmask")) {
 			logging.Logger(e.App).Warn("Device has invalid netmask; using broadcast default", "device", e.Record.GetString("name"), "netmask", "255.255.255.255")
 			e.Record.Set("netmask", "255.255.255.255")
 			saveErr := e.App.Save(e.Record)

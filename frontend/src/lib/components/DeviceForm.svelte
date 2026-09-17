@@ -22,11 +22,25 @@
 		await getGroups();
 	});
 
+	const fqdnPattern =
+		/^(?:[\p{L}\p{N}](?:[\p{L}\p{N}-]{0,61}[\p{L}\p{N}])?\.)+[\p{L}\p{N}](?:[\p{L}\p{N}-]{0,61}[\p{L}\p{N}])?$/u;
 	const ipPattern =
-		'^(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}$';
-	const macPattern = '^([0-9A-Fa-f]{2}[:\\-]){5}([0-9A-Fa-f]{2})$';
+		/^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
+	const macPattern = '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$';
+	const netmaskPattern =
+		'^(?:255\\.255\\.255\\.(?:255|254|252|248|240|224|192|128|0)|255\\.255\\.(?:255|254|252|248|240|224|192|128|0)\\.0|255\\.(?:255|254|252|248|240|224|192|128|0)\\.0\\.0|(?:255|254|252|248|240|224|192|128|0)\\.0\\.0\\.0)$';
+
+	$: if ($settingsPriv?.track_ip_interval === '' || !ipPattern.test(device.ip)) {
+		device.track_ip = false;
+	}
 
 	async function save() {
+		// validate FQDN/IP
+		if (!(ipPattern.test(device.ip) || fqdnPattern.test(device.ip))) {
+			toast.error(m.settings_invalid_fqdnip());
+			throw new Error('fqdn_ip not valid');
+		}
+
 		// validate crons
 		if (device.wake_cron_enabled && !(await validateCron(device.wake_cron))) {
 			toast.error(m.settings_invalid_cron());
@@ -230,7 +244,7 @@
 							type="text"
 							placeholder={m.device_general_ip()}
 							class="input"
-							pattern={ipPattern}
+							maxlength="255"
 							bind:value={device.ip}
 							required
 						/>
@@ -243,6 +257,7 @@
 							type="text"
 							placeholder={m.device_general_mac()}
 							class="input"
+							maxlength="18"
 							pattern={macPattern}
 							bind:value={device.mac}
 							required
@@ -256,7 +271,8 @@
 							type="text"
 							placeholder={m.device_general_netmask()}
 							class="input"
-							pattern={ipPattern}
+							maxlength="16"
+							pattern={netmaskPattern}
 							bind:value={device.netmask}
 							required
 						/>
@@ -282,7 +298,7 @@
 						type="checkbox"
 						bind:checked={device.track_ip}
 						class="toggle toggle-success"
-						disabled={$settingsPriv?.track_ip_interval === ''}
+						disabled={$settingsPriv?.track_ip_interval === '' || !ipPattern.test(device.ip)}
 					/>
 					{m.device_general_track_ip()}
 				</label>
