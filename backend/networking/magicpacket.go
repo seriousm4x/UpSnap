@@ -88,6 +88,8 @@ func wakeUDP(broadcastIp string, deviceIp string, target net.HardwareAddr, passw
 		destinations = append(destinations,
 			fmt.Sprintf("%s:9", deviceIp),
 			fmt.Sprintf("%s:7", deviceIp),
+			"255.255.255.255:9",
+			"255.255.255.255:7",
 		)
 	}
 
