@@ -169,7 +169,7 @@ func HandlerShutdown(e *core.RequestEvent) error {
 }
 
 func HandlerWakeGroup(e *core.RequestEvent) error {
-	records, err := e.App.FindRecordsByFilter("devices", "groups.id = {:grpId} && status = 'offline'", "", 0, 0,
+	records, err := e.App.FindRecordsByFilter("devices", "groups.id ?= {:grpId} && status = 'offline'", "", 0, 0,
 		dbx.Params{"grpId": e.Request.PathValue("id")},
 	)
 	if err != nil {
@@ -203,7 +203,7 @@ func HandlerWakeGroup(e *core.RequestEvent) error {
 }
 
 func HandlerShutdownGroup(e *core.RequestEvent) error {
-	records, err := e.App.FindRecordsByFilter("devices", "groups.id = {:grpId} && status = 'online'", "", 0, 0,
+	records, err := e.App.FindRecordsByFilter("devices", "groups.id ?= {:grpId} && status = 'online'", "", 0, 0,
 		dbx.Params{"grpId": e.Request.PathValue("id")},
 	)
 	if err != nil {
