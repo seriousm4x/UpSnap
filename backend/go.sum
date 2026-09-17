@@ -48,8 +48,6 @@ github.com/holoplot/go-avahi v1.0.1/go.mod h1:qH5psEKb0DK+BRplMfc+RY4VMOlbf6mqfx
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/josharian/native v1.0.0/go.mod h1:7X/raswPFr05uY3HiLlYeyQntB6OO7E/d2Cu7qoaN2w=
-github.com/josharian/native v1.1.0 h1:uuaP0hAbW7Y4l0ZRQ6C9zfb7Mg1mbFKry/xzDAfmtLA=
-github.com/josharian/native v1.1.0/go.mod h1:7X/raswPFr05uY3HiLlYeyQntB6OO7E/d2Cu7qoaN2w=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
@@ -62,8 +60,8 @@ github.com/mdlayher/ethernet v0.0.0-20190313224307-5b5fc417d966/go.mod h1:5s5p/s
 github.com/mdlayher/ethernet v0.0.0-20220221185849-529eae5b6118 h1:2oDp6OOhLxQ9JBoUuysVz9UZ9uI6oLUbvAZu0x8o+vE=
 github.com/mdlayher/ethernet v0.0.0-20220221185849-529eae5b6118/go.mod h1:ZFUnHIVchZ9lJoWoEGUg8Q3M4U8aNNWA3CVSUTkW4og=
 github.com/mdlayher/packet v1.0.0/go.mod h1:eE7/ctqDhoiRhQ44ko5JZU2zxB88g+JH/6jmnjzPjOU=
-github.com/mdlayher/packet v1.1.2 h1:3Up1NG6LZrsgDVn6X4L9Ge/iyRyxFEFD9o6Pr3Q1nQY=
-github.com/mdlayher/packet v1.1.2/go.mod h1:GEu1+n9sG5VtiRE4SydOmX5GTwyyYlteZiFU+x0kew4=
+github.com/mdlayher/packet v1.2.0 h1:SX7/oY0+nkKo7p4Sv30+TIc3YuWgvDEf0eucTXRyPqk=
+github.com/mdlayher/packet v1.2.0/go.mod h1:UtYVnQt+Zj6UD0F89HfzkqGXaYqys1NwkrS86wlLCv4=
 github.com/mdlayher/raw v0.0.0-20190313224157-43dbcdd7739d/go.mod h1:r1fbeITl2xL/zLbVnNHFyOzQJTgr/3fpf1lJX/cjzR8=
 github.com/mdlayher/socket v0.2.1/go.mod h1:QLlNPkFR88mRUNQIzRBMfXxwKal8H7u1h3bL1CV+f0E=
 github.com/mdlayher/socket v0.7.0 h1:qVREPVwtUMg17pwvveQxpurq0PVisMxi3FGgpsorMYQ=
@@ -78,8 +76,8 @@ github.com/pocketbase/dbx v1.12.0 h1:/oLErM+A0b4xI0PWTGPqSDVjzix48PqI/bng2l0PzoA
 github.com/pocketbase/dbx v1.12.0/go.mod h1:xXRCIAKTHMgUCyCKZm55pUOdvFziJjQfXaWKhu2vhMs=
 github.com/pocketbase/ozzo-validation/v4 v4.3.0 h1:uKBDVma7bZqgR2a6AwE+k9hkuDFfiZMpBHQdZ1z3iQs=
 github.com/pocketbase/ozzo-validation/v4 v4.3.0/go.mod h1:6XNjSTw/Jb2F8LOkKO3oyzIWExbrGiYoS4uVxVwz90g=
-github.com/pocketbase/pocketbase v0.40.3 h1:iLq2DPQjcBRDJ2sjM5ssc7eLV7LmPtCKx4Xs8Rkgud8=
-github.com/pocketbase/pocketbase v0.40.3/go.mod h1:T5rHKBqPqzEOesla8gqBnwqnceXfeHVuGt/MekG00TU=
+github.com/pocketbase/pocketbase v0.40.4 h1:0SvSUreR3NhUMCs9LchE59oEG53efZ3cKiMGyAGBN9U=
+github.com/pocketbase/pocketbase v0.40.4/go.mod h1:2mU+80FLiY1fb13WZRg8Xx/lKg4nTjgKVJMigyRH6k0=
 github.com/prometheus-community/pro-bing v0.9.1 h1:kpuAr6AU2oRtzGihJSUcetHtjc7ku7h6PxeuW9RVrQw=
 github.com/prometheus-community/pro-bing v0.9.1/go.mod h1:z79wYTxAOf6FpTng0QdIhZ3j/Nd5l3+gnFSCIT+SiSQ=
 github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec h1:W09IVJc94icq4NjY3clb7Lk8O1qJ8BdBEF8z0ibU0rE=
