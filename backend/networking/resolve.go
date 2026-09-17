@@ -33,7 +33,7 @@ func ResolveToIPAddr(host string) (string, error) {
 	defer cancel()
 	ips, err := net.DefaultResolver.LookupNetIP(ctx, "ip4", host)
 	if err != nil {
-		if strings.HasSuffix(host, ".local") {
+		if strings.HasSuffix(strings.ToLower(host), ".local") {
 			var dnsErr *net.DNSError
 			isNotFound := errors.As(err, &dnsErr) && dnsErr.IsNotFound
 			isTimeout := errors.Is(err, context.DeadlineExceeded) || ctx.Err() == context.DeadlineExceeded
@@ -48,7 +48,7 @@ func ResolveToIPAddr(host string) (string, error) {
 		return ips[0].String(), nil
 	}
 	// No results, but it's expected for a .local FQDN device that is offline. Don't return an error.
-	if strings.HasSuffix(host, ".local") {
+	if strings.HasSuffix(strings.ToLower(host), ".local") {
 		return "", nil
 	} else {
 		// No results, but FQDN should have resolved since it's not .local. Return an error.

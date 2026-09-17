@@ -60,7 +60,7 @@ func ResolveToIPAddr(host string) (string, error) {
 		return "", err
 	}
 	// attempt mDNS query first
-	if strings.HasSuffix(host, ".local") {
+	if strings.HasSuffix(strings.ToLower(host), ".local") {
 		//		conn, err := dbus.Dial("unix:path=/var/run/dbus/system_bus_socket")
 		server, err := getAvahiServer()
 		if err != nil {
