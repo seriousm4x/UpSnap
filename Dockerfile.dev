@@ -1,4 +1,4 @@
-FROM node:alpine AS node
+FROM node:bookworm AS node
 WORKDIR /app
 COPY frontend/ .
 RUN npm i -g pnpm &&\

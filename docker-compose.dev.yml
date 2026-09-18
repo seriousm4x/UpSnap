@@ -1,5 +1,9 @@
 services:
   upsnap:
+    cap_add:
+      - NET_RAW # Required for privileged ping, network device scan, and IP address tracking (nmap)
+    cap_drop:
+      - ALL
     container_name: upsnap
     build:
       dockerfile: Dockerfile.dev

@@ -24,8 +24,8 @@ RUN addgroup -g 1000 upsnap &&\
 WORKDIR /app
 COPY --from=downloader /app/upsnap upsnap
 LABEL org.opencontainers.image.source="https://github.com/seriousm4x/UpSnap" \
-      org.opencontainers.image.url="https://github.com/seriousm4x/UpSnap" \
-      org.opencontainers.image.licenses="MIT"
+    org.opencontainers.image.url="https://github.com/seriousm4x/UpSnap" \
+    org.opencontainers.image.licenses="MIT"
 HEALTHCHECK --interval=10s \
     CMD curl -fs "http://${UPSNAP_HTTP_LISTEN}/api/health" || exit 1
 CMD ["serve","--http","${UPSNAP_HTTP_LISTEN}"]
