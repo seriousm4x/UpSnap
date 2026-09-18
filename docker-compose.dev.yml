@@ -7,6 +7,10 @@ services:
     restart: unless-stopped
     volumes:
       - ./data:/app/pb_data
+    # # If you want to use FQDN instead of an IP and it is a ".local" domain, avahi and dbus must be installed on 
+    # # the host, and the host dbus must be mounted in the container.
+    # # Before uncommmenting, ensure you are familiar with potential security implications of mounting dbus
+    #   - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
     # # To use a non-root user, create the mountpoint first before starting
     # # the container (mkdir data) so that it has the right permissions.
     # user: 1000:1000
