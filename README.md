@@ -25,6 +25,7 @@
 - 🔌 Ping Any Port You Choose
 - 🔍 Discover Devices with Network Scanning (nmap required)
 - 📌 Optional IP Address Tracking per Device via periodic ARP scan (nmap required, no extra privileges beyond network scanning)
+- 📡 Support using a Fully Qualified Domain Name for a device (refer to the Wiki: [Use FQDN](https://github.com/seriousm4x/UpSnap/wiki/Use-FQDN))
 - ❎️ Shutdown Devices with a Custom Command
 - 👤 Secured User Management
 - 📋 Superuser Logs Page
