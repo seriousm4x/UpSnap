@@ -74,6 +74,10 @@ environment:
   - UPSNAP_HTTP_LISTEN=0.0.0.0:5000
 ```
 
+## 🍎 Mac answers ping but remote control cannot connect
+
+Some sleeping Macs respond to the network after WOL without becoming fully available to remote-control tools. See [Mac full-wake setup](docs/macos-full-wake.md) for restricted SSH, persistent storage, values to replace, the authenticated wake API, and verification. The recipe requires the command-completion fix in [PR #1777](https://github.com/seriousm4x/UpSnap/pull/1777) or an equivalent build; this guide alone does not change UpSnap behavior.
+
 ## ❎️ Shutting Down Devices
 
 To shutdown devices, refer to the Wiki: [How to use shutdowns](https://github.com/seriousm4x/UpSnap/wiki/How-to-use-shutdowns)
