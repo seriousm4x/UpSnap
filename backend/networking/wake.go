@@ -71,17 +71,23 @@ func WakeDevice(app core.App, device *core.Record, trigger string) error {
 		}()
 
 		start := time.Now()
+		commandFinished := false
 
 		for {
 			select {
 			case <-time.After(1 * time.Second):
 				if time.Since(start) >= time.Duration(wakeTimeout)*time.Second {
-					if cmd.Process != nil {
+					if !commandFinished && cmd.Process != nil {
 						if err := KillProcess(app, cmd.Process); err != nil {
 							log.Error("Failed to kill wake command", "error", err)
 						}
 					}
 					return fmt.Errorf("%s not online after %d seconds", device.GetString("name"), wakeTimeout)
+				}
+				// Reachability alone does not mean a custom wake command has finished.
+				// For example, a Mac can respond to ping while it is still in DarkWake.
+				if !commandFinished {
+					continue
 				}
 				isOnline, err := PingDevice(device)
 				if err != nil {
@@ -89,11 +95,6 @@ func WakeDevice(app core.App, device *core.Record, trigger string) error {
 					return err
 				}
 				if isOnline {
-					if cmd.Process != nil {
-						if err := KillProcess(app, cmd.Process); err != nil {
-							// Process might have already finished
-						}
-					}
 					return nil
 				}
 			case err := <-done:
@@ -105,6 +106,8 @@ func WakeDevice(app core.App, device *core.Record, trigger string) error {
 					}
 					return fmt.Errorf("%s", stderr.String())
 				}
+				commandFinished = true
+				done = nil
 				// Command finished successfully, but we continue the loop until device is online or timeout
 			}
 		}
