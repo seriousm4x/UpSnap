@@ -6,7 +6,7 @@ import (
 	"net"
 	"sync/atomic"
 
-	"github.com/pocketbase/pocketbase/core"
+	"ganigeorgiev.com/pocketbase/pocketbase/core"
 	"github.com/seriousm4x/upsnap/logging"
 	"github.com/seriousm4x/upsnap/networking"
 )

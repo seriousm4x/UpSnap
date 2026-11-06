@@ -3,7 +3,7 @@ package networking
 import (
 	"testing"
 
-	"github.com/pocketbase/pocketbase/core"
+	"ganigeorgiev.com/pocketbase/pocketbase/core"
 )
 
 func TestPingDevice(t *testing.T) {

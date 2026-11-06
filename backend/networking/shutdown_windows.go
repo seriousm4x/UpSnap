@@ -6,7 +6,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/pocketbase/pocketbase/core"
+	"ganigeorgiev.com/pocketbase/pocketbase/core"
 
 	"golang.org/x/sys/windows"
 )

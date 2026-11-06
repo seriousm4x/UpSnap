@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/pocketbase/pocketbase/core"
+	"ganigeorgiev.com/pocketbase/pocketbase/core"
 	probing "github.com/prometheus-community/pro-bing"
 	"kernel.org/pub/linux/libs/security/libcap/cap"
 )

@@ -1,7 +1,7 @@
 package cronjobs
 
 import (
-	"github.com/pocketbase/pocketbase/core"
+	"ganigeorgiev.com/pocketbase/pocketbase/core"
 	"github.com/robfig/cron/v3"
 	"github.com/seriousm4x/upsnap/iptracking"
 	"github.com/seriousm4x/upsnap/logging"

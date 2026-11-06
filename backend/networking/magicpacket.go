@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net"
 
+	"ganigeorgiev.com/pocketbase/pocketbase/core"
 	"github.com/mdlayher/wol"
-	"github.com/pocketbase/pocketbase/core"
 )
 
 func SendMagicPacket(device *core.Record) error {

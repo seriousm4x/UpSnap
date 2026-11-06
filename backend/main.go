@@ -4,7 +4,7 @@ import (
 	"embed"
 	"log"
 
-	"github.com/pocketbase/pocketbase/apis"
+	"ganigeorgiev.com/pocketbase/pocketbase/apis"
 	"github.com/seriousm4x/upsnap/pb"
 )
 
