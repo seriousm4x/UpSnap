@@ -70,3 +70,37 @@ func RequireUpSnapPermission() *hook.Handler[*core.RequestEvent] {
 		},
 	}
 }
+
+func RequireUpSnapGroupPermission() *hook.Handler[*core.RequestEvent] {
+	return &hook.Handler[*core.RequestEvent]{
+		Func: func(e *core.RequestEvent) error {
+			if e.HasSuperuserAuth() {
+				return e.Next()
+			}
+
+			user := e.Auth
+			if user == nil {
+				return apis.NewUnauthorizedError("The request requires superuser or record authorization token to be set.", nil)
+			}
+
+			devices, err := e.App.FindRecordsByFilter("devices", "groups.id ?= {:grpId}", "", 0, 0,
+				dbx.Params{"grpId": e.Request.PathValue("id")},
+			)
+			if err != nil || len(devices) == 0 {
+				return apis.NewForbiddenError("You are not allowed to perform this request.", nil)
+			}
+
+			for _, device := range devices {
+				res, err := e.App.FindFirstRecordByFilter("permissions", "user.id = {:userId} && power.id ?= {:deviceId}", dbx.Params{
+					"userId":   user.Id,
+					"deviceId": device.Id,
+				})
+				if res == nil || err != nil {
+					return apis.NewForbiddenError("You are not allowed to perform this request.", nil)
+				}
+			}
+
+			return e.Next()
+		},
+	}
+}
