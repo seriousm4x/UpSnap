@@ -5,7 +5,6 @@ package networking
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"strconv"
 	"time"
 
@@ -78,15 +77,6 @@ func PingDevice(device *core.Record) (bool, error) {
 		shell = "/bin/sh"
 		shell_arg = "-c"
 
-		cmd := exec.Command(shell, shell_arg, ping_cmd)
-		err := cmd.Run()
-
-		if err != nil {
-			if _, ok := err.(*exec.ExitError); ok {
-				return false, nil
-			}
-			return false, err
-		}
-		return true, nil
+		return runPingCmd(shell, shell_arg, ping_cmd)
 	}
 }
