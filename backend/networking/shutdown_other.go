@@ -16,6 +16,12 @@ func SetProcessAttributes(cmd *exec.Cmd) {
 	cmd.SysProcAttr = &unix.SysProcAttr{Setpgid: true}
 }
 
+// killProcessGroup kills a process started with SetProcessAttributes and all
+// of its children.
+func killProcessGroup(process *os.Process) error {
+	return unix.Kill(-process.Pid, unix.SIGKILL)
+}
+
 // Kills child processes on Linux. Windows doesn't provide a direct way to kill child processes, so we kill just the main process.
 func KillProcess(app core.App, process *os.Process) error {
 	logging.Logger(app).Warn("Command did not finish in time and will be killed")

@@ -1,6 +1,8 @@
 package cronjobs
 
 import (
+	"sync"
+
 	"ganigeorgiev.com/pocketbase/pocketbase/core"
 	"github.com/robfig/cron/v3"
 	"github.com/seriousm4x/upsnap/iptracking"
@@ -18,6 +20,35 @@ var (
 		cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow,
 	)))
 )
+
+// pingInFlight holds the ids of devices whose last ping has not returned yet.
+// The ping cron fires on its interval whether or not the previous round has
+// finished, so without this a slow ping command is started again every tick.
+var pingInFlight sync.Map
+
+// pingCmdSlots limits how many custom ping commands run at the same time.
+// These commands often open an SSH connection, and starting one per device at
+// once can exceed the SSH server's MaxStartups limit (10 by default). The
+// server then drops connections and those devices are marked offline.
+var pingCmdSlots = make(chan struct{}, 5)
+
+// pingDevice is a seam for tests to stub out the real ping
+var pingDevice = networking.PingDevice
+
+// pingDeviceOnce pings the device unless its previous ping is still running.
+// ran is false when the ping was skipped.
+func pingDeviceOnce(d *core.Record) (isUp bool, ran bool, err error) {
+	if _, running := pingInFlight.LoadOrStore(d.Id, struct{}{}); running {
+		return false, false, nil
+	}
+	defer pingInFlight.Delete(d.Id)
+	if d.GetString("ping_cmd") != "" {
+		pingCmdSlots <- struct{}{}
+		defer func() { <-pingCmdSlots }()
+	}
+	isUp, err = pingDevice(d)
+	return isUp, true, err
+}
 
 func SetPingJobs(app core.App) {
 	log := logging.Logger(app)
@@ -62,7 +93,10 @@ func SetPingJobs(app core.App) {
 				if status == "pending" {
 					return
 				}
-				isUp, err := networking.PingDevice(d)
+				isUp, ran, err := pingDeviceOnce(d)
+				if !ran {
+					return
+				}
 				if err != nil {
 					log.Error("Failed to ping device", "device", d.GetString("name"), "error", err)
 				}
